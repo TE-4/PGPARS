@@ -15,6 +15,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// Register the fake repo with the IApplicantRepo interface
+builder.Services.AddTransient<IApplicantRepository, FakeApplicantRepository>();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
@@ -36,6 +39,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // add MapControllerRoute here???
