@@ -1,6 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// add SQL DB here???
+// add SQL DB here??? 
+
+// For Identity
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
