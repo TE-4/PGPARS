@@ -18,7 +18,7 @@ namespace PGPARS.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult AdminIndex()
         {
             return View();
         }

@@ -8,15 +8,45 @@ html {
   }
 }
 
+.container {
+    background-color: rgb(128, 128, 128, 0.5);
+    padding:30px;
+    border-radius:25px;
+}
+
+.container-content {
+    color: white;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+  position: center;
+  height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    min-height: 100vh;
+    height: 100%;
+    background-image: url('/images/Generic-Background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+header {
+
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, a, span {
+    color: white;
 }
