@@ -1,10 +1,19 @@
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using PGPARS.Data;
+using PGPARS.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// add SQL DB here??? 
+// SQL DB 
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Identity will go here
 
+// Identity 
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
