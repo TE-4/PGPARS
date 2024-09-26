@@ -9,13 +9,15 @@ html {
 }
 
 .container {
-    
+
+    color: white;
 }
 
 .container-opaque {
     background-color: rgb(128, 128, 128, 0.5);
-    padding:30px;
-    border-radius:20px;
+    padding: 0px;
+    border-radius: 20px;
+    color: white;
 }
 
 .container-content {
@@ -52,9 +54,10 @@ html {
 }
 
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
+    margin-left: 200px;
+    font-size: 28px;
+    padding: 0px 10px;
+    color: white;
 }
 
 @media screen and (max-height: 450px) {
@@ -70,6 +73,7 @@ body {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
+    color: white;
 }
 
 .header {
@@ -82,8 +86,9 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
+    text-align: right;
 }
 
-.body, h1, h2, h3, h4, h5, h6, p, a, span {
+.body, .h1, .h2, .h3, .h4, .h5, .h6, .p, .a, .span {
     color: white;
 }
