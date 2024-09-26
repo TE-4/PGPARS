@@ -45,8 +45,15 @@ app.UseAuthorization();
 // add MapControllerRoute here???
 
 app.MapControllerRoute(
+    name: "dashboard",
+    pattern: "Dashboard",
+    defaults: new { Controller = "Admin", action = "Dashboard"});
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.MapDefaultControllerRoute(); ???
 
 app.MapRazorPages();
 

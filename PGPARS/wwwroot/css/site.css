@@ -9,9 +9,13 @@ html {
 }
 
 .container {
+    
+}
+
+.container-opaque {
     background-color: rgb(128, 128, 128, 0.5);
     padding:30px;
-    border-radius:25px;
+    border-radius:20px;
 }
 
 .container-content {
@@ -22,9 +26,40 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: center;
+.sidenav {
   height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  text-align: center;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
 }
 
 body {
@@ -37,16 +72,18 @@ body {
     background-repeat: no-repeat;
 }
 
-header {
-
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
-footer {
+.footer {
     position: absolute;
     bottom: 0;
     width: 100%;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, a, span {
+.body, h1, h2, h3, h4, h5, h6, p, a, span {
     color: white;
 }
