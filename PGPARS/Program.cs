@@ -7,7 +7,8 @@ using PGPARS.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // SQL DB 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 // Identity 
