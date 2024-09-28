@@ -1,0 +1,31 @@
+﻿@model LoginViewModel;
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            div{
+                padding:5px;
+                margin:10px;            
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Login</h1>
+            <form asp-action="Login" class="mt-4" p-3 border rounded bg-light>
+                <div class="mb-3">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" />
+                </div>
+                <div>
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="password"/>
+                </div>
+                <div>
+                    <p>Submit button will go here</p>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
