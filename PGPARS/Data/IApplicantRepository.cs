@@ -1,18 +1,12 @@
-﻿using PGPARS.Models;
+﻿using PGPARS.Models.ViewModels;
+using PGPARS.Models;
 
 namespace PGPARS.Data
 {
-    public interface IApplicantRepository
-    {
-        IEnumerable<Applicant> GetApplicants();
-
-        // Will add other methods later
-
-        //Applicant GetApplicantById(int id);
-        //void UpdateApplicant(Applicant applicant);
-        //void DeleteApplicant(int id);
-        //void AddApplicant(Applicant applicant);
-
-
+        public interface IApplicantRepository
+        {
+            IEnumerable<ApplicantDisplayViewModel> GetFilteredApplicants();
+            IEnumerable<Applicant> GetAllApplicants();
+            Applicant GetApplicantById(int id);
+        }
     }
-}

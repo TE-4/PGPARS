@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PGPARS.Models.ApplicantDisplayViewModel>
+
+<h2>Applicant Directory</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Approved Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var applicant in Model)
+        {
+            <tr>
+                <td>@applicant.Id</td>
+                <td>@applicant.FullName</td>
+                <td>@applicant.Gender</td>
+                <td>@applicant.ApprovedStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>
