@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PGPARS.Models
+namespace PGPARS.Models.ViewModels
 {
     public class LoginViewModel
     {

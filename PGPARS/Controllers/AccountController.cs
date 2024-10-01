@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using PGPARS.Models;
+using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Controllers
 {
