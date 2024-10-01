@@ -5,7 +5,7 @@ using PGPARS.Models;
 
 namespace PGPARS.Data
 {
-    public class ApplicantRepository
+    public class ApplicantRepository : IApplicantRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -31,7 +31,7 @@ namespace PGPARS.Data
             }
             //AddRange adds the parsed CSV data into the database in bulk
         }
-
+        //The smaller model for the list
         public IEnumerable<ApplicantDisplayViewModel> GetFilteredApplicants()
         {
             return _context.Applicants
@@ -39,8 +39,8 @@ namespace PGPARS.Data
                 {
                     Id = a.Id,
                     FullName = a.FirstName + " " + a.LastName,
-                    Gender = a.Sex,  // Assuming 'Sex' is the gender field
-                    ApprovedStatus = a.Status == "Approved"  // Adjust based on your status field
+                    Gender = a.Sex,
+                    ApprovedStatus = a.Status == "Approved"  
                 })
                 .ToList();
         }

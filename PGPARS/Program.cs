@@ -16,7 +16,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Register the fake repo with the IApplicantRepo interface
+// Register the  repo with the IApplicantRepo interface
 builder.Services.AddTransient<IApplicantRepository, ApplicantRepository>();
 
 // Add services to the container.

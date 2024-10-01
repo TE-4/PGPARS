@@ -15,13 +15,14 @@ namespace PGPARS.Controllers
         }
 
         // Action to display the filtered list of applicants
-        public IActionResult Applicants()
+        public IActionResult StudentDirectory()
         {
             // Retrieve filtered applicants (Id, FullName, Gender, ApprovedStatus)
             var applicant = _applicantRepository.GetFilteredApplicants();
 
             // Pass the data to the view for display
             return View(applicant);
+
         }
     }
 }
