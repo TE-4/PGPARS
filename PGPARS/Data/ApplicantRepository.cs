@@ -2,7 +2,6 @@
 using System.IO;
 using CsvHelper;
 using PGPARS.Models;
-using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Data
 {

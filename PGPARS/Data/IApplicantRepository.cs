@@ -1,9 +1,8 @@
-﻿using PGPARS.Models.ViewModels;
-using PGPARS.Models;
+﻿using PGPARS.Models;
 
 namespace PGPARS.Data
 {
-        public interface IApplicantRepository
+    public interface IApplicantRepository
         {
             IEnumerable<ApplicantDisplayViewModel> GetFilteredApplicants();
             IEnumerable<Applicant> GetAllApplicants();

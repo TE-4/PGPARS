@@ -17,7 +17,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Register the fake repo with the IApplicantRepo interface
-builder.Services.AddTransient<IApplicantRepository, FakeApplicantRepository>();
+builder.Services.AddTransient<IApplicantRepository, ApplicantRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

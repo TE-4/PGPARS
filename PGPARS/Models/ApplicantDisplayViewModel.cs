@@ -1,4 +1,4 @@
-﻿namespace PGPARS.Models.ViewModels
+﻿namespace PGPARS.Models
 {
     public class ApplicantDisplayViewModel
     {
