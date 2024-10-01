@@ -5,7 +5,7 @@ using PGPARS.Models;
 
 namespace PGPARS.Data
 {
-    public class ApplicantRepository
+    public class ApplicantRepository : IApplicantRepository
     {
         private readonly ApplicationDbContext _context;
 
