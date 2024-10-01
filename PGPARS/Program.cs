@@ -16,7 +16,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Register the  repo with the IApplicantRepo interface
+// Register the ApplicantRepository with the interface
 builder.Services.AddTransient<IApplicantRepository, ApplicantRepository>();
 
 // Add services to the container.
@@ -35,13 +35,24 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Middleware pipeline setup
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+// create a scope that uses services to seed an Admin user and role on program startup
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await DbSeeder.SeedAdminUser(userManager, roleManager);
+}
+
 
 // add MapControllerRoute here???
 

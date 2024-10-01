@@ -74,6 +74,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     color: white;
+    justify-content: center;
 }
 
 .header {
@@ -91,4 +92,38 @@ body {
 
 .body, .h1, .h2, .h3, .h4, .h5, .h6, .p, .a, .span {
     color: white;
+}
+
+.loginContainer {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    align-content: center;
+    text-align: center;
+
+}
+
+.loginContainer h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: white;
+    font: lighter;
+}
+
+.loginContainer .btn-primary {
+    width:40%;
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: darkgreen;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    
+}
+
+.loginContainer .btn-primary:hover {
+    background-color: green;
 }
