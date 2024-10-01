@@ -42,7 +42,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-/*
+
 // create a scope that uses services to seed an Admin user and role on program startup
 using (var scope = app.Services.CreateScope())
 {
@@ -52,7 +52,7 @@ using (var scope = app.Services.CreateScope())
 
     await DbSeeder.SeedAdminUser(userManager, roleManager);
 }
-*/
+
 
 // add MapControllerRoute here???
 
