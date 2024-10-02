@@ -50,6 +50,7 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
+    // call method from DbSeeder class to seed roles
     await DbSeeder.SeedAdminUser(userManager, roleManager);
 }
 

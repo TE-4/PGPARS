@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PGPARS.Models;
+using System.Diagnostics;
 
 namespace PGPARS.Data
 {
@@ -8,10 +9,17 @@ namespace PGPARS.Data
         public static async Task SeedAdminUser(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
 
+            Debug.WriteLine("Beginning Seeding process");
+
             // create the role "admin" if it does not already exist
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
-                await roleManager.CreateAsync(new IdentityRole("Admin"));
+                var result1 = await roleManager.CreateAsync(new IdentityRole("Admin"));
+                if (result1.Succeeded)
+                {
+                    Debug.WriteLine("Role created!");
+                }
+
             }
 
             // create the user if it doesn't already exist
@@ -19,22 +27,30 @@ namespace PGPARS.Data
             var user = await userManager.FindByEmailAsync(email);
             if (user == null) 
             {
+                Debug.WriteLine("Attempting to create new user...");
                 var newUser = new AppUser
                 {
                     UserName = email,
                     Email = email,
-                    Nnumber = "n000000"
+                    Nnumber = "n00000000"
                 };
 
-                var result = await userManager.CreateAsync(newUser, "admin@1234");
+                var result = await userManager.CreateAsync(newUser, "Admin@1234");
 
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(newUser, "Admin");
+                    Debug.WriteLine("User successfully created!");
+
                 }
                 else
                 {
-                    Console.WriteLine("Creating user failed");
+                    Debug.WriteLine("Creating user failed");
+                    foreach(var error in result.Errors)
+                    {
+                        Debug.WriteLine($"Error: {error.Description}");
+                    }
+
                 }
             }
         }
