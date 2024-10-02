@@ -6,18 +6,20 @@ namespace PGPARS.Models
     {
         public int Id { get; set; }
         public string? Nnumber { get; set; }
-        public  string? FirstName { get; set; }
-        public  string? LastName { get; set; }
+
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public DateTime? AppSubmitDate { get; set; }
-        public  string? Email { get; set; }
-        public  string? Phone { get; set; }
-        public  string? Status { get; set; }
-        public  string? Race { get; set; }
-        public  string? Sex { get; set; }
-        public  string? Reviewer1 { get; set; }
-        public  string? Reviewer2 { get; set; }
-        public  string? Rev1Decision { get; set; }
-        public  string? Rev2Decision { get; set; }
+        public string? email { get; set; } 
+        public string? Phone { get; set; }
+        public string? AdvisorEmail { get; set; } 
+        public string? Status { get; set; }
+        public string? Race { get; set; }
+        public string? Sex { get; set; }
+        public string? Reviewer1 { get; set; }
+        public string? Reviewer2 { get; set; }
+        public string? Rev1Decision { get; set; }
+        public string? Rev2Decision { get; set; }
         public bool? RevAgree { get; set; }
         public  string? CommitteeReview { get; set; }
         public  string? Mentor1 { get; set; }
