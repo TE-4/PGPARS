@@ -1,5 +1,6 @@
 ﻿@model LoginViewModel;
 
+<h1>Applicant Review System</h1>
    
 <div class="loginContainer">
     <h1>Login</h1>
@@ -24,7 +25,7 @@
     {
         <h2>Welcome, @User.Identity.Name!</h2>
         <form asp-action="Logout" method="post">
-            <button type="submit" class="btn btn-danger">Logout</button>
+            <button type="submit" class="btn-danger">Logout</button>
         </form>
     }
 </div>
