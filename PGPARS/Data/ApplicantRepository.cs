@@ -27,12 +27,30 @@ namespace PGPARS.Data
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var records = csv.GetRecords<Applicant>().ToList();
-                _context.Applicants.AddRange(records);
+
+                foreach (var record in records)
+                {
+                    var existingApplicant = _context.Applicants
+                        .SingleOrDefault(a => a.Nnumber == record.Nnumber);
+
+                    if (existingApplicant != null)
+                    {
+                        // Update existing record
+                        _context.Entry(existingApplicant).CurrentValues.SetValues(record);
+                    }
+                    else
+                    {
+                        // Add new record
+                        _context.Applicants.Add(record);
+                    }
+                }
+
                 _context.SaveChanges();
             }
             //AddRange adds the parsed CSV data into the database in bulk
         }
    
+
         }
         //Applicant GetApplicantById(int id);
 

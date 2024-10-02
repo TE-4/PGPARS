@@ -52,6 +52,5 @@ namespace PGPARS.Models
                 return $"{FirstName} {LastName}".Trim();
             }
         }
-
     }
 }
