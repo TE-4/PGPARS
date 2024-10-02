@@ -32,7 +32,7 @@ namespace PGPARS.Controllers
                 var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, isPersistent: true, lockoutOnFailure: false);
                 if(result.Succeeded)
                 {
-                    return RedirectToAction("Admin", "Dashboard");
+                    return RedirectToAction("Dashboard", "Admin");
                 }
                 else
                 {

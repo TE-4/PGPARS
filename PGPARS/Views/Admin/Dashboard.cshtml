@@ -1,8 +1,8 @@
 ﻿<div class="sidenav a">
-  
-    <a asp-action="StudentDirectory" asp-controller="Applicant">Student Directory</a>
+    <p>Welcome, @User.Identity.Name!</p>
+    <a href="/AppList/StudentDirectory">Student Directory</a>
     <a href="/UserManagement">User Management</a>
-    <a href="/etc">etc</a>
+    <a asp-action="Logout" asp-controller="Account">Logout</a>
 </div>
 <div class="main">
     <div class="container-opaque">
