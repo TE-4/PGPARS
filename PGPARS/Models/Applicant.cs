@@ -5,24 +5,24 @@ namespace PGPARS.Models
     public class Applicant
     {
         public int Id { get; set; }
-        public required string Nnumber { get; set; }
-        public required string FirstName { get; set; }
-        public required string LastName { get; set; }
+        public string? Nnumber { get; set; }
+        public  string? FirstName { get; set; }
+        public  string? LastName { get; set; }
         public DateTime? AppSubmitDate { get; set; }
-        public required string Email { get; set; }
-        public required string Phone { get; set; }
-        public required string Status { get; set; }
-        public required string Race { get; set; }
-        public required string Sex { get; set; }
-        public required string Reviewer1 { get; set; }
-        public required string Reviewer2 { get; set; }
-        public required string Rev1Decision { get; set; }
-        public required string Rev2Decision { get; set; }
+        public  string? Email { get; set; }
+        public  string? Phone { get; set; }
+        public  string? Status { get; set; }
+        public  string? Race { get; set; }
+        public  string? Sex { get; set; }
+        public  string? Reviewer1 { get; set; }
+        public  string? Reviewer2 { get; set; }
+        public  string? Rev1Decision { get; set; }
+        public  string? Rev2Decision { get; set; }
         public bool? RevAgree { get; set; }
-        public required string CommitteeReview { get; set; }
-        public required string Mentor1 { get; set; }
-        public required string Mentor2 { get; set; }
-        public required string Mentor3 { get; set; }
+        public  string? CommitteeReview { get; set; }
+        public  string? Mentor1 { get; set; }
+        public  string? Mentor2 { get; set; }
+        public  string? Mentor3 { get; set; }
         public  string? SelectMentor { get; set; }
         public decimal? GPAOverall { get; set; }   // Nullable fields
         public decimal? GPAPsych { get; set; }     // Nullable fields

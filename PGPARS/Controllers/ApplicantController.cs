@@ -6,10 +6,10 @@ namespace PGPARS.Controllers
 {
     public class ApplicantController : Controller
     {
-        private readonly IApplicantRepository _applicantRepository;
+        private readonly ApplicantRepository _applicantRepository;
 
         // Constructor to inject the repository
-        public ApplicantController(IApplicantRepository applicantRepository)
+        public ApplicantController(ApplicantRepository applicantRepository)
         {
             _applicantRepository = applicantRepository;
         }
