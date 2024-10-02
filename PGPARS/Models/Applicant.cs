@@ -24,8 +24,8 @@ namespace PGPARS.Models
         public  string? Mentor2 { get; set; }
         public  string? Mentor3 { get; set; }
         public  string? SelectMentor { get; set; }
-        public decimal? GPAOverall { get; set; }   // Nullable fields
-        public decimal? GPAPsych { get; set; }     // Nullable fields
+        public decimal? GPAOverall { get; set; }   
+        public decimal? GPAPsych { get; set; }    
         public string? GPAComment { get; set; }
         public bool? Course_Req_Met { get; set; }
         public string? CrsReqComment { get; set; }
@@ -44,5 +44,14 @@ namespace PGPARS.Models
         public  string? DecRec { get; set; }
         public  string? FollowUp { get; set; }
         public  string? FinalComments { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}".Trim();
+            }
+        }
+
     }
 }

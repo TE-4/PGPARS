@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PGPARS.Models.ViewModels.ApplicantDisplayViewModel>
+﻿@model IEnumerable<PGPARS.Models.Applicant>
 
 <h2>Student Directory</h2>
 
@@ -17,8 +17,8 @@
             <tr>
                 <td>@applicant.Id</td>
                 <td>@applicant.FullName</td>
-                <td>@applicant.Gender</td>
-                <td>@applicant.ApprovedStatus</td>
+                <td>@applicant.Sex</td>
+                <td>@applicant.Status</td>
             </tr>
         }
     </tbody>

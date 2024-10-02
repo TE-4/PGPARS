@@ -17,7 +17,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Register the ApplicantRepository with the interface
-builder.Services.AddTransient<IApplicantRepository, ApplicantRepository>();
+builder.Services.AddTransient<ApplicantRepository, ApplicantRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

@@ -6,7 +6,7 @@ using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Data
 {
-    public class ApplicantRepository : IApplicantRepository
+    public class ApplicantRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -32,31 +32,12 @@ namespace PGPARS.Data
             }
             //AddRange adds the parsed CSV data into the database in bulk
         }
-        //The smaller model for the list
-        public IEnumerable<ApplicantDisplayViewModel> GetFilteredApplicants()
-        {
-            return _context.Applicants
-                .Select(a => new ApplicantDisplayViewModel
-                {
-                    Id = a.Id,
-                    FullName = a.FirstName + " " + a.LastName,
-                    Gender = a.Sex,
-                    ApprovedStatus = a.Status == "Approved"  
-                })
-                .ToList();
+   
         }
         //Applicant GetApplicantById(int id);
-        public IEnumerable<Applicant> GetAllApplicants()
-        {
-            return _context.Applicants.ToList();
-        }
 
-        public Applicant GetApplicantById(int id)
-        {
-            return _context.Applicants.FirstOrDefault(a => a.Id == id);
-        }
         //void UpdateApplicant(Applicant applicant);
         //void DeleteApplicant(int id);
         //void AddApplicant(Applicant applicant);
     }
-}
+
