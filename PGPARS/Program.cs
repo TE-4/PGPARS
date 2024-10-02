@@ -16,8 +16,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Register the ApplicantRepository with the interface
-builder.Services.AddTransient<ApplicantRepository, ApplicantRepository>();
+// Register the ApplicantRepository with the interface; change me later :D
+builder.Services.AddTransient<IApplicantRepository, FakeApplicantRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

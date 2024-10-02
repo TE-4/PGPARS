@@ -7,11 +7,11 @@ namespace PGPARS.Controllers
 {
     public class ApplicantController : Controller
     {
-        private readonly ApplicantRepository _applicantRepository;
+        private readonly IApplicantRepository _applicantRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         // Constructor to inject the repository and IWebHostEnvironment
-        public ApplicantController(ApplicantRepository applicantRepository, IWebHostEnvironment webHostEnvironment)
+        public ApplicantController(IApplicantRepository applicantRepository, IWebHostEnvironment webHostEnvironment)
         {
             _applicantRepository = applicantRepository;
             _webHostEnvironment = webHostEnvironment;
