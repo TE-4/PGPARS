@@ -12,7 +12,7 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241001195519_first")]
+    [Migration("20241002213246_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -229,11 +229,11 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Nnumber")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("AdvisorEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("AppSubmitDate")
                         .HasColumnType("datetime2");
@@ -248,9 +248,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DecRec")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FinalComments")
@@ -296,9 +293,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mentor3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nnumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OverallFitComments")
@@ -352,7 +346,10 @@ namespace PGPARS.Migrations
                     b.Property<int?>("WritSampQuality")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Nnumber");
 
                     b.ToTable("Applicants");
                 });

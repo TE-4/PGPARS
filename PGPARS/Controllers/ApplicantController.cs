@@ -23,16 +23,6 @@ namespace PGPARS.Controllers
             var applicants = _applicantRepository.GetApplicants();
             return View(applicants);  // Pass the applicants to the view
         }
-
-        [HttpPost]
-        public IActionResult ImportApplicants()
-        {
-            // Get the physical path of the CSV file in wwwroot/Files
-            string filePath = System.IO.Path.Combine(_webHostEnvironment.WebRootPath, "Files", "ApplicantMasterList.csv");
-
-            _applicantRepository.ImportApplicantsFromCsv(filePath);
-
-            return RedirectToAction("StudentDirectory");
         }
     }
-}
+

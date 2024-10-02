@@ -15,14 +15,13 @@ namespace PGPARS.Migrations
                 name: "Applicants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nnumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppSubmitDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdvisorEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Race = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -59,7 +58,7 @@ namespace PGPARS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Applicants", x => x.Id);
+                    table.PrimaryKey("PK_Applicants", x => x.Nnumber);
                 });
 
             migrationBuilder.CreateTable(

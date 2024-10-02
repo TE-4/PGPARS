@@ -26,6 +26,11 @@ namespace PGPARS.Data
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                // Read the header
+                csv.Read();
+                csv.ReadHeader(); // This will read the header and allow you to skip it
+
+                // Get records while skipping the header
                 var records = csv.GetRecords<Applicant>().ToList();
 
                 foreach (var record in records)
@@ -47,15 +52,15 @@ namespace PGPARS.Data
 
                 _context.SaveChanges();
             }
-            //AddRange adds the parsed CSV data into the database in bulk
         }
-   
 
-        }
-        //Applicant GetApplicantById(int id);
 
-        //void UpdateApplicant(Applicant applicant);
-        //void DeleteApplicant(int id);
-        //void AddApplicant(Applicant applicant);
+
     }
+    //Applicant GetApplicantById(int id);
+
+    //void UpdateApplicant(Applicant applicant);
+    //void DeleteApplicant(int id);
+    //void AddApplicant(Applicant applicant);
+}
 

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PGPARS.Models
 {
     public class Applicant
     {
-        public int Id { get; set; }
+        [Key]  // Explicitly mark Nnumber as the primary key
         public string? Nnumber { get; set; }
 
         public string? FirstName { get; set; }
@@ -21,13 +22,13 @@ namespace PGPARS.Models
         public string? Rev1Decision { get; set; }
         public string? Rev2Decision { get; set; }
         public bool? RevAgree { get; set; }
-        public  string? CommitteeReview { get; set; }
-        public  string? Mentor1 { get; set; }
-        public  string? Mentor2 { get; set; }
-        public  string? Mentor3 { get; set; }
-        public  string? SelectMentor { get; set; }
-        public decimal? GPAOverall { get; set; }   
-        public decimal? GPAPsych { get; set; }    
+        public string? CommitteeReview { get; set; }
+        public string? Mentor1 { get; set; }
+        public string? Mentor2 { get; set; }
+        public string? Mentor3 { get; set; }
+        public string? SelectMentor { get; set; }
+        public decimal? GPAOverall { get; set; }
+        public decimal? GPAPsych { get; set; }
         public string? GPAComment { get; set; }
         public bool? Course_Req_Met { get; set; }
         public string? CrsReqComment { get; set; }
@@ -37,15 +38,15 @@ namespace PGPARS.Models
         public int? ResExpQuality { get; set; }
         public string? ResumeComment { get; set; }
         public int? WritSampQuality { get; set; }
-        public  string? WritSampComment { get; set; }
+        public string? WritSampComment { get; set; }
         public int? LORRelevance { get; set; }
         public int? LORQuality { get; set; }
-        public  string? LORComment { get; set; }
+        public string? LORComment { get; set; }
         public int? OverallFitQuality { get; set; }
-        public  string? OverallFitComments { get; set; }
-        public  string? DecRec { get; set; }
-        public  string? FollowUp { get; set; }
-        public  string? FinalComments { get; set; }
+        public string? OverallFitComments { get; set; }
+        public string? DecRec { get; set; }
+        public string? FollowUp { get; set; }
+        public string? FinalComments { get; set; }
 
         public string FullName
         {
