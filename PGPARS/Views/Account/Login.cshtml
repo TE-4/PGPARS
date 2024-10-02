@@ -3,6 +3,8 @@
    
 <div class="loginContainer">
     <h1>Login</h1>
+    @if(!User.Identity.IsAuthenticated)
+    {
     <form asp-action="Login">
         <div class="mb-3">
             <label asp-for="Email"></label>
@@ -16,6 +18,14 @@
         </div>
         <br />
         <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+        </form>
+    }
+    else
+    {
+        <h2>Welcome, @User.Identity.Name!</h2>
+        <form asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    }
 </div>
     

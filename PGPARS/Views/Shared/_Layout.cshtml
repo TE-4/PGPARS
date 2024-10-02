@@ -9,11 +9,7 @@
 </head>
 
 <body>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h1>Welcome, @User.Identity.Name!</h1>
-
-    }
+   
     @RenderBody()
     <footer class="footer">
         <div>
