@@ -23,7 +23,6 @@ builder.Services.AddTransient<IApplicantRepository, FakeApplicantRepository>();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
-// add transient here???
 
 var app = builder.Build();
 
@@ -66,7 +65,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 //app.MapDefaultControllerRoute(); ???
 

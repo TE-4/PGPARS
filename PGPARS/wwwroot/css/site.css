@@ -95,15 +95,18 @@ body, html {
     max-width: 500px;
     padding: 2rem;
     border-radius: 10px;
-    border: 1px solid #ddd;
+    border: 3px solid #ddd;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: azure;
+    color: black;
 }
 
 .loginContainer h1 {
     text-align: center;
     margin-bottom: 1.5rem;
-    color: white;
-    font: lighter;
+    
+    
+    
 }
 
 .loginContainer .btn-primary {
@@ -136,4 +139,11 @@ body, html {
 .btn-logout:hover{
     background-color:darkred;
     transform: scale(1.10);
+}
+
+#loginForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
