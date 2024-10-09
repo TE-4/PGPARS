@@ -23,6 +23,9 @@ namespace PGPARS.Controllers
             var applicants = _applicantRepository.GetApplicants();
             return View(applicants);  // Pass the applicants to the view
         }
+        public IActionResult ApplicantInfo()
+        {
+            return View();
         }
     }
-
+}

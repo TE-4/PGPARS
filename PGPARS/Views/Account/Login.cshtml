@@ -3,12 +3,7 @@
 <div id="loginForm">
     <div class="loginContainer">
         <h1>Applicant Review System</h1>
-
-        <div>
-            <h3>Login</h3>
-         </div>
-        @if(!User.Identity.IsAuthenticated)
-        {
+        <h3>Login</h3>
         <form asp-action="Login">
             <div class="mb-3">
                 <label asp-for="Email"></label>
@@ -22,14 +17,6 @@
             </div>
             <br />
             <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-        }
-        else
-        {
-            <h2>Welcome, @User.Identity.Name!</h2>
-            <form asp-action="Logout" method="post">
-                <button type="submit" class="btn-danger">Logout</button>
-            </form>
-        }
+        </form>
     </div>
 </div>

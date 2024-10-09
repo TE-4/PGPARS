@@ -20,7 +20,14 @@ namespace PGPARS.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
