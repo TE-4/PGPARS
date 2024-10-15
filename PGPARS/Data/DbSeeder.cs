@@ -17,9 +17,39 @@ namespace PGPARS.Data
                 var result1 = await roleManager.CreateAsync(new IdentityRole("Admin"));
                 if (result1.Succeeded)
                 {
-                    Debug.WriteLine("Role created!");
+                    Debug.WriteLine("Admin role created!");
                 }
 
+            }
+
+            // create the role "Faculty" if it does not already exist
+            if(!await roleManager.RoleExistsAsync("Faculty"))
+            {
+                var result2 = await roleManager.CreateAsync(new IdentityRole("Faculty"));
+                if (result2.Succeeded)
+                {
+                    Debug.WriteLine("Faculty role created!");
+                }
+            }
+
+            // create the role "Committee" if it does not already exist
+            if (!await roleManager.RoleExistsAsync("Committee"))
+            {
+                var result2 = await roleManager.CreateAsync(new IdentityRole("Committee"));
+                if (result2.Succeeded)
+                {
+                    Debug.WriteLine("Committee role created!");
+                }
+            }
+
+            // create the role "Staff" if it does not already exist
+            if (!await roleManager.RoleExistsAsync("Staff"))
+            {
+                var result2 = await roleManager.CreateAsync(new IdentityRole("Staff"));
+                if (result2.Succeeded)
+                {
+                    Debug.WriteLine("Staff role created!");
+                }
             }
 
             // create the user if it doesn't already exist
