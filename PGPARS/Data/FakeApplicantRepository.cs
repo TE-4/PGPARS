@@ -9,10 +9,10 @@ namespace PGPARS.Data
             return new List<Applicant>
             {
                 new Applicant { Nnumber = "1", FirstName = "John Smith" },
-                //new Applicant { Id = 2, FullName = "Peter Student" },
-                //new Applicant { Id = 3, FullName = "Alice Johnson" },
-                //new Applicant { Id = 4, FullName = "Michael Davis" },
-                //new Applicant { Id = 5, FullName = "Marshall Mathers" }
+                new Applicant { Nnumber = "2", FirstName = "Peter Student" },
+                new Applicant { Nnumber = "3", FirstName = "Alice Johnson" },
+                new Applicant { Nnumber = "4", FirstName = "Michael Davis" },
+                new Applicant { Nnumber = "5", FirstName = "Marshall Mathers" }
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace PGPARS.Models.ViewModels
 {
@@ -13,7 +14,10 @@ namespace PGPARS.Models.ViewModels
         public string Password { get; set; }
 
         [Required(ErrorMessage= "Role is required!")]
-        public string Role { get; set; }
+        [Display(Name = "Role")]
+        public string RoleId { get; set; }
+
+        public IEnumerable<SelectListItem> Roles { get; set; }
 
 
 

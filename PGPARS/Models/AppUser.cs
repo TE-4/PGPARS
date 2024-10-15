@@ -5,9 +5,7 @@ namespace PGPARS.Models
 {
     public class AppUser : IdentityUser
     {
-        public required string Nnumber { get; set; }
-
-
+        public string Nnumber { get; set; }
         // can add more properties later as we need
         // Many properties are built into the IdentityUser (including user roles, email, name, etc.)
     }

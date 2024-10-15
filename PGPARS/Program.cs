@@ -44,7 +44,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-// create a scope that uses services to seed an Admin user and role on program startup
+// create a scope that uses services to admin user and user roles on startup
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
