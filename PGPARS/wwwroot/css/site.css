@@ -126,8 +126,10 @@ body, html {
 }
 
 .mainContent{
-    margin-left: 200px;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .registerContainer{
