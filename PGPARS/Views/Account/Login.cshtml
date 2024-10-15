@@ -4,6 +4,9 @@
     <div class="loginContainer">
         <h1>Applicant Review System</h1>
         <h3>Login</h3>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
         <form asp-action="Login">
             <div class="mb-3">
                 <label asp-for="Email"></label>

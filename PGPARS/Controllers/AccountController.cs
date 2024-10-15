@@ -35,11 +35,11 @@ namespace PGPARS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel lvm)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, isPersistent: true, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if(result.Succeeded)
                 {
                     return RedirectToAction("Dashboard", "Admin");
@@ -51,7 +51,7 @@ namespace PGPARS.Controllers
 
                 
             }
-            return View(lvm);
+            return View(model);
         }// end method
 
         public async Task<IActionResult> Logout()
