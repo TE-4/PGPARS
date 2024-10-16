@@ -53,6 +53,7 @@ namespace PGPARS.Data
             }
 
             // create the user if it doesn't already exist
+            // replace this email w/ client's real email later
             var email = "admin@admin.com";
             var user = await userManager.FindByEmailAsync(email);
             if (user == null) 
@@ -60,9 +61,12 @@ namespace PGPARS.Data
                 Debug.WriteLine("Attempting to create new user...");
                 var newUser = new AppUser
                 {
-                    UserName = email,
+                    FirstName = "Dan",
+                    LastName = "Richard",
                     Email = email,
-                    Nnumber = "n00000000"
+                    Nnumber = "n00009308",
+                    UserName = email,
+                    Position = "Professor"
                 };
 
                 var result = await userManager.CreateAsync(newUser, "Admin@1234");

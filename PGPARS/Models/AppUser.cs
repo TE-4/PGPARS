@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PGPARS.Models
 {
     public class AppUser : IdentityUser
     {
+
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+
+        public string Position { get; set; }
         public string Nnumber { get; set; }
-        // can add more properties later as we need
-        // Many properties are built into the IdentityUser (including user roles, email, name, etc.)
+        
+        
     }
 }
