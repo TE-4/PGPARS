@@ -3,7 +3,7 @@
 <div class="mainContent">
     <div class="registerContainer">
         <h2>Create new Account</h2>
-        <div>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <form method="post" asp-action="Register" asp-antiforgery="true">
             <div class="form-group">
                 <label asp-for="Email" class="control-label" style="font-weight: bold"></label>
@@ -15,6 +15,12 @@
                     <label asp-for="Password" class="control-label" style="font-weight: bold"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label" style="font-weight: bold"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
 
             <div class="form-group">

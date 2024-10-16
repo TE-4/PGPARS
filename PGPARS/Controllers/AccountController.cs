@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics;
 
 namespace PGPARS.Controllers
 {
@@ -92,10 +93,12 @@ namespace PGPARS.Controllers
                     if (role != null)
                     {
                         await _userManager.AddToRoleAsync(user, role.Name);
+                        Debug.WriteLine("Assigned role to new user successfully!");
                     }
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Dashboard", "Admin");
                 }
+                
 
                 foreach (var error in result.Errors)
                 {
