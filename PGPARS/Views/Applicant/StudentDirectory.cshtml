@@ -1,25 +1,31 @@
 ﻿@model IEnumerable<PGPARS.Models.Applicant>
-
-<h2>Student Directory</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Full Name</th>
-            <th>Gender</th>
-            <th>Approved Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var applicant in Model)
-        {
-            <tr>
-                <td>@applicant.Nnumber</td>
-                <td>@applicant.FullName</td>
-                <td>@applicant.Sex</td>
-                <td>@applicant.Status</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="main">
+    <div class="container-opaque">
+        <div class="text-center p-3">
+            Applicant Directory
+        </div>
+    </div>
+    <div class="container-opaque">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Approved Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var applicant in Model)
+                {
+                    <tr>
+                        <td>@applicant.Nnumber</td>
+                        <td>@applicant.FullName</td>
+                        <td>@applicant.Sex</td>
+                        <td>@applicant.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
