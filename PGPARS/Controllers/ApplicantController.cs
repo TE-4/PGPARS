@@ -18,7 +18,7 @@ namespace PGPARS.Controllers
         }
 
         // Action to display the filtered list of applicants
-        public IActionResult StudentDirectory()
+        public IActionResult ApplicantDirectory()
         {
             var applicants = _applicantRepository.GetApplicants();
             return View(applicants);  // Pass the applicants to the view
