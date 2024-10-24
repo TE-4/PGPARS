@@ -63,6 +63,7 @@ namespace PGPARS.Data
                 {
                     FirstName = "Dan",
                     LastName = "Richard",
+                    ShortName = "D. Richard",
                     Email = email,
                     Nnumber = "n00009308",
                     UserName = email,

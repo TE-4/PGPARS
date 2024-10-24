@@ -24,7 +24,6 @@ namespace PGPARS.Models.ViewModels
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage= "Role is required!")]
-        [Display(Name = "Role")]
         public string RoleId { get; set; }
 
         public IEnumerable<SelectListItem> Roles { get; set; }
