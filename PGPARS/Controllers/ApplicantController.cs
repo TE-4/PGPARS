@@ -18,11 +18,24 @@ namespace PGPARS.Controllers
         }
 
         // Action to display the filtered list of applicants
-        public IActionResult StudentDirectory()
+        public IActionResult StudentDirectory(string searchString)
         {
+            // Fetch all applicants from the repository
             var applicants = _applicantRepository.GetApplicants();
-            return View(applicants);  // Pass the applicants to the view
+
+            // If the search string is not empty, filter the applicants by full name
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                applicants = applicants.Where(a => a.FullName.Contains(searchString)).ToList();
+            }
+
+            // Pass the search string back to the view to retain the search term
+            ViewData["SearchString"] = searchString;
+
+            // Return the filtered (or full) list of applicants to the view
+            return View(applicants);
         }
+
         public IActionResult ApplicantInfo()
         {
             return View();

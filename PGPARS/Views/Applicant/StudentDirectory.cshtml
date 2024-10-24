@@ -5,6 +5,15 @@
             Applicant Directory
         </div>
     </div>
+    <!-- Search Form -->
+    <div class="container-opaque">
+        <form method="get" asp-action="StudentDirectory">
+            <div class="form-group">
+                <input type="text" name="searchString" class="form-control" placeholder="Search by name..." value="@ViewData["SearchString"]" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
     <div class="container-opaque">
         <table class="table">
             <thead>
