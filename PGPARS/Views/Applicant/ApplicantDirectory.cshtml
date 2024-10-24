@@ -5,9 +5,10 @@
             Applicant Directory
         </div>
     </div>
+    <br />
     <!-- Search Form -->
     <div class="container-opaque">
-        <form method="get" asp-action="StudentDirectory">
+        <form method="get" asp-action="ApplicantDirectory">
             <div class="form-group">
                 <input type="text" name="searchString" class="form-control" placeholder="Search by name..." value="@ViewData["SearchString"]" />
             </div>
@@ -27,7 +28,7 @@
             <tbody>
                 @foreach (var applicant in Model)
                 {
-                    <tr>
+                    <tr onclick="location.href='@Url.Action("ApplicantDetails", "Applicant", new { Nnumber = applicant.Nnumber })'">
                         <td>@applicant.Nnumber</td>
                         <td>@applicant.FullName</td>
                         <td>@applicant.Sex</td>

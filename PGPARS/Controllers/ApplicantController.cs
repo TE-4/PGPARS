@@ -18,7 +18,7 @@ namespace PGPARS.Controllers
         }
 
         // Action to display the filtered list of applicants
-        public IActionResult StudentDirectory(string searchString)
+        public IActionResult ApplicantDirectory(string searchString)
         {
             // Fetch all applicants from the repository
             var applicants = _applicantRepository.GetApplicants();
@@ -36,9 +36,16 @@ namespace PGPARS.Controllers
             return View(applicants);
         }
 
-        public IActionResult ApplicantInfo()
+        public IActionResult ApplicantDetails(string Nnumber)
         {
-            return View();
+            var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == Nnumber);
+
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+
+            return View(applicant);
         }
     }
 }
