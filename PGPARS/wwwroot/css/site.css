@@ -5,6 +5,46 @@
   }
 }
 
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.body, .h1, .h2, .h3, .h4, .h5, .h6, .p, .a, .span {
+    color: white;
+}
+
+body, html {
+    min-height: 100vh;
+    height: 100%;
+    background-image: url('/images/Generic-Background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+/* Will Fix this later */
+.btn-logout{
+    background-color: red;
+    color: white;
+    border: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover{
+    background-color:darkred;
+    transform: scale(1.10);
+}
+
 .container {
     color: white;
 }
@@ -20,8 +60,110 @@
     color: white;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.footer {
+    
+}
+
+.grid-container > div {
+    background-color: rgba(0, 65, 255, 0.5);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+}
+.personalInfo { grid-area: a; }
+.reviewInfo { grid-area: b; }
+.courseInfo { grid-area: c; }
+.applicationInfo { grid-area: d; }
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'a a a a a a'
+        'b b b c c c'
+        'd d d d d d';
+    gap: 10px;
+    background-color: rgb(128, 128, 128, 0.8);
+    padding: 0px;
+    border-radius: 10px;
+    color: white;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.loginContainer {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 3px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: lavender;
+    color: black;
+
+}
+
+.loginContainer h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.loginContainer .btn-primary {
+    width:40%;
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: darkgreen;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    
+}
+
+.loginContainer .btn-primary:hover {
+    background-color: green;
+}
+
+.mainContent{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    margin-left: 200px;
+    font-size: 25px;
+    padding: 0px 10px;
+    color: white;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.registerContainer {
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 3px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: lavender;
+    color: black;
+    margin-left: 200px;
 }
 
 .sidenav {
@@ -49,123 +191,14 @@
   color: #f1f1f1;
   background-color: #0d215f;
 }
-
-.main {
-    margin-left: 200px;
-    font-size: 25px;
-    padding: 0px 10px;
-    color: white;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-body, html {
-    min-height: 100vh;
-    height: 100%;
-    background-image: url('/images/Generic-Background.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-}
-
-.header {
+.sidenav-footer {
     position: absolute;
-    top: 0;
+    bottom: 0px; /* Adjust as needed for spacing */
+    left: 0;
     width: 100%;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: right;
-}
-
-.body, .h1, .h2, .h3, .h4, .h5, .h6, .p, .a, .span {
-    color: white;
-}
-
-.loginContainer {
-    width: 100%;
-    max-width: 500px;
-    padding: 2rem;
-    border-radius: 10px;
-    border: 3px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: lavender;
-    color: black;
-
-}
-
-.loginContainer h1 {
+    color: #FFFFFF;
+    font-size: 10px; /* Adjust font size if needed */
     text-align: center;
-    margin-bottom: 1.5rem;
-    
-    
-    
-}
-
-.loginContainer .btn-primary {
-    width:40%;
-    padding: 1rem;
-    font-size: 1rem;
-    background-color: darkgreen;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    
-}
-
-.loginContainer .btn-primary:hover {
-    background-color: green;
-}
-
-.mainContent{
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.registerContainer{
-    
-    max-width: 500px;
-    padding: 2rem;
-    border-radius: 10px;
-    border: 3px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: lavender;
-    color: black;
-    margin-left:200px;
-}
-
-/* Will Fix this later */
-.btn-logout{
-    background-color: red;
-    color: white;
-    border: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-logout:hover{
-    background-color:darkred;
-    transform: scale(1.10);
-}
-
-#loginForm{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
 .table {

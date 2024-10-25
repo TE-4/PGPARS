@@ -10,6 +10,7 @@ namespace PGPARS.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        
         public IActionResult Dashboard()
         {
             if (User.Identity.IsAuthenticated)

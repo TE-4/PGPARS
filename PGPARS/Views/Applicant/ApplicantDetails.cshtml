@@ -2,14 +2,22 @@
 
 <div class="main">
     <div class="container-opaque">
-        <div class="text-center p-3">
+        <h2 class="text-center">
             @Model.FullName
-        </div>
+        </h2>
     </div>
-    </br>
-    <div class="container-opaque p-5">
-        <p><strong>Nnumber:</strong> @Model.Nnumber</p>
-        <p><strong>Sex:</strong> @Model.Sex</p>
-        <p><strong>Status:</strong> @Model.Status</p>
+    <br />
+    <p><strong>(status Bar goes here?) Status:</strong> @Model.Status</p>
+    <br />
+    <div class="grid-container">
+        <div class="personalInfo">Personal Information<br />
+            <div class="container-opaque p-5">
+                <p><strong>Nnumber:</strong> @Model.Nnumber</p>
+                <p><strong>Sex:</strong> @Model.Sex</p>
+            </div>
+        </div>
+        <div class="reviewInfo">R info</div>
+        <div class="courseInfo">C info</div>
+        <div class="applicationInfo">A info</div>
     </div>
 </div>
