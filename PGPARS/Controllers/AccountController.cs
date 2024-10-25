@@ -6,6 +6,7 @@ using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace PGPARS.Controllers
 {
@@ -80,22 +81,27 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Find role, if exists, and returns async task containing the role
+                var role = await _roleManager.FindByNameAsync(model.Role);
+
                 var user = new AppUser { FirstName = model.FirstName,
                                          LastName = model.LastName,
                                          Email = model.Email,
                                          UserName = model.Email,
-                                         Nnumber = model.Nnumber};
+                                         Nnumber = model.Nnumber,
+                                         MainRole = role.Name};
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     // Assign the selected role to the user
-                    var role = await _roleManager.FindByNameAsync(model.Role);
+                    
                     if (role != null)
                     {
                         await _userManager.AddToRoleAsync(user, role.Name);
                         Debug.WriteLine("Assigned role to new user successfully!");
+                        
                     }
 
                     return RedirectToAction("Dashboard", "Admin");
@@ -113,7 +119,11 @@ namespace PGPARS.Controllers
             return View(model);
         }
 
-
+        public async Task<IActionResult> Directory()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return View(users);
+        }
 
     }// end class
 }// end namespace

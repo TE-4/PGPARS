@@ -188,6 +188,10 @@ namespace PGPARS.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("MainRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nnumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

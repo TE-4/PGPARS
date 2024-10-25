@@ -12,7 +12,7 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241025061859_first")]
+    [Migration("20241025073100_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -190,6 +190,10 @@ namespace PGPARS.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("MainRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nnumber")
                         .IsRequired()

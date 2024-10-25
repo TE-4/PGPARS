@@ -18,9 +18,8 @@ namespace PGPARS.Models
         public string ShortName => $"{FirstName[0]}. {LastName}";
 
         public string? Position { get; set; }
-        
-   
 
-        
+        public string MainRole { get; set; }
+             
     }
 }

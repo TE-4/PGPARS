@@ -14,8 +14,8 @@ namespace PGPARS.Data
             // create the role "admin" if it does not already exist
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
-                var result1 = await roleManager.CreateAsync(new IdentityRole("Admin"));
-                if (result1.Succeeded)
+                var result = await roleManager.CreateAsync(new IdentityRole("Admin"));
+                if (result.Succeeded)
                 {
                     Debug.WriteLine("Admin role created!");
                 }
@@ -25,8 +25,8 @@ namespace PGPARS.Data
             // create the role "Faculty" if it does not already exist
             if(!await roleManager.RoleExistsAsync("Faculty"))
             {
-                var result2 = await roleManager.CreateAsync(new IdentityRole("Faculty"));
-                if (result2.Succeeded)
+                var result = await roleManager.CreateAsync(new IdentityRole("Faculty"));
+                if (result.Succeeded)
                 {
                     Debug.WriteLine("Faculty role created!");
                 }
@@ -35,8 +35,8 @@ namespace PGPARS.Data
             // create the role "Committee" if it does not already exist
             if (!await roleManager.RoleExistsAsync("Committee"))
             {
-                var result2 = await roleManager.CreateAsync(new IdentityRole("Committee"));
-                if (result2.Succeeded)
+                var result = await roleManager.CreateAsync(new IdentityRole("Committee"));
+                if (result.Succeeded)
                 {
                     Debug.WriteLine("Committee role created!");
                 }
@@ -45,15 +45,15 @@ namespace PGPARS.Data
             // create the role "Staff" if it does not already exist
             if (!await roleManager.RoleExistsAsync("Staff"))
             {
-                var result2 = await roleManager.CreateAsync(new IdentityRole("Staff"));
-                if (result2.Succeeded)
+                var result = await roleManager.CreateAsync(new IdentityRole("Staff"));
+                if (result.Succeeded)
                 {
                     Debug.WriteLine("Staff role created!");
                 }
             }
 
             // create the user if it doesn't already exist
-            // replace this email w/ client's real email later
+            
             var email = "admin@admin.com";
             var user = await userManager.FindByEmailAsync(email);
             if (user == null) 
@@ -66,7 +66,8 @@ namespace PGPARS.Data
                     Email = email,
                     Nnumber = "n00009308",
                     UserName = email,
-                    Position = "Professor"
+                    Position = "Professor",
+                    MainRole = "Admin"
                 };
 
                 var result = await userManager.CreateAsync(newUser, "Admin@1234");
