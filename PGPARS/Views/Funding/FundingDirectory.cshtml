@@ -1,0 +1,16 @@
+﻿@model IEnumerable<PGPARS.Models.Funding>
+
+<h2>Funding List</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+    </tr>
+    @foreach (var fund in Model)
+    {
+        <tr>
+            <td>@fund.Name</td>
+            <td>@fund.Amount</td>
+        </tr>
+    }
+</table>
