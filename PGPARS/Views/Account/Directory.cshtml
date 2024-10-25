@@ -2,38 +2,44 @@
 <head>
     <link rel="stylesheet" href="~/css/flatly.css">
 </head>
-<div class="align-content-center">
-    <h2>Site Users</h2>
+<div class="main">
+    <div class="container-opaque">
+        <div class="text-center p-3">
+            Site Users
+        </div>
+    </div>
+    <br />
+    <div class="container-opaque">
+        @if (TempData["UserCreated"] != null)
+        {
+            <script>
+                alert('@TempData["UserCreated"]');
+            </script>
+        }
 
-    @if (TempData["UserCreated"] != null)
-    {
-        <script>
-            alert('@TempData["UserCreated"]');
-        </script>
-    }
-
-    <a asp-action="Register" asp-controller="Account" class="btn btn-primary">Add New User</a>
-    <table class="table table-striped table-hover table-bordered">
-        <thead class="thead-dark">
-            <tr>
-                <th>Email</th>
-                <th>Short Name</th>
-                <th>N-Number</th>
-                <th>Role</th>
-                <th>Full Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
+        <a asp-action="Register" asp-controller="Account" class="btn btn-primary">Add New User</a>
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="thead-dark">
                 <tr>
-                    <td>@user.Email</td>
-                    <td>@user.ShortName</td>
-                    <td>@user.Nnumber</td>
-                    <td>@user.MainRole</td>
-                    <td>@user.FirstName @user.LastName</td>
+                    <th>Email</th>
+                    <th>Short Name</th>
+                    <th>N-Number</th>
+                    <th>Role</th>
+                    <th>Full Name</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td>@user.ShortName</td>
+                        <td>@user.Nnumber</td>
+                        <td>@user.MainRole</td>
+                        <td>@user.FirstName @user.LastName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
