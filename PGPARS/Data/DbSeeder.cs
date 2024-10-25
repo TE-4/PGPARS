@@ -62,8 +62,7 @@ namespace PGPARS.Data
                 var newUser = new AppUser
                 {
                     FirstName = "Dan",
-                    LastName = "Richard",
-                    ShortName = "D. Richard",
+                    LastName = "Richard",                 
                     Email = email,
                     Nnumber = "n00009308",
                     UserName = email,

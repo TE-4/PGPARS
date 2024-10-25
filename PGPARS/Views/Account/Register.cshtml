@@ -26,6 +26,12 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="Nnumber" class="control-label" style="font-weight: bold"></label>
+                <input asp-for="Nnumber" class="form-control" />
+                <span asp-validation-for="Nnumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                     <label asp-for="Password" class="control-label" style="font-weight: bold"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
@@ -38,11 +44,15 @@
             </div>
 
             <div class="form-group">
-                    <label asp-for="RoleId" class="control-label" style="font-weight: bold"></label>
-                <select asp-for="RoleId" class="form-control" asp-items="Model.Roles">
+                <label asp-for="Role" class="control-label" style="font-weight: bold"></label>
+                <select asp-for="Role" class="form-control">
                     <option value="">-- Select Role --</option>
+                    <option value="Admin">Administrator</option>
+                    <option value="Committee">Committee Member</option>
+                    <option value="Faculty">Faculty Member</option>
+                    <option value="Staff">Staff Member</option>
                 </select>
-                <span asp-validation-for="RoleId" class="text-danger"></span>
+                <span asp-validation-for="Role" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Register</button>

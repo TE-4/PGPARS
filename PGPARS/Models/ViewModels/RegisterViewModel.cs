@@ -23,10 +23,11 @@ namespace PGPARS.Models.ViewModels
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage= "Role is required!")]
-        public string RoleId { get; set; }
+        [Required(ErrorMessage = "User must have a role!")]
+        public string Role {  get; set; }
 
-        public IEnumerable<SelectListItem> Roles { get; set; }
+        [Required(ErrorMessage = "N-Number is required!")]
+        public string Nnumber { get; set; }
 
 
 

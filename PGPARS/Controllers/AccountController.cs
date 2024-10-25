@@ -15,6 +15,14 @@ namespace PGPARS.Controllers
         private readonly UserManager<AppUser> _userManager;  
         private readonly RoleManager<IdentityRole> _roleManager;
 
+        private readonly List<SelectListItem> roles = new List<SelectListItem>
+        {
+            new SelectListItem{Value = "Admin", Text = "Admin" },
+            new SelectListItem{Value = "Faculty", Text = "Faculty" },
+            new SelectListItem{Value = "Committee", Text = "Committee" },
+            new SelectListItem{Value = "Staff", Text = "Staff" }
+        };
+
         public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
@@ -63,19 +71,8 @@ namespace PGPARS.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Register()
-        {
-            // get roles from AspNetRoles table and store them in roles variable
-            var roles = _roleManager.Roles.ToList();
-            var viewModel = new RegisterViewModel
-            {
-                Roles = roles.Select(role => new SelectListItem
-                {
-                    Value = role.Id,
-                    Text = role.Name
-                }).ToList()
-            };
-
-            return View(viewModel);
+        {              
+            return View();
         }
 
         [HttpPost]
@@ -83,13 +80,18 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AppUser { FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, UserName = model.Email };
+                var user = new AppUser { FirstName = model.FirstName,
+                                         LastName = model.LastName,
+                                         Email = model.Email,
+                                         UserName = model.Email,
+                                         Nnumber = model.Nnumber};
+
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     // Assign the selected role to the user
-                    var role = await _roleManager.FindByIdAsync(model.RoleId);
+                    var role = await _roleManager.FindByNameAsync(model.Role);
                     if (role != null)
                     {
                         await _userManager.AddToRoleAsync(user, role.Name);
@@ -106,13 +108,7 @@ namespace PGPARS.Controllers
                 }
             }
 
-            // If we got this far, something failed; reload the roles to show them again in the view
-            var roles = _roleManager.Roles.ToList();
-            model.Roles = roles.Select(role => new SelectListItem
-            {
-                Value = role.Id,
-                Text = role.Name
-            }).ToList();
+           
 
             return View(model);
         }

@@ -7,13 +7,17 @@ namespace PGPARS.Models
     public class AppUser : IdentityUser
     {
 
+        [Required]
         public string Nnumber { get; set; }
-        public string FirstName { get; set; }
-        
-        public string LastName { get; set; }
-        public string ShortName { get; set; }
 
-        public string Position { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+  
+        [Required]
+        public string LastName { get; set; }
+        public string ShortName => $"{FirstName[0]}. {LastName}";
+
+        public string? Position { get; set; }
         
    
 
