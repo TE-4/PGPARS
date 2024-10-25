@@ -103,8 +103,8 @@ namespace PGPARS.Controllers
                         Debug.WriteLine("Assigned role to new user successfully!");
                         
                     }
-
-                    return RedirectToAction("Dashboard", "Admin");
+                    TempData["UserCreated"] = "User successfully created!";
+                    return RedirectToAction("Directory", "Account");
                 }
                 
 

@@ -4,6 +4,14 @@
 </head>
 <div class="align-content-center">
     <h2>Site Users</h2>
+
+    @if (TempData["UserCreated"] != null)
+    {
+        <script>
+            alert('@TempData["UserCreated"]');
+        </script>
+    }
+
     <a asp-action="Register" asp-controller="Account" class="btn btn-primary">Add New User</a>
     <table class="table table-striped table-hover table-bordered">
         <thead class="thead-dark">
