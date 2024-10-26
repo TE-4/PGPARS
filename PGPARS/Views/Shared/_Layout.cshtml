@@ -23,13 +23,17 @@
             <p class="text-center sidenav-footer">&copy; 2024 - PGPARS<br />Magic in Development</p>
         </div>
     }
-
-    <div class="container">
-        @RenderBody()
+    <div class="header">
+        <div class="headerContent">
+            <strong>Psychology Graduate Program Applicant Review System</strong>
+        </div>
+        <div class="headerLogo">
+            <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+        </div>
     </div>
-    
-    
 
+    @RenderBody()
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

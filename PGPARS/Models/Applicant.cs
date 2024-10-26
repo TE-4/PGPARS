@@ -13,7 +13,7 @@ namespace PGPARS.Models
         public DateTime? AppSubmitDate { get; set; } //App related
         public string? email { get; set; } //personal
         public string? Phone { get; set; } //personal
-        public string? AdvisorEmail { get; set; } //mentor / advisor?
+        public string? AdvisorEmail { get; set; } //personal
         public string? Status { get; set; } //Most significant, implement slider bar?
         public string? Race { get; set; } //personal
         public string? Sex { get; set; } //personal

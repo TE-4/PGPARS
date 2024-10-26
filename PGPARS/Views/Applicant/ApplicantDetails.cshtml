@@ -1,23 +1,85 @@
 ﻿@model PGPARS.Models.Applicant
-
 <div class="main">
     <div class="container-opaque">
-        <h2 class="text-center">
-            @Model.FullName
-        </h2>
+        <div class="text-center p-2">
+            <strong>@Model.FullName</strong>
+        </div>
     </div>
     <br />
     <p><strong>(status Bar goes here?) Status:</strong> @Model.Status</p>
     <br />
     <div class="grid-container">
-        <div class="personalInfo">Personal Information<br />
+        <div class="personalInfo">Personal Information
             <div class="container-opaque p-5">
-                <p><strong>Nnumber:</strong> @Model.Nnumber</p>
-                <p><strong>Sex:</strong> @Model.Sex</p>
+                <table class="table">
+                    <tr>
+                        <td><strong>Nnumber: </strong> @Model.Nnumber</td>
+                        <td><strong>Email: </strong>@Model.email</td>
+                        <td><strong>Phone: </strong>@Model.Phone</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sex: </strong> @Model.Sex</td>
+                        <td><strong>Race: </strong>@Model.Race</td>
+                        <td><strong>Advisor Email: </strong>@Model.AdvisorEmail</td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <div class="reviewInfo">R info</div>
-        <div class="courseInfo">C info</div>
-        <div class="applicationInfo">A info</div>
+        <div class="reviewInfo">Review Information
+            <div class="container-opaque p-5">
+                <table class="table">
+                    <tr>
+                        <td><strong>Reviewer 1: </strong>@Model.Reviewer1</td>
+                        <td><strong>@Model.Rev1Decision</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reviewer 2: </strong>@Model.Reviewer2</td>
+                        <td><strong>@Model.Rev2Decision</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reviewer Agree: </strong>@Model.RevAgree</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Committee Review: </strong>@Model.CommitteeReview</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mentor 1: </strong>@Model.Mentor1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mentor 2: </strong>@Model.Mentor2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mentor 3: </strong>@Model.Mentor3</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mentor Selected: </strong>@Model.SelectMentor</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="courseInfo">Course Information
+            <div class="container-opaque p-5">
+                <table class="table">
+                    <tr>
+                        <td><strong>GPA Overall: </strong>@Model.GPAOverall</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GPA Psychology: </strong>@Model.GPAPsych</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Required Courses Completed: </strong>@Model.Course_Req_Met</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GPA Comments:</strong><br />@Model.GPAComment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Courses Completed Comments:</strong><br />@Model.CrsReqComment</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="applicationInfo">Application Information
+        
+        </div>
     </div>
 </div>
