@@ -16,13 +16,7 @@ namespace PGPARS.Controllers
         private readonly UserManager<AppUser> _userManager;  
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        private readonly List<SelectListItem> roles = new List<SelectListItem>
-        {
-            new SelectListItem{Value = "Admin", Text = "Admin" },
-            new SelectListItem{Value = "Faculty", Text = "Faculty" },
-            new SelectListItem{Value = "Committee", Text = "Committee" },
-            new SelectListItem{Value = "Staff", Text = "Staff" }
-        };
+        
 
         public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
