@@ -69,13 +69,13 @@ body, html {
     font-size: 20px;
 }
 .personalInfo {grid-area: a;}
-.personalInfo:hover{background-color: rgb(0, 0, 0, 0.6);}
+
 .reviewInfo {grid-area: b;}
-.reviewInfo:hover{background-color: rgb(0, 0, 0, 0.6);}
+
 .courseInfo {grid-area: c;}
-.courseInfo:hover {background-color: rgb(0, 0, 0, 0.6);}
+
 .applicationInfo {grid-area: d;}
-.applicationInfo:hover {background-color: rgb(0, 0, 0, 0.6);}
+
 .grid-container {
     display: grid;
     grid-template-areas:
