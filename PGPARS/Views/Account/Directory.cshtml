@@ -26,6 +26,7 @@
                     <th>N-Number</th>
                     <th>Role</th>
                     <th>Full Name</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,11 @@
                         <td>@user.Nnumber</td>
                         <td>@user.MainRole</td>
                         <td>@user.FirstName @user.LastName</td>
+                        <td><a asp-action="Edit" asp-controller="Account" 
+                            asp-route-UserId="@user.Id">Edit</a>
+                            <span>Delete/UserDetails/AssociatedApplicants</span>
+                        </td>
+                            
                     </tr>
                 }
             </tbody>

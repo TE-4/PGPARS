@@ -119,5 +119,17 @@ namespace PGPARS.Controllers
             return View(users);
         }
 
+
+        // Add search bar functionality to Directory method or new method
+        // Add filters
+
+
+        public async Task<IActionResult> Edit(string id)
+        {
+
+
+            return View();
+        }
+
     }// end class
 }// end namespace
