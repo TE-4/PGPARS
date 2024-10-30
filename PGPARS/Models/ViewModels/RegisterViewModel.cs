@@ -5,6 +5,7 @@ namespace PGPARS.Models.ViewModels
 {
     public class RegisterViewModel
     {
+        
         [Required]
         public string FirstName { get; set; }
         [Required] 
