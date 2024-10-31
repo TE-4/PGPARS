@@ -123,12 +123,95 @@ namespace PGPARS.Controllers
         // Add search bar functionality to Directory method or new method
         // Add filters
 
-
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) 
+            {
+                return NotFound();
+            }
+            var model = new EditViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Nnumber = user.Nnumber,
+                Position = user.Position,
+                Email = user.Email,
+                Role = user.MainRole
+            };
 
 
-            return View();
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Update user details (other fields)
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.Nnumber = model.Nnumber;
+            user.MainRole = model.Role;
+
+            // Check if the password fields are populated for change
+            if (!string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword))
+            {
+                if (model.NewPassword != model.ConfirmPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "New password and confirm password do not match.");
+                    return View(model);
+                }
+
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+                if (!passwordCheck)
+                {
+                    ModelState.AddModelError(string.Empty, "Current password is incorrect.");
+                    return View(model);
+                }
+
+                var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }
+            }
+
+            // Save other updates to the user
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (updateResult.Succeeded)
+            {
+                TempData["UserUpdated"] = "User details successfully updated!";
+                return RedirectToAction("Directory");
+            }
+
+            foreach (var error in updateResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(model);
         }
 
     }// end class
