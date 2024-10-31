@@ -171,6 +171,7 @@ namespace PGPARS.Controllers
             user.Email = model.Email;
             user.Nnumber = model.Nnumber;
             user.MainRole = model.Role;
+            user.Position = model.Position;
 
             // Check if the password fields are populated for change
             if (!string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword))
@@ -255,6 +256,17 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
+        public async Task<IActionResult> LinkedApplicants(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Get applicants that are linked to the User here
+            return View();
+        }
 
     }// end class
 }// end namespace
