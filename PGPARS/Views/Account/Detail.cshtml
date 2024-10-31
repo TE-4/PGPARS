@@ -1,0 +1,21 @@
+﻿@model PGPARS.Models.AppUser
+
+<div class="container mt-4">
+    <h2>User Details</h2>
+    <hr />
+
+    <div>
+        <div>
+            <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
+            <p>
+                <strong>Email:</strong> @Model.Email <br />
+                <strong>N-Number:</strong> @Model.Nnumber <br />
+                <strong>Short Name:</strong> @Model.ShortName <br />
+                <strong>Position:</strong> @(Model.Position ?? "Not specified") <br />
+                <strong>Role:</strong> @Model.MainRole
+            </p>
+        </div>
+    </div>
+
+    <a asp-action="Directory" asp-controller="Account" class="btn btn-secondary mt-3">Back to Directory</a>
+</div>

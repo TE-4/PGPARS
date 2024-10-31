@@ -44,7 +44,13 @@
             </div>
             <div class="col-md-6">
                 <label asp-for="Role" class="form-label"></label>
-                <input asp-for="Role" class="form-control" />
+                <select asp-for="Role" class="form-control">
+                    <option value="">-- Select Role --</option>
+                    <option value="Admin">Administrator</option>
+                    <option value="Committee">Committee Member</option>
+                    <option value="Faculty">Faculty Member</option>
+                    <option value="Staff">Staff Member</option>
+                </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
         </div>
