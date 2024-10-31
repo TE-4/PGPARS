@@ -5,15 +5,13 @@ namespace PGPARS.Data
 {
     public class FakeFundingRepository : IFundingRepository
     {
-        public IEnumerable<Funding> GetFunding()
+    private List<Funding> _fundingList = new List<Funding>
         {
-            return new List<Funding>
-            {
-                new Funding { Name = "Smitherson", Amount = 500 },
-                new Funding { Name = "Peterson", Amount = 1000 },
-                new Funding { Name = "Alicon", Amount = 300 },
-                new Funding { Name = "Micicon", Amount = 700 },
-                new Funding { Name = "Marshacon", Amount = 1500 }
+             new Funding { Name = "Smitherson",FundingID = 1, Amount = 500, },
+                new Funding { Name = "Peterson",FundingID = 2, Amount = 1000 },
+                new Funding { Name = "Alicon",FundingID = 3, Amount = 300 },
+                new Funding { Name = "Micicon",FundingID = 4, Amount = 700 },
+                new Funding { Name = "Marshacon",FundingID = 5, Amount = 1500 }
             };
         }
     }

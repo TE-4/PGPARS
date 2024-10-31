@@ -14,8 +14,17 @@ namespace PGPARS.Controllers
 
         public IActionResult FundingDirectory()
         {
-            var fundingList = _fundingRepository.GetFunding();
-            return View(fundingList);
+            var funding = _fundingRepository.GetFundingById(fundingId);
+            var applicant = _applicantRepository.GetApplicantById(applicantId);
+
+            if (funding != null && applicant != null)
+            {
+                funding.Applicant = applicant.FullName;
+                funding.ApplicantId = applicantId;
+                _fundingRepository.UpdateFunding(funding);
+            }
+
+            return RedirectToAction("FundingDirectory");
         }
     }
 }
