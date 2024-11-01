@@ -6,7 +6,11 @@ namespace PGPARS.Models
     {
         [Key]
         public string? Name { get; set; }  // Name of corporation
+        public int FundingID { get; set; }
+        public double? Amount { get; set; } // amount that is fundable
+        public string? Applicant { get; set; } // Applicant FullName
 
-        public double? Amount { get; set; }
+        public int? ApplicantId { get; set; } // Nullable ID for applicant if assigned
     }
+
 }

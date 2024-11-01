@@ -5,6 +5,7 @@ namespace PGPARS.Data
     public interface IApplicantRepository
     {
         IEnumerable<Applicant> GetApplicants();
+        Applicant GetApplicantById(int applicantId);
 
         // Will add other methods later
 
