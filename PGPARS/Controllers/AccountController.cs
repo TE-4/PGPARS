@@ -122,7 +122,6 @@ namespace PGPARS.Controllers
 
         // Add search bar functionality to Directory method or new method
         // Add filters
-        // Fix Edit so the Position field is updated properly (currently not working)
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -256,6 +255,7 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
+        // This method will display the linked applicants for a user
         public async Task<IActionResult> LinkedApplicants(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -265,8 +265,14 @@ namespace PGPARS.Controllers
             }
 
             // Get applicants that are linked to the User here
-            return View();
+            //var linkedApplicants = await GetLinkedApplicants(user.Id);
+
+            // Pass the linkedApplicants to the view
+            //ViewData["LinkedApplicants"] = linkedApplicants;
+
+            return View(user);
         }
+
 
     }// end class
 }// end namespace

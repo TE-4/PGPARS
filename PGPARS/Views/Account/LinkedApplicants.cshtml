@@ -1,0 +1,32 @@
+﻿@model AppUser
+
+@{
+    ViewBag.Title = "Linked Applicants";
+    var applicants = ViewBag.LinkedApplicants;
+}
+<head>
+        <link rel="stylesheet" href="~/css/flatly.css" />
+</head>
+<body>
+<div class="container mt-4">      
+        <h2>Linked Applicants</h2>
+        <h3><strong>Committee/Faculty:</strong> @Model.FirstName @Model.LastName</h3>
+    @if(applicants != null){
+    @foreach(var applicant in applicants)
+    {
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>@applicant.FirstName @applicant.LastName</label>
+            </div>
+            <div class="col-md-6">
+                <label>@applicant.Nnumber</label>
+            </div>
+        </div>
+    }
+    }
+    else
+    {
+        <p>No applicants linked to this user.</p>
+    }
+</div>
+</body>

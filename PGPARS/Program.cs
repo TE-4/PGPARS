@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PGPARS.Data;
@@ -25,8 +24,8 @@ builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllersWithViews().
+AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
