@@ -25,6 +25,10 @@ namespace PGPARS.Data
             _context.Applicants.Update(applicant);
             _context.SaveChanges();
         }
+        public Applicant GetApplicantById(int applicantId)
+        {
+            return _context.Applicants.Find(applicantId);
+        }
 
         // will map the CSV data directly into the Applicant model.
         public void ImportApplicantsFromCsv(string filePath)
@@ -63,5 +67,6 @@ namespace PGPARS.Data
     //Applicant GetApplicantById(int id);
     //void DeleteApplicant(int id);
     //void AddApplicant(Applicant applicant);
+
 }
 
