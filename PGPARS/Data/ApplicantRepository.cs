@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
 using CsvHelper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 
@@ -19,6 +20,11 @@ namespace PGPARS.Data
         {
             return _context.Applicants.ToList();
         }
+        /*public IEnumerable<Applicant> UpdateApplicant(Applicant applicant)
+        {
+            _context.Applicants.Update(applicant);
+            return applicant;
+        }*/
 
         // will map the CSV data directly into the Applicant model.
         public void ImportApplicantsFromCsv(string filePath)

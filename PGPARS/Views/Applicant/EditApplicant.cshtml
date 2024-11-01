@@ -1,4 +1,4 @@
-﻿@ApplicantEditViewModel
+﻿@model ApplicantEditViewModel
 
 <div class="main">
     <div class="container-opaque">
@@ -7,7 +7,6 @@
         </div>
     </div>
     <form asp-action="ApplicantEdit" method="post">
-        <input type="hidden" asp-for="Nnumber" />
         <div class="grid-container">
             <div class="personalInfo">
                 <strong style="font-size: 25px">Personal Information</strong>

@@ -58,7 +58,7 @@ namespace PGPARS.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<IActionResult> EditApplicant(string Nnumber)
+        public IActionResult EditApplicant(string Nnumber)
         {
             var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == Nnumber);
             if (applicant == null)
@@ -111,6 +111,79 @@ namespace PGPARS.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditApplicant(ApplicantEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == model.Nnumber);
+            if (applicant == null)
+            {
+                return NotFound();
+            }
+
+            // Update Applicant details
+            applicant.Nnumber = model.Nnumber;
+            applicant.FirstName = model.FirstName;
+            applicant.LastName = model.LastName;
+            //applicant.AppSubmitDate = model.AppSubmitDate;
+            applicant.email = model.email;
+            applicant.Phone = model.Phone;
+            applicant.AdvisorEmail = model.AdvisorEmail;
+            applicant.Status = model.Status;
+            applicant.Race = model.Race;
+            applicant.Sex = model.Sex;
+            applicant.Reviewer1 = model.Reviewer1;
+            applicant.Reviewer2 = model.Reviewer2;
+            applicant.Rev1Decision = model.Rev1Decision;
+            //applicant.RevAgree = model.RevAgree;
+            applicant.CommitteeReview = model.CommitteeReview;
+            applicant.Mentor1 = model.Mentor1;
+            applicant.Mentor2 = model.Mentor2;
+            applicant.Mentor3 = model.Mentor3;
+            applicant.SelectMentor = model.SelectMentor;
+            //applicant.GPAOverall = model.GPAOverall;
+            //applicant.GPAPsych = model.GPAPsych;
+            applicant.GPAComment = model.GPAComment;
+            //applicant.Course_Req_Met = model.Course_Req_Met;
+            applicant.CrsReqComment = model.CrsReqComment;
+            //applicant.LetterQuality = model.LetterQuality;
+            applicant.LetterComment = model.LetterComment;
+            //applicant.ResumeQuality = model.ResumeQuality;
+            //applicant.ResExpQuality = model.ResExpQuality;
+            applicant.ResumeComment = model.ResumeComment;
+            //applicant.WritSampQuality = model.WritSampQuality;
+            applicant.WritSampComment = model.WritSampComment;
+            //applicant.LORRelevance = model.LORRelevance;
+            //applicant.LORQuality = model.LORQuality;
+            applicant.LORComment = model.LORComment;
+            //applicant.OverallFitQuality = model.OverallFitQuality;
+            applicant.OverallFitComments = model.OverallFitComments;
+            applicant.DecRec = model.DecRec;
+            applicant.FollowUp = model.FollowUp;
+            applicant.FinalComments = model.FinalComments;
+
+
+            /* Save other updates to the applicant
+            var updateResult = _applicantRepository.?;
+            if (updateResult.Succeeded)
+            {
+                TempData["ApplicantUpdated"] = "Applicant Details successfully updated!";
+                return View(applicant);
+            }
+
+            foreach (var error in updateResult.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }*/
+
+            return View(applicant);
+        }
 
     } // END CLASS
 }
