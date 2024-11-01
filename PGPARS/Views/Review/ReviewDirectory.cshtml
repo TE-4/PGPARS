@@ -11,13 +11,13 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Decision</th>
+                    <th>Accepted?</th>
                 </tr>
                 @foreach (var review in Model)
                 {
                     <tr>
                         <td>@review.ReviewId</td>
-                        <td>@review.IsRejected</td>
+                        <td>@review.IsAccepted</td>
                     </tr>
                 }
         </table>

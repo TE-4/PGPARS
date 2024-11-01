@@ -8,9 +8,9 @@ namespace PGPARS.Data
         {
             return new List<Review>
             {
-                new Review { ReviewId = "Smith", IsRejected = false },
-                new Review { ReviewId = "Chris", IsRejected = true },
-                new Review { ReviewId = "Andy", IsRejected = false },
+                new Review { ReviewId = "Smith", IsAccepted = false },
+                new Review { ReviewId = "Chris", IsAccepted = true },
+                new Review { ReviewId = "Andy", IsAccepted = false },
             };
         }
     }
