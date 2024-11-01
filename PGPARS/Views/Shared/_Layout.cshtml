@@ -24,6 +24,14 @@
             </p>
         </div>
     }
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="sidenav a">
+            <p class="text-center sidenav-footer">
+                &copy; 2024 - PGPARS<br />Magic in Development
+            </p>
+        </div>
+    }
     <div class="header">
         <div class="headerContent">
             <strong>Psychology Graduate Program Applicant Review System</strong>

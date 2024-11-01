@@ -169,20 +169,11 @@ namespace PGPARS.Controllers
             applicant.FinalComments = model.FinalComments;
 
 
-            /* Save other updates to the applicant
-            var updateResult = _applicantRepository.?;
-            if (updateResult.Succeeded)
-            {
-                TempData["ApplicantUpdated"] = "Applicant Details successfully updated!";
-                return View(applicant);
-            }
+            // Update using the repository method
+            _applicantRepository.UpdateApplicant(applicant);
 
-            foreach (var error in updateResult.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }*/
-
-            return View(applicant);
+            TempData["ApplicantUpdated"] = "Applicant Details successfully updated!";
+            return RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber });
         }
 
     } // END CLASS

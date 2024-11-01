@@ -12,7 +12,11 @@
                 <strong style="font-size: 25px">Personal Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>Nnumber: </strong> @Model.Nnumber</td>
+                        <td>
+                            <strong>Nnumber: </strong>
+                            <input asp-for="Nnumber" class="form-control"/>
+                            <span asp-validation-for="Nnumber" class="text-danger"></span>
+                        </td>
                         <td><strong>Email: </strong>@Model.email</td>
                         <td><strong>Phone: </strong>@Model.Phone</td>
                     </tr>

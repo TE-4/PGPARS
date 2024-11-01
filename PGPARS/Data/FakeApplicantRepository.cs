@@ -15,5 +15,10 @@ namespace PGPARS.Data
                 new Applicant { Nnumber = "5", FirstName = "Marshall Mathers" , Sex = "Male", Status = "Approved"}
             };
         }
+
+        public void UpdateApplicant(Applicant applicant)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

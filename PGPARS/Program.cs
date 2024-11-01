@@ -16,7 +16,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Register the ApplicantRepository with the interface; change me later :D
-builder.Services.AddTransient<IApplicantRepository, FakeApplicantRepository>();
+builder.Services.AddScoped<IApplicantRepository, FakeApplicantRepository>();
 
 // Register the FundingRepository with the interface; change me later :3
 builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
