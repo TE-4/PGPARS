@@ -6,5 +6,8 @@ namespace PGPARS.Data
     public interface IFundingRepository
     {
         IEnumerable<Funding> GetFunding();
+        Funding GetFundingById(int fundingId);
+        void UpdateFunding(Funding funding);
     }
+
 }

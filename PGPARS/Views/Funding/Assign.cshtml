@@ -1,0 +1,36 @@
+﻿@model PGPARS.Models.ViewModels.FundingAssignmentViewModel
+
+@if (Model.Funding != null && Model.Applicants != null)
+{
+    <div class="container mt-4">
+        <h3>Assign Applicant to Funding: @Model.Funding.Name</h3>
+
+        <div class="mb-3">
+            <strong>Funding Amount:</strong> $@Model.Funding.Amount
+        </div>
+
+        <form asp-action="AssignFundingToApplicant" method="post">
+            <input type="hidden" name="fundingId" value="@Model.Funding.FundingID" />
+
+            <div class="form-group">
+                <label for="applicantSelect">Select Applicant:</label>
+            <select id="applicantSelect" name="applicantId" class="form-control">
+                    <option value="">-- Select an Applicant --</option>
+                    @foreach (var applicant in Model.Applicants)
+                    {
+                        <option value="@applicant.Nnumber">@applicant.FullName</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Assign</button>
+            <a asp-action="FundingDirectory" class="btn btn-secondary mt-3">Cancel</a>
+        </form>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <p>There was an error loading the funding or applicants data. Please try again later.</p>
+    </div>
+}

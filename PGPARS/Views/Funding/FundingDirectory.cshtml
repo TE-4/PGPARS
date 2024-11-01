@@ -1,25 +1,38 @@
 ﻿@model IEnumerable<PGPARS.Models.Funding>
+
 <div class="main">
-    <div class="container-opaque">
-        <div class="text-center p-3">
-            Funding List
-        </div>
-    </div>
-    <br />
     <div class="container-opaque">
         <table class="table">
             <thead>
-            <tr>
-                <th>Name</th>
-                <th>Amount</th>
-            </tr>
-            @foreach (var fund in Model)
-            {
                 <tr>
-                    <td>@fund.Name</td>
-                    <td>@fund.Amount</td>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Applicant</th> 
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var fund in Model)
+                {
+                    <tr>
+                        <td>@fund.Name</td>
+                        <td>@fund.Amount</td>
+                        <td>
+                            @if (fund.Applicant == null)
+                            {
+                                <!-- Button should appear within the Applicant cell if there's no applicant assigned -->
+                                <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
+
+                            }
+                            else
+                            {
+                                <!-- Display the applicant name if already assigned -->
+                                @fund.Applicant
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
+
 </div>
