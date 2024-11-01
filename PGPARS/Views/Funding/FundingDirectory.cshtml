@@ -25,7 +25,8 @@
                         <td>
                             @if (fund.Applicant == null)
                             {
-                                <a asp-action="AssignApplicant" asp-route-fundingId="@fund.Name" class="btn btn-primary">Assign</a>
+                                <!-- Button should appear within the Applicant cell if there's no applicant assigned -->
+                                <a asp-action="AssignFundingToApplicant" asp-route-fundingId="@fund.FundingID" asp-route-applicantId="desiredApplicantId" class="btn btn-primary">Assign</a>
                             }
                             else
                             {
