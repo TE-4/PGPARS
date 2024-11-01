@@ -1,24 +1,22 @@
-﻿@model PGPARS.Models.Applicant
+﻿@model ApplicantEditViewModel
+
 <div class="main">
-    <div class="container-opaque d-flex justify-content-between align-items-center">
-        <form method="get" asp-action="EditApplicant">
-            <button type="submit" class="btn btn-edit">Edit</button>
-        </form>
+    <div class="container-opaque">
         <div class="text-center p-2">
-            <strong>@Model.FullName</strong>
+            <strong>Edit Applicant</strong>
         </div>
-        <button type="button" class="btn btn-delete">Delete</button>
     </div>
-    <div class="text-center">
-        Status: @Model.Status<br />
-        <strong>(status Bar goes here?)</strong>
-    </div>
-    <div class="grid-container">
-        <div class="personalInfo">
-            <strong style="font-size: 25px">Personal Information</strong>
-            <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
+    <form asp-action="ApplicantEdit" method="post">
+        <div class="grid-container">
+            <div class="personalInfo">
+                <strong style="font-size: 25px">Personal Information</strong>
+                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>Nnumber: </strong> @Model.Nnumber</td>
+                        <td>
+                            <strong>Nnumber: </strong>
+                            <input asp-for="Nnumber" class="form-control"/>
+                            <span asp-validation-for="Nnumber" class="text-danger"></span>
+                        </td>
                         <td><strong>Email: </strong>@Model.email</td>
                         <td><strong>Phone: </strong>@Model.Phone</td>
                     </tr>
@@ -28,10 +26,10 @@
                         <td><strong>Advisor Email: </strong>@Model.AdvisorEmail</td>
                     </tr>
                 </table>
-        </div>
-        <div class="reviewInfo">
-            <strong style="font-size: 25px">Review Information</strong>
-            <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
+            </div>
+            <div class="reviewInfo">
+                <strong style="font-size: 25px">Review Information</strong>
+                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
                         <td><strong>Reviewer 1: </strong>@Model.Reviewer1</td>
                         <td><strong>@Model.Rev1Decision</strong></td>
@@ -65,10 +63,10 @@
                         <td><strong>@Model.SelectMentor</strong></td>
                     </tr>
                 </table>
-        </div>
-        <div class="courseInfo">
-            <strong style="font-size: 25px">Course Information</strong>
-            <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
+            </div>
+            <div class="courseInfo">
+                <strong style="font-size: 25px">Course Information</strong>
+                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
                         <td><strong>GPA Overall: </strong>@Model.GPAOverall</td>
                     </tr>
@@ -85,43 +83,44 @@
                         <td><strong>Courses Completed Comments:</strong><br />@Model.CrsReqComment</td>
                     </tr>
                 </table>
-        </div>
-        <div class="applicationInfo">
-            <strong style="font-size: 25px">Application Information</strong>
-            <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
+            </div>
+            <div class="applicationInfo">
+                <strong style="font-size: 25px">Application Information</strong>
+                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
                         <td><strong>Application Submission Date: </strong>@Model.AppSubmitDate</td>
-                    <td><strong>Letter of Recommendation Quality: </strong>@Model.LORQuality</td>
+                        <td><strong>Letter of Recommendation Quality: </strong>@Model.LORQuality</td>
                     </tr>
                     <tr>
                         <td><strong>Letter Quality: </strong>@Model.LetterQuality</td>
-                    <td><strong>Letter of Recommendation Relevance: </strong>@Model.LORRelevance</td>
+                        <td><strong>Letter of Recommendation Relevance: </strong>@Model.LORRelevance</td>
                     </tr>
                     <tr>
                         <td><strong>Letter Comments: </strong><br />@Model.LetterComment</td>
-                    <td><strong>Letter of Recommendation Comments: </strong><br />@Model.LORComment</td>
+                        <td><strong>Letter of Recommendation Comments: </strong><br />@Model.LORComment</td>
                     </tr>
                     <tr>
                         <td><strong>Resume Quality: </strong>@Model.ResumeQuality</td>
-                    <td><strong>Overall Fit Quality:</strong>@Model.OverallFitQuality</td>
+                        <td><strong>Overall Fit Quality:</strong>@Model.OverallFitQuality</td>
                     </tr>
                     <tr>
                         <td><strong>Resume Experience Quality: </strong>@Model.ResExpQuality</td>
-                    <td><strong>Overall Fit Comments:</strong><br />@Model.OverallFitComments</td>
+                        <td><strong>Overall Fit Comments:</strong><br />@Model.OverallFitComments</td>
                     </tr>
                     <tr>
                         <td><strong>Resume Comments: </strong><br />@Model.ResumeComment</td>
-                    <td><strong>Decision to Recommend: </strong>@Model.DecRec</td>
+                        <td><strong>Decision to Recommend: </strong>@Model.DecRec</td>
                     </tr>
                     <tr>
                         <td><strong>Writing Sample Quality: </strong>@Model.WritSampQuality</td>
-                    <td><strong>Follow Up: </strong>@Model.FollowUp</td>
+                        <td><strong>Follow Up: </strong>@Model.FollowUp</td>
                     </tr>
                     <tr>
                         <td><strong>Writing Sample Comments: </strong><br />@Model.WritSampComment</td>
-                    <td><strong>Final Comments: </strong><br />@Model.FinalComments</td>
+                        <td><strong>Final Comments: </strong><br />@Model.FinalComments</td>
                     </tr>
                 </table>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

@@ -43,7 +43,7 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
                 if(result.Succeeded)
                 {
                     return RedirectToAction("Dashboard", "Admin");
@@ -170,6 +170,7 @@ namespace PGPARS.Controllers
             user.Email = model.Email;
             user.Nnumber = model.Nnumber;
             user.MainRole = model.Role;
+            user.Position = model.Position;
 
             // Check if the password fields are populated for change
             if (!string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword))
@@ -213,6 +214,65 @@ namespace PGPARS.Controllers
 
             return View(model);
         }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["UserDeleted"] = "User account successfully deleted!";
+                return RedirectToAction("Directory");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return RedirectToAction("Directory");
+        }
+
+      
+        public async Task<IActionResult> Detail(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+                
+            }
+
+            return View(user);
+        }
+
+        // This method will display the linked applicants for a user
+        public async Task<IActionResult> LinkedApplicants(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Get applicants that are linked to the User here
+            //var linkedApplicants = await GetLinkedApplicants(user.Id);
+
+            // Pass the linkedApplicants to the view
+            //ViewData["LinkedApplicants"] = linkedApplicants;
+
+            return View(user);
+        }
+
 
     }// end class
 }// end namespace

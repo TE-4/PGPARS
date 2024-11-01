@@ -43,6 +43,23 @@ body, html {
 .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
+/*TEST*/
+.btn {
+    color: white;
+    background-color: #0d215f;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.btn-edit {
+    margin-left: 15px;
+}
+
+.btn-delete {
+    margin-right: 15px;
+    background-color: #dc3545;
+}
 
 /*CONTAINERS*/
 .container {
@@ -53,9 +70,65 @@ body, html {
     padding: 0px;
     border-radius: 5px;
     color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-opaque .text-center {
+    flex-grow: 1;
+    text-align: center;
 }
 .container-content {
     color: white;
+}
+/**/
+
+/*DASHBOARD*/
+.dashboard-table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.dashboard-header {
+    display: flex;
+    justify-content: space-around; /* Space out header items evenly */
+    padding: 10px;
+    background-color: #0d215f; /* Background color for headers */
+    color: white;
+    border-radius: 5px;
+}
+.dashboard-header-item {
+    flex: 1;
+    margin: 5px;
+    padding: 15px;
+    color: white;
+}
+.dashboard-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+.dashboard-row {
+    display: flex;
+    justify-content: space-around;
+}
+.dashboard-cell {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.6); /* Similar to container-opaque */
+    color: white;
+    border-radius: 5px;
+    margin: 5px;
+    min-height: 30px;
+}
+/**/
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /*FOOTER*/

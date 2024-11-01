@@ -1,12 +1,13 @@
 ﻿using System.Globalization;
 using System.IO;
 using CsvHelper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Data
 {
-    public class ApplicantRepository
+    public class ApplicantRepository : IApplicantRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -18,6 +19,15 @@ namespace PGPARS.Data
         public IEnumerable<Applicant> GetApplicants()
         {
             return _context.Applicants.ToList();
+        }
+        public void UpdateApplicant(Applicant applicant)
+        {
+            _context.Applicants.Update(applicant);
+            _context.SaveChanges();
+        }
+        public Applicant GetApplicantById(int applicantId)
+        {
+            return _context.Applicants.Find(applicantId);
         }
 
         // will map the CSV data directly into the Applicant model.
@@ -53,14 +63,10 @@ namespace PGPARS.Data
                 _context.SaveChanges();
             }
         }
-
-
-
     }
     //Applicant GetApplicantById(int id);
-
-    //void UpdateApplicant(Applicant applicant);
     //void DeleteApplicant(int id);
     //void AddApplicant(Applicant applicant);
+
 }
 

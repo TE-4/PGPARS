@@ -22,6 +22,11 @@ namespace PGPARS.Data
         {
             return GetApplicants().FirstOrDefault(a => a.Nnumber == applicantId.ToString());
         }
+
+        public void UpdateApplicant(Applicant applicant)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

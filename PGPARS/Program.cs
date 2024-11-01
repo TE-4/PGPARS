@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PGPARS.Data;
@@ -17,7 +16,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Register the ApplicantRepository with the interface; change me later :D
-builder.Services.AddTransient<IApplicantRepository, FakeApplicantRepository>();
+builder.Services.AddScoped<IApplicantRepository, FakeApplicantRepository>();
 
 // Register the FundingRepository with the interface; change me later :3
 builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
@@ -25,8 +24,8 @@ builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllersWithViews().
+AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
