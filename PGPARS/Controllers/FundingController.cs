@@ -28,6 +28,12 @@ namespace PGPARS.Controllers
 
             return RedirectToAction("FundingDirectory");
         }
+        public IActionResult FundingDirectory()
+        {
+            var fundingList = _fundingRepository.GetFunding(); // Make sure this retrieves all funding records.
+            return View(fundingList); // Ensure there is a FundingDirectory.cshtml file in Views/Funding
+        }
+
     }
 
 
