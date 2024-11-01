@@ -30,8 +30,31 @@ namespace PGPARS.Controllers
         }
         public IActionResult FundingDirectory()
         {
-            var fundingList = _fundingRepository.GetFunding(); // Make sure this retrieves all funding records.
-            return View(fundingList); // Ensure there is a FundingDirectory.cshtml file in Views/Funding
+            var fundingList = _fundingRepository.GetFunding(); 
+            return View(fundingList); 
+        }
+        public IActionResult Assign(int fundingId)
+        {
+            var funding = _fundingRepository.GetFundingById(fundingId);
+
+            // Filter applicants to include only those with "Approved for Funding" status
+            var applicants = _applicantRepository.GetApplicants()
+                               .Where(a => a.Status == "Approved for Funding").ToList();
+
+            // Check if applicants is empty (optional, based on your requirements)
+            if (applicants == null || !applicants.Any())
+            {
+                // Redirect to FundingDirectory or show a message that no applicants are available
+                return RedirectToAction("FundingDirectory");
+            }
+
+            var viewModel = new FundingAssignmentViewModel
+            {
+                Funding = funding,
+                Applicants = applicants
+            };
+
+            return View(viewModel);
         }
 
     }

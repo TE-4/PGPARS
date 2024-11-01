@@ -8,7 +8,7 @@
     </div>
 
     <form asp-action="AssignFundingToApplicant" method="post">
-        <input type="hidden" name="FundingId" value="@Model.Funding.FundingId" />
+            <input type="hidden" name="fundingId" value="@Model.Funding.FundingID" />
 
         <div class="form-group">
             <label for="applicantSelect">Select Applicant:</label>
@@ -16,7 +16,7 @@
                 <option value="">-- Select an Applicant --</option>
                 @foreach (var applicant in Model.Applicants)
                 {
-                    <option value="@applicant.ApplicantId">@applicant.FullName</option>
+                    <option value="@applicant.Nnumber">@applicant.FullName</option>
                 }
             </select>
         </div>
@@ -25,3 +25,10 @@
         <a asp-action="FundingDirectory" class="btn btn-secondary mt-3">Cancel</a>
     </form>
 </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <p>There was an error loading the funding or applicants data. Please try again later.</p>
+    </div>
+}

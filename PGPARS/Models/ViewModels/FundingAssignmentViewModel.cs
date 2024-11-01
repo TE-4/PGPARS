@@ -2,6 +2,6 @@
 
 public class FundingAssignmentViewModel
 {
-    public Funding Funding { get; set; } // Funding details
-    public IEnumerable<Applicant> Applicants { get; set; } // List of applicants to choose from
+    public Funding Funding { get; set; }
+    public IEnumerable<Applicant> Applicants { get; set; }
 }
