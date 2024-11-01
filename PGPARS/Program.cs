@@ -21,6 +21,9 @@ builder.Services.AddScoped<IApplicantRepository, FakeApplicantRepository>();
 // Register the FundingRepository with the interface; change me later :3
 builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
 
+// Register the ReviewRepository with the interface; change me later x)
+builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();

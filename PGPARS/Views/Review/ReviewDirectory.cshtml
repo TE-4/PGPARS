@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PGPARS.Models.Review>
+<div class="main">
+    <div class="container-opaque">
+        <div class="text-center p-3">
+            Review Process
+        </div>
+    </div>
+    <br />
+    <div class="container-opaque">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Accepted?</th>
+                </tr>
+                @foreach (var review in Model)
+                {
+                    <tr>
+                        <td>@review.ReviewId</td>
+                        <td>@review.IsAccepted</td>
+                    </tr>
+                }
+        </table>
+    </div>
+</div>
