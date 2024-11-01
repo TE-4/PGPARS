@@ -1,7 +1,11 @@
-﻿using PGPARS.Models;
+﻿using System.Collections.Generic;
+using PGPARS.Models;
 
-public class FundingAssignmentViewModel
+namespace PGPARS.Models.ViewModels
 {
-    public Funding Funding { get; set; }
-    public IEnumerable<Applicant> Applicants { get; set; }
+    public class FundingAssignmentViewModel
+    {
+        public Funding Funding { get; set; }
+        public IEnumerable<Applicant> Applicants { get; set; }
+    }
 }

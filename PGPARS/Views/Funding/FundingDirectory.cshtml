@@ -20,7 +20,8 @@
                             @if (fund.Applicant == null)
                             {
                                 <!-- Button should appear within the Applicant cell if there's no applicant assigned -->
-                                <a asp-action="AssignFundingToApplicant" asp-route-fundingId="@fund.FundingID" asp-route-applicantId="desiredApplicantId" class="btn btn-primary">Assign</a>
+                                <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
+
                             }
                             else
                             {

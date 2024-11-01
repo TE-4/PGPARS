@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PGPARS.Data;
+using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Controllers
 {
@@ -14,6 +15,7 @@ namespace PGPARS.Controllers
             _applicantRepository = applicantRepository;
         }
 
+        [HttpPost]
         public IActionResult AssignFundingToApplicant(int fundingId, int applicantId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
@@ -28,6 +30,7 @@ namespace PGPARS.Controllers
 
             return RedirectToAction("FundingDirectory");
         }
+
         public IActionResult FundingDirectory()
         {
             var fundingList = _fundingRepository.GetFunding(); 
@@ -36,6 +39,13 @@ namespace PGPARS.Controllers
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
+
+            // Check if funding is null
+            if (funding == null)
+            {
+                // Redirect to FundingDirectory or return a NotFound view if funding does not exist
+                return RedirectToAction("FundingDirectory");
+            }
 
             // Filter applicants to include only those with "Approved for Funding" status
             var applicants = _applicantRepository.GetApplicants()
@@ -56,6 +66,8 @@ namespace PGPARS.Controllers
 
             return View(viewModel);
         }
+
+
 
     }
 
