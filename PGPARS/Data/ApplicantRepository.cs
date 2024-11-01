@@ -7,7 +7,7 @@ using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Data
 {
-    public class ApplicantRepository
+    public class ApplicantRepository : IApplicantRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -20,11 +20,11 @@ namespace PGPARS.Data
         {
             return _context.Applicants.ToList();
         }
-        /*public IEnumerable<Applicant> UpdateApplicant(Applicant applicant)
+        public void UpdateApplicant(Applicant applicant)
         {
             _context.Applicants.Update(applicant);
-            return applicant;
-        }*/
+            _context.SaveChanges();
+        }
 
         // will map the CSV data directly into the Applicant model.
         public void ImportApplicantsFromCsv(string filePath)
@@ -59,13 +59,8 @@ namespace PGPARS.Data
                 _context.SaveChanges();
             }
         }
-
-
-
     }
     //Applicant GetApplicantById(int id);
-
-    //void UpdateApplicant(Applicant applicant);
     //void DeleteApplicant(int id);
     //void AddApplicant(Applicant applicant);
 }
