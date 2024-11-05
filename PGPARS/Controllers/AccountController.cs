@@ -274,5 +274,19 @@ namespace PGPARS.Controllers
         }
 
 
+        // This method will filter the users by search query and filter by role
+        [HttpGet]
+        public async Task<IActionResult> SearchUsers(string query, string role)
+        {
+            var users = await _userManager.Users
+                .Where(u => (u.FirstName.Contains(query) || u.LastName.Contains(query) || u.Email.Contains(query)) &&
+                            (string.IsNullOrEmpty(role) || u.MainRole == role))
+                .ToListAsync();
+
+            return View("Directory", users);
+        }
+
+        
+
     }// end class
 }// end namespace
