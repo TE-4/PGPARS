@@ -278,15 +278,28 @@ namespace PGPARS.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchUsers(string query, string role)
         {
-            var users = await _userManager.Users
-                .Where(u => (u.FirstName.Contains(query) || u.LastName.Contains(query) || u.Email.Contains(query)) &&
-                            (string.IsNullOrEmpty(role) || u.MainRole == role))
-                .ToListAsync();
+            var userQuery = _userManager.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                userQuery = userQuery.Where(u =>
+                    u.FirstName.Contains(query) ||
+                    u.LastName.Contains(query) ||
+                    (u.FirstName + " " + u.LastName).Contains(query) ||
+                    u.Email.Contains(query));
+            }
+
+            if (!string.IsNullOrEmpty(role))
+            {
+                userQuery = userQuery.Where(u => u.MainRole == role);
+            }
+
+            var users = await userQuery.ToListAsync();
 
             return View("Directory", users);
         }
 
-        
+
 
     }// end class
 }// end namespace
