@@ -278,15 +278,19 @@ namespace PGPARS.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchUsers(string query, string role)
         {
+            // using AsQueryable() to allow for dynamic filtering
             var userQuery = _userManager.Users.AsQueryable();
+
+            // remove leading and trailing whitespace and convert to lowercase
+            query = query?.Trim().ToLower();
 
             if (!string.IsNullOrEmpty(query))
             {
                 userQuery = userQuery.Where(u =>
-                    u.FirstName.Contains(query) ||
-                    u.LastName.Contains(query) ||
-                    (u.FirstName + " " + u.LastName).Contains(query) ||
-                    u.Email.Contains(query));
+                    u.FirstName.ToLower().Contains(query) || // Matches first name
+                    u.LastName.ToLower().Contains(query) || // Matches last name
+                    (u.FirstName + " " + u.LastName).ToLower().Contains(query) || // Matches full name
+                    u.Email.ToLower().Contains(query)); // Matches email
             }
 
             if (!string.IsNullOrEmpty(role))
@@ -298,6 +302,7 @@ namespace PGPARS.Controllers
 
             return View("Directory", users);
         }
+
 
 
 
