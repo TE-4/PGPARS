@@ -20,7 +20,7 @@ public class CSVParserService
 
                 var values = line.Split(',');
 
-                if (values.Length < 5) continue; // Ensure the correct number of fields
+                if (values.Length < 3) continue; 
 
                 try
                 {
@@ -28,10 +28,9 @@ public class CSVParserService
                     {
                         Nnumber = values[0].Trim(),
                         FirstName = values[1].Trim(),
-                        LastName = values[2].Trim(),
-                        email = values[3].Trim(),
-                        Phone = values[4].Trim()
-                        
+                        LastName = values[2].Trim()
+
+
                     };
                     applicants.Add(applicant);
                 }
