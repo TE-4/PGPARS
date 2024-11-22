@@ -6,7 +6,15 @@
             <strong>Edit Applicant</strong>
         </div>
     </div>
-    <form asp-action="ApplicantEdit" method="post">
+    <form asp-action="EditApplicant" asp-controller="Applicant" method="post">
+        <div>
+            <strong>FirstName: </strong>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <strong>LastName: </strong>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
         <div class="grid-container">
             <div class="personalInfo">
                 <strong style="font-size: 25px">Personal Information</strong>
@@ -14,16 +22,33 @@
                     <tr>
                         <td>
                             <strong>Nnumber: </strong>
-                            <input asp-for="Nnumber" class="form-control"/>
+                            <input asp-for="Nnumber" class="form-control" />
                             <span asp-validation-for="Nnumber" class="text-danger"></span>
                         </td>
-                        <td><strong>Email: </strong>@Model.email</td>
-                        <td><strong>Phone: </strong>@Model.Phone</td>
+                        <td>
+                            <strong>Email: </strong>
+                            <input asp-for="email" class="form-control" />
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <strong>Phone: </strong>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Sex: </strong> @Model.Sex</td>
-                        <td><strong>Race: </strong>@Model.Race</td>
-                        <td><strong>Advisor Email: </strong>@Model.AdvisorEmail</td>
+                        <td><strong>Gender: </strong>
+                            <input asp-for="Sex" class="form-control" />
+                            <span asp-validation-for="Sex" class="text-danger"></span>
+                        </td>
+                        <td><strong>Race: </strong>
+                            <input asp-for="Race" class="form-control" />
+                            <span asp-validation-for="Race" class="text-danger"></span>
+                        </td>
+                        <td><strong>Advisor Email: </strong>
+                            <input asp-for="AdvisorEmail" class="form-control" />
+                            <span asp-validation-for="AdvisorEmail" class="text-danger"></span>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -31,36 +56,76 @@
                 <strong style="font-size: 25px">Review Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>Reviewer 1: </strong>@Model.Reviewer1</td>
-                        <td><strong>@Model.Rev1Decision</strong></td>
+                        <td>
+                            <strong>Reviewer 1: </strong>
+                            @Model.Reviewer1
+                        </td>
+                        <td>
+                            <strong>@Model.Rev1Decision</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Reviewer 2: </strong>@Model.Reviewer2</td>
-                        <td><strong>@Model.Rev2Decision</strong></td>
+                        <td>
+                            <strong>Reviewer 2: </strong>
+                            @Model.Reviewer2
+                        </td>
+                        <td>
+                            <strong>@Model.Rev2Decision</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Reviewer Agree: </strong>@Model.RevAgree</td>
-                        <td><strong>@Model.RevAgree</strong></td>
+                        <td>
+                            <strong>Reviewer Agree: </strong>
+                            @Model.RevAgree
+                        </td>
+                        <td>
+                            <strong>@Model.RevAgree</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Committee Review: </strong>@Model.CommitteeReview</td>
-                        <td><strong>@Model.CommitteeReview</strong></td>
+                        <td>
+                            <strong>Committee Review: </strong>
+                            @Model.CommitteeReview
+                        </td>
+                        <td>
+                            <strong>@Model.CommitteeReview</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor 1: </strong>@Model.Mentor1</td>
-                        <td><strong>@Model.Mentor1</strong></td>
+                        <td>
+                            <strong>Mentor 1: </strong>
+                            @Model.Mentor1
+                        </td>
+                        <td>
+                            <strong>@Model.Mentor1</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor 2: </strong>@Model.Mentor2</td>
-                        <td><strong>@Model.Mentor2</strong></td>
+                        <td>
+                            <strong>Mentor 2: </strong>
+                            @Model.Mentor2
+                        </td>
+                        <td>
+                            <strong>@Model.Mentor2</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor 3: </strong>@Model.Mentor3</td>
-                        <td><strong>@Model.Mentor3</strong></td>
+                        <td>
+                            <strong>Mentor 3: </strong>
+                            @Model.Mentor3
+                        </td>
+                        <td>
+                            <strong>@Model.Mentor3</strong>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor Selected: </strong>@Model.SelectMentor</td>
-                        <td><strong>@Model.SelectMentor</strong></td>
+                        <td>
+                            <strong>Mentor Selected: </strong>
+                            @Model.SelectMentor
+                        </td>
+                        <td>
+                            <strong>@Model.SelectMentor</strong>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -68,19 +133,34 @@
                 <strong style="font-size: 25px">Course Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>GPA Overall: </strong>@Model.GPAOverall</td>
+                        <td>
+                            <strong>GPA Overall: </strong>
+                            @Model.GPAOverall
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>GPA Psychology: </strong>@Model.GPAPsych</td>
+                        <td>
+                            <strong>GPA Psychology: </strong>
+                            @Model.GPAPsych
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Required Courses Completed: </strong>@Model.Course_Req_Met</td>
+                        <td>
+                            <strong>Required Courses Completed: </strong>
+                            @Model.Course_Req_Met
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>GPA Comments:</strong><br />@Model.GPAComment</td>
+                        <td>
+                            <strong>GPA Comments:</strong><br />
+                            @Model.GPAComment
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Courses Completed Comments:</strong><br />@Model.CrsReqComment</td>
+                        <td>
+                            <strong>Courses Completed Comments:</strong><br />
+                            @Model.CrsReqComment
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -88,39 +168,90 @@
                 <strong style="font-size: 25px">Application Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>Application Submission Date: </strong>@Model.AppSubmitDate</td>
-                        <td><strong>Letter of Recommendation Quality: </strong>@Model.LORQuality</td>
+                        <td>
+                            <strong>Application Submission Date: </strong>
+                            @Model.AppSubmitDate
+                        </td>
+                        <td>
+                            <strong>Letter of Recommendation Quality: </strong>
+                            @Model.LORQuality
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Letter Quality: </strong>@Model.LetterQuality</td>
-                        <td><strong>Letter of Recommendation Relevance: </strong>@Model.LORRelevance</td>
+                        <td>
+                            <strong>Letter Quality: </strong>
+                            @Model.LetterQuality
+                        </td>
+                        <td>
+                            <strong>Letter of Recommendation Relevance: </strong>
+                            @Model.LORRelevance
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Letter Comments: </strong><br />@Model.LetterComment</td>
-                        <td><strong>Letter of Recommendation Comments: </strong><br />@Model.LORComment</td>
+                        <td>
+                            <strong>Letter Comments: </strong><br />
+                            @Model.LetterComment
+                        </td>
+                        <td>
+                            <strong>Letter of Recommendation Comments: </strong><br />
+                            @Model.LORComment
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Resume Quality: </strong>@Model.ResumeQuality</td>
-                        <td><strong>Overall Fit Quality:</strong>@Model.OverallFitQuality</td>
+                        <td>
+                            <strong>Resume Quality: </strong>
+                            @Model.ResumeQuality
+                        </td>
+                        <td>
+                            <strong>Overall Fit Quality:</strong>
+                            @Model.OverallFitQuality
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Resume Experience Quality: </strong>@Model.ResExpQuality</td>
-                        <td><strong>Overall Fit Comments:</strong><br />@Model.OverallFitComments</td>
+                        <td>
+                            <strong>Resume Experience Quality: </strong>
+                            @Model.ResExpQuality
+                        </td>
+                        <td>
+                            <strong>Overall Fit Comments:</strong><br />
+                            @Model.OverallFitComments
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Resume Comments: </strong><br />@Model.ResumeComment</td>
-                        <td><strong>Decision to Recommend: </strong>@Model.DecRec</td>
+                        <td>
+                            <strong>Resume Comments: </strong><br />
+                            @Model.ResumeComment
+                        </td>
+                        <td>
+                            <strong>Decision to Recommend: </strong>
+                            @Model.DecRec
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Writing Sample Quality: </strong>@Model.WritSampQuality</td>
-                        <td><strong>Follow Up: </strong>@Model.FollowUp</td>
+                        <td>
+                            <strong>Writing Sample Quality: </strong>
+                            @Model.WritSampQuality
+                        </td>
+                        <td>
+                            <strong>Follow Up: </strong>
+                            @Model.FollowUp
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Writing Sample Comments: </strong><br />@Model.WritSampComment</td>
-                        <td><strong>Final Comments: </strong><br />@Model.FinalComments</td>
+                        <td>
+                            <strong>Writing Sample Comments: </strong><br />
+                            @Model.WritSampComment
+                        </td>
+                        <td>
+                            <strong>Final Comments: </strong><br />
+                            @Model.FinalComments
+                        </td>
                     </tr>
                 </table>
             </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
     </form>
 </div>

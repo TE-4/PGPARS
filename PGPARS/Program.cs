@@ -62,7 +62,12 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// add MapControllerRoute here???
+// add MapControllerRoute here
+
+app.MapControllerRoute(
+    name: "applicant",
+    pattern: "Applicant/{action}/{Nnumber?}",
+    defaults: new { controller = "Applicant", action = "ApplicantDirectory" });
 
 app.MapControllerRoute(
     name: "dashboard",
