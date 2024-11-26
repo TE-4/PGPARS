@@ -41,6 +41,12 @@ namespace PGPARS.Data
             _context.SaveChanges();
         }
 
+        public void DeleteApplicant(string Nnumber)
+        {
+            var applicant = _context.Applicants.Find(Nnumber);
+            _context.Applicants.Remove(applicant);
+            _context.SaveChanges();
+        }
     }
 
 }
