@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using PGPARS.Services;
 using PGPARS.Data;
 using PGPARS.Models;
 
@@ -16,13 +17,16 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Register the ApplicantRepository with the interface; change me later :D
-builder.Services.AddScoped<IApplicantRepository, FakeApplicantRepository>();
+builder.Services.AddScoped<IApplicantRepository, ApplicantRepository>();
 
 // Register the FundingRepository with the interface; change me later :3
 builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
 
 // Register the ReviewRepository with the interface; change me later x)
 builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();
+
+// Register CsvService
+builder.Services.AddTransient<CsvService>();
 
 
 // Add services to the container.

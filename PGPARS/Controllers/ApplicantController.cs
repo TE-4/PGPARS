@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using PGPARS.Data;
 using System.Linq;
-using PGPARS.Services; 
 
 namespace PGPARS.Controllers
 {
@@ -177,37 +176,7 @@ namespace PGPARS.Controllers
             return RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber });
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UploadCSV(IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                TempData["Error"] = "Please select a valid CSV file.";
-                return RedirectToAction("UploadCSV");
-            }
-
-            try
-            {
-                // Parse CSV file asynchronously
-                using (var stream = new StreamReader(file.OpenReadStream()))
-                {
-                    var parserService = new CSVParserService();
-                    var applicants = await parserService.ParseApplicantsFromCsvAsync(stream);
-
-                    // Save applicants to the database
-                    _applicantRepository.AddApplicants(applicants); // Keep this synchronous if needed
-                    TempData["Success"] = $"{applicants.Count} applicants successfully uploaded!";
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = $"An error occurred while processing the file: {ex.Message}";
-            }
-
-            return RedirectToAction("ApplicantDirectory");
-        }
+       
 
 
 
