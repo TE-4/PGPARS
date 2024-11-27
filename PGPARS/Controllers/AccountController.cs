@@ -29,7 +29,23 @@ namespace PGPARS.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Dashboard", "Admin");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+                if (User.IsInRole("Committee"))
+                {
+                    return RedirectToAction("Dashboard", "Committee");
+                }
+                if (User.IsInRole("Faculty"))
+                {
+                    return RedirectToAction("Dashboard", "Faculty");
+                }
+                if (User.IsInRole("Staff"))
+                {
+                    return RedirectToAction("Dashboard", "Staff");
+                }
+                return RedirectToAction("Login", "Account");
             }
             else
             {

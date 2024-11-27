@@ -13,7 +13,7 @@ namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20241029173221_first")]
-    partial class first
+    partial class firstM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

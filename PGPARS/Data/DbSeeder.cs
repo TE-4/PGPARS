@@ -88,6 +88,42 @@ namespace PGPARS.Data
 
                 }
             }
+
+            //Committee Tester
+            email = "com@com.com";
+            user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                Debug.WriteLine("Attempting to create new user...");
+                var newUser = new AppUser
+                {
+                    FirstName = "That",
+                    LastName = "Guy",
+                    Email = email,
+                    Nnumber = "n00000001",
+                    UserName = email,
+                    Position = "Committee Positions?",
+                    MainRole = "Committee"
+                };
+
+                var result = await userManager.CreateAsync(newUser, "Com@1234");
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newUser, "Committee");
+                    Debug.WriteLine("User successfully created!");
+
+                }
+                else
+                {
+                    Debug.WriteLine("Creating user failed");
+                    foreach (var error in result.Errors)
+                    {
+                        Debug.WriteLine($"Error: {error.Description}");
+                    }
+
+                }
+            }
         }
     }
 }

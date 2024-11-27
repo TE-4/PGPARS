@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PGPARS.Controllers
 {
-   /* [Authorize]
-    public class CommitteeController
+   [Authorize]
+    public class CommitteeController : Controller
     {
         public IActionResult Dashboard()
         {
@@ -22,5 +22,4 @@ namespace PGPARS.Controllers
             }
         }
     }
-   */
 }
