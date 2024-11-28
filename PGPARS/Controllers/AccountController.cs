@@ -309,9 +309,22 @@ namespace PGPARS.Controllers
                     u.Email.ToLower().Contains(query)); // Matches email
             }
 
+            // this if-statement filters users by Role and works with a hierarchical structure where all committee members are faculty
+            // and the admin can serve as faculty or committee
             if (!string.IsNullOrEmpty(role))
             {
+                if(role == "Faculty")
+                {
+                    userQuery = userQuery.Where(u => u.MainRole == "Faculty" || u.MainRole == "Committee" || u.MainRole == "Admin");
+                }
+                else if(role == "Committee")
+                {
+                    userQuery = userQuery.Where(u => u.MainRole == "Committee" || u.MainRole == "Admin");
+                }
+                else 
+                { 
                 userQuery = userQuery.Where(u => u.MainRole == role);
+                }
             }
 
             var users = await userQuery.ToListAsync();
