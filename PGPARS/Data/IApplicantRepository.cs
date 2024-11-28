@@ -11,7 +11,7 @@ namespace PGPARS.Data
 
         //Applicant GetApplicantById(int id);
         void UpdateApplicant(Applicant applicant);
-        void DeleteApplicant(int id);
+        void DeleteApplicant(string Nnumber);
         //void AddApplicant(Applicant applicant);
 
 

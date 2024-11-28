@@ -31,7 +31,7 @@ namespace PGPARS.Services
                 }
             }
             catch (HeaderValidationException ex)
-            {
+            {   
                 throw new ApplicationException("CSV file header is invalid.", ex);
             }
             catch (TypeConverterException ex)
