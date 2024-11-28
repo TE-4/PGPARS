@@ -25,9 +25,9 @@ namespace PGPARS.Data
             _context.Applicants.Update(applicant);
             _context.SaveChanges();
         }
-        public Applicant GetApplicantById(int applicantId)
+        public Applicant GetApplicantById(String Nnumber)
         {
-            return _context.Applicants.Find(applicantId);
+            return _context.Applicants.Find(Nnumber);
         }
         public void AddApplicants(List<Applicant> applicants)
         {
@@ -41,11 +41,21 @@ namespace PGPARS.Data
             _context.SaveChanges();
         }
 
-        public void DeleteApplicant(int Nnumber)
+        public void DeleteApplicant(String Nnumber)
         {
             var applicant = _context.Applicants.Find(Nnumber);
             _context.Applicants.Remove(applicant);
             _context.SaveChanges();
+        }
+
+        public Applicant GetApplicantById(int applicantId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteApplicant(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 

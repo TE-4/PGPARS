@@ -124,6 +124,42 @@ namespace PGPARS.Data
 
                 }
             }
+
+            //Faculty Tester
+            email = "Fac@Fac.com";
+            user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                Debug.WriteLine("Attempting to create new user...");
+                var newUser = new AppUser
+                {
+                    FirstName = "Big",
+                    LastName = "Steppa",
+                    Email = email,
+                    Nnumber = "n00000002",
+                    UserName = email,
+                    Position = "Faculty Positions?",
+                    MainRole = "Faculty"
+                };
+
+                var result = await userManager.CreateAsync(newUser, "Fac@1234");
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newUser, "Faculty");
+                    Debug.WriteLine("User successfully created!");
+
+                }
+                else
+                {
+                    Debug.WriteLine("Creating user failed");
+                    foreach (var error in result.Errors)
+                    {
+                        Debug.WriteLine($"Error: {error.Description}");
+                    }
+
+                }
+            }
         }
     }
 }

@@ -16,31 +16,24 @@ namespace PGPARS.Models.ViewModels
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required]
         [Display(Name = "Application Submission Date")]
         public string AppSubmitDate { get; set; }
 
-        [Required]
         [Display(Name = "Email")]
         public string email { get; set; }
 
-        [Required]
         [Display(Name = "Phone Number")]
         public string Phone { get; set; }
 
-        [Required]
         [Display(Name = "Advisor Email")]
         public string AdvisorEmail { get; set; }
 
-        [Required]
         [Display(Name = "Status")]
         public string Status { get; set; }
 
-        [Required]
         [Display(Name = "Race")]
         public string Race { get; set; }
 
-        [Required]
         [Display(Name = "Sex")]
         public string Sex { get; set; }
 
