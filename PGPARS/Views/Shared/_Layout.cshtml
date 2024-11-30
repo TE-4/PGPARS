@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PGPARS</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     @if (User.Identity.IsAuthenticated)
@@ -17,6 +18,7 @@
             <a asp-action="Directory" asp-controller="Account">User Directory</a><br />
             <a asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
             <a asp-action="Register" asp-controller="Account">Create Account</a><br />
+            <a asp-action="Index" asp-controller="FileUpload">Upload Applicant CSV</a>
             <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
             <a asp-action="" asp-controller="">For Testing</a>
             <p class="text-center sidenav-footer">

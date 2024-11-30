@@ -1,0 +1,35 @@
+[1mdiff --git a/PGPARS/Controllers/AccountController.cs b/PGPARS/Controllers/AccountController.cs[m
+[1mindex 4d4a10c..1438dac 100644[m
+[1m--- a/PGPARS/Controllers/AccountController.cs[m
+[1m+++ b/PGPARS/Controllers/AccountController.cs[m
+[36m@@ -278,15 +278,19 @@[m [mnamespace PGPARS.Controllers[m
+         [HttpGet][m
+         public async Task<IActionResult> SearchUsers(string query, string role)[m
+         {[m
+[32m+[m[32m            // using AsQueryable() to allow for dynamic filtering[m
+             var userQuery = _userManager.Users.AsQueryable();[m
+ [m
+[32m+[m[32m            // remove leading and trailing whitespace and convert to lowercase[m
+[32m+[m[32m            query = query?.Trim().ToLower();[m
+[32m+[m
+             if (!string.IsNullOrEmpty(query))[m
+             {[m
+                 userQuery = userQuery.Where(u =>[m
+[31m-                    u.FirstName.Contains(query) ||[m
+[31m-                    u.LastName.Contains(query) ||[m
+[31m-                    (u.FirstName + " " + u.LastName).Contains(query) ||[m
+[31m-                    u.Email.Contains(query));[m
+[32m+[m[32m                    u.FirstName.ToLower().Contains(query) || // Matches first name[m
+[32m+[m[32m                    u.LastName.ToLower().Contains(query) || // Matches last name[m
+[32m+[m[32m                    (u.FirstName + " " + u.LastName).ToLower().Contains(query) || // Matches full name[m
+[32m+[m[32m                    u.Email.ToLower().Contains(query)); // Matches email[m
+             }[m
+ [m
+             if (!string.IsNullOrEmpty(role))[m
+[36m@@ -301,5 +305,6 @@[m [mnamespace PGPARS.Controllers[m
+ [m
+ [m
+ [m
+[32m+[m
+     }// end class[m
+ }// end namespace[m

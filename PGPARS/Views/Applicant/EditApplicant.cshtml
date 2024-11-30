@@ -6,24 +6,55 @@
             <strong>Edit Applicant</strong>
         </div>
     </div>
-    <form asp-action="ApplicantEdit" method="post">
+    <form asp-action="EditApplicant" asp-controller="Applicant" method="post">
+        <div class="grid-container">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+            <label asp-for="Status" class="form-label"></label>
+            <input asp-for="Status" class="form-control" data-val="false" />
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
         <div class="grid-container">
             <div class="personalInfo">
                 <strong style="font-size: 25px">Personal Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
                         <td>
-                            <strong>Nnumber: </strong>
-                            <input asp-for="Nnumber" class="form-control"/>
+                            <label asp-for="Nnumber" class="form-label"></label>
+                            <input asp-for="Nnumber" class="form-control" />
                             <span asp-validation-for="Nnumber" class="text-danger"></span>
                         </td>
-                        <td><strong>Email: </strong>@Model.email</td>
-                        <td><strong>Phone: </strong>@Model.Phone</td>
+                        <td>
+                            <label asp-for="email" class="form-label"></label>
+                            <input asp-for="email" class="form-control" data-val="false" />
+                            <span asp-validation-for="email" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="Phone" class="form-label"></label>
+                            <input asp-for="Phone" class="form-control" data-val="false" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Sex: </strong> @Model.Sex</td>
-                        <td><strong>Race: </strong>@Model.Race</td>
-                        <td><strong>Advisor Email: </strong>@Model.AdvisorEmail</td>
+                        <td>
+                            <label asp-for="Sex" class="form-label"></label>
+                            <input asp-for="Sex" class="form-control" data-val="false" />
+                            <span asp-validation-for="Sex" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="Race" class="form-label"></label>
+                            <input asp-for="Race" class="form-control" data-val="false" />
+                            <span asp-validation-for="Race" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="AdvisorEmail" class="form-label"></label>
+                            <input asp-for="AdvisorEmail" class="form-control" data-val="false" />
+                            <span asp-validation-for="AdvisorEmail" class="text-danger"></span>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -31,36 +62,70 @@
                 <strong style="font-size: 25px">Review Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>Reviewer 1: </strong>@Model.Reviewer1</td>
-                        <td><strong>@Model.Rev1Decision</strong></td>
+                        <td>
+                            <label asp-for="Reviewer1" class="form-label"></label>
+                            <input asp-for="Reviewer1" class="form-control" data-val="false" />
+                            <span asp-validation-for="Reviewer1" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="Rev1Decision" class="form-label"></label>
+                            <input asp-for="Rev1Decision" class="form-control" data-val="false" />
+                            <span asp-validation-for="Rev1Decision" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Reviewer 2: </strong>@Model.Reviewer2</td>
-                        <td><strong>@Model.Rev2Decision</strong></td>
+                        <td>
+                            <label asp-for="Reviewer2" class="form-label"></label>
+                            <input asp-for="Reviewer2" class="form-control" data-val="false" />
+                            <span asp-validation-for="Reviewer2" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="Rev2Decision" class="form-label"></label>
+                            <input asp-for="Rev2Decision" class="form-control" data-val="false" />
+                            <span asp-validation-for="Rev2Decision" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Reviewer Agree: </strong>@Model.RevAgree</td>
-                        <td><strong>@Model.RevAgree</strong></td>
+                        <td>
+                            <label asp-for="RevAgree" class="form-label"></label>
+                            <input asp-for="RevAgree" class="form-control" data-val="false" />
+                            <span asp-validation-for="RevAgree" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Committee Review: </strong>@Model.CommitteeReview</td>
-                        <td><strong>@Model.CommitteeReview</strong></td>
+                        <td>
+                            <label asp-for="CommitteeReview" class="form-label"></label>
+                            <input asp-for="CommitteeReview" class="form-control" data-val="false" />
+                            <span asp-validation-for="CommitteeReview" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor 1: </strong>@Model.Mentor1</td>
-                        <td><strong>@Model.Mentor1</strong></td>
+                        <td>
+                            <label asp-for="Mentor1" class="form-label"></label>
+                            <input asp-for="Mentor1" class="form-control" data-val="false" />
+                            <span asp-validation-for="Mentor1" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor 2: </strong>@Model.Mentor2</td>
-                        <td><strong>@Model.Mentor2</strong></td>
+                        <td>
+                            <label asp-for="Mentor2" class="form-label"></label>
+                            <input asp-for="Mentor2" class="form-control" data-val="false" />
+                            <span asp-validation-for="Mentor2" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor 3: </strong>@Model.Mentor3</td>
-                        <td><strong>@Model.Mentor3</strong></td>
+                        <td>
+                            <label asp-for="Mentor3" class="form-label"></label>
+                            <input asp-for="Mentor3" class="form-control" data-val="false" />
+                            <span asp-validation-for="Mentor3" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Mentor Selected: </strong>@Model.SelectMentor</td>
-                        <td><strong>@Model.SelectMentor</strong></td>
+                        <td>
+                            <label asp-for="SelectMentor" class="form-label"></label>
+                            <input asp-for="SelectMentor" class="form-control" data-val="false" />
+                            <span asp-validation-for="SelectMentor" class="text-danger"></span>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -68,19 +133,39 @@
                 <strong style="font-size: 25px">Course Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>GPA Overall: </strong>@Model.GPAOverall</td>
+                        <td>
+                            <label asp-for="GPAOverall" class="form-label"></label>
+                            <input asp-for="GPAOverall" class="form-control" data-val="false" />
+                            <span asp-validation-for="GPAOverall" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>GPA Psychology: </strong>@Model.GPAPsych</td>
+                        <td>
+                            <label asp-for="GPAPsych" class="form-label"></label>
+                            <input asp-for="GPAPsych" class="form-control" data-val="false" />
+                            <span asp-validation-for="GPAPsych" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Required Courses Completed: </strong>@Model.Course_Req_Met</td>
+                        <td>
+                            <label asp-for="Course_Req_Met" class="form-label"></label>
+                            <input asp-for="Course_Req_Met" class="form-control" data-val="false" />
+                            <span asp-validation-for="Course_Req_Met" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>GPA Comments:</strong><br />@Model.GPAComment</td>
+                        <td>
+                            <label asp-for="GPAComment" class="form-label"></label>
+                            <input asp-for="GPAComment" class="form-control" data-val="false" />
+                            <span asp-validation-for="GPAComment" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Courses Completed Comments:</strong><br />@Model.CrsReqComment</td>
+                        <td>
+                            <label asp-for="CrsReqComment" class="form-label"></label>
+                            <input asp-for="CrsReqComment" class="form-control" data-val="false" />
+                            <span asp-validation-for="CrsReqComment" class="text-danger"></span>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -88,39 +173,106 @@
                 <strong style="font-size: 25px">Application Information</strong>
                 <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
                     <tr>
-                        <td><strong>Application Submission Date: </strong>@Model.AppSubmitDate</td>
-                        <td><strong>Letter of Recommendation Quality: </strong>@Model.LORQuality</td>
+                        <td>
+                            <label asp-for="AppSubmitDate" class="form-label"></label>
+                            <input asp-for="AppSubmitDate" class="form-control" data-val="false" />
+                            <span asp-validation-for="AppSubmitDate" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="LORQuality" class="form-label"></label>
+                            <input asp-for="LORQuality" class="form-control" data-val="false" />
+                            <span asp-validation-for="LORQuality" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Letter Quality: </strong>@Model.LetterQuality</td>
-                        <td><strong>Letter of Recommendation Relevance: </strong>@Model.LORRelevance</td>
+                        <td>
+                            <label asp-for="LetterQuality" class="form-label"></label>
+                            <input asp-for="LetterQuality" class="form-control" data-val="false" />
+                            <span asp-validation-for="LetterQuality" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="LORRelevance" class="form-label"></label>
+                            <input asp-for="LORRelevance" class="form-control" data-val="false" />
+                            <span asp-validation-for="LORRelevance" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Letter Comments: </strong><br />@Model.LetterComment</td>
-                        <td><strong>Letter of Recommendation Comments: </strong><br />@Model.LORComment</td>
+                        <td>
+                            <label asp-for="LetterComment" class="form-label"></label>
+                            <input asp-for="LetterComment" class="form-control" data-val="false" />
+                            <span asp-validation-for="LetterComment" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="LORComment" class="form-label"></label>
+                            <input asp-for="LORComment" class="form-control" data-val="false" />
+                            <span asp-validation-for="LORComment" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Resume Quality: </strong>@Model.ResumeQuality</td>
-                        <td><strong>Overall Fit Quality:</strong>@Model.OverallFitQuality</td>
+                        <td>
+                            <label asp-for="ResumeQuality" class="form-label"></label>
+                            <input asp-for="ResumeQuality" class="form-control" data-val="false" />
+                            <span asp-validation-for="ResumeQuality" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="OverallFitQuality" class="form-label"></label>
+                            <input asp-for="OverallFitQuality" class="form-control" data-val="false" />
+                            <span asp-validation-for="OverallFitQuality" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Resume Experience Quality: </strong>@Model.ResExpQuality</td>
-                        <td><strong>Overall Fit Comments:</strong><br />@Model.OverallFitComments</td>
+                        <td>
+                            <label asp-for="ResExpQuality" class="form-label"></label>
+                            <input asp-for="ResExpQuality" class="form-control" data-val="false" />
+                            <span asp-validation-for="ResExpQuality" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="OverallFitComments" class="form-label"></label>
+                            <input asp-for="OverallFitComments" class="form-control" data-val="false" />
+                            <span asp-validation-for="OverallFitComments" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Resume Comments: </strong><br />@Model.ResumeComment</td>
-                        <td><strong>Decision to Recommend: </strong>@Model.DecRec</td>
+                        <td>
+                            <label asp-for="ResumeComment" class="form-label"></label>
+                            <input asp-for="ResumeComment" class="form-control" data-val="false" />
+                            <span asp-validation-for="ResumeComment" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="DecRec" class="form-label"></label>
+                            <input asp-for="DecRec" class="form-control" data-val="false" />
+                            <span asp-validation-for="DecRec" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Writing Sample Quality: </strong>@Model.WritSampQuality</td>
-                        <td><strong>Follow Up: </strong>@Model.FollowUp</td>
+                        <td>
+                            <label asp-for="WritSampQuality" class="form-label"></label>
+                            <input asp-for="WritSampQuality" class="form-control" data-val="false" />
+                            <span asp-validation-for="WritSampQuality" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="FollowUp" class="form-label"></label>
+                            <input asp-for="FollowUp" class="form-control" data-val="false" />
+                            <span asp-validation-for="FollowUp" class="text-danger"></span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><strong>Writing Sample Comments: </strong><br />@Model.WritSampComment</td>
-                        <td><strong>Final Comments: </strong><br />@Model.FinalComments</td>
+                        <td>
+                            <label asp-for="WritSampComment" class="form-label"></label>
+                            <input asp-for="WritSampComment" class="form-control" data-val="false" />
+                            <span asp-validation-for="WritSampComment" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <label asp-for="FinalComments" class="form-label"></label>
+                            <input asp-for="FinalComments" class="form-control" data-val="false" />
+                            <span asp-validation-for="FinalComments" class="text-danger"></span>
+                        </td>
                     </tr>
                 </table>
             </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
     </form>
 </div>

@@ -2,7 +2,7 @@
 
 namespace PGPARS.Data
 {
-    public class FakeApplicantRepository : IApplicantRepository
+    public class FakeApplicantRepository //: IApplicantRepository
     {
         public IEnumerable<Applicant> GetApplicants()
         {

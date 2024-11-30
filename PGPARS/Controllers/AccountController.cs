@@ -29,7 +29,23 @@ namespace PGPARS.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Dashboard", "Admin");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+                if (User.IsInRole("Committee"))
+                {
+                    return RedirectToAction("Dashboard", "Committee");
+                }
+                if (User.IsInRole("Faculty"))
+                {
+                    return RedirectToAction("Dashboard", "Faculty");
+                }
+                if (User.IsInRole("Staff"))
+                {
+                    return RedirectToAction("Dashboard", "Staff");
+                }
+                return RedirectToAction("Login", "Account");
             }
             else
             {
@@ -272,6 +288,51 @@ namespace PGPARS.Controllers
 
             return View(user);
         }
+
+
+        // This method will filter the users by search query and filter by role
+        [HttpGet]
+        public async Task<IActionResult> SearchUsers(string query, string role)
+        {
+            // using AsQueryable() to allow for dynamic filtering
+            var userQuery = _userManager.Users.AsQueryable();
+
+            // remove leading and trailing whitespace and convert to lowercase
+            query = query?.Trim().ToLower();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                userQuery = userQuery.Where(u =>
+                    u.FirstName.ToLower().Contains(query) || // Matches first name
+                    u.LastName.ToLower().Contains(query) || // Matches last name
+                    (u.FirstName + " " + u.LastName).ToLower().Contains(query) || // Matches full name
+                    u.Email.ToLower().Contains(query)); // Matches email
+            }
+
+            // this if-statement filters users by Role and works with a hierarchical structure where all committee members are faculty
+            // and the admin can serve as faculty or committee
+            if (!string.IsNullOrEmpty(role))
+            {
+                if(role == "Faculty")
+                {
+                    userQuery = userQuery.Where(u => u.MainRole == "Faculty" || u.MainRole == "Committee" || u.MainRole == "Admin");
+                }
+                else if(role == "Committee")
+                {
+                    userQuery = userQuery.Where(u => u.MainRole == "Committee" || u.MainRole == "Admin");
+                }
+                else 
+                { 
+                userQuery = userQuery.Where(u => u.MainRole == role);
+                }
+            }
+
+            var users = await userQuery.ToListAsync();
+
+            return View("Directory", users);
+        }
+
+
 
 
     }// end class

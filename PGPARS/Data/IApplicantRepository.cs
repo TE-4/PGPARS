@@ -7,11 +7,11 @@ namespace PGPARS.Data
         IEnumerable<Applicant> GetApplicants();
         Applicant GetApplicantById(int applicantId);
 
-        // Will add other methods later
-        //void ImportApplicantsFromCsv(string filePath); - For Alex?
+        void AddApplicants(List<Applicant> applicants);
+
         //Applicant GetApplicantById(int id);
         void UpdateApplicant(Applicant applicant);
-        //void DeleteApplicant(int id);
+        void DeleteApplicant(string Nnumber);
         //void AddApplicant(Applicant applicant);
 
 

@@ -58,12 +58,12 @@ namespace PGPARS.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult EditApplicant(string Nnumber)
+        public Task<IActionResult> EditApplicant(string Nnumber)
         {
             var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == Nnumber);
             if (applicant == null)
             {
-                return NotFound();
+                return Task.FromResult<IActionResult>(NotFound());
             }
             var model = new ApplicantEditViewModel
             {
@@ -108,23 +108,23 @@ namespace PGPARS.Controllers
                 FollowUp = applicant.FollowUp,
                 FinalComments = applicant.FinalComments
             };
-            return View(model);
+            return Task.FromResult<IActionResult>(View(model));
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditApplicant(ApplicantEditViewModel model)
+        public Task<IActionResult> EditApplicant(ApplicantEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return Task.FromResult<IActionResult>(View(model));
             }
 
             var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == model.Nnumber);
             if (applicant == null)
             {
-                return NotFound();
+                return Task.FromResult<IActionResult>(NotFound());
             }
 
             // Update Applicant details
@@ -173,8 +173,7 @@ namespace PGPARS.Controllers
             _applicantRepository.UpdateApplicant(applicant);
 
             TempData["ApplicantUpdated"] = "Applicant Details successfully updated!";
-            return RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber });
+            return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
         }
-
     } // END CLASS
 }
