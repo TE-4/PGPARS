@@ -1,0 +1,22 @@
+﻿@model IEnumerable<PGPARS.Models.Applicant>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV File Upload</title>
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload CSV File</h1>
+        <form asp-controller="FileUpload" asp-action="FacultyUpload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="csvFile" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+    </div>
+</body>
+</html>
