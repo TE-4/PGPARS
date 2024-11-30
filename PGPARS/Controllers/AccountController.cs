@@ -182,10 +182,19 @@ namespace PGPARS.Controllers
                 return View(model);
             }
 
+            // checks if the user exists in the database
             var user = await _userManager.FindByIdAsync(model.Id);
             if (user == null)
             {
                 return NotFound();
+            }
+
+            // checks if the Nnumber is already associated with another user
+            var existingUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == model.Nnumber && u.Id != model.Id);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Nnumber", "The Nnumber is already associated with another user.");
+                return View(model);
             }
 
             // Update user details (other fields)

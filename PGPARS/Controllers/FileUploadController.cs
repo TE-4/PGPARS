@@ -18,13 +18,13 @@ namespace PGPARS.Controllers
             _applicantRepo = applicantRepo;
         }
        
-        public IActionResult Index()
+        public IActionResult ApplicantUpload()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Index(IFormFile csvFile)
+        public IActionResult ApplicantUpload(IFormFile csvFile)
         {
             if (csvFile != null && csvFile.Length > 0)
             {
@@ -32,7 +32,7 @@ namespace PGPARS.Controllers
                 {
                     try
                     {
-                        var applicants = _csvService.ReadCsvFile(stream).ToList();
+                        var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
                         // add applicants to the Applicant Table
                         _applicantRepo.AddApplicants(applicants);
                         return RedirectToAction("ApplicantDirectory", "Applicant");
