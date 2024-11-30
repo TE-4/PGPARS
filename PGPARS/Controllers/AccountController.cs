@@ -66,7 +66,7 @@ namespace PGPARS.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login Credentials.");
+                    ModelState.AddModelError(string.Empty, "Invalid Email or Password.");
                 }
 
                 
@@ -91,6 +91,14 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == model.Nnumber);
+                if(userExists != null)
+                {
+                    ModelState.AddModelError(string.Empty, "User with this N-Number already exists.");
+                    return View(model);
+                }
+
+
                 // Find role, if exists, and returns async task containing the role
                 var role = await _roleManager.FindByNameAsync(model.Role);
 
