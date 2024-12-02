@@ -19,13 +19,10 @@
                         <td>
                             @if (fund.Applicant == null)
                             {
-                                <!-- Button should appear within the Applicant cell if there's no applicant assigned -->
                                 <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
-
                             }
                             else
                             {
-                                <!-- Display the applicant name if already assigned -->
                                 @fund.Applicant
                             }
                         </td>
@@ -34,5 +31,4 @@
             </tbody>
         </table>
     </div>
-
 </div>
