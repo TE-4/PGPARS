@@ -37,6 +37,21 @@ namespace PGPARS.Data
                 existingFunding.ApplicantId = funding.ApplicantId;
             }
         }
+        public void AddFunding(Funding funding)
+        {
+            funding.FundingID = _fundingList.Max(f => f.FundingID) + 1; // Generate a new ID
+            _fundingList.Add(funding);
+        }
+
+        public void DeleteFunding(int fundingId)
+        {
+            var funding = _fundingList.FirstOrDefault(f => f.FundingID == fundingId);
+            if (funding != null)
+            {
+                _fundingList.Remove(funding);
+            }
+        }
+
 
     }
 }
