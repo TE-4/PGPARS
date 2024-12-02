@@ -9,7 +9,7 @@ namespace PGPARS.Services
 {
     public class CsvService
     {
-        public IEnumerable<Applicant> ReadCsvFile(Stream fileStream)
+        public IEnumerable<T> ReadCsvFile<T>(Stream fileStream, ClassMap classMap) where T : class
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -23,10 +23,10 @@ namespace PGPARS.Services
                 using (var csv = new CsvReader(reader, config))
                 {
                     // add the custom class mapping for Applicant
-                    csv.Context.RegisterClassMap<ApplicantMap>();
+                    csv.Context.RegisterClassMap(classMap);
 
                     // get the records with the CsvReader and return them as a list
-                    var records = csv.GetRecords<Applicant>();
+                    var records = csv.GetRecords<T>();
                     return records.ToList();
                 }
             }
