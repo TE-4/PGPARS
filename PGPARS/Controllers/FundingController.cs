@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
+using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Controllers
@@ -13,6 +15,60 @@ namespace PGPARS.Controllers
         {
             _fundingRepository = fundingRepository;
             _applicantRepository = applicantRepository;
+        }
+        // GET: AddFunding
+        [HttpGet]
+        public IActionResult AddFunding()
+        {
+            return View(new Funding()); // Return a blank form for adding funding
+        }
+
+        // POST: AddFunding
+        [HttpPost]
+        public IActionResult AddFunding(Funding funding)
+        {
+            if (ModelState.IsValid)
+            {
+                _fundingRepository.AddFunding(funding); // Add the funding to the repository
+                return RedirectToAction("FundingDirectory");
+            }
+            return View(funding); // Return the form with validation errors
+        }
+
+        // GET: EditFunding
+        [HttpGet]
+        public IActionResult EditFunding(int id)
+        {
+            var funding = _fundingRepository.GetFundingById(id);
+            if (funding == null)
+            {
+                return NotFound();
+            }
+            return View(funding); // Return the populated form for editing
+        }
+
+        // POST: EditFunding
+        [HttpPost]
+        public IActionResult EditFunding(Funding funding)
+        {
+            if (ModelState.IsValid)
+            {
+                _fundingRepository.UpdateFunding(funding); // Update the funding in the repository
+                return RedirectToAction("FundingDirectory");
+            }
+            return View(funding); // Return the form with validation errors
+        }
+
+        // POST: DeleteFunding
+        [HttpPost]
+        public IActionResult DeleteFunding(int id)
+        {
+            var funding = _fundingRepository.GetFundingById(id);
+            if (funding != null)
+            {
+                _fundingRepository.DeleteFunding(id); // Delete the funding from the repository
+            }
+            return RedirectToAction("FundingDirectory");
         }
 
         [HttpPost]
@@ -65,6 +121,8 @@ namespace PGPARS.Controllers
             };
 
             return View(viewModel);
+
+
         }
 
 
