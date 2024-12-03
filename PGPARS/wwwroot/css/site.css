@@ -308,7 +308,7 @@ body, html {
 .table th, .table td {
     padding: 5px;
     text-align: left;
-    color: black;
+    color: white;
     border: 1px solid white;
 }
 .tableHover:hover{
