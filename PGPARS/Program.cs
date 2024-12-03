@@ -20,7 +20,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 builder.Services.AddScoped<IApplicantRepository, ApplicantRepository>();
 
 // Register the FundingRepository with the interface; change me later :3
-builder.Services.AddScoped<IFundingRepository, FakeFundingRepository>();
+builder.Services.AddScoped<IFundingRepository, FundingRepository>();
 
 // Register the ReviewRepository with the interface; change me later x)
 builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();

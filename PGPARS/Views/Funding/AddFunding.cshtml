@@ -1,0 +1,69 @@
+﻿@model PGPARS.Models.Funding
+
+<div class="main">
+    <div class="container-opaque">
+        <h2>Add New Funding</h2>
+
+        <form asp-action="AddFunding" method="post">
+            <div class="form-group">
+                <label for="Name">Funding Name</label>
+                <input type="text" class="form-control" id="Name" name="Name" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Cohort">Cohort</label>
+                <select class="form-control" id="Cohort" name="Cohort">
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <!-- Add more cohorts as needed -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FundType">Funding Type</label>
+                <select class="form-control" id="FundType" name="FundType">
+                    <option value="GRA">GRA</option>
+                    <option value="Tonsfeldt">Tonsfeldt</option>
+                    <option value="Grad Scholar">Grad Scholar</option>
+                    <option value="JZAG">JZAG</option>
+                    <option value="Startup">Startup</option>
+                    <!-- Add more fund types as needed -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Source">Funding Source</label>
+                <select class="form-control" id="Source" name="Source">
+                    <option value="COAS">COAS</option>
+                    <option value="Foundation">Foundation</option>
+                    <option value="Graduate School">Graduate School</option>
+                    <option value="Jacksonville Zoo">Jacksonville Zoo</option>
+                    <option value="Startup">Startup</option>
+                    <!-- Add more sources as needed -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Amount">Amount</label>
+                <input type="number" class="form-control" id="Amount" name="Amount" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Stipends">Stipends</label>
+                <input type="number" class="form-control" id="Stipends" name="Stipends" />
+            </div>
+
+            <div class="form-group">
+                <label for="Scholarships">Scholarships</label>
+                <input type="number" class="form-control" id="Scholarships" name="Scholarships" />
+            </div>
+
+            <div class="form-group">
+                <label for="Comment">Comment</label>
+                <textarea class="form-control" id="Comment" name="Comment"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Add Funding</button>
+        </form>
+    </div>
+</div>

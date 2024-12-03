@@ -32,7 +32,7 @@ namespace PGPARS.Controllers
                 _fundingRepository.AddFunding(funding); // Add the funding to the repository
                 return RedirectToAction("FundingDirectory");
             }
-            return View(funding); // Return the form with validation errors
+            return View(FundingDirectory); // Return the form with validation errors
         }
 
         // GET: EditFunding
