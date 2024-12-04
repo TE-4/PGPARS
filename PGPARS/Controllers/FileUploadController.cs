@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using PGPARS.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PGPARS.Controllers
 {
@@ -69,10 +70,12 @@ namespace PGPARS.Controllers
         {
             if (csvFile == null || csvFile.Length == 0)
             {
+                // if file is null or empty, add error 
                 ModelState.AddModelError(string.Empty, "Please select a valid CSV file.");
                 return View();
             }
 
+            // create list of potential errors to display 
             var errors = new List<string>();
 
             using (var stream = csvFile.OpenReadStream())
@@ -81,24 +84,21 @@ namespace PGPARS.Controllers
                 {
                     var faculties = _csvService.ReadCsvFile<AppUser>(stream, new FacultyMap()).ToList();
 
+                    // by this point, the faculties list is populated with AppUser objects from the FacultyUser File; Need to Debug further to get this to work correctly
                     foreach (var faculty in faculties)
                     {
                         // Check if user with the same email already exists
-                        var existingUser = await _userManager.FindByEmailAsync(faculty.Email);
-                        if (existingUser != null)
+                        var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
+                        if (userExists != null)
                         {
-                            errors.Add($"A user with the email {faculty.Email} already exists.");
+                            errors.Add($"A user with the N-Number {faculty.Nnumber} already exists.");
                             continue;
                         }
 
-                        // Set UserName if not already populated
-                        if (string.IsNullOrWhiteSpace(faculty.UserName))
-                        {
-                            faculty.UserName = faculty.Email;
-                        }
+                            
 
                         // Create the user
-                        var result = await _userManager.CreateAsync(faculty, "Password1234");
+                        var result = await _userManager.CreateAsync(faculty, "Password123!");
                         if (!result.Succeeded)
                         {
                             errors.Add($"Failed to create user {faculty.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");

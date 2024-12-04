@@ -1,29 +1,29 @@
 ﻿@model LoginViewModel;
 
-<div id="loginForm">
-    <div class="loginContainer">
-        <h1>Applicant Review System</h1>
-        <h3>Login</h3>
+<head>
+    <link rel="stylesheet" href="~/css/altsite.css" />
+</head>
+<div class="form-box">
+    <h1>Applicant Review System</h1>
+    <h3>Login</h3>
 
-        <div asp-validation-summary="All" class="text-danger"></div>
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-        <form asp-action="Login">
-            <div class="mb-3">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control">
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control"/>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </div>
+    <form asp-action="Login">
+        <div>
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="Enter your email">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        
+        <div>
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

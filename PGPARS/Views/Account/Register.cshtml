@@ -1,65 +1,71 @@
-﻿@model RegisterViewModel
+﻿@model RegisterViewModel;
+<head>
+    <link rel="stylesheet" href="~/css/altsite.css" asp-append-version="true" />
+</head>
+<div class="registerContainer">
+    <h2>Create New User Account</h2>
 
-<div class="mainContent">
-    <div class="registerContainer">
-        <h2>Create new Account</h2>
+    <!-- Validation summary -->
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-        <form method="post" asp-action="Register" asp-antiforgery="true">
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label" style="font-weight: bold"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label" style="font-weight: bold"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Email" class="control-label" style="font-weight: bold"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Nnumber" class="control-label" style="font-weight: bold"></label>
-                <input asp-for="Nnumber" class="form-control" />
-                <span asp-validation-for="Nnumber" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                    <label asp-for="Password" class="control-label" style="font-weight: bold"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label" style="font-weight: bold"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Role" class="control-label" style="font-weight: bold"></label>
-                <select asp-for="Role" class="form-control">
-                    <option value="">-- Select Role --</option>
-                    <option value="Admin">Administrator</option>
-                    <option value="Committee">Committee Member</option>
-                    <option value="Faculty">Faculty Member</option>
-                    <option value="Staff">Staff Member</option>
-                </select>
-                <span asp-validation-for="Role" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+    <!-- Register form -->
+    <form method="post" asp-action="Register" asp-antiforgery="true">
+        <!-- First Name -->
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label"><strong>First Name*</strong></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
-    </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label"><strong>Last Name*</strong></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"><strong>Email Address*</strong></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <!-- Nnumber -->
+        <div class="form-group">
+            <label asp-for="Nnumber" class="control-label"><strong>N-Number*</strong></label>
+            <input asp-for="Nnumber" class="form-control" />
+            <span asp-validation-for="Nnumber" class="text-danger"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"><strong>Password*</strong></label>
+            <input asp-for="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"><strong>Confirm Password*</strong></label>
+            <input asp-for="ConfirmPassword" class="form-control" type="password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <!-- Role -->
+        <div class="form-group">
+            <label asp-for="Role" class="control-label"><strong>Role*</strong></label>
+            <select asp-for="Role" class="form-control">
+                <option value="">-- Select Role --</option>
+                <option value="Admin">Administrator</option>
+                <option value="Committee">Committee Member</option>
+                <option value="Faculty">Faculty Member</option>
+                <option value="Staff">Staff Member</option>
+            </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
 </div>
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

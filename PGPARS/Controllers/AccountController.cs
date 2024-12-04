@@ -31,7 +31,7 @@ namespace PGPARS.Controllers
             {
                 if (User.IsInRole("Admin"))
                 {
-                    return RedirectToAction("Dashboard", "Admin");
+                    return RedirectToAction("AdminDashboard", "Admin");
                 }
                 if (User.IsInRole("Committee"))
                 {
