@@ -35,6 +35,7 @@ namespace PGPARS.Controllers
             return View(funding); // Return the form with validation errors and user input
         }
 
+
         // GET: EditFunding
         [HttpGet]
         public IActionResult EditFunding(int id)
@@ -95,17 +96,22 @@ namespace PGPARS.Controllers
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
+
+            // Check if funding is null
             if (funding == null)
             {
+                // Redirect to FundingDirectory or return a NotFound view if funding does not exist
                 return RedirectToAction("FundingDirectory");
             }
 
+            // Filter applicants to include only those with "Approved for Funding" status
             var applicants = _applicantRepository.GetApplicants()
                                .Where(a => a.Status == "Approved for Funding").ToList();
 
             // Check if applicants is empty (optional, based on your requirements)
             if (applicants == null || !applicants.Any())
             {
+                // Redirect to FundingDirectory or show a message that no applicants are available
                 return RedirectToAction("FundingDirectory");
             }
 
