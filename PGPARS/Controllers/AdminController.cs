@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Controllers
 {
@@ -15,17 +16,32 @@ namespace PGPARS.Controllers
         private readonly IFundingRepository _fundingRepository;
         private readonly IReviewRepository _reviewRepository;
 
-        public AdminController()
+        public AdminController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository)
         {
-            //_applicantRepository = applicantRepository;
-
+            _applicantRepository = applicantRepository;
+            _fundingRepository = fundingRepository;
+            _reviewRepository = reviewRepository;
         }
 
-        public IActionResult Dashboard()
+        public IActionResult AdminDashboard()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return View();
+                // Fetch data from services/repositories
+                var applicants = _applicantRepository.GetApplicants(); // Example service
+                var reviews = _reviewRepository.GetReviews();
+                //var budgetRemaining = _fundingService.GetBudgetRemaining();
+                var fundings = _fundingRepository.GetFunding();
+
+                // Create and populate the ViewModel
+                var viewModel = new AdminDashboardViewModel
+                {
+                    Applicants = applicants,
+                    Reviews = reviews,
+                    //BudgetRemaining = budgetRemaining,
+                    Fundings = fundings
+                };
+                return View(viewModel);
             }
             else
             {

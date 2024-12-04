@@ -1,0 +1,38 @@
+﻿@model AdminDashboardViewModel
+<div class="main">
+    <div class="dashboard-table">
+        <div class="dashboard-header">
+            <div class="container-opaque dashboard-header-item text-center p-4">Next in Queue</div>
+            <div class="container-opaque dashboard-header-item text-center p-4">Recent Updates</div>
+        </div>
+        <div class="dashboard-body">
+            <div class="dashboard-row">
+                <div class="dashboard-cell">Admin Dashboard</div>
+            </div>
+            <div class="dashboard-row">
+                <div class="dashboard-cell">
+                    <h3>Applicants</h3>
+                    <ul>
+                        @foreach (var applicant in Model.Applicants)
+                        {
+                            <li>@applicant.FullName</li>
+                        }
+                    </ul>
+                </div>
+                <div class="dashboard-cell">
+                    <h3>Reviews</h3>
+                    <ul>
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <li>@review.ReviewId</li>
+                        }
+                    </ul>
+                </div>
+                <div class="dashboard-cell">
+                    <h3>Funding</h3>
+                    Coming Soon!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
