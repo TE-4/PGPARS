@@ -1,25 +1,41 @@
 ﻿@model IEnumerable<PGPARS.Models.Review>
+
 <div class="main">
     <div class="container-opaque">
-        <div class="text-center p-3">
-            Review Process
-        </div>
-    </div>
-    <br />
-    <div class="container-opaque">
-        <table class="table">
+        <h2>Review Directory</h2>
+        <a asp-action="AddReview" class="btn btn-success mb-3">New Review</a> <!-- Add Button -->
+    <table class="table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Accepted?</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>N Number</th>
+                    <th>Status</th>
                 </tr>
+            </thead>
+            <tbody>
                 @foreach (var review in Model)
                 {
                     <tr>
-                        <td>@review.ReviewId</td>
-                        <td>@review.IsAccepted</td>
+                        <td>@review.LastName</td>
+                        <td>@review.FirstName</td>
+                        <td>@review.NNumber</td>
+                        <td>@review.Status</td>
+                        <td>
+                            <a asp-action="Edit Review" asp-route-id="@review.ReviewId" class="btn-warning">Edit</a>
+                            <form asp-action="DeleteReview" asp-route-id="@review.ReviewId" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this Review?');">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
+            </tbody>
         </table>
     </div>
 </div>
+<!--
+    Do this 2nd
+-->
