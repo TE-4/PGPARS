@@ -35,8 +35,10 @@ namespace PGPARS.Data
             {
                 existingFunding.Applicant = funding.Applicant;
                 existingFunding.ApplicantId = funding.ApplicantId;
-                // You can add other properties that need to be updated
-                _context.SaveChanges(); // Save the changes to the database
+                existingFunding.Amount = funding.Amount;
+                existingFunding.Comment = funding.Comment;
+                existingFunding.DateModified = DateTime.UtcNow;
+                _context.SaveChanges();
             }
         }
 
