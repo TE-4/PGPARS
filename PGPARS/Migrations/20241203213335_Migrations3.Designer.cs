@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PGPARS.Data;
 
@@ -11,9 +12,11 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241203213335_Migrations3")]
+    partial class Migrations3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -414,116 +417,6 @@ namespace PGPARS.Migrations
                     b.HasKey("FundingID");
 
                     b.ToTable("Fundings");
-                });
-
-            modelBuilder.Entity("PGPARS.Models.Review", b =>
-                {
-                    b.Property<int?>("ReviewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ReviewId"));
-
-                    b.Property<double?>("AllGPA")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime?>("AppSubmitDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CourseReqComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CourseReqMet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DecRec")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FinalComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FollowUp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GPAComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LORComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LORQuality")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LORRelevance")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LetterComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LetterQuality")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mentor1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mentor2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mentor3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OverallFitComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OverallFitQuality")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("PsychGPA")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("ResExpQuality")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ResumeComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ResumeQuality")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Reviewer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WritingSampleComments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("WritingSampleQuality")
-                        .HasColumnType("int");
-
-                    b.HasKey("ReviewId");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
