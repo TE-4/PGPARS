@@ -2,6 +2,7 @@
 
 <div class="main">
     <div class="container-opaque">
+        <!-- Title -->
         <h2>Funding Directory</h2>
 
         <!-- Search bar -->
@@ -22,21 +23,22 @@
         }
         else
         {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Applicant</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var fund in Model)
-                {
+            <!-- Table -->
+            <table class="table">
+                <thead>
                     <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Applicant</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var fund in Model)
+                    {
+                        <tr>
                             <td>@fund.Name</td>
-                        <td>@fund.Amount</td>
+                            <td>@fund.Amount</td>
 
                             <!-- Show applicant or the assign button if no applicant is assigned -->
                             <td>
@@ -50,18 +52,19 @@
                                 }
                             </td>
 
-                        <td>
-                            <a asp-action="EditFunding" asp-route-id="@fund.FundingID" class="btn btn-warning">Edit</a>
-                            <form asp-action="DeleteFunding" asp-route-id="@fund.FundingID" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete this funding?');">
-                                    Delete
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            <td>
+                                <a asp-action="EditFunding" asp-route-id="@fund.FundingID" class="btn btn-warning">Edit</a>
+                                <form asp-action="DeleteFunding" asp-route-id="@fund.FundingID" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this funding?');">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
 </div>
