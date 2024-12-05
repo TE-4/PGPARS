@@ -10,9 +10,7 @@ namespace PGPARS.Models
 
         public string? NNumber { get; set; } // n number
 
-        public string? FirstName { get; set; } // first name
-
-        public string? LastName { get; set; } // last name
+        public string? FullName { get; set; } // Full name
 
         public DateTime? AppSubmitDate { get; set; } // date
 
