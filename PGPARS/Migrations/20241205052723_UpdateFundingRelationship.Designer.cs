@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PGPARS.Data;
 
@@ -11,9 +12,11 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241205052723_UpdateFundingRelationship")]
+    partial class UpdateFundingRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,6 +380,10 @@ namespace PGPARS.Migrations
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("ApplicantNNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -396,10 +403,6 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nnumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -411,7 +414,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("Nnumber");
+                    b.HasIndex("ApplicantNNumber");
 
                     b.ToTable("Fundings");
                 });
@@ -471,7 +474,7 @@ namespace PGPARS.Migrations
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("Nnumber")
+                        .HasForeignKey("ApplicantNNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

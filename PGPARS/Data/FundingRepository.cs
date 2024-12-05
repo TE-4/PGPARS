@@ -34,7 +34,7 @@ namespace PGPARS.Data
             if (existingFunding != null)
             {
                 existingFunding.Applicant = funding.Applicant;
-                existingFunding.ApplicantId = funding.ApplicantId;
+                existingFunding.Nnumber = funding.Nnumber;
                 existingFunding.Amount = funding.Amount;
                 existingFunding.Comment = funding.Comment;
                 existingFunding.DateModified = DateTime.UtcNow;
@@ -64,11 +64,12 @@ namespace PGPARS.Data
             if (string.IsNullOrEmpty(searchQuery))
                 return _context.Fundings.ToList();
 
-            searchQuery = searchQuery.ToLower();
+            searchQuery = searchQuery.ToLowerInvariant(); // Explicitly use ToLowerInvariant
             return _context.Fundings
-                .Where(f => (f.Name != null && f.Name.ToLower().Contains(searchQuery)) ||
-                            (f.Applicant != null && f.Applicant.ToLower().Contains(searchQuery)))
+                .Where(f => (f.Name != null && f.Name.ToLowerInvariant().Contains(searchQuery)) ||
+                            (f.Applicant != null && f.Applicant.FullName.ToLowerInvariant().Contains(searchQuery))) // Ensure Applicant.FullName is used
                 .ToList();
         }
+
     }
 }
