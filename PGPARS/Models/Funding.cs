@@ -5,10 +5,11 @@ namespace PGPARS.Models
 {
     public class Funding
     {
+
         [Key]
         public int FundingID { get; set; } // Unique identifier for funding
 
-        [Required]
+        
       
         public string? Name { get; set; } // Name of corporation or funding source
 
@@ -26,10 +27,14 @@ namespace PGPARS.Models
 
         public double? Amount { get; set; } // Total fundable amount
 
-      
-        public string? Applicant { get; set; } // Full name of the associated applicant
 
-        public int? ApplicantId { get; set; } // Nullable ID for the associated applicant
+        
+        // Foreign key for Applicant
+       
+        public string? Nnumber { get; set; } // Foreign key property
+
+        // Navigation property for Applicant
+        public Applicant? Applicant { get; set; }
 
         public DateTime DateAdded { get; set; } = DateTime.UtcNow; // Timestamp when the funding was added
         public DateTime DateModified { get; set; } = DateTime.UtcNow; // Timestamp when the funding was last modified

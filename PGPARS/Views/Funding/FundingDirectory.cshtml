@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PGPARS.Models.Funding>
+﻿@using Microsoft.IdentityModel.Tokens
+@model IEnumerable<PGPARS.Models.Funding>
 
 <div class="main">
     <div class="container-opaque">
@@ -21,7 +22,7 @@
         <a asp-action="AddFunding" class="btn btn-success mb-3">Add New Funding</a>
 
         <!-- No results message -->
-        @if (!Model.Any())
+        @if (Model == null || !Model.Any())
         {
             <p class="text-muted">No funding entries found matching your search criteria.</p>
         }
@@ -46,9 +47,9 @@
 
                             <!-- Show applicant or the assign button if no applicant is assigned -->
                             <td>
-                                @if (!string.IsNullOrEmpty(fund.Applicant))
+                                @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
                                 {
-                                    @fund.Applicant
+                                    @fund.Applicant.FullName
                                 }
                                 else
                                 {

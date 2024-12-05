@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PGPARS.Controllers
@@ -17,6 +18,7 @@ namespace PGPARS.Controllers
             _fundingRepository = fundingRepository;
             _applicantRepository = applicantRepository;
         }
+
         // GET: AddFunding
         [HttpGet]
         public IActionResult AddFunding()
@@ -35,7 +37,6 @@ namespace PGPARS.Controllers
             }
             return View(funding); // Return the form with validation errors and user input
         }
-
 
         // GET: EditFunding
         [HttpGet]
@@ -73,6 +74,7 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingDirectory");
         }
 
+        // POST: AssignFundingToApplicant
         [HttpPost]
         public IActionResult AssignFundingToApplicant(int fundingId, int applicantId)
         {
@@ -81,14 +83,15 @@ namespace PGPARS.Controllers
 
             if (funding != null && applicant != null)
             {
-                funding.Applicant = applicant.FullName;
-                funding.ApplicantId = applicantId;
+                funding.Applicant = applicant;
+                funding.Nnumber = applicant.Nnumber;
                 _fundingRepository.UpdateFunding(funding);
             }
 
             return RedirectToAction("FundingDirectory");
         }
 
+        // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
         {
             IEnumerable<Funding> fundingList;
@@ -106,25 +109,22 @@ namespace PGPARS.Controllers
             return View(fundingList);
         }
 
+        // GET: Assign
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
 
-            // Check if funding is null
             if (funding == null)
             {
-                // Redirect to FundingDirectory or return a NotFound view if funding does not exist
                 return RedirectToAction("FundingDirectory");
             }
 
-            // Filter applicants to include only those with "Approved for Funding" status
             var applicants = _applicantRepository.GetApplicants()
-                               .Where(a => a.Status == "Approved for Funding").ToList();
+                               .Where(a => a.Status == "Approved for Funding")
+                               .ToList();
 
-            // Check if applicants is empty (optional, based on your requirements)
             if (applicants == null || !applicants.Any())
             {
-                // Redirect to FundingDirectory or show a message that no applicants are available
                 return RedirectToAction("FundingDirectory");
             }
 
@@ -135,14 +135,6 @@ namespace PGPARS.Controllers
             };
 
             return View(viewModel);
-
-
         }
-
-
-
     }
-
-
 }
-

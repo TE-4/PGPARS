@@ -48,6 +48,8 @@ namespace PGPARS.Models
         public string? FollowUp { get; set; } //App related
         public string? FinalComments { get; set; } //App related
 
+         // Navigation property for the related Fundings
+        public ICollection<Funding>? Fundings { get; set; }
         public string FullName
         {
             get
