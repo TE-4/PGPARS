@@ -25,32 +25,34 @@ namespace PGPARS.Controllers
             _roleManager = roleManager;
         }
 
+        private IActionResult RedirectBasedOnRole()
+        {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("AdminDashboard", "Admin");
+            }
+            if (User.IsInRole("Committee"))
+            {
+                return RedirectToAction("Dashboard", "Committee");
+            }
+            if (User.IsInRole("Faculty"))
+            {
+                return RedirectToAction("Dashboard", "Faculty");
+            }
+            if (User.IsInRole("Staff"))
+            {
+                return RedirectToAction("Dashboard", "Staff");
+            }
+            return RedirectToAction("Login", "Account");
+        }
+
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("AdminDashboard", "Admin");
-                }
-                if (User.IsInRole("Committee"))
-                {
-                    return RedirectToAction("Dashboard", "Committee");
-                }
-                if (User.IsInRole("Faculty"))
-                {
-                    return RedirectToAction("Dashboard", "Faculty");
-                }
-                if (User.IsInRole("Staff"))
-                {
-                    return RedirectToAction("Dashboard", "Staff");
-                }
-                return RedirectToAction("Login", "Account");
+                return RedirectBasedOnRole();
             }
-            else
-            {
-                return View();
-            }
+            return View();
         }
 
         [HttpPost]
@@ -62,17 +64,16 @@ namespace PGPARS.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
                 if(result.Succeeded)
                 {
-                    return RedirectToAction("Dashboard", "Admin");
+                    return RedirectBasedOnRole();
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid Email or Password.");
                 }
-
-                
             }
+
             return View(model);
-        }// end method
+        }
 
         public async Task<IActionResult> Logout()
         {
@@ -119,21 +120,15 @@ namespace PGPARS.Controllers
                     {
                         await _userManager.AddToRoleAsync(user, role.Name);
                         Debug.WriteLine("Assigned role to new user successfully!");
-                        
                     }
                     TempData["UserCreated"] = "User successfully created!";
                     return RedirectToAction("Directory", "Account");
                 }
-                
-
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
-           
-
             return View(model);
         }
 
