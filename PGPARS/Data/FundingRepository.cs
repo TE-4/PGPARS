@@ -59,5 +59,16 @@ namespace PGPARS.Data
                 _context.SaveChanges(); // Save the changes to remove the funding
             }
         }
+        public IEnumerable<Funding> SearchFunding(string searchQuery)
+        {
+            if (string.IsNullOrEmpty(searchQuery))
+                return _context.Fundings.ToList();
+
+            searchQuery = searchQuery.ToLower();
+            return _context.Fundings
+                .Where(f => (f.Name != null && f.Name.ToLower().Contains(searchQuery)) ||
+                            (f.Applicant != null && f.Applicant.ToLower().Contains(searchQuery)))
+                .ToList();
+        }
     }
 }
