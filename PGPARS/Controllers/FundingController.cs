@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
+using System.Linq;
 
 namespace PGPARS.Controllers
 {
@@ -88,11 +89,23 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingDirectory");
         }
 
-        public IActionResult FundingDirectory()
+        public IActionResult FundingDirectory(string searchQuery)
         {
-            var fundingList = _fundingRepository.GetFunding(); 
-            return View(fundingList); 
+            IEnumerable<Funding> fundingList;
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                fundingList = _fundingRepository.SearchFunding(searchQuery);
+            }
+            else
+            {
+                fundingList = _fundingRepository.GetFunding();
+            }
+
+            ViewData["SearchQuery"] = searchQuery; // Preserve the search query in the view
+            return View(fundingList);
         }
+
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
