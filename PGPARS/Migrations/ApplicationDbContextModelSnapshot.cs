@@ -363,7 +363,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("Nnumber");
 
-                    b.ToTable("Applicants");
+                    b.ToTable("Applicants", (string)null);
                 });
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
@@ -376,6 +376,10 @@ namespace PGPARS.Migrations
 
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
+
+                    b.Property<string>("ApplicantNNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
@@ -396,10 +400,6 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nnumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -411,9 +411,9 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("Nnumber");
+                    b.HasIndex("ApplicantNNumber");
 
-                    b.ToTable("Fundings");
+                    b.ToTable("Fundings", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -471,7 +471,7 @@ namespace PGPARS.Migrations
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("Nnumber")
+                        .HasForeignKey("ApplicantNNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

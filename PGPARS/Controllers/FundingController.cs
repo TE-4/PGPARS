@@ -56,11 +56,17 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
-                _fundingRepository.UpdateFunding(funding); // Update the funding in the repository
+                // Call the repository method to update the funding in the database
+                _fundingRepository.UpdateFunding(funding);
+
+                // Redirect back to the directory after updating
                 return RedirectToAction("FundingDirectory");
             }
-            return View(funding); // Return the form with validation errors
+
+            // If the model state is invalid, return to the edit page with errors
+            return View(funding);
         }
+
 
         // POST: DeleteFunding
         [HttpPost]

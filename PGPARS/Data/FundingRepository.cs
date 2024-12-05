@@ -34,14 +34,16 @@ namespace PGPARS.Data
             var existingFunding = _context.Fundings.FirstOrDefault(f => f.FundingID == funding.FundingID);
             if (existingFunding != null)
             {
-                existingFunding.Applicant = funding.Applicant;
-                existingFunding.Nnumber = funding.Nnumber;
+                existingFunding.Cohort = funding.Cohort;
+                existingFunding.FundingType = funding.FundingType;
+                existingFunding.Source = funding.Source;
                 existingFunding.Amount = funding.Amount;
                 existingFunding.Comment = funding.Comment;
                 existingFunding.DateModified = DateTime.UtcNow;
                 _context.SaveChanges();
             }
         }
+
 
         // Add method for funding
         public void AddFunding(Funding funding)
@@ -74,7 +76,7 @@ namespace PGPARS.Data
 
             // Now apply the ToLowerInvariant and Contains filter in memory (client-side)
             return fundings
-                .Where(f => (f.Name != null && f.Name.ToLowerInvariant().Contains(searchQuery)) ||
+                .Where(f => (f.Source != null && f.Source.ToLowerInvariant().Contains(searchQuery)) ||
                             (f.Applicant != null && f.Applicant.FullName != null && f.Applicant.FullName.ToLowerInvariant().Contains(searchQuery)))
                 .ToList();
         }
