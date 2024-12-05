@@ -21,7 +21,7 @@
         <a asp-action="AddFunding" class="btn btn-success mb-3">Add New Funding</a>
 
         <!-- No results message -->
-        @if (!Model.Any())
+        @if (Model == null || !Model.Any())
         {
             <p class="text-muted">No funding entries found matching your search criteria.</p>
         }
@@ -55,7 +55,6 @@
                                     <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
                                 }
                             </td>
-
 
                             <td>
                                 <a asp-action="EditFunding" asp-route-id="@fund.FundingID" class="btn btn-warning">Edit</a>

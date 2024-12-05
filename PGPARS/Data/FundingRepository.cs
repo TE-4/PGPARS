@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using System.Collections.Generic;
@@ -64,12 +65,20 @@ namespace PGPARS.Data
             if (string.IsNullOrEmpty(searchQuery))
                 return _context.Fundings.ToList();
 
-            searchQuery = searchQuery.ToLowerInvariant(); // Explicitly use ToLowerInvariant
-            return _context.Fundings
+            searchQuery = searchQuery.ToLowerInvariant(); // Convert search query to lowercase first
+
+            // Fetch data from the database first, without applying the transformation
+            var fundings = _context.Fundings
+                .Include(f => f.Applicant)  // Ensure Applicant data is loaded
+                .ToList();  // Execute query and bring the data into memory
+
+            // Now apply the ToLowerInvariant and Contains filter in memory (client-side)
+            return fundings
                 .Where(f => (f.Name != null && f.Name.ToLowerInvariant().Contains(searchQuery)) ||
-                            (f.Applicant != null && f.Applicant.FullName.ToLowerInvariant().Contains(searchQuery))) // Ensure Applicant.FullName is used
+                            (f.Applicant != null && f.Applicant.FullName != null && f.Applicant.FullName.ToLowerInvariant().Contains(searchQuery)))
                 .ToList();
         }
+
 
     }
 }
