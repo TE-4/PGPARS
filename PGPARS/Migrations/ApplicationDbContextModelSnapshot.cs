@@ -368,26 +368,20 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.Property<string>("Cohort")
-            .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FundingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("Source")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FundingType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Stipends")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("Scholarships")
-                        .HasColumnType("float");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FundingID"));
 
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<string>("Nnumber")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("Cohort")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -395,16 +389,25 @@ namespace PGPARS.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
-                    // Setting primary key
+                    b.Property<string>("Nnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double?>("Scholarships")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Stipends")
+                        .HasColumnType("float");
+
                     b.HasKey("FundingID");
 
-                    // Configuring foreign key for Applicant using Nnumber
                     b.HasIndex("Nnumber");
 
-                    // Specifying table name
                     b.ToTable("Fundings");
                 });
 
