@@ -8,8 +8,6 @@ namespace PGPARS.Models
         [Key]
         public int? ReviewId { get; set; } //nullable ID
 
-        [Required]
-
         public string? NNumber { get; set; } // n number
 
         public string? FirstName { get; set; } // first name

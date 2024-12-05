@@ -7,7 +7,7 @@ namespace PGPARS.Models
     {
         [Key]
         public int FundingID { get; set; } // Unique identifier for funding
-             
+        [Required]
         public string? Name { get; set; } // Name of corporation or funding source
 
       
