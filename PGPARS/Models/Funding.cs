@@ -9,20 +9,16 @@ namespace PGPARS.Models
         [Key]
         public int FundingID { get; set; } // Unique identifier for funding
 
-      
         public string? Cohort { get; set; } // Cohort for which funding is allocated
 
         public string? Source { get; set; } // Name/Source of the funds
         public string? FundingType { get; set; } // Type of funding (e.g., grant, scholarship)
  
-
-
         public double? Stipends { get; set; } // Amount allocated for stipends
         public double? Scholarships { get; set; } // Amount allocated for scholarships
 
         public double? Amount { get; set; } // Total fundable amount
 
-       
         public string? Nnumber { get; set; } // Foreign key property
 
         // Navigation property for Applicant

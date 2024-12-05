@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205052723_UpdateFundingRelationship")]
-    partial class UpdateFundingRelationship
+    [Migration("20241205080617_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -380,10 +380,6 @@ namespace PGPARS.Migrations
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<string>("ApplicantNNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -396,12 +392,11 @@ namespace PGPARS.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FundType")
+                    b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Nnumber")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
@@ -414,7 +409,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("ApplicantNNumber");
+                    b.HasIndex("Nnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -474,9 +469,8 @@ namespace PGPARS.Migrations
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("ApplicantNNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Nnumber")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Applicant");
                 });

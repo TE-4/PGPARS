@@ -363,29 +363,31 @@ namespace PGPARS.Migrations
 
                     b.HasKey("Nnumber");
 
-                    b.ToTable("Applicants", (string)null);
+                    b.ToTable("Applicants");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.Property<int>("FundingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Cohort")
+            .HasColumnType("nvarchar(max)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FundingID"));
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FundingType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Stipends")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Scholarships")
+                        .HasColumnType("float");
 
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<string>("ApplicantNNumber")
-                        .IsRequired()
+                    b.Property<string>("Nnumber")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Cohort")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -393,27 +395,17 @@ namespace PGPARS.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FundType")
+                    b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Scholarships")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Source")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Stipends")
-                        .HasColumnType("float");
-
+                    // Setting primary key
                     b.HasKey("FundingID");
 
-                    b.HasIndex("ApplicantNNumber");
+                    // Configuring foreign key for Applicant using Nnumber
+                    b.HasIndex("Nnumber");
 
-                    b.ToTable("Fundings", (string)null);
+                    // Specifying table name
+                    b.ToTable("Fundings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -471,9 +463,8 @@ namespace PGPARS.Migrations
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("ApplicantNNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Nnumber")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Applicant");
                 });
