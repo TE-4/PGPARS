@@ -10,9 +10,26 @@
    <div>
     <form asp-action="EditFunding" method="post">
         <div class="form-group">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Cohort"></label>
+                <input asp-for="Cohort" class="form-control" />
+                <span asp-validation-for="Cohort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FundingType"></label>
+                <select asp-for="FundingType" class="form-control">
+                    <option value="GRA">GRA</option>
+                    <option value="GRA 10 (half stipend)">GRA 10 (half stipend)</option>
+                    <option value="Tonsfeldt">Tonsfeldt</option>
+                    <option value="Grad Scholar">Grad Scholar</option>
+                    <option value="JZAG">JZAG (Jacksonville zoo and gardens)</option>
+                    <option value="Other">Other (catch all option)</option>
+                </select>
+                <span asp-validation-for="FundingType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Source"></label>
+                <input asp-for="Source" class="form-control" />
+                <span asp-validation-for="Source" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Amount"></label>
