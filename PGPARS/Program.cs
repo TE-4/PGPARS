@@ -69,18 +69,8 @@ using (var scope = app.Services.CreateScope())
 // add MapControllerRoute here
 
 app.MapControllerRoute(
-    name: "applicant",
-    pattern: "Applicant/{action}/{Nnumber?}",
-    defaults: new { controller = "Applicant", action = "ApplicantDirectory" });
-
-app.MapControllerRoute(
-    name: "dashboard",
-    pattern: "Dashboard",
-    defaults: new { Controller = "Admin", action = "Dashboard"});
-
-app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Account}/{action=Logout}/{id?}");
 
 //app.MapDefaultControllerRoute(); ???
 
