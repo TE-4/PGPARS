@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241206005742_RemoveApplicantFromFunding")]
-    partial class RemoveApplicantFromFunding
+    [Migration("20241206050428_updateFunding")]
+    partial class updateFunding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
