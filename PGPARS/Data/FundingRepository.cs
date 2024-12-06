@@ -68,13 +68,13 @@ namespace PGPARS.Data
             if (string.IsNullOrEmpty(searchQuery))
                 return _context.Fundings.ToList();
 
-            searchQuery = searchQuery.ToLowerInvariant();
-
+            // Perform a case-insensitive search
             return _context.Fundings
-                .Where(f => (f.Source != null && f.Source.ToLowerInvariant().Contains(searchQuery)) ||
-                            (f.Cohort != null && f.Cohort.ToLowerInvariant().Contains(searchQuery)))
+                .Where(f => (f.Source != null && EF.Functions.Like(f.Source, $"%{searchQuery}%")) ||
+                            (f.Cohort != null && EF.Functions.Like(f.Cohort, $"%{searchQuery}%")))
                 .ToList();
         }
+
 
 
 

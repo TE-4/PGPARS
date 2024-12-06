@@ -13,7 +13,7 @@
         <!-- Search bar -->
         <form asp-action="FundingDirectory" method="get" class="mb-3">
             <div class="input-group">
-                <input type="text" name="searchQuery" class="form-control" placeholder="Search by Name or Applicant..." value="@ViewData["SearchQuery"]" />
+                <input type="text" name="searchQuery" class="form-control" placeholder="Search by Source or Cohort..." value="@ViewData["SearchQuery"]" />
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
@@ -39,9 +39,10 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Cohort</th>
+                        <th>Source</th>
                         <th>Amount</th>
-                        <th>Actions</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
