@@ -28,19 +28,11 @@ namespace PGPARS.Models
 
         public string? GPAComment { get; set; } //any comments about gpa
 
-        public string? CourseReqMet { get; set; } 
+        public bool? CourseReqMet { get; set; } 
 
         public string? CourseReqComments { get; set; }
 
         public int? LetterQuality { get; set; }
-
-        public string? Mentor1 { get; set; }
-
-        public string? Mentor2 { get; set; }
-
-        public string? Mentor3 { get; set; }
-
-        public string? LetterComment { get; set; }
 
         public int? ResumeQuality { get; set; }
 
@@ -64,11 +56,8 @@ namespace PGPARS.Models
 
         public string? DecRec { get; set; }
 
-        public string? FollowUp { get; set; }
+        public bool? FollowUp { get; set; }
 
         public string? FinalComments { get; set; }
-
-        public bool? IsAccepted { get; set; } //1. add the entire ass form like this, use alex and form for ref plz and ty
-
     }
 }

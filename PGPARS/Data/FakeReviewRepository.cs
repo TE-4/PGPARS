@@ -6,7 +6,7 @@ namespace PGPARS.Data
     {
         private List<Review> _reviewList = new List<Review>
         {
-            new Review { FullName = "Buh, Jimmy" , ReviewId = 1 , Status = "Accepted"}
+            new Review { FullName = "Buh, Jimmy" , NNumber = "01234567", ReviewId = 1 , Status = "Accepted"}
         };
         public IEnumerable<Review> GetReviews()
         {
