@@ -1,5 +1,6 @@
 ﻿using PGPARS.Data;
 using Microsoft.AspNetCore.Mvc;
+using PGPARS.Models;
 
 namespace PGPARS.Controllers;
     public class ReviewController : Controller
@@ -9,7 +10,6 @@ namespace PGPARS.Controllers;
         public ReviewController(IReviewRepository reviewRepository)
         {
             _reviewRepository = reviewRepository;
-            _applicantRepository = applicantRepository;
         }
         // GET: AddReview
         [HttpGet]
