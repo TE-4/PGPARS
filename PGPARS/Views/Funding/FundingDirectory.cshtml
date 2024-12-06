@@ -34,7 +34,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Amount</th>
-                        <th>Applicant</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -46,18 +45,7 @@
                             <td>@fund.Source</td>
                             <td>@fund.Amount</td>
 
-                            <!-- Show applicant or the assign button if no applicant is assigned -->
-                            <td>
-                                @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
-                                {
-                                    @fund.Applicant.FullName
-                                }
-                                else
-                                {
-                                    <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
-                                }
-                            </td>
-
+                            <!-- Actions column -->
                             <td>
                                 <a asp-action="EditFunding" asp-route-id="@fund.FundingID" class="btn btn-warning">Edit</a>
                                 <form asp-action="DeleteFunding" asp-route-id="@fund.FundingID" method="post" style="display:inline;">

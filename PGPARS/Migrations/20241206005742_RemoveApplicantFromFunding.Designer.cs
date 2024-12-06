@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205230159_first")]
-    partial class first
+    [Migration("20241206005742_RemoveApplicantFromFunding")]
+    partial class RemoveApplicantFromFunding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -380,6 +380,9 @@ namespace PGPARS.Migrations
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("ApplicantNnumber")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -395,9 +398,6 @@ namespace PGPARS.Migrations
                     b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nnumber")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -409,7 +409,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("Nnumber");
+                    b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -467,12 +467,9 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
+                    b.HasOne("PGPARS.Models.Applicant", null)
                         .WithMany("Fundings")
-                        .HasForeignKey("Nnumber")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Applicant");
+                        .HasForeignKey("ApplicantNnumber");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
@@ -67,7 +66,6 @@ namespace PGPARS.Controllers
             return View(funding);
         }
 
-
         // POST: DeleteFunding
         [HttpPost]
         public IActionResult DeleteFunding(int id)
@@ -81,6 +79,8 @@ namespace PGPARS.Controllers
         }
 
         // POST: AssignFundingToApplicant
+        // Commented out because Applicant is no longer part of the Funding model
+        /*
         [HttpPost]
         public IActionResult AssignFundingToApplicant(int fundingId, int applicantId)
         {
@@ -96,6 +96,7 @@ namespace PGPARS.Controllers
 
             return RedirectToAction("FundingDirectory");
         }
+        */
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
@@ -116,6 +117,8 @@ namespace PGPARS.Controllers
         }
 
         // GET: Assign
+        // Commented out because Applicant is no longer part of the Funding model
+        /*
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
@@ -142,5 +145,6 @@ namespace PGPARS.Controllers
 
             return View(viewModel);
         }
+        */
     }
 }
