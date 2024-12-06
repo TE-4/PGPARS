@@ -28,10 +28,10 @@ namespace PGPARS.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 // Fetch data from services/repositories
-                var applicants = _applicantRepository.GetApplicants(); // Example service
+                var applicants = _applicantRepository.GetApplicants();
                 var reviews = _reviewRepository.GetReviews();
                 //var budgetRemaining = _fundingService.GetBudgetRemaining();
-                var fundings = _fundingRepository.GetFunding();
+                //var fundings = _fundingRepository.GetFunding();
 
                 // Create and populate the ViewModel
                 var viewModel = new AdminDashboardViewModel
@@ -39,7 +39,7 @@ namespace PGPARS.Controllers
                     Applicants = applicants,
                     Reviews = reviews,
                     //BudgetRemaining = budgetRemaining,
-                    Fundings = fundings
+                    //Fundings = fundings
                 };
                 return View(viewModel);
             }

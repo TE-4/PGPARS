@@ -33,7 +33,7 @@ namespace PGPARS.Controllers
             }
             if (User.IsInRole("Committee"))
             {
-                return RedirectToAction("Dashboard", "Committee");
+                return RedirectToAction("CommitteeDashboard", "Committee");
             }
             if (User.IsInRole("Faculty"))
             {
