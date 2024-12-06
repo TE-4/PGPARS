@@ -15,6 +15,7 @@ namespace PGPARS.Controllers
         private readonly CsvService _csvService;
         private readonly IApplicantRepository _applicantRepo;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager)
         {
@@ -95,9 +96,13 @@ namespace PGPARS.Controllers
                             continue;
                         }
 
-                            
+                        // fill in required properties for the AppUser object
+                        faculty.UserName = faculty.Email;
+                        faculty.MainRole = "Faculty";
 
+                        
                         // Create the user
+
                         var result = await _userManager.CreateAsync(faculty, "Password123!");
                         if (!result.Succeeded)
                         {
@@ -131,7 +136,7 @@ namespace PGPARS.Controllers
                 }
             }
 
-            return View();
+            return View("Directory", "Account");
         }
 
 

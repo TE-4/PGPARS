@@ -50,6 +50,9 @@ namespace PGPARS.Models
 
          // Navigation property for the related Fundings
         public ICollection<Funding>? Fundings { get; set; }
+
+        // Navigation property for Committee Members assigned to review the applicant
+        public List<AppUser>? AssignedReviewers { get; set; }
         public string FullName
         {
             get

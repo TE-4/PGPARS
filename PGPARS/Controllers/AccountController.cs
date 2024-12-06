@@ -293,10 +293,10 @@ namespace PGPARS.Controllers
             }
 
             // Get applicants that are linked to the User here
-            //var linkedApplicants = await GetLinkedApplicants(user.Id);
+            var linkedApplicants = user.Assig
 
             // Pass the linkedApplicants to the view
-            //ViewData["LinkedApplicants"] = linkedApplicants;
+            ViewData["LinkedApplicants"] = linkedApplicants;
 
             return View(user);
         }
