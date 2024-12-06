@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
@@ -56,10 +55,15 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
-                _fundingRepository.UpdateFunding(funding); // Update the funding in the repository
+                // Call the repository method to update the funding in the database
+                _fundingRepository.UpdateFunding(funding);
+
+                // Redirect back to the directory after updating
                 return RedirectToAction("FundingDirectory");
             }
-            return View(funding); // Return the form with validation errors
+
+            // If the model state is invalid, return to the edit page with errors
+            return View(funding);
         }
 
         // POST: DeleteFunding
@@ -75,6 +79,8 @@ namespace PGPARS.Controllers
         }
 
         // POST: AssignFundingToApplicant
+        // Commented out because Applicant is no longer part of the Funding model
+        /*
         [HttpPost]
         public IActionResult AssignFundingToApplicant(int fundingId, int applicantId)
         {
@@ -90,6 +96,7 @@ namespace PGPARS.Controllers
 
             return RedirectToAction("FundingDirectory");
         }
+        */
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
@@ -110,6 +117,8 @@ namespace PGPARS.Controllers
         }
 
         // GET: Assign
+        // Commented out because Applicant is no longer part of the Funding model
+        /*
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
@@ -136,5 +145,6 @@ namespace PGPARS.Controllers
 
             return View(viewModel);
         }
+        */
     }
 }

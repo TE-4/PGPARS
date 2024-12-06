@@ -377,6 +377,9 @@ namespace PGPARS.Migrations
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("ApplicantNnumber")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -389,16 +392,8 @@ namespace PGPARS.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FundType")
+                    b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nnumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
@@ -411,7 +406,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("Nnumber");
+                    b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -469,13 +464,9 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
+                    b.HasOne("PGPARS.Models.Applicant", null)
                         .WithMany("Fundings")
-                        .HasForeignKey("Nnumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Applicant");
+                        .HasForeignKey("ApplicantNnumber");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>

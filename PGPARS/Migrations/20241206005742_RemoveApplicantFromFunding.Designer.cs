@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205052723_UpdateFundingRelationship")]
-    partial class UpdateFundingRelationship
+    [Migration("20241206005742_RemoveApplicantFromFunding")]
+    partial class RemoveApplicantFromFunding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -380,8 +380,7 @@ namespace PGPARS.Migrations
                     b.Property<double?>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<string>("ApplicantNNumber")
-                        .IsRequired()
+                    b.Property<string>("ApplicantNnumber")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Cohort")
@@ -396,11 +395,7 @@ namespace PGPARS.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FundType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Scholarships")
@@ -414,7 +409,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("ApplicantNNumber");
+                    b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -472,13 +467,9 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
+                    b.HasOne("PGPARS.Models.Applicant", null)
                         .WithMany("Fundings")
-                        .HasForeignKey("ApplicantNNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Applicant");
+                        .HasForeignKey("ApplicantNnumber");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>

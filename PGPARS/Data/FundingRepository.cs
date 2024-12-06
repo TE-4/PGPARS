@@ -22,6 +22,7 @@ namespace PGPARS.Data
             return _context.Fundings.ToList();
         }
 
+
         // Updated method to use FundingID
         public Funding GetFundingById(int fundingId)
         {
@@ -34,14 +35,16 @@ namespace PGPARS.Data
             var existingFunding = _context.Fundings.FirstOrDefault(f => f.FundingID == funding.FundingID);
             if (existingFunding != null)
             {
-                existingFunding.Applicant = funding.Applicant;
-                existingFunding.Nnumber = funding.Nnumber;
+                existingFunding.Cohort = funding.Cohort;
+                existingFunding.FundingType = funding.FundingType;
+                existingFunding.Source = funding.Source;
                 existingFunding.Amount = funding.Amount;
                 existingFunding.Comment = funding.Comment;
                 existingFunding.DateModified = DateTime.UtcNow;
                 _context.SaveChanges();
             }
         }
+
 
         // Add method for funding
         public void AddFunding(Funding funding)
@@ -65,19 +68,14 @@ namespace PGPARS.Data
             if (string.IsNullOrEmpty(searchQuery))
                 return _context.Fundings.ToList();
 
-            searchQuery = searchQuery.ToLowerInvariant(); // Convert search query to lowercase first
+            searchQuery = searchQuery.ToLowerInvariant();
 
-            // Fetch data from the database first, without applying the transformation
-            var fundings = _context.Fundings
-                .Include(f => f.Applicant)  // Ensure Applicant data is loaded
-                .ToList();  // Execute query and bring the data into memory
-
-            // Now apply the ToLowerInvariant and Contains filter in memory (client-side)
-            return fundings
-                .Where(f => (f.Name != null && f.Name.ToLowerInvariant().Contains(searchQuery)) ||
-                            (f.Applicant != null && f.Applicant.FullName != null && f.Applicant.FullName.ToLowerInvariant().Contains(searchQuery)))
+            return _context.Fundings
+                .Where(f => (f.Source != null && f.Source.ToLowerInvariant().Contains(searchQuery)) ||
+                            (f.Cohort != null && f.Cohort.ToLowerInvariant().Contains(searchQuery)))
                 .ToList();
         }
+
 
 
     }

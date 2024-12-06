@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class RemoveApplicantFromFunding : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -111,22 +111,25 @@ namespace PGPARS.Migrations
                 {
                     FundingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cohort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FundType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FundingType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Stipends = table.Column<double>(type: "float", nullable: true),
                     Scholarships = table.Column<double>(type: "float", nullable: true),
                     Amount = table.Column<double>(type: "float", nullable: true),
-                    Applicant = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApplicantId = table.Column<int>(type: "int", nullable: true),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicantNnumber = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fundings", x => x.FundingID);
+                    table.ForeignKey(
+                        name: "FK_Fundings_Applicants_ApplicantNnumber",
+                        column: x => x.ApplicantNnumber,
+                        principalTable: "Applicants",
+                        principalColumn: "Nnumber");
                 });
 
             migrationBuilder.CreateTable(
@@ -273,14 +276,16 @@ namespace PGPARS.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fundings_ApplicantNnumber",
+                table: "Fundings",
+                column: "ApplicantNnumber");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Applicants");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -304,6 +309,9 @@ namespace PGPARS.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Applicants");
         }
     }
 }
