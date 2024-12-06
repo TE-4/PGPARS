@@ -24,7 +24,14 @@
         <!-- No results message -->
         @if (Model == null || !Model.Any())
         {
-            <p class="text-muted">No funding entries found matching your search criteria.</p>
+            if (string.IsNullOrEmpty(ViewData["SearchQuery"]?.ToString()))
+            {
+                <p class="text-muted">There are no Fundings available at the moment.</p>
+            }
+            else
+            {
+                <p class="text-muted">Nothing matches your search criteria.</p>
+            }
         }
         else
         {
