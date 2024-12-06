@@ -124,7 +124,7 @@ namespace PGPARS.Controllers
                         return View();
                     }
 
-                    return RedirectToAction("Directory", "Account");
+                    return View("Directory", "Account");
                 }
                 catch (ApplicationException ex)
                 {
