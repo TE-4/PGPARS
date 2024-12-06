@@ -41,6 +41,7 @@ namespace PGPARS.Controllers;
             {
                 return NotFound();
             }
+            var model = new Review();
             return View(review); //return with form for editing
         }
         // POST: EditReview

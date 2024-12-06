@@ -12,7 +12,8 @@ namespace PGPARS.Models
 
         public string? FullName { get; set; } // Full name
 
-        public DateTime? AppSubmitDate { get; set; } // date
+        //not used rn
+        //public DateTime? AppSubmitDate { get; set; } // date
 
         public string? Email { get; set; } // email
 
