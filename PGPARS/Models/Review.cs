@@ -5,7 +5,7 @@ namespace PGPARS.Models
     public class Review
     {
         [Key]
-        public string? ReviewId { get; set; } //name
+        public int? ReviewId { get; set; } // ID
 
         public string? NNumber { get; set; } // n number
 
