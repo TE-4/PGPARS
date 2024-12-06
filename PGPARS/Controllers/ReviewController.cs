@@ -34,15 +34,44 @@ namespace PGPARS.Controllers;
         }
         // GET: EditReview
         [HttpGet]
-        public IActionResult EditReview(int id)
+        public Task<IActionResult> EditReview(int id)
         {
             var review = _reviewRepository.GetReviewById(id);
             if (review == null)
             {
-                return NotFound();
+                return Task.FromResult<IActionResult>(NotFound());
             }
-            var model = new Review();
-            return View(review); //return with form for editing
+        var model = new Review
+        {
+            ReviewId = id,
+            NNumber = review.NNumber,
+            FullName = review.FullName,
+            Email = review.Email,
+            PhoneNumber = review.PhoneNumber,
+            Status = review.Status,
+            Reviewer = review.Reviewer,
+            AllGPA = review.AllGPA,
+            PsychGPA = review.PsychGPA,
+            GPAComment = review.GPAComment,
+            CourseReqMet = review.CourseReqMet,
+            CourseReqComments = review.CourseReqComments,
+            LetterQuality = review.LetterQuality,
+            ResumeQuality = review.ResumeQuality,
+            ResExpQuality = review.ResExpQuality,
+            ResumeComments = review.ResumeComments,
+            WritingSampleQuality = review.WritingSampleQuality,
+            WritingSampleComments = review.WritingSampleComments,
+            LORRelevance = review.LORRelevance,
+            LORQuality = review.LORQuality,
+            LORComments = review.LORComments,
+            OverallFitQuality = review.OverallFitQuality,
+            OverallFitComments = review.OverallFitComments,
+            DecRec = review.DecRec,
+            FollowUp = review.FollowUp,
+            FinalComments = review.FinalComments,
+        };
+            
+            return Task.FromResult<IActionResult>(View(model)); //return with form for editing
         }
         // POST: EditReview
         [HttpPost]
