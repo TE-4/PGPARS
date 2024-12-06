@@ -32,7 +32,7 @@ namespace PGPARS.Controllers
             if (ModelState.IsValid)
             {
                 _fundingRepository.AddFunding(funding); // Add the funding to the repository
-                return RedirectToAction("FundingDirectory");
+                return RedirectToAction("FundingDirectory"); // Redirect to FundingDirectory after successful submission
             }
             return View(funding); // Return the form with validation errors and user input
         }
