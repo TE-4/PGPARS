@@ -1,21 +1,23 @@
 ﻿@model IEnumerable<PGPARS.Models.AppUser>
 @{
-    ViewData["Title"] = "Upload Applicants - CSV";
+    ViewData["Title"] = "Upload Faculty Members - CSV";
 }
-<div class="container mt-5 text-dark">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h1 class="h4 text-center mb-0">Upload Applicants</h1>
-        </div>
-        <div class="card-body">
-            <p>Upload a CSV file containing Faculty Members (Faculty List). Export as CSV if you have an Excel file, then upload. Must be in the proper format.</p>
-            <form asp-controller="FileUpload" asp-action="facultyUpload" method="post" enctype="multipart/form-data">
-                <div class="form-group mb-4">
-                    <label for="csvFile" class="form-label"><strong>Choose CSV File:</strong></label>
-                    <input type="file" id="csvFile" name="csvFile" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Upload</button>
-            </form>
+<div class="main">
+    <div class="container mt-5 text-dark">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h4 text-center mb-0">Upload Applicants</h1>
+            </div>
+            <div class="card-body">
+                <p>Upload a CSV file containing Faculty Members (Faculty List). Export as CSV if you have an Excel file, then upload. Must be in the proper format.</p>
+                <form asp-controller="FileUpload" asp-action="facultyUpload" method="post" enctype="multipart/form-data">
+                    <div class="form-group mb-4">
+                        <label for="csvFile" class="form-label"><strong>Choose CSV File:</strong></label>
+                        <input type="file" id="csvFile" name="csvFile" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Upload</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

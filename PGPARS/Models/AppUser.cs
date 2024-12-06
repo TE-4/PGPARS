@@ -20,6 +20,8 @@ namespace PGPARS.Models
         public string? Position { get; set; }
 
         public string MainRole { get; set; }
-             
+
+        public List<Applicant>? AssignedApplicants { get; set; }
+
     }
 }

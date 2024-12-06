@@ -2,22 +2,37 @@
 <div class="main">
     <div class="container-opaque">
         <div class="text-center p-3">
-            Review Process
+        <h2>Review Directory</h2>
         </div>
     </div>
     <br />
     <div class="container-opaque">
-        <table class="table">
+        <a asp-action="AddReview" class="btn btn-success mb-3">New Review</a> <!-- Add Button -->
+    <table class="table">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Accepted?</th>
+                    <th>N Number</th>
+                    <th>Status</th>
+                    <th>Review ID</th>
+                    <th>Actions</th>
                 </tr>
                 @foreach (var review in Model)
                 {
                     <tr>
+                        <td>@review.FullName</td>
+                        <td>@review.NNumber</td>
+                        <td>@review.Status</td>
                         <td>@review.ReviewId</td>
-                        <td>@review.IsAccepted</td>
+                        <td>
+                            <a asp-action="Edit Review" asp-route-id="@review.ReviewId" class="btn btn-warning">Edit</a>
+                            <form asp-action="DeleteReview" asp-route-id="@review.ReviewId" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this Review?');">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
         </table>
