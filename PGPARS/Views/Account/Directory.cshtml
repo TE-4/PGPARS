@@ -36,9 +36,14 @@
                     </button>
                 </form>
 
-                <a asp-action="Register" asp-controller="Account" class="btn btn-success">
-                    <i class="bi bi-person-plus"></i> Add New User
-                </a>
+                <div class="d-flex gap-2">
+                    <a asp-action="Register" asp-controller="Account" class="btn btn-success">
+                        <i class="bi bi-person-plus"></i> Add New User
+                    </a>
+                    <a asp-action="facultyUpload" asp-controller="FileUpload" class="btn btn-success">
+                        <i class="bi bi-upload"></i>&nbsp;Import CSV
+                    </a>
+                </div>
             </div>
 
             <div class="table-responsive shadow-sm rounded">

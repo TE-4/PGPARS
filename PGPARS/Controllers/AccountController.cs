@@ -139,8 +139,6 @@ namespace PGPARS.Controllers
         }
 
 
-        // Add search bar functionality to Directory method or new method
-        // Add filters
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -293,7 +291,7 @@ namespace PGPARS.Controllers
             }
 
             // Get applicants that are linked to the User here
-            var linkedApplicants = user.Assig
+            var linkedApplicants = user.AssignedApplicants.ToList();
 
             // Pass the linkedApplicants to the view
             ViewData["LinkedApplicants"] = linkedApplicants;
