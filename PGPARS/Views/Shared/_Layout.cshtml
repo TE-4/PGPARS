@@ -23,6 +23,14 @@
                 &copy; 2024 - PGPARS<br />Magic in Development
             </p>
         </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
+        </div>
     }
     @if (User.Identity.IsAuthenticated && User.IsInRole("Committee"))
     {
@@ -36,23 +44,26 @@
                 &copy; 2024 - PGPARS<br />Magic in Development
             </p>
         </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
+        </div>
     }
     @if (!User.Identity.IsAuthenticated)
     {
-        <div class="sidenav a">
-            <p class="text-center sidenav-footer">
-                &copy; 2024 - PGPARS<br />Magic in Development
-            </p>
+        <div class="header" style="left: 0px">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
         </div>
     }
-    <div class="header">
-        <div class="headerContent">
-            <strong>Psychology Graduate Program Applicant Review System</strong>
-        </div>
-        <div class="headerLogo">
-            <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
-        </div>
-    </div>
 
     @RenderBody()
     
