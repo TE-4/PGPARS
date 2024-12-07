@@ -410,10 +410,6 @@ namespace PGPARS.Migrations
                     b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
