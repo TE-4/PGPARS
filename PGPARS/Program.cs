@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using PGPARS.Services;
 using PGPARS.Data;
 using PGPARS.Models;
+using PGPARS.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +26,12 @@ builder.Services.AddScoped<IFundingRepository, FundingRepository>();
 // Register the ReviewRepository with the interface; change me later x)
 builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();
 
-// Register CsvService
+// Register custom services
 builder.Services.AddTransient<CsvService>();
+builder.Services.AddTransient<DbSeederService>();
 
 
-// Add services to the container.
+// Add more services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews().
 AddRazorRuntimeCompilation();
@@ -54,15 +56,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-// create a scope that uses services to admin user and user roles on startup
+// create a scope that uses services to create admin user and user roles on startup
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-    // call method from DbSeeder class to seed roles and admin user
-    await DbSeeder.SeedAdminUser(userManager, roleManager);
+    var DbSeeder = services.GetRequiredService<DbSeederService>();
+    DbSeeder.SeedRolesAndUsers().Wait();
 }
 
 
