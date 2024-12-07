@@ -4,24 +4,27 @@
     <div class="container-opaque">
         <!-- Title -->
         <div class="text-center p-3">
-        <h2>Add New Funding</h2>
+            <h2 class="display-6 fw-bold text-black">Add New Funding</h2>
         </div>
     </div>
-    <div>
-        <form asp-action="AddFunding" method="post">
 
-            <div class="form-group">
-                <label for="Cohort">Cohort</label>
-                <select class="form-control" id="Cohort" name="Cohort">
+    <!-- Form Container -->
+    <div class="container mt-4 mb-4 p-4 rounded shadow-sm" style="background-color: #f9f9f9;">
+        <form asp-action="AddFunding" method="post">
+            <!-- Cohort -->
+            <div class="mb-3 text-center">
+                <label for="Cohort" class="form-label fw-bold">Cohort</label>
+                <select class="form-control w-50 mx-auto" id="Cohort" name="Cohort">
                     <option value="2024">2024</option>
                     <option value="2025">2025</option>
                     <!-- Add more cohorts as needed -->
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="FundType">Funding Type</label>
-                <select class="form-control" id="FundType" name="FundType">
+            <!-- Funding Type -->
+            <div class="mb-3 text-center">
+                <label for="FundType" class="form-label fw-bold">Funding Type</label>
+                <select class="form-control w-50 mx-auto" id="FundType" name="FundType">
                     <option value="GRA">GRA</option>
                     <option value="Tonsfeldt">Tonsfeldt</option>
                     <option value="Grad Scholar">Grad Scholar</option>
@@ -31,9 +34,10 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="Source">Funding Source</label>
-                <select class="form-control" id="Source" name="Source">
+            <!-- Funding Source -->
+            <div class="mb-3 text-center">
+                <label for="Source" class="form-label fw-bold">Funding Source</label>
+                <select class="form-control w-50 mx-auto" id="Source" name="Source">
                     <option value="COAS">COAS</option>
                     <option value="Foundation">Foundation</option>
                     <option value="Graduate School">Graduate School</option>
@@ -43,27 +47,36 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="Amount">Amount</label>
-                <input type="number" class="form-control" id="Amount" name="Amount" required />
+            <!-- Amount -->
+            <div class="mb-3 text-center">
+                <label for="Amount" class="form-label fw-bold">Amount</label>
+                <input type="number" class="form-control w-50 mx-auto" id="Amount" name="Amount" required />
             </div>
 
-            <div class="form-group">
-                <label for="Stipends">Stipends</label>
-                <input type="number" class="form-control" id="Stipends" name="Stipends" />
+            <!-- Stipends -->
+            <div class="mb-3 text-center">
+                <label for="Stipends" class="form-label fw-bold">Stipends</label>
+                <input type="number" step="0.01" class="form-control w-50 mx-auto" id="Stipends" name="Stipends" />
             </div>
 
-            <div class="form-group">
-                <label for="Scholarships">Scholarships</label>
-                <input type="number" class="form-control" id="Scholarships" name="Scholarships" />
+            <!-- Scholarships -->
+            <div class="mb-3 text-center">
+                <label for="Scholarships" class="form-label fw-bold">Scholarships</label>
+                <input type="number" class="form-control w-50 mx-auto" id="Scholarships" name="Scholarships" />
             </div>
 
-            <div class="form-group">
-                <label for="Comment">Comment</label>
-                <textarea class="form-control" id="Comment" name="Comment"></textarea>
+            <!-- Comment -->
+            <div class="mb-3 text-center">
+                <label for="Comment" class="form-label fw-bold">Comment</label>
+                <textarea class="form-control w-50 mx-auto" id="Comment" name="Comment" rows="3"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-success">Add Funding</button>
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-plus-circle"></i> Add Funding
+                </button>
+            </div>
         </form>
     </div>
 </div>
