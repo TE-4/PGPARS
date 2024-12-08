@@ -29,6 +29,7 @@ builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();
 // Register custom services
 builder.Services.AddTransient<CsvService>();
 builder.Services.AddTransient<DbSeederService>();
+builder.Services.AddTransient<ApplicantReviewAssignmentService>();
 
 
 // Add more services to the container.
@@ -62,6 +63,9 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var DbSeeder = services.GetRequiredService<DbSeederService>();
     DbSeeder.SeedRolesAndUsers().Wait();
+
+    var AssignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
+    AssignApplicants.AssignReviewers().Wait();
 }
 
 
