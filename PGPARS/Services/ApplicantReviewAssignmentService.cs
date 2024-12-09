@@ -51,9 +51,39 @@ namespace PGPARS.Services
                     _applicantRepository.UpdateApplicant(applicant);
                 }
             }
+        } // end method
+
+        // if needed, unassign all reviewers from all applicants
+        public async Task UnassignReviewers()
+        {
+            var applicants = _applicantRepository.GetApplicants();
+            foreach (var applicant in applicants)
+            {
+                applicant.Reviewer1 = null;
+                applicant.Reviewer2 = null;
+                _applicantRepository.UpdateApplicant(applicant);
+            }
+        } // end method
+
+        // manually assign a reviewer to an applicant
+        public async Task AssignReviewerAsync(int applicantId, string reviewerNnumber)
+        {
+            var applicant = _applicantRepository.GetApplicantById(applicantId);
+            var reviewer = await _userManager.FindByIdAsync(reviewerNnumber);
+
+            if (reviewer == null)
+            {
+                throw new Exception("Reviewer not found.");
+            }
+
+            if(applicant.Reviewer1 != null)
+            {
+                
+            }
+
+            // Assign the reviewer to the applicant here
         }
 
 
-
-        } // end class
+    } // end class
 } // end namespace

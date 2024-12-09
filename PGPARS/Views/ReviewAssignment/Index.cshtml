@@ -1,0 +1,71 @@
+﻿@model AppUser
+
+@{
+    ViewBag.Title = "Manage Reviewers";
+    var applicants = ViewBag.LinkedApplicants;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/altsite.css" />
+    <style>
+        .action-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .action-card button {
+                margin: 8px;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">Manage Reviewers</h2>
+        <h3><strong>Committee/Faculty:</strong> @Model.FirstName @Model.LastName</h3>
+        <hr />
+
+        @if (applicants != null && applicants.Any())
+        {
+            <div class="action-card">
+                <h5>Actions</h5>
+                <button class="btn btn-primary" onclick="assignReviewers()">Assign Reviewers</button>
+                <button class="btn btn-danger" onclick="removeReviewers()">Remove All Reviewers</button>
+            </div>
+
+            @foreach (var applicant in applicants)
+            {
+                <div class="action-card">
+                    <h5>@applicant.FirstName @applicant.LastName</h5>
+                    <p><strong>N-Number:</strong> @applicant.Nnumber</p>
+                    <p><strong>Email:</strong> @applicant.Email</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No applicants linked to this user.</p>
+        }
+    </div>
+
+    <script>
+        function assignReviewers() {
+            if (confirm("Are you sure you want to assign reviewers to all applicants?")) {
+                // Add logic to assign reviewers
+                alert("Reviewers assigned successfully!");
+            }
+        }
+
+        function removeReviewers() {
+            if (confirm("Are you sure you want to remove all reviewers?")) {
+                // Add logic to remove all reviewers
+                alert("All reviewers removed successfully!");
+            }
+        }
+    </script>
+</body>
