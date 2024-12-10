@@ -17,5 +17,10 @@ namespace PGPARS.Models
         public DateTime DateAdded { get; set; } = DateTime.UtcNow; // Timestamp when the funding was added
         public DateTime DateModified { get; set; } = DateTime.UtcNow; // Timestamp when the funding was last modified
         public string? Comment { get; set; } // Additional notes or comments
+
+     //   public string? Nnumber { get; set; } // Foreign key property
+
+        // Navigation property for Applicant
+      //  public Applicant? Applicant { get; set; }
     }
 }
