@@ -1,85 +1,82 @@
 ﻿@model PGPARS.Models.Funding
 
-<div class="main">
-    <div class="container-opaque">
-        <!-- Title -->
-        <div class="text-center p-3">
-            <h2 class="display-6 fw-bold text-black">Edit Funding</h2>
+<form asp-action="EditFunding" method="post">
+    <!-- Cohort -->
+    <div class="mb-3 text-center">
+        <label for="Cohort" class="form-label fw-bold">Cohort</label>
+        <select class="form-control w-50 mx-auto" id="Cohort" name="Cohort">
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <!-- Add more cohorts as needed -->
+        </select>
+        <span asp-validation-for="Cohort" class="text-danger"></span>
+    </div>
+
+    <!-- Funding Type -->
+    <div class="mb-3 text-center">
+        <label asp-for="FundingType" class="form-label fw-bold"></label>
+        <select asp-for="FundingType" class="form-control w-50 mx-auto">
+            <option value="">-- Select Funding Type --</option>
+            <option value="GRA">GRA</option>
+            <option value="Startup">Startup</option>
+            <!-- Other options -->
+        </select>
+        <span asp-validation-for="FundingType" class="text-danger"></span>
+    </div>
+
+    <!-- Funding Source -->
+    <div class="mb-3 text-center">
+        <div class="form-group">
+            <label asp-for="Source" class="control-label"></label>
+            <input asp-for="Source" class="form-control" />
+            <span asp-validation-for="Source" class="text-danger"></span>
         </div>
     </div>
 
-    <!-- Form Container -->
-    <div class="container mt-4 mb-4 p-4 rounded shadow-sm" style="background-color: #f9f9f9;">
-        <form asp-action="EditFunding" method="post">
-            <!-- Cohort -->
-            <div class="mb-3 text-center">
-                <label for="Cohort" class="form-label fw-bold">Cohort</label>
-                <select class="form-control w-50 mx-auto" id="Cohort" name="Cohort" asp-for="Cohort">
-                    <option value="2024" selected="@Model.Cohort == " 2024"">2024</option>
-                    <option value="2025" selected="@Model.Cohort == " 2025"">2025</option>
-                    <!-- Add more cohorts as needed -->
-                </select>
-            </div>
-
-            <!-- Funding Type -->
-            <div class="mb-3 text-center">
-                <label for="FundType" class="form-label fw-bold">Funding Type</label>
-                <select class="form-control w-50 mx-auto" id="FundType" name="FundType" asp-for="FundingType">
-                    <option value="GRA" selected="@Model.FundingType == " GRA"">GRA</option>
-                    <option value="Tonsfeldt" selected="@Model.FundingType == " Tonsfeldt"">Tonsfeldt</option>
-                    <option value="Grad Scholar" selected="@Model.FundingType == " Grad Scholar"">Grad Scholar</option>
-                    <option value="JZAG" selected="@Model.FundingType == " JZAG"">JZAG</option>
-                    <option value="Startup" selected="@Model.FundingType == " Startup"">Startup</option>
-                    <!-- Add more fund types as needed -->
-                </select>
-            </div>
-
-            <!-- Funding Source -->
-            <div class="mb-3 text-center">
-                <label for="Source" class="form-label fw-bold">Funding Source</label>
-                <select class="form-control w-50 mx-auto" id="Source" name="Source" asp-for="Source">
-                    <option value="COAS" selected="@Model.Source == " COAS"">COAS</option>
-                    <option value="Foundation" selected="@Model.Source == " Foundation"">Foundation</option>
-                    <option value="Graduate School" selected="@Model.Source == " Graduate School"">Graduate School</option>
-                    <option value="Jacksonville Zoo" selected="@Model.Source == " Jacksonville Zoo"">Jacksonville Zoo</option>
-                    <option value="Startup" selected="@Model.Source == " Startup"">Startup</option>
-                    <!-- Add more sources as needed -->
-                </select>
-            </div>
-
-            <!-- Amount -->
-            <div class="mb-3 text-center">
-                <label for="Amount" class="form-label fw-bold">Amount</label>
-                <input type="number" class="form-control w-50 mx-auto" id="Amount" name="Amount" asp-for="Amount" required />
-            </div>
-
-            <!-- Stipends -->
-            <div class="mb-3 text-center">
-                <label for="Stipends" class="form-label fw-bold">Stipends</label>
-                <input type="number" step="0.01" class="form-control w-50 mx-auto" id="Stipends" name="Stipends" asp-for="Stipends" />
-            </div>
-
-            <!-- Scholarships -->
-            <div class="mb-3 text-center">
-                <label for="Scholarships" class="form-label fw-bold">Scholarships</label>
-                <input type="number" class="form-control w-50 mx-auto" id="Scholarships" name="Scholarships" asp-for="Scholarships" />
-            </div>
-
-            <!-- Comment -->
-            <div class="mb-3 text-center">
-                <label for="Comment" class="form-label fw-bold">Comment</label>
-                <textarea class="form-control w-50 mx-auto" id="Comment" name="Comment" asp-for="Comment" rows="3"></textarea>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="text-center">
-                <button type="submit" class="btn btn-success btn-lg">
-                    <i class="bi bi-pencil-square"></i> Save Changes
-                </button>
-                <a asp-action="FundingDirectory" class="btn btn-secondary btn-lg">
-                    <i class="bi bi-arrow-left-circle"></i> Cancel
-                </a>
-            </div>
-        </form>
+    <!-- Amount -->
+    <div class="mb-3 text-center">
+        <div class="form-group">
+            <label asp-for="Amount" class="control-label"></label>
+            <input asp-for="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
     </div>
-</div>
+
+    <!-- Stipends -->
+    <div class="mb-3 text-center">
+        <div class="form-group">
+            <label asp-for="Stipends" class="control-label"></label>
+            <input asp-for="Stipends" class="form-control" />
+            <span asp-validation-for="Stipends" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Scholarships -->
+    <div class="mb-3 text-center">
+        <div class="form-group">
+        <label asp-for="Scholarships" class="control-label"></label>
+        <input asp-for="Scholarships" class="form-control" />
+        <span asp-validation-for="Scholarships" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Comment -->
+    <div class="mb-3 text-center">
+        <div class="form-group">
+            <label asp-for="Comment" class="control-label"></label>
+            <textarea asp-for="Comment" class="form-control"></textarea>
+            <span asp-validation-for="Comment" class="text-danger"></span>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="FundingID" />
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button type="submit" class="btn btn-success btn-lg">
+            <i class="bi bi-pencil-square"></i> Save Changes
+        </button>
+        <a asp-action="FundingDirectory" class="btn btn-secondary btn-lg">
+            <i class="bi bi-arrow-left-circle"></i> Cancel
+        </a>
+    </div>
+</form>

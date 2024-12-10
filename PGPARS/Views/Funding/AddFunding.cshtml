@@ -19,12 +19,13 @@
                     <option value="2025">2025</option>
                     <!-- Add more cohorts as needed -->
                 </select>
+                <span asp-validation-for="Cohort" class="text-danger"></span>
             </div>
 
             <!-- Funding Type -->
             <div class="mb-3 text-center">
                 <label for="FundType" class="form-label fw-bold">Funding Type</label>
-                <select class="form-control w-50 mx-auto" id="FundType" name="FundType">
+                <select class="form-control w-50 mx-auto" id="FundingType" name="FundingType">
                     <option value="GRA">GRA</option>
                     <option value="Tonsfeldt">Tonsfeldt</option>
                     <option value="Grad Scholar">Grad Scholar</option>
@@ -32,6 +33,8 @@
                     <option value="Startup">Startup</option>
                     <!-- Add more fund types as needed -->
                 </select>
+                <span asp-validation-for="FundingType" class="text-danger"></span>
+
             </div>
 
             <!-- Funding Source -->
@@ -45,6 +48,8 @@
                     <option value="Startup">Startup</option>
                     <!-- Add more sources as needed -->
                 </select>
+                <span asp-validation-for="Source" class="text-danger"></span>
+
             </div>
 
             <!-- Amount -->
@@ -71,6 +76,7 @@
                 <textarea class="form-control w-50 mx-auto" id="Comment" name="Comment" rows="3"></textarea>
             </div>
 
+            <input type="hidden" asp-for="FundingID" />
             <!-- Submit Button -->
             <div class="text-center">
                 <button type="submit" class="btn btn-success btn-lg">
