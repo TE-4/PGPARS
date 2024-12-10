@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class fresh : Migration
+    public partial class Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -111,6 +111,7 @@ namespace PGPARS.Migrations
                 {
                     FundingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cohort = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FundingType = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -149,6 +150,30 @@ namespace PGPARS.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppUserApplicant",
+                columns: table => new
+                {
+                    AssignedApplicantsNnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AssignedReviewersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserApplicant", x => new { x.AssignedApplicantsNnumber, x.AssignedReviewersId });
+                    table.ForeignKey(
+                        name: "FK_AppUserApplicant_Applicants_AssignedApplicantsNnumber",
+                        column: x => x.AssignedApplicantsNnumber,
+                        principalTable: "Applicants",
+                        principalColumn: "Nnumber",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppUserApplicant_AspNetUsers_AssignedReviewersId",
+                        column: x => x.AssignedReviewersId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -239,6 +264,11 @@ namespace PGPARS.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppUserApplicant_AssignedReviewersId",
+                table: "AppUserApplicant",
+                column: "AssignedReviewersId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -286,6 +316,9 @@ namespace PGPARS.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppUserApplicant");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

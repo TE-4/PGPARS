@@ -22,6 +22,21 @@ namespace PGPARS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.Property<string>("AssignedApplicantsNnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignedReviewersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AssignedApplicantsNnumber", "AssignedReviewersId");
+
+                    b.HasIndex("AssignedReviewersId");
+
+                    b.ToTable("AppUserApplicant");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -163,9 +178,6 @@ namespace PGPARS.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicantNnumber")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -230,8 +242,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicantNnumber");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -400,6 +410,10 @@ namespace PGPARS.Migrations
                     b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -414,6 +428,21 @@ namespace PGPARS.Migrations
                     b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
+                });
+
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.HasOne("PGPARS.Models.Applicant", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedApplicantsNnumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PGPARS.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedReviewersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -467,13 +496,6 @@ namespace PGPARS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PGPARS.Models.AppUser", b =>
-                {
-                    b.HasOne("PGPARS.Models.Applicant", null)
-                        .WithMany("AssignedReviewers")
-                        .HasForeignKey("ApplicantNnumber");
-                });
-
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
                     b.HasOne("PGPARS.Models.Applicant", null)
@@ -483,8 +505,6 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>
                 {
-                    b.Navigation("AssignedReviewers");
-
                     b.Navigation("Fundings");
                 });
 #pragma warning restore 612, 618
