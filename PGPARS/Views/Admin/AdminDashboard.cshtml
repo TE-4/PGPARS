@@ -1,4 +1,5 @@
 ﻿@model AdminDashboardViewModel
+
 <div class="main">
     <div class="dashboard-table">
         <div class="dashboard-body">
@@ -11,16 +12,27 @@
                     <ul>
                         @foreach (var applicant in Model.Applicants)
                         {
-                            <li>@applicant.FullName</li>
+                            <li>@applicant.Nnumber - @applicant.FullName</li>
                         }
                     </ul>
                 </div>
                 <div class="dashboard-cell">
                     <h3>Reviews</h3>
                     <ul>
-                        @foreach (var review in Model.Reviews)
+                        @{
+                            var reviews = new List<(string NNumber, DateTime DateTime)>
                         {
-                            <li>@review.ReviewId</li>
+                        ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-10)),
+                        ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-20)),
+                        ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-30))
+                        }
+                            .OrderByDescending(r => r.DateTime)
+                            .ToList();
+
+                            foreach (var review in reviews)
+                            {
+                                <li>@review.NNumber - @review.DateTime.ToString("MM/dd/yyyy HH:mm")</li>
+                            }
                         }
                     </ul>
                 </div>
