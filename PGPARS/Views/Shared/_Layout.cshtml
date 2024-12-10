@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PGPARS</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/altsite.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -20,8 +21,17 @@
             <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />                        
             <p class="text-center sidenav-footer">
                 <a asp-action="Logout" asp-controller="Account">Logout</a>
+                <br/>
                 &copy; 2024 - PGPARS<br />Magic in Development
             </p>
+        </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
         </div>
     }
     @if (User.Identity.IsAuthenticated && User.IsInRole("Committee"))
@@ -36,23 +46,26 @@
                 &copy; 2024 - PGPARS<br />Magic in Development
             </p>
         </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
+        </div>
     }
     @if (!User.Identity.IsAuthenticated)
     {
-        <div class="sidenav a">
-            <p class="text-center sidenav-footer">
-                &copy; 2024 - PGPARS<br />Magic in Development
-            </p>
+        <div class="header" style="left: 0px">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
         </div>
     }
-    <div class="header">
-        <div class="headerContent">
-            <strong>Psychology Graduate Program Applicant Review System</strong>
-        </div>
-        <div class="headerLogo">
-            <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
-        </div>
-    </div>
 
     @RenderBody()
     
