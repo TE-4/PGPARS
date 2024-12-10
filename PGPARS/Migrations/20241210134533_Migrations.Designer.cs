@@ -12,11 +12,7 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:PGPARS/Migrations/20241206220951_Migrations.Designer.cs
-    [Migration("20241206220951_Migrations")]
-========
-    [Migration("20241210020120_Migrations")]
->>>>>>>> bb65c9f545139f2fada2ffa29feac57542f0cd9d:PGPARS/Migrations/20241210020120_Migrations.Designer.cs
+    [Migration("20241210134533_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />
@@ -415,10 +411,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FundingType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Scholarships")

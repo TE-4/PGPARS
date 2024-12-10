@@ -111,7 +111,6 @@ namespace PGPARS.Migrations
                 {
                     FundingID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cohort = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FundingType = table.Column<string>(type: "nvarchar(max)", nullable: true),
