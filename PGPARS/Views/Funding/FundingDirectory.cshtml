@@ -53,9 +53,23 @@
                         @foreach (var fund in Model)
                         {
                             <tr>
-                                <td class="text-center">@fund.Cohort</td>
-                                <td class="text-center">@fund.Source</td>
-                                <td class="text-center">@fund.Amount</td>
+                                <td> @fund.Cohort</td>
+                                <td>@fund.Source</td>
+                                <td>@fund.Amount?.ToString("C")</td>
+
+                                @*
+                                <td>
+                                @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
+                                {
+                                  @fund.Applicant.FullName
+                                }
+                                else
+                                {
+                                  <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
+                                }
+                                </td>
+                                *@
+
                                 <!-- Actions column -->
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
