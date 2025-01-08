@@ -17,14 +17,19 @@
             <a asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <a asp-action="Directory" asp-controller="Account">User Directory</a><br />
             <a asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
-            <a asp-action="Register" asp-controller="Account">Create Account</a><br />
-            <a asp-action="ApplicantUpload" asp-controller="FileUpload">Upload Applicant CSV</a><br />
-            <a asp-action="FacultyUpload" asp-controller="FileUpload">Upload Faculty CSV</a><br />
-            <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
+            <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />                        
             <p class="text-center sidenav-footer">
                 <a asp-action="Logout" asp-controller="Account">Logout</a>
                 &copy; 2024 - PGPARS<br />Magic in Development
             </p>
+        </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
         </div>
     }
     @if (User.Identity.IsAuthenticated && User.IsInRole("Committee"))
@@ -39,23 +44,26 @@
                 &copy; 2024 - PGPARS<br />Magic in Development
             </p>
         </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
+        </div>
     }
     @if (!User.Identity.IsAuthenticated)
     {
-        <div class="sidenav a">
-            <p class="text-center sidenav-footer">
-                &copy; 2024 - PGPARS<br />Magic in Development
-            </p>
+        <div class="header" style="left: 0px">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
         </div>
     }
-    <div class="header">
-        <div class="headerContent">
-            <strong>Psychology Graduate Program Applicant Review System</strong>
-        </div>
-        <div class="headerLogo">
-            <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
-        </div>
-    </div>
 
     @RenderBody()
     

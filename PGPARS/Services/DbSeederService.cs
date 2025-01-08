@@ -4,17 +4,25 @@ using System.Diagnostics;
 
 namespace PGPARS.Data
 {
-    public class DbSeeder
+    public class DbSeederService
     {
-        public static async Task SeedAdminUser(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public DbSeederService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager) 
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+
+        public async Task SeedRolesAndUsers()
         {
 
             Debug.WriteLine("Beginning Seeding process");
 
             // create the role "admin" if it does not already exist
-            if (!await roleManager.RoleExistsAsync("Admin"))
+            if (!await _roleManager.RoleExistsAsync("Admin"))
             {
-                var result = await roleManager.CreateAsync(new IdentityRole("Admin"));
+                var result = await _roleManager.CreateAsync(new IdentityRole("Admin"));
                 if (result.Succeeded)
                 {
                     Debug.WriteLine("Admin role created!");
@@ -23,9 +31,9 @@ namespace PGPARS.Data
             }
 
             // create the role "Faculty" if it does not already exist
-            if(!await roleManager.RoleExistsAsync("Faculty"))
+            if(!await _roleManager.RoleExistsAsync("Faculty"))
             {
-                var result = await roleManager.CreateAsync(new IdentityRole("Faculty"));
+                var result = await _roleManager.CreateAsync(new IdentityRole("Faculty"));
                 if (result.Succeeded)
                 {
                     Debug.WriteLine("Faculty role created!");
@@ -33,9 +41,9 @@ namespace PGPARS.Data
             }
 
             // create the role "Committee" if it does not already exist
-            if (!await roleManager.RoleExistsAsync("Committee"))
+            if (!await _roleManager.RoleExistsAsync("Committee"))
             {
-                var result = await roleManager.CreateAsync(new IdentityRole("Committee"));
+                var result = await _roleManager.CreateAsync(new IdentityRole("Committee"));
                 if (result.Succeeded)
                 {
                     Debug.WriteLine("Committee role created!");
@@ -43,9 +51,9 @@ namespace PGPARS.Data
             }
 
             // create the role "Staff" if it does not already exist
-            if (!await roleManager.RoleExistsAsync("Staff"))
+            if (!await _roleManager.RoleExistsAsync("Staff"))
             {
-                var result = await roleManager.CreateAsync(new IdentityRole("Staff"));
+                var result = await _roleManager.CreateAsync(new IdentityRole("Staff"));
                 if (result.Succeeded)
                 {
                     Debug.WriteLine("Staff role created!");
@@ -55,7 +63,7 @@ namespace PGPARS.Data
             // create the user if it doesn't already exist
             
             var email = "admin@admin.com";
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null) 
             {
                 Debug.WriteLine("Attempting to create new user...");
@@ -70,11 +78,11 @@ namespace PGPARS.Data
                     MainRole = "Admin"
                 };
 
-                var result = await userManager.CreateAsync(newUser, "Admin@1234");
+                var result = await _userManager.CreateAsync(newUser, "Admin@1234");
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(newUser, "Admin");
+                    await _userManager.AddToRoleAsync(newUser, "Admin");
                     Debug.WriteLine("User successfully created!");
 
                 }
@@ -91,7 +99,7 @@ namespace PGPARS.Data
 
             //Committee Tester
             email = "com@com.com";
-            user = await userManager.FindByEmailAsync(email);
+            user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 Debug.WriteLine("Attempting to create new user...");
@@ -106,11 +114,11 @@ namespace PGPARS.Data
                     MainRole = "Committee"
                 };
 
-                var result = await userManager.CreateAsync(newUser, "Com@1234");
+                var result = await _userManager.CreateAsync(newUser, "Com@1234");
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(newUser, "Committee");
+                    await _userManager.AddToRoleAsync(newUser, "Committee");
                     Debug.WriteLine("User successfully created!");
 
                 }
@@ -127,7 +135,7 @@ namespace PGPARS.Data
 
             //Faculty Tester
             email = "Fac@Fac.com";
-            user = await userManager.FindByEmailAsync(email);
+            user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 Debug.WriteLine("Attempting to create new user...");
@@ -142,11 +150,11 @@ namespace PGPARS.Data
                     MainRole = "Faculty"
                 };
 
-                var result = await userManager.CreateAsync(newUser, "Fac@1234");
+                var result = await _userManager.CreateAsync(newUser, "Fac@1234");
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(newUser, "Faculty");
+                    await _userManager.AddToRoleAsync(newUser, "Faculty");
                     Debug.WriteLine("User successfully created!");
 
                 }

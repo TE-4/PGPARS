@@ -1,35 +1,48 @@
-﻿@model AppUser
+﻿@model LinkedApplicantsViewModel
 
-@{
-    ViewBag.Title = "Linked Applicants";
-    var applicants = ViewBag.LinkedApplicants;
-}
 <head>
+    <link rel="stylesheet" href="~/css/altsite.css" />
     <style>
-        <link rel="stylesheet" href="~/css/flatly.css" />
+       
+
+        .applicant-card {
+            background-color: white;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .applicant-card h5 {
+                margin-bottom: 8px;
+            }
     </style>
 </head>
+
 <body>
-<div class="container mt-4">      
-        <h2>Linked Applicants</h2>
-        <h3><strong>Committee/Faculty:</strong> @Model.FirstName @Model.LastName</h3>
+    <div class="container mt-4">
+        <h2 class="mb-4">Linked Applicants</h2>
+        <h3><strong>Committee/Faculty:</strong> @Model.User.FirstName @Model.User.LastName</h3>
         <hr />
-    @if(applicants != null){
-    @foreach(var applicant in applicants)
-    {
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label>@applicant.FirstName @applicant.LastName</label>
-            </div>
-            <div class="col-md-6">
-                <label>@applicant.Nnumber</label>
-            </div>
-        </div>
-    }
-    }
-    else
-    {
-        <p>No applicants linked to this user.</p>
-    }
-</div>
+
+        @if (Model.LinkedApplicants != null && Model.LinkedApplicants.Any())
+        {
+            @foreach (var applicant in Model.LinkedApplicants)
+            {
+                <div class="applicant-card">
+                    <h5>@applicant.FirstName @applicant.LastName</h5>
+                    <p><strong>N-Number:</strong> @applicant.Nnumber</p>
+                    <p><strong>Email:</strong> @applicant.email</p>
+                    <p><strong>Phone:</strong> @applicant.Phone</p>
+                    <p><strong>Mentor(if any):</strong> @applicant.Mentor1</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No applicants linked to this user.</p>
+        }
+    </div>
 </body>

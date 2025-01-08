@@ -7,6 +7,8 @@ using PGPARS.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using PGPARS.Data;
+using System.Threading.Tasks;
 
 namespace PGPARS.Controllers
 {
@@ -15,14 +17,17 @@ namespace PGPARS.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;  
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IApplicantRepository _applicantRepository;
 
-        
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager
+            , IApplicantRepository applicantRepo)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
+            _applicantRepository = applicantRepo;
         }
 
         private IActionResult RedirectBasedOnRole()
@@ -139,8 +144,6 @@ namespace PGPARS.Controllers
         }
 
 
-        // Add search bar functionality to Directory method or new method
-        // Add filters
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -192,13 +195,31 @@ namespace PGPARS.Controllers
                 return View(model);
             }
 
-            // Update user details (other fields)
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email;
-            user.Nnumber = model.Nnumber;
-            user.MainRole = model.Role;
-            user.Position = model.Position;
+            // if role is changed, remove the user from the old role and add to the new role
+            if (user.MainRole != model.Role)
+            {
+                // remove them from their current role
+                await _userManager.RemoveFromRoleAsync(user, user.MainRole);
+                var role = await _roleManager.FindByNameAsync(model.Role);
+                if (role != null)
+                {
+                    await _userManager.AddToRoleAsync(user, role.Name);
+                }
+            }
+
+                // Update user details (other fields)
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.Nnumber = model.Nnumber;
+                user.MainRole = model.Role;
+                user.Position = model.Position;
+
+
+           
+               
+           
+
 
             // Check if the password fields are populated for change
             if (!string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword))
@@ -284,22 +305,28 @@ namespace PGPARS.Controllers
         }
 
         // This method will display the linked applicants for a user
-        public async Task<IActionResult> LinkedApplicants(string id)
+        public async Task<IActionResult> LinkedApplicants(string email)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 return NotFound();
             }
 
-            // Get applicants that are linked to the User here
-            //var linkedApplicants = await GetLinkedApplicants(user.Id);
+            var linkedApplicants = _applicantRepository.GetApplicants()
+                .Where(a => a.Reviewer1 == user.ShortName || a.Reviewer2 == user.ShortName)
+                .ToList();
+            Debug.WriteLine($"Linked Applicants Count: {linkedApplicants.Count}");
+            var viewModel = new LinkedApplicantsViewModel
+            {
+                User = user,
+                LinkedApplicants = linkedApplicants
+            };
 
-            // Pass the linkedApplicants to the view
-            //ViewData["LinkedApplicants"] = linkedApplicants;
-
-            return View(user);
+            return View(viewModel);
         }
+
+
 
 
         // This method will filter the users by search query and filter by role

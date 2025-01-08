@@ -22,6 +22,21 @@ namespace PGPARS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.Property<string>("AssignedApplicantsNnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignedReviewersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AssignedApplicantsNnumber", "AssignedReviewersId");
+
+                    b.HasIndex("AssignedReviewersId");
+
+                    b.ToTable("AppUserApplicant");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -409,6 +424,21 @@ namespace PGPARS.Migrations
                     b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
+                });
+
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.HasOne("PGPARS.Models.Applicant", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedApplicantsNnumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PGPARS.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedReviewersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

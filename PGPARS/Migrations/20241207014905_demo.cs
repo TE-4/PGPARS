@@ -5,7 +5,7 @@
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class tes123 : Migration
+    public partial class demo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

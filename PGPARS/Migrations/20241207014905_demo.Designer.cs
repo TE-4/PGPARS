@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241206005742_RemoveApplicantFromFunding")]
-    partial class RemoveApplicantFromFunding
+    [Migration("20241207014905_demo")]
+    partial class demo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace PGPARS.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.Property<string>("AssignedApplicantsNnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignedReviewersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AssignedApplicantsNnumber", "AssignedReviewersId");
+
+                    b.HasIndex("AssignedReviewersId");
+
+                    b.ToTable("AppUserApplicant");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -412,6 +427,21 @@ namespace PGPARS.Migrations
                     b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
+                });
+
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.HasOne("PGPARS.Models.Applicant", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedApplicantsNnumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PGPARS.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedReviewersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
