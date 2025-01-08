@@ -12,7 +12,9 @@ namespace PGPARS.Models
         public string? FundingType { get; set; } // Type of funding (e.g., grant, scholarship)
         public double? Stipends { get; set; } // Amount allocated for stipends
         public double? Scholarships { get; set; } // Amount allocated for scholarships
-        public double? Amount { get; set; } // Total fundable amount
+
+        [DataType(DataType.Currency)]
+        public decimal? Amount { get; set; } // Total fundable amount
         public DateTime DateAdded { get; set; } = DateTime.UtcNow; // Timestamp when the funding was added
         public DateTime DateModified { get; set; } = DateTime.UtcNow; // Timestamp when the funding was last modified
         public string? Comment { get; set; } // Additional notes or comments
