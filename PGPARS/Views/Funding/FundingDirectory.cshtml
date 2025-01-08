@@ -52,9 +52,9 @@
                         @foreach (var fund in Model)
                         {
                             <tr>
-                                <td class="text-center">@fund.Cohort</td>
-                                <td class="text-center">@fund.Source</td>
-                                <td class="text-center">@fund.Amount</td>
+                                <td> @fund.Cohort</td>
+                                <td>@fund.Source</td>
+                                <td>@fund.Amount?.ToString("C")</td>
 
                                 @*
                                 <td>
