@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PGPARS.Data;
 
@@ -11,9 +12,11 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250109215139_UpdateFundingApplicantModels")]
+    partial class UpdateFundingApplicantModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -392,6 +395,9 @@ namespace PGPARS.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ApplicantNnumber")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -408,7 +414,7 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nnumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
@@ -421,7 +427,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("Nnumber");
+                    b.HasIndex("ApplicantNnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -496,7 +502,7 @@ namespace PGPARS.Migrations
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("Nnumber");
+                        .HasForeignKey("ApplicantNnumber");
 
                     b.Navigation("Applicant");
                 });
