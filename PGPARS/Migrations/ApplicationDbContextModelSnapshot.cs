@@ -392,9 +392,6 @@ namespace PGPARS.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ApplicantNnumber")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -410,6 +407,9 @@ namespace PGPARS.Migrations
                     b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Nnumber")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -421,7 +421,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("ApplicantNnumber");
+                    b.HasIndex("Nnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -494,9 +494,11 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.HasOne("PGPARS.Models.Applicant", null)
+                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("ApplicantNnumber");
+                        .HasForeignKey("Nnumber");
+
+                    b.Navigation("Applicant");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>

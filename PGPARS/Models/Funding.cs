@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PGPARS.Models
 {
@@ -20,9 +21,14 @@ namespace PGPARS.Models
         public DateTime DateModified { get; set; } = DateTime.UtcNow; // Timestamp when the funding was last modified
         public string? Comment { get; set; } // Additional notes or comments
 
-     //   public string? Nnumber { get; set; } // Foreign key property
+
+        // Foreign key for Applicant
+        [ForeignKey("Applicant")]
+        public string? Nnumber { get; set; } // Foreign key property (must match Applicant primary key type)
 
         // Navigation property for Applicant
-      //  public Applicant? Applicant { get; set; }
+        public Applicant? Applicant { get; set; }
+
+
     }
 }

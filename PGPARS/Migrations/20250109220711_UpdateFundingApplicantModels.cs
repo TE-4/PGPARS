@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class UpdateFundingApplicantModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -116,18 +116,18 @@ namespace PGPARS.Migrations
                     FundingType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Stipends = table.Column<double>(type: "float", nullable: true),
                     Scholarships = table.Column<double>(type: "float", nullable: true),
-                    Amount = table.Column<double>(type: "float", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApplicantNnumber = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Fundings", x => x.FundingID);
                     table.ForeignKey(
-                        name: "FK_Fundings_Applicants_ApplicantNnumber",
-                        column: x => x.ApplicantNnumber,
+                        name: "FK_Fundings_Applicants_Nnumber",
+                        column: x => x.Nnumber,
                         principalTable: "Applicants",
                         principalColumn: "Nnumber");
                 });
@@ -307,9 +307,9 @@ namespace PGPARS.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fundings_ApplicantNnumber",
+                name: "IX_Fundings_Nnumber",
                 table: "Fundings",
-                column: "ApplicantNnumber");
+                column: "Nnumber");
         }
 
         /// <inheritdoc />

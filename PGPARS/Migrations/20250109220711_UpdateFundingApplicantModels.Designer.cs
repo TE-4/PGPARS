@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241210193916_Migrations")]
-    partial class Migrations
+    [Migration("20250109220711_UpdateFundingApplicantModels")]
+    partial class UpdateFundingApplicantModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -392,11 +392,8 @@ namespace PGPARS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FundingID"));
 
-                    b.Property<double?>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ApplicantNnumber")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
@@ -413,6 +410,9 @@ namespace PGPARS.Migrations
                     b.Property<string>("FundingType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Nnumber")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -424,7 +424,7 @@ namespace PGPARS.Migrations
 
                     b.HasKey("FundingID");
 
-                    b.HasIndex("ApplicantNnumber");
+                    b.HasIndex("Nnumber");
 
                     b.ToTable("Fundings");
                 });
@@ -497,9 +497,11 @@ namespace PGPARS.Migrations
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
-                    b.HasOne("PGPARS.Models.Applicant", null)
+                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
-                        .HasForeignKey("ApplicantNnumber");
+                        .HasForeignKey("Nnumber");
+
+                    b.Navigation("Applicant");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>

@@ -57,7 +57,7 @@
                                 <td>@fund.Source</td>
                                 <td>@fund.Amount?.ToString("C")</td>
 
-                                @*
+                                
                                 <td>
                                 @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
                                 {
@@ -68,8 +68,7 @@
                                   <a asp-action="Assign" asp-route-fundingId="@fund.FundingID" class="btn btn-primary">Assign</a>
                                 }
                                 </td>
-                                *@
-
+                                
                                 <!-- Actions column -->
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
