@@ -6,7 +6,7 @@ namespace PGPARS.Data
     {
         private List<Review> _reviewList = new List<Review>
         {
-            new Review { FullName = "Buh, Jimmy" , NNumber = "01234567", ReviewId = 1 , Status = "Accepted"}
+            new Review { FullName = "Buh, Jimmy" , NNumber = "01234567", ReviewNumber = 1 , Status = "Accepted"}
         };
         public IEnumerable<Review> GetReviews()
         {
@@ -14,16 +14,16 @@ namespace PGPARS.Data
         }
         public Review GetReviewById(int reviewId)
         {
-            return _reviewList.FirstOrDefault(r => r.ReviewId == reviewId);
+            return _reviewList.FirstOrDefault(r => r.ReviewNumber == reviewId);
         }
         public void AddReview(Review review)
         {
-            review.ReviewId = _reviewList.Max(r => r.ReviewId) + 1; //new id
+            review.ReviewNumber = _reviewList.Max(r => r.ReviewNumber) + 1; //new id
             _reviewList.Add(review);
         }
         public void UpdateReview(Review review)
         {
-            var existingReview = _reviewList.FirstOrDefault(r => r.ReviewId == review.ReviewId);
+            var existingReview = _reviewList.FirstOrDefault(r => r.ReviewNumber == review.ReviewNumber);
             if (existingReview != null)
             {
                 existingReview.Status = review.Status;
@@ -31,7 +31,7 @@ namespace PGPARS.Data
         }
         public void DeleteReview(int reviewId)
         {
-            var review = _reviewList.FirstOrDefault(r => r.ReviewId == reviewId);
+            var review = _reviewList.FirstOrDefault(r => r.ReviewNumber == reviewId);
             if (review != null)
             {
                 _reviewList.Remove(review);

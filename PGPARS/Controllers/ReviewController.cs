@@ -39,7 +39,7 @@ namespace PGPARS.Controllers;
             }
         var model = new Review
         {
-            ReviewId = id,
+            ReviewNumber = review.ReviewNumber,
             NNumber = review.NNumber,
             FullName = review.FullName,
             Email = review.Email,
@@ -65,6 +65,7 @@ namespace PGPARS.Controllers;
             DecRec = review.DecRec,
             FollowUp = review.FollowUp,
             FinalComments = review.FinalComments,
+            Applicant = review.Applicant,
         };
             
             return Task.FromResult<IActionResult>(View(model)); //return with form for editing
