@@ -54,14 +54,14 @@
             </div>
 
             <!-- Amount -->
-        <div class="form-group">
+        <div  <div class="mb-3 text-center">
             <label for="Amount">Amount</label>
-            <input type="number" step="0.01" class="form-control" id="Amount" name="Amount" required />
+            <input type="number" step="0.01" class="form-control w-50 mx-auto" id="Amount" name="Amount" required />
         </div>
         <!-- Stipends -->
-            <div class="form-group">
+             <div class="mb-3 text-center">
                 <label for="Stipends">Stipends</label>
-                <input type="number" class="form-control" id="Stipends" name="Stipends" />
+                <input type="number" class="form-control w-50 mx-auto" id="Stipends" name="Stipends" />
             </div>
 
             <!-- Scholarships -->
@@ -77,11 +77,15 @@
             </div>
 
             <input type="hidden" asp-for="FundingID" />
-            <!-- Submit Button -->
-            <div class="text-center">
-                <button type="submit" class="btn btn-success btn-lg">
-                    <i class="bi bi-plus-circle"></i> Add Funding
-                </button>
-            </div>
+                <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content-center gap-2 mt-3">
+            <button type="submit" class="btn btn-success btn-sm">
+                <i class="bi bi-plus-circle"></i> Add Funding
+            </button>
+            <a asp-action="FundingDirectory" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Cancel
+            </a>
+        </div>
+
         </form>
 </div>
