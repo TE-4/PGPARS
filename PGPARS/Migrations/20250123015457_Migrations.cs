@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,8 +27,8 @@ namespace PGPARS.Migrations
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reviewer1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reviewer2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rev1Decision = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rev2Decision = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rev1Decision = table.Column<bool>(type: "bit", nullable: true),
+                    Rev2Decision = table.Column<bool>(type: "bit", nullable: true),
                     RevAgree = table.Column<bool>(type: "bit", nullable: true),
                     CommitteeReview = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -52,8 +52,8 @@ namespace PGPARS.Migrations
                     LORComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OverallFitQuality = table.Column<int>(type: "int", nullable: true),
                     OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DecRec = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FollowUp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DecRec = table.Column<bool>(type: "bit", nullable: true),
+                    FollowUp = table.Column<bool>(type: "bit", nullable: true),
                     FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

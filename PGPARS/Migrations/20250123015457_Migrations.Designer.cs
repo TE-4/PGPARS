@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250120194252_first")]
-    partial class first
+    [Migration("20250123015457_Migrations")]
+    partial class Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,8 +277,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("CrsReqComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DecRec")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("DecRec")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FinalComments")
                         .HasColumnType("nvarchar(max)");
@@ -286,8 +286,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FollowUp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("FollowUp")
+                        .HasColumnType("bit");
 
                     b.Property<string>("GPAComment")
                         .HasColumnType("nvarchar(max)");
@@ -346,11 +346,11 @@ namespace PGPARS.Migrations
                     b.Property<int?>("ResumeQuality")
                         .HasColumnType("int");
 
-                    b.Property<string>("Rev1Decision")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Rev1Decision")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Rev2Decision")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Rev2Decision")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("RevAgree")
                         .HasColumnType("bit");

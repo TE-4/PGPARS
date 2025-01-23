@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using PGPARS.Services;
 using PGPARS.Data;
 using PGPARS.Models;
-using PGPARS.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,10 +63,12 @@ using (var scope = app.Services.CreateScope())
     var DbSeeder = services.GetRequiredService<DbSeederService>();
     DbSeeder.SeedRolesAndUsers().Wait();
 
-    var AssignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
-    AssignApplicants.AssignReviewers().Wait();
+    if (app.Environment.IsProduction())
+    {
+        var assignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
+        assignApplicants.AssignReviewers().Wait();
+    }
 }
-
 
 // add MapControllerRoute here
 

@@ -1,9 +1,11 @@
 ﻿@model PGPARS.Models.Applicant
 <div class="main">
     <div class="container-opaque d-flex justify-content-between align-items-center">
-        <form method="get" asp-controller="Applicant" asp-action="EditApplicant" asp-route-Nnumber="@Model.Nnumber">
-            <button type="submit" class="btn btn-edit">Edit</button>
-        </form>
+        <a asp-action="EditApplicant" asp-controller="Applicant" asp-route-Nnumber="@Model.Nnumber" style="text-decoration: none;">
+            <button type="submit" class="btn btn-secondary btn-lg">
+                <div class="bi bi-pencil">&ensp;Edit</div>
+            </button>
+        </a>
         <div class="text-center p-2">
             <strong>@Model.FullName</strong>
         </div>
