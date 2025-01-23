@@ -12,7 +12,7 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250123015457_Migrations")]
+    [Migration("20250123192237_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />
