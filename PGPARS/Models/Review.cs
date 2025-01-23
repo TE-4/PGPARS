@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PGPARS.Models
@@ -6,7 +7,7 @@ namespace PGPARS.Models
     public class Review
     {
         [Key]
-        public int? ReviewNumber { get; set; } // number
+        public int ReviewNumber { get; set; } // review number
 
         public string? NNumber { get; set; } // n number
 

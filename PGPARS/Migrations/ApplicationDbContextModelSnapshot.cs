@@ -426,6 +426,99 @@ namespace PGPARS.Migrations
                     b.ToTable("Fundings");
                 });
 
+            modelBuilder.Entity("PGPARS.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewNumber"));
+
+                    b.Property<double?>("AllGPA")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ApplicantNnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CourseReqComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("CourseReqMet")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("DecRec")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinalComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("FollowUp")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GPAComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LORComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LORQuality")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LORRelevance")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LetterQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OverallFitComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OverallFitQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("PsychGPA")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ResExpQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResumeComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ResumeQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reviewer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WritingSampleComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WritingSampleQuality")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReviewNumber");
+
+                    b.HasIndex("ApplicantNnumber");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("AppUserApplicant", b =>
                 {
                     b.HasOne("PGPARS.Models.Applicant", null)
@@ -497,6 +590,15 @@ namespace PGPARS.Migrations
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
                         .HasForeignKey("Nnumber");
+
+                    b.Navigation("Applicant");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.Review", b =>
+                {
+                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantNnumber");
 
                     b.Navigation("Applicant");
                 });
