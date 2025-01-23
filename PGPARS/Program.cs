@@ -63,11 +63,11 @@ using (var scope = app.Services.CreateScope())
     var DbSeeder = services.GetRequiredService<DbSeederService>();
     DbSeeder.SeedRolesAndUsers().Wait();
 
-    if (app.Environment.IsProduction())
-    {
-        var assignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
-        assignApplicants.AssignReviewers().Wait();
-    }
+    
+    
+    var assignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
+    assignApplicants.AssignReviewers().Wait();
+    
 }
 
 // add MapControllerRoute here
