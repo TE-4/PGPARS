@@ -23,7 +23,7 @@ builder.Services.AddScoped<IApplicantRepository, ApplicantRepository>();
 builder.Services.AddScoped<IFundingRepository, FundingRepository>();
 
 // Register the ReviewRepository with the interface; change me later x)
-builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 // Register custom services
 builder.Services.AddTransient<CsvService>();

@@ -23,10 +23,10 @@
                         <td>@review.FullName</td>
                         <td>@review.NNumber</td>
                         <td>@review.Status</td>
-                        <td>@review.ReviewId</td>
+                        <td>@review.ReviewNumber</td>
                         <td>
-                            <a asp-action="EditReview" asp-route-id="@review.ReviewId" class="btn btn-warning">Edit</a>
-                            <form asp-action="DeleteReview" asp-route-id="@review.ReviewId" method="post" style="display:inline;">
+                            <a asp-action="EditReview" asp-route-id="@review.ReviewNumber" class="btn btn-warning">Edit</a>
+                            <form asp-action="DeleteReview" asp-route-id="@review.ReviewNumber" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="return confirm('Are you sure you want to delete this Review?');">
                                     Delete
