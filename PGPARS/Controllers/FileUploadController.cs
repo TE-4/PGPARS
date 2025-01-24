@@ -41,15 +41,16 @@ namespace PGPARS.Controllers
                         var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
                         // add applicants to the Applicant Table
                         _applicantRepo.AddApplicants(applicants);
+                        TempData["SuccessMessage"] = $"{applicants.Count} applicants have been added successfully.";
                         return RedirectToAction("ApplicantDirectory", "Applicant");
                     }
                     catch (ApplicationException ex)
                     {
-                        ModelState.AddModelError(string.Empty, ex.Message);
+                        TempData["ErrorMessage"] = ex.Message;
                     }
                     catch (Exception ex)
                     {
-                        ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                        TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
                     }
                 }
             }

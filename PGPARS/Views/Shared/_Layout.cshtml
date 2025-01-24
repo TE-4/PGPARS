@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PGPARS</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/altsite.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
 <body>
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -18,7 +18,8 @@
             <a asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <a asp-action="Directory" asp-controller="Account">User Directory</a><br />
             <a asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
-            <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />                        
+            <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />    
+            <a asp-action="AuditLog" asp-controller="Audit">Action History</a>
             <p class="text-center sidenav-footer">
                 <a asp-action="Logout" asp-controller="Account">Logout</a>
                 <br/>
@@ -73,6 +74,28 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        window.onload = function () {
+            const errorMessage = '@TempData["ErrorMessage"]';
+            const successMessage = '@TempData["SuccessMessage"]';
+
+            if (errorMessage) {
+                toastr.error(errorMessage); // Display error messages
+            }
+
+            if (successMessage) {
+                toastr.success(successMessage); // Display success messages
+            }
+        };
+    </script>
+
+
+
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>
