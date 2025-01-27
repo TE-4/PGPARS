@@ -78,6 +78,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    
     <script>
         toastr.options = {
             "positionClass": "toast-top-center", // Positions the toast at the top center
@@ -91,7 +92,7 @@
             "hideMethod": "fadeOut"
         };
 
-    <script>
+    
         window.onload = function () {
             const errorMessage = '@TempData["ErrorMessage"]';
             const successMessage = '@TempData["SuccessMessage"]';
@@ -104,6 +105,7 @@
                 toastr.success(successMessage); // Display success messages
             }
         };
+
     </script>
 
 

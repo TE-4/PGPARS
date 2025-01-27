@@ -15,7 +15,6 @@ namespace PGPARS.Controllers
         private readonly CsvService _csvService;
         private readonly IApplicantRepository _applicantRepo;
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
         public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager)
         {
@@ -54,7 +53,7 @@ namespace PGPARS.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Please select a valid CSV file.");
             }
-            return View();
+            return RedirectToAction("ApplicantDirectory", "Applicant");
         }
 
 
