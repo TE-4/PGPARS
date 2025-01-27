@@ -37,9 +37,9 @@
                     <a asp-action="Register" asp-controller="Account" class="btn btn-success">
                         <i class="bi bi-person-plus"></i> Add New User
                     </a>
-                    <a asp-action="facultyUpload" asp-controller="FileUpload" class="btn btn-success">
-                        <i class="bi bi-upload"></i>&nbsp;Import CSV
-                    </a>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    <div class="bi bi-upload">&ensp;Import CSV</div>
+                </button>
                 </div>
             </div>
 
@@ -105,5 +105,27 @@
             </div>
         </div>
     </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload Applicants</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for CSV upload -->
+                    <form asp-controller="FileUpload" asp-action="FacultyUpload" method="post" enctype="multipart/form-data">
+                        <div class="form-group mb-4">
+                            <label for="csvFile" class="form-label"><strong>Choose CSV File(Faculty User List):</strong></label>
+                            <input type="file" id="csvFile" name="csvFile" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </body>

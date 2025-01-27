@@ -8,6 +8,7 @@
         </div>
         <br />
         <div class="d-flex justify-content-between align-items-center">
+
             <!-- Upload CSV button that triggers the modal -->
             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal">
                 <div class="bi bi-upload">&ensp;Import CSV</div>
@@ -93,7 +94,7 @@
                     <!-- Form for CSV upload -->
                     <form asp-controller="FileUpload" asp-action="ApplicantUpload" method="post" enctype="multipart/form-data">
                         <div class="form-group mb-4">
-                            <label for="csvFile" class="form-label"><strong>Choose CSV File:</strong></label>
+                            <label for="csvFile" class="form-label"><strong>Choose CSV File(GDP_Applicant..):</strong></label>
                             <input type="file" id="csvFile" name="csvFile" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Upload</button>

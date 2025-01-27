@@ -23,11 +23,7 @@ namespace PGPARS.Controllers
             _applicantRepo = applicantRepo;
             _userManager = userManager;
         }
-       
-        public IActionResult ApplicantUpload()
-        {
-            return View();
-        }
+          
 
         [HttpPost]
         public IActionResult ApplicantUpload(IFormFile csvFile)
@@ -61,10 +57,7 @@ namespace PGPARS.Controllers
             return View();
         }
 
-        public IActionResult FacultyUpload()
-        {
-            return View();
-        }
+
 
 
         [HttpPost]
@@ -72,12 +65,11 @@ namespace PGPARS.Controllers
         {
             if (csvFile == null || csvFile.Length == 0)
             {
-                // if file is null or empty, add error 
-                ModelState.AddModelError(string.Empty, "Please select a valid CSV file.");
-                return View();
+                // Return to the User Directory or display an error
+                TempData["ErrorMessage"] = "Please select a valid CSV file.";
+                return RedirectToAction("Directory", "Account"); 
             }
 
-            // create list of potential errors to display 
             var errors = new List<string>();
 
             using (var stream = csvFile.OpenReadStream())
@@ -86,10 +78,8 @@ namespace PGPARS.Controllers
                 {
                     var faculties = _csvService.ReadCsvFile<AppUser>(stream, new FacultyMap()).ToList();
 
-                    // by this point, the faculties list is populated with AppUser objects from the FacultyUser File; Need to Debug further to get this to work correctly
                     foreach (var faculty in faculties)
                     {
-                        // Check if user with the same email already exists
                         var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
                         if (userExists != null)
                         {
@@ -97,12 +87,8 @@ namespace PGPARS.Controllers
                             continue;
                         }
 
-                        // fill in required properties for the AppUser object
                         faculty.UserName = faculty.Email;
                         faculty.MainRole = "Faculty";
-
-                        
-                        // Create the user
 
                         var result = await _userManager.CreateAsync(faculty, "Password123!");
                         if (!result.Succeeded)
@@ -111,7 +97,6 @@ namespace PGPARS.Controllers
                             continue;
                         }
 
-                        // Assign the "Faculty" role
                         var roleResult = await _userManager.AddToRoleAsync(faculty, "Faculty");
                         if (!roleResult.Succeeded)
                         {
@@ -121,23 +106,19 @@ namespace PGPARS.Controllers
 
                     if (errors.Any())
                     {
-                        ModelState.AddModelError(string.Empty, string.Join("<br>", errors));
-                        return View();
+                        TempData["ErrorMessage"] = string.Join("<br>", errors);
+                        return RedirectToAction("Directory", "Account"); 
                     }
 
-                    return View("Directory", "Account");
-                }
-                catch (ApplicationException ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
+                    TempData["SuccessMessage"] = $"{faculties.Count} faculty members uploaded successfully.";
+                    return RedirectToAction("Directory", "Account"); 
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                    TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+                    return RedirectToAction("Directory", "Account"); 
                 }
             }
-
-            return View("Directory", "Account");
         }
 
 
