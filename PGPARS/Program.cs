@@ -56,7 +56,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-// create a scope that uses services to create admin user and user roles on startup
+// create a scope that uses services to create default users and user roles on startup
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -69,8 +69,6 @@ using (var scope = app.Services.CreateScope())
     assignApplicants.AssignReviewers().Wait();
     
 }
-
-// add MapControllerRoute here
 
 app.MapControllerRoute(
     name: "default",
