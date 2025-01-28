@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using PGPARS.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace PGPARS.Controllers
 {
@@ -35,8 +36,8 @@ namespace PGPARS.Controllers
                     {
                         var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
                         // add applicants to the Applicant Table
-                        _applicantRepo.AddApplicants(applicants);
-                        TempData["SuccessMessage"] = $"{applicants.Count} applicants have been added successfully.";
+                        var uploadCount = _applicantRepo.AddApplicants(applicants);
+                        TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
                         return RedirectToAction("ApplicantDirectory", "Applicant");
                     }
                     catch (ApplicationException ex)
@@ -51,7 +52,7 @@ namespace PGPARS.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Please select a valid CSV file.");
+                TempData["ErrorMessage"] = "Please select a valid CSV file.";
             }
             return RedirectToAction("ApplicantDirectory", "Applicant");
         }
@@ -69,20 +70,23 @@ namespace PGPARS.Controllers
                 return RedirectToAction("Directory", "Account"); 
             }
 
-            var errors = new List<string>();
+            
 
             using (var stream = csvFile.OpenReadStream())
             {
                 try
                 {
                     var faculties = _csvService.ReadCsvFile<AppUser>(stream, new FacultyMap()).ToList();
+                    int uploadCount = 0; // This is to keep track of how many users are uploaded successfully for the Toastr notification
 
                     foreach (var faculty in faculties)
                     {
+                        // check if the user already exists in our AspNetUsers table
                         var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
+
+                        // if the user does already exist, we skip this iteration in our loop to prevent duplicates in our database
                         if (userExists != null)
-                        {
-                            errors.Add($"A user with the N-Number {faculty.Nnumber} already exists.");
+                        {                            
                             continue;
                         }
 
@@ -92,24 +96,24 @@ namespace PGPARS.Controllers
                         var result = await _userManager.CreateAsync(faculty, "Password123!");
                         if (!result.Succeeded)
                         {
-                            errors.Add($"Failed to create user {faculty.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                             continue;
                         }
 
                         var roleResult = await _userManager.AddToRoleAsync(faculty, "Faculty");
                         if (!roleResult.Succeeded)
                         {
-                            errors.Add($"Failed to assign role to user {faculty.Email}: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                            Debug.WriteLine("Error adding role to user");
+                        }
+                        else
+                        {
+                            // if everything has succeeded this far, we can increment our upload count
+                            uploadCount++;
                         }
                     }
 
-                    if (errors.Any())
-                    {
-                        TempData["ErrorMessage"] = string.Join("<br>", errors);
-                        return RedirectToAction("Directory", "Account"); 
-                    }
+                  
 
-                    TempData["SuccessMessage"] = $"{faculties.Count} faculty members uploaded successfully.";
+                    TempData["SuccessMessage"] = $"{uploadCount} faculty members uploaded successfully.";
                     return RedirectToAction("Directory", "Account"); 
                 }
                 catch (Exception ex)
