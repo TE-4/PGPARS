@@ -21,6 +21,7 @@ body, html {
     background-position: center;
     background-repeat: no-repeat;
     color: white;
+    margin: 5px;
 }
 
 /* Will Fix this later */
@@ -39,30 +40,35 @@ body, html {
     background-color:darkred;
     transform: scale(1.10);
 }
-.btn:focus,
-.btn:active:focus,
-.btn-link.nav-link:focus,
-.form-control:focus,
-.form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-/*TEST*/
-.btn {
-    color: white;
-    background-color: #0d215f;
-    border: none;
+.btn btn-lg {
+    color:white;
+    border: 2px solid black;
     padding: 5px 10px;
     border-radius: 5px;
     text-decoration: underline rgba(0, 0, 0, 0.1);
+    text-shadow: -2px -2px 0 black, 
+         2px -2px 0 black, 
+        -2px  2px 0 black, 
+         2px  2px 0 black, 
+        -1px -1px 0 black, 
+         1px -1px 0 black, 
+        -1px  1px 0 black, 
+         1px  1px 0 black;
 }
-
 .btn-edit {
     margin-left: 15px;
 }
-
 .btn-delete {
     margin-right: 15px;
     background-color: #dc3545;
+}
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.btn-lg:hover,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 /*CONTAINERS*/
@@ -72,7 +78,8 @@ body, html {
 .container-opaque {
     background-color: rgb(128, 128, 128, 0.6);
     padding: 0px;
-    border: 1px solid black;
+    border: 0px solid black;
+    border-radius: 15px;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -123,11 +130,11 @@ body, html {
     padding: 20px;
     background-color: rgba(128, 128, 128, 0.6); /* Similar to container-opaque */
     color: white;
-    border-radius: 5px;
+    border-radius: 15px;
     margin: 5px;
     min-height: 30px;
+    /*max-height: 400px;*/
 }
-/**/
 
 .flex-container {
     display: flex;
@@ -138,6 +145,17 @@ body, html {
 /*FOOTER*/
 .footer {
     
+}
+
+/*LOGIN*/
+.form-box {
+    background-color: rgba(128, 128, 128, 0.6);
+    padding: 0px;
+    border: 0px solid black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /*GRIDS*/
@@ -192,26 +210,35 @@ body, html {
 }
 
 /*LOGIN*/
-#loginForm {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+.loginBody {
+    margin: 0;
+    padding: 0;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 70vh;
 }
 .loginContainer {
     width: 100%;
     max-width: 500px;
     padding: 2rem;
     border-radius: 10px;
-    border: 3px solid #ddd;
+    border: 2px solid black;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: lavender;
+    background-color: rgb(128, 128, 128, 0.6);
     color: black;
-
 }
-.loginContainer h1 {
+.loginContainer .h1 {
     text-align: center;
     margin-bottom: 1.5rem;
+}
+.loginContainer .hr {
+    border: none;
+    border-top: 3px solid black;
+    margin: 10px 0;
+    width: 100%; /* Adjust the width as needed */
+    align-self: center;
+    color: black;
 }
 .loginContainer .btn-primary {
     width:40%;
@@ -225,6 +252,12 @@ body, html {
 }
 .loginContainer .btn-primary:hover {
     background-color: green;
+}
+.loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 30vh;
 }
 
 /*MAIN*/
@@ -314,13 +347,31 @@ body, html {
 }
 .table th, .table td {
     padding: 5px;
-    text-align: left;
+    text-align: center;
     color: white;
     border: 2px solid black;
+    text-shadow: -2px -2px 0 black, 
+         2px -2px 0 black, 
+        -2px  2px 0 black, 
+         2px  2px 0 black, 
+        -1px -1px 0 black, 
+         1px -1px 0 black, 
+        -1px  1px 0 black, 
+         1px  1px 0 black; /* Bottom-right shadow */
 }
 .th {
     background-color: #0d215f;
+    text-align: center;
 }
 .tableHover:hover{
     background-color: #0d215f;
+}
+
+/* TExT */
+.text-outline {
+    color: white; /* Inner text color */
+    text-shadow: 2px 2px 0 black, /* Top-left shadow */
+    2px 2px 0 black, /* Top-right shadow */
+    2px 2px 0 black, /* Bottom-left shadow */
+    2px 2px 0 black; /* Bottom-right shadow */
 }

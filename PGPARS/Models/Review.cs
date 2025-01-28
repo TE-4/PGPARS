@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PGPARS.Models
 {
     public class Review
     {
         [Key]
-        public int? ReviewId { get; set; } // ID
+        public int ReviewNumber { get; set; } // review number
 
         public string? NNumber { get; set; } // n number
 
@@ -59,5 +61,9 @@ namespace PGPARS.Models
         public bool? FollowUp { get; set; }
 
         public string? FinalComments { get; set; }
+
+        // Navigation property for Applicant
+        public Applicant? Applicant { get; set; }
+
     }
 }

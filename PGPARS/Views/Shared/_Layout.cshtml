@@ -2,23 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PGPARS</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/altsite.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 </head>
 <body>
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
-            <a asp-action="AdminDashboard" asp-controller="Admin">Admin Dashboard</a><br/>
+            <a asp-action="AdminDashboard" asp-controller="Admin">Dashboard</a><br/>
             <a asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <a asp-action="Directory" asp-controller="Account">User Directory</a><br />
             <a asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
-            <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />                        
+            <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />    
+            <a asp-action="Index" asp-controller="Audit">Action History</a>
             <p class="text-center sidenav-footer">
                 <a asp-action="Logout" asp-controller="Account">Logout</a>
                 <br/>
@@ -38,7 +39,7 @@
     {
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
-            <a asp-action="CommitteeDashboard" asp-controller="Committee">Committee Dashboard</a><br />
+            <a asp-action="CommitteeDashboard" asp-controller="Committee">Dashboard</a><br />
             <a asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <a asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
             <p class="text-center sidenav-footer">
@@ -73,6 +74,44 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <script>
+        toastr.options = {
+            "positionClass": "toast-top-center", // Positions the toast at the top center
+            "closeButton": true, // Adds a close button to the toast
+            "progressBar": true, // Adds a progress bar to the toast
+            "timeOut": "5000", // Sets the display time (in ms) before the toast disappears
+            "extendedTimeOut": "2000", // Time the toast remains after a hover
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+    
+        window.onload = function () {
+            const errorMessage = '@TempData["ErrorMessage"]';
+            const successMessage = '@TempData["SuccessMessage"]';
+
+            if (errorMessage) {
+                toastr.error(errorMessage); // Display error messages
+            }
+
+            if (successMessage) {
+                toastr.success(successMessage); // Display success messages
+            }
+        };
+
+    </script>
+
+
+
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>

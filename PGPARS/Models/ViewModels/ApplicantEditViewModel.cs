@@ -10,121 +10,121 @@ namespace PGPARS.Models.ViewModels
 
         [Required]
         [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [Display(Name = "Application Submission Date")]
-        public string AppSubmitDate { get; set; }
+        public DateTime? AppSubmitDate { get; set; }
 
         [Display(Name = "Email")]
-        public string email { get; set; }
+        public string? email { get; set; }
 
         [Display(Name = "Phone Number")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         [Display(Name = "Advisor Email")]
-        public string AdvisorEmail { get; set; }
+        public string? AdvisorEmail { get; set; }
 
         [Display(Name = "Status")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         [Display(Name = "Race")]
-        public string Race { get; set; }
+        public string? Race { get; set; }
 
         [Display(Name = "Sex")]
-        public string Sex { get; set; }
+        public string? Sex { get; set; }
 
         [Display(Name = "Reviewer 1")]
-        public string Reviewer1 { get; set; }
+        public string? Reviewer1 { get; set; }
 
         [Display(Name = "Reviewer 2")]
-        public string Reviewer2 { get; set; }
+        public string? Reviewer2 { get; set; }
 
         [Display(Name = "Reveiwer 1 Decision")]
-        public string Rev1Decision { get; set; }
+        public bool? Rev1Decision { get; set; }
 
         [Display(Name = "Reveiwer 2 Decision")]
-        public string Rev2Decision { get; set; }
+        public bool? Rev2Decision { get; set; }
 
         [Display(Name = "Reveiwers Agree")]
-        public string RevAgree { get; set; }
+        public bool? RevAgree { get; set; }
 
         [Display(Name = "Committee Review")]
-        public string CommitteeReview { get; set; }
+        public string? CommitteeReview { get; set; }
 
         [Display(Name = "Mentor 1")]
-        public string Mentor1 { get; set; }
+        public string? Mentor1 { get; set; }
 
         [Display(Name = "Mentor 2")]
-        public string Mentor2 { get; set; }
+        public string? Mentor2 { get; set; }
 
         [Display(Name = "Mentor 3")]
-        public string Mentor3 { get; set; }
+        public string? Mentor3 { get; set; }
 
         [Display(Name = "Selected Mentor")]
-        public string SelectMentor { get; set; }
+        public string? SelectMentor { get; set; }
 
         [Display(Name = "GPA Overall")]
-        public string GPAOverall { get; set; }
+        public decimal? GPAOverall { get; set; }
 
         [Display(Name = "GPA Psychology")]
-        public string GPAPsych { get; set; }
+        public decimal? GPAPsych { get; set; }
 
         [Display(Name = "GPA Comments")]
-        public string GPAComment { get; set; }
+        public string? GPAComment { get; set; }
 
         [Display(Name = "Course Requirements Met")]
-        public string Course_Req_Met { get; set; }
+        public bool? Course_Req_Met { get; set; }
 
         [Display(Name = "Course Requirements Comments")]
-        public string CrsReqComment { get; set; }
+        public string? CrsReqComment { get; set; }
 
         [Display(Name = "Letter Quality")]
-        public string LetterQuality { get; set; }
+        public int? LetterQuality { get; set; }
 
         [Display(Name = "Letter Comments")]
-        public string LetterComment { get; set; }
+        public string? LetterComment { get; set; }
 
         [Display(Name = "Resume Quality")]
-        public string ResumeQuality { get; set; }
+        public int? ResumeQuality { get; set; }
 
         [Display(Name = "Resume Experience Quality")]
-        public string ResExpQuality { get; set; }
+        public int? ResExpQuality { get; set; }
 
         [Display(Name = "Resume Comments")]
-        public string ResumeComment { get; set; }
+        public string? ResumeComment { get; set; }
 
         [Display(Name = "Writing Sample Quality")]
-        public string WritSampQuality { get; set; }
+        public int? WritSampQuality { get; set; }
 
         [Display(Name = "Writing Sample Comments")]
-        public string WritSampComment { get; set; }
+        public string? WritSampComment { get; set; }
 
         [Display(Name = "Letter of Recommendation Relevance")]
-        public string LORRelevance { get; set; }
+        public int? LORRelevance { get; set; }
 
         [Display(Name = "Letter of Recommendation Quality")]
-        public string LORQuality { get; set; }
+        public int? LORQuality { get; set; }
 
         [Display(Name = "Letter of Recommendation Comments")]
-        public string LORComment { get; set; }
+        public string? LORComment { get; set; }
 
         [Display(Name = "Overall Fit Quality")]
-        public string OverallFitQuality { get; set; }
+        public int? OverallFitQuality { get; set; }
 
         [Display(Name = "Overall Fit Comments")]
-        public string OverallFitComments { get; set; }
+        public string? OverallFitComments { get; set; }
 
         [Display(Name = "Decision to Recommend")]
-        public string DecRec { get; set; }
+        public bool? DecRec { get; set; }
 
         [Display(Name = "Follow Up")]
-        public string FollowUp { get; set; }
+        public bool? FollowUp { get; set; }
 
         [Display(Name = "Final Comments")]
-        public string FinalComments { get; set; }
+        public string? FinalComments { get; set; }
     }
 }

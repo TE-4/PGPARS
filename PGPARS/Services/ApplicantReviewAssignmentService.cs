@@ -18,7 +18,7 @@ namespace PGPARS.Services
         // assign reviewers to applicants
         public async Task AssignReviewers()
         {
-            var applicants = _applicantRepository.GetApplicants();
+            var applicants = _applicantRepository.GetApplicants(); // add await for async query?
             var reviewers = await _userManager.GetUsersInRoleAsync("Committee");
             int limit = reviewers.Count;
             int count = 0;

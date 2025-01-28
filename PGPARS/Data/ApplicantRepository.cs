@@ -29,16 +29,19 @@ namespace PGPARS.Data
         {
             return _context.Applicants.Find(Nnumber);
         }
-        public void AddApplicants(List<Applicant> applicants)
+        public int AddApplicants(List<Applicant> applicants)
         {
+            int uploadCount = 0;
             foreach (var applicant in applicants)
             {
                 if (!_context.Applicants.Any(a => a.Nnumber == applicant.Nnumber))
                 {
                     _context.Applicants.Add(applicant);
-                }
+                    uploadCount++;
+                }            
             }
             _context.SaveChanges();
+            return uploadCount;
         }
 
         public void DeleteApplicant(String Nnumber)

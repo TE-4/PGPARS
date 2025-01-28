@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using PGPARS.Services;
 using PGPARS.Data;
 using PGPARS.Models;
-using PGPARS.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +23,16 @@ builder.Services.AddScoped<IApplicantRepository, ApplicantRepository>();
 builder.Services.AddScoped<IFundingRepository, FundingRepository>();
 
 // Register the ReviewRepository with the interface; change me later x)
-builder.Services.AddScoped<IReviewRepository, FakeReviewRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+
+// Register the audit repository
+builder.Services.AddScoped<IAuditRepository, AuditRepository>();
 
 // Register custom services
 builder.Services.AddTransient<CsvService>();
 builder.Services.AddTransient<DbSeederService>();
 builder.Services.AddTransient<ApplicantReviewAssignmentService>();
+builder.Services.AddTransient<AuditLogService>();
 
 
 // Add more services to the container.
@@ -57,19 +60,19 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-// create a scope that uses services to create admin user and user roles on startup
+// create a scope that uses services to create default users and user roles on startup
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var DbSeeder = services.GetRequiredService<DbSeederService>();
     DbSeeder.SeedRolesAndUsers().Wait();
 
-    var AssignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
-    AssignApplicants.AssignReviewers().Wait();
+    
+    
+    var assignApplicants = services.GetRequiredService<ApplicantReviewAssignmentService>();
+    assignApplicants.AssignReviewers().Wait();
+    
 }
-
-
-// add MapControllerRoute here
 
 app.MapControllerRoute(
     name: "default",

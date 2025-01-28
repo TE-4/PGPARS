@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<PGPARS.Models.Review>
 <div class="main">
     <div class="container-opaque">
-        <div class="text-center p-3">
+        <div class="text-center text-outline p-3">
         <h2>Review Directory</h2>
         </div>
     </div>
     <br />
     <div class="container-opaque">
-        <a asp-action="AddReview" class="btn btn-success mb-3">New Review</a> <!-- Add Button -->
+        <a asp-action="AddReview" class="btn btn-success btn-lg">Add Review</a> <!-- Add Button -->
     <table class="table">
             <thead>
                 <tr>
@@ -23,10 +23,10 @@
                         <td>@review.FullName</td>
                         <td>@review.NNumber</td>
                         <td>@review.Status</td>
-                        <td>@review.ReviewId</td>
+                        <td>@review.ReviewNumber</td>
                         <td>
-                            <a asp-action="EditReview" asp-route-id="@review.ReviewId" class="btn btn-warning">Edit</a>
-                            <form asp-action="DeleteReview" asp-route-id="@review.ReviewId" method="post" style="display:inline;">
+                            <a asp-action="EditReview" asp-route-id="@review.ReviewNumber" class="btn btn-warning">Edit</a>
+                            <form asp-action="DeleteReview" asp-route-id="@review.ReviewNumber" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="return confirm('Are you sure you want to delete this Review?');">
                                     Delete

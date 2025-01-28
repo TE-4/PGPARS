@@ -7,7 +7,7 @@ namespace PGPARS.Data
         IEnumerable<Applicant> GetApplicants();
         Applicant GetApplicantById(int applicantId);
 
-        void AddApplicants(List<Applicant> applicants);
+        int AddApplicants(List<Applicant> applicants);
 
         //Applicant GetApplicantById(int id);
         void UpdateApplicant(Applicant applicant);

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using PGPARS.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace PGPARS.Controllers
 {
@@ -15,19 +16,17 @@ namespace PGPARS.Controllers
         private readonly CsvService _csvService;
         private readonly IApplicantRepository _applicantRepo;
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly AuditLogService _logger;
 
-        public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager)
+        public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager, 
+            AuditLogService als)
         {
             _csvService = csvService;
             _applicantRepo = applicantRepo;
             _userManager = userManager;
+            _logger = als;
         }
-       
-        public IActionResult ApplicantUpload()
-        {
-            return View();
-        }
+          
 
         [HttpPost]
         public IActionResult ApplicantUpload(IFormFile csvFile)
@@ -40,30 +39,32 @@ namespace PGPARS.Controllers
                     {
                         var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
                         // add applicants to the Applicant Table
-                        _applicantRepo.AddApplicants(applicants);
+                        var uploadCount = _applicantRepo.AddApplicants(applicants);
+                        TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
+
+                        // Log the action
+                        _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
+
                         return RedirectToAction("ApplicantDirectory", "Applicant");
                     }
                     catch (ApplicationException ex)
                     {
-                        ModelState.AddModelError(string.Empty, ex.Message);
+                        TempData["ErrorMessage"] = ex.Message;
                     }
                     catch (Exception ex)
                     {
-                        ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                        TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
                     }
                 }
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Please select a valid CSV file.");
+                TempData["ErrorMessage"] = "Please select a valid CSV file.";
             }
-            return View();
+            return RedirectToAction("ApplicantDirectory", "Applicant");
         }
 
-        public IActionResult FacultyUpload()
-        {
-            return View();
-        }
+
 
 
         [HttpPost]
@@ -71,72 +72,67 @@ namespace PGPARS.Controllers
         {
             if (csvFile == null || csvFile.Length == 0)
             {
-                // if file is null or empty, add error 
-                ModelState.AddModelError(string.Empty, "Please select a valid CSV file.");
-                return View();
+                // Return to the User Directory or display an error
+                TempData["ErrorMessage"] = "Please select a valid CSV file.";
+                return RedirectToAction("Directory", "Account"); 
             }
 
-            // create list of potential errors to display 
-            var errors = new List<string>();
+            
 
             using (var stream = csvFile.OpenReadStream())
             {
                 try
                 {
                     var faculties = _csvService.ReadCsvFile<AppUser>(stream, new FacultyMap()).ToList();
+                    int uploadCount = 0; // This is to keep track of how many users are uploaded successfully for the Toastr notification
 
-                    // by this point, the faculties list is populated with AppUser objects from the FacultyUser File; Need to Debug further to get this to work correctly
                     foreach (var faculty in faculties)
                     {
-                        // Check if user with the same email already exists
+                        // check if the user already exists in our AspNetUsers table
                         var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
+
+                        // if the user does already exist, we skip this iteration in our loop to prevent duplicates in our database
                         if (userExists != null)
-                        {
-                            errors.Add($"A user with the N-Number {faculty.Nnumber} already exists.");
+                        {                            
                             continue;
                         }
 
-                        // fill in required properties for the AppUser object
                         faculty.UserName = faculty.Email;
                         faculty.MainRole = "Faculty";
-
-                        
-                        // Create the user
 
                         var result = await _userManager.CreateAsync(faculty, "Password123!");
                         if (!result.Succeeded)
                         {
-                            errors.Add($"Failed to create user {faculty.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                             continue;
                         }
 
-                        // Assign the "Faculty" role
                         var roleResult = await _userManager.AddToRoleAsync(faculty, "Faculty");
                         if (!roleResult.Succeeded)
                         {
-                            errors.Add($"Failed to assign role to user {faculty.Email}: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                            Debug.WriteLine("Error adding role to user");
+                        }
+                        else
+                        {
+                            // if everything has succeeded this far, we can increment our upload count
+                            uploadCount++;
                         }
                     }
 
-                    if (errors.Any())
-                    {
-                        ModelState.AddModelError(string.Empty, string.Join("<br>", errors));
-                        return View();
-                    }
+                  
 
-                    return View("Directory", "Account");
-                }
-                catch (ApplicationException ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
+                    TempData["SuccessMessage"] = $"{uploadCount} faculty members uploaded successfully.";
+
+                    // Log the action
+                    _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} faculty members uploaded", "INFO");
+
+                    return RedirectToAction("Directory", "Account"); 
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                    TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+                    return RedirectToAction("Directory", "Account"); 
                 }
             }
-
-            return View("Directory", "Account");
         }
 
 

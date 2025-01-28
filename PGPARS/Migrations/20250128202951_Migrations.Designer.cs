@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250109220711_UpdateFundingApplicantModels")]
-    partial class UpdateFundingApplicantModels
+    [Migration("20250128202951_Migrations")]
+    partial class Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,8 +277,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("CrsReqComment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DecRec")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("DecRec")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FinalComments")
                         .HasColumnType("nvarchar(max)");
@@ -286,8 +286,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FollowUp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("FollowUp")
+                        .HasColumnType("bit");
 
                     b.Property<string>("GPAComment")
                         .HasColumnType("nvarchar(max)");
@@ -346,11 +346,11 @@ namespace PGPARS.Migrations
                     b.Property<int?>("ResumeQuality")
                         .HasColumnType("int");
 
-                    b.Property<string>("Rev1Decision")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Rev1Decision")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Rev2Decision")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool?>("Rev2Decision")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("RevAgree")
                         .HasColumnType("bit");
@@ -382,6 +382,37 @@ namespace PGPARS.Migrations
                     b.HasKey("Nnumber");
 
                     b.ToTable("Applicants");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.AuditLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditLogs");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
@@ -427,6 +458,99 @@ namespace PGPARS.Migrations
                     b.HasIndex("Nnumber");
 
                     b.ToTable("Fundings");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewNumber"));
+
+                    b.Property<double?>("AllGPA")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ApplicantNnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CourseReqComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("CourseReqMet")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("DecRec")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinalComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("FollowUp")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GPAComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LORComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LORQuality")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LORRelevance")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LetterQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OverallFitComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OverallFitQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("PsychGPA")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ResExpQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResumeComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ResumeQuality")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reviewer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WritingSampleComments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WritingSampleQuality")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReviewNumber");
+
+                    b.HasIndex("ApplicantNnumber");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("AppUserApplicant", b =>
@@ -500,6 +624,15 @@ namespace PGPARS.Migrations
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Fundings")
                         .HasForeignKey("Nnumber");
+
+                    b.Navigation("Applicant");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.Review", b =>
+                {
+                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantNnumber");
 
                     b.Navigation("Applicant");
                 });

@@ -1,28 +1,30 @@
 ﻿@model LoginViewModel;
-
-<head>
-    <link rel="stylesheet" href="~/css/altsite.css" />
-</head>
-<div class="form-box">
-    <h3 style="text-align: center">Login</h3>
-
-    <div asp-validation-summary="All" class="text-danger"></div>
-
-    <form asp-action="Login">
-        <div>
-            <label asp-for="Email" class="form-label"></label>
-            <input asp-for="Email" class="form-control" placeholder="Enter your email">
-            <span asp-validation-for="Email" class="text-danger"></span>
+<body>
+    <div class="loginBody">
+        <div class="loginContainer">
+            <div class="text-outline h1">
+                Login
+                <hr class="hr"/>
+                <div class="loginForm">
+                    <div asp-validation-summary="All">
+                        <form asp-action="Login">
+                            <div>
+                                <label asp-for="Email" class="form-label"></label>
+                                <input asp-for="Email" class="form-control" placeholder="Enter your email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <br />
+                            <div>
+                                <label asp-for="Password" class="form-label"></label>
+                                <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <br />
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        
-        <div>
-            <label asp-for="Password" class="form-label"></label>
-            <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password">
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-
-        
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-</div>
+    </div>
+</body>

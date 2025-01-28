@@ -7,7 +7,7 @@ namespace PGPARS.Data
     {
         public ApplicantMap() 
         {
-            Map(m => m.Nnumber).Name("N# or Slate ID");
+            Map(m => m.Nnumber).Name("Slate Id");
             Map(m => m.FirstName).Name("First name");
             Map(m => m.LastName).Name("Last name");
             Map(m => m.email).Name("Email");

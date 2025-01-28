@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateFundingApplicantModels : Migration
+    public partial class Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,8 +27,8 @@ namespace PGPARS.Migrations
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reviewer1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reviewer2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rev1Decision = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rev2Decision = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rev1Decision = table.Column<bool>(type: "bit", nullable: true),
+                    Rev2Decision = table.Column<bool>(type: "bit", nullable: true),
                     RevAgree = table.Column<bool>(type: "bit", nullable: true),
                     CommitteeReview = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -52,8 +52,8 @@ namespace PGPARS.Migrations
                     LORComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OverallFitQuality = table.Column<int>(type: "int", nullable: true),
                     OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DecRec = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FollowUp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DecRec = table.Column<bool>(type: "bit", nullable: true),
+                    FollowUp = table.Column<bool>(type: "bit", nullable: true),
                     FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -106,6 +106,23 @@ namespace PGPARS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuditLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    User = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Fundings",
                 columns: table => new
                 {
@@ -128,6 +145,49 @@ namespace PGPARS.Migrations
                     table.ForeignKey(
                         name: "FK_Fundings_Applicants_Nnumber",
                         column: x => x.Nnumber,
+                        principalTable: "Applicants",
+                        principalColumn: "Nnumber");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Reviewer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AllGPA = table.Column<double>(type: "float", nullable: true),
+                    PsychGPA = table.Column<double>(type: "float", nullable: true),
+                    GPAComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseReqMet = table.Column<bool>(type: "bit", nullable: true),
+                    CourseReqComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LetterQuality = table.Column<int>(type: "int", nullable: true),
+                    ResumeQuality = table.Column<int>(type: "int", nullable: true),
+                    ResExpQuality = table.Column<int>(type: "int", nullable: true),
+                    ResumeComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WritingSampleQuality = table.Column<int>(type: "int", nullable: true),
+                    WritingSampleComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LORRelevance = table.Column<int>(type: "int", nullable: true),
+                    LORQuality = table.Column<int>(type: "int", nullable: true),
+                    LORComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OverallFitQuality = table.Column<int>(type: "int", nullable: true),
+                    OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DecRec = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FollowUp = table.Column<bool>(type: "bit", nullable: true),
+                    FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicantNnumber = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewNumber);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Applicants_ApplicantNnumber",
+                        column: x => x.ApplicantNnumber,
                         principalTable: "Applicants",
                         principalColumn: "Nnumber");
                 });
@@ -310,6 +370,11 @@ namespace PGPARS.Migrations
                 name: "IX_Fundings_Nnumber",
                 table: "Fundings",
                 column: "Nnumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_ApplicantNnumber",
+                table: "Reviews",
+                column: "ApplicantNnumber");
         }
 
         /// <inheritdoc />
@@ -334,7 +399,13 @@ namespace PGPARS.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuditLogs");
+
+            migrationBuilder.DropTable(
                 name: "Fundings");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

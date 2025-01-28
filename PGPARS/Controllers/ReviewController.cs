@@ -1,6 +1,15 @@
-﻿using PGPARS.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using PGPARS.Models;
+using PGPARS.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using PGPARS.Data;
+using System.Linq;
 
 namespace PGPARS.Controllers;
     public class ReviewController : Controller
@@ -28,18 +37,19 @@ namespace PGPARS.Controllers;
             }
             return View(review); //return with errors
         }
-        // GET: EditReview
-        [HttpGet]
-        public Task<IActionResult> EditReview(int id)
+    // GET: EditReview
+    [HttpGet]
+    public IActionResult EditReview(int id)
+    {
+        var review = _reviewRepository.GetReviewById(id);
+        if (review == null)
         {
-            var review = _reviewRepository.GetReviewById(id);
-            if (review == null)
-            {
-                return Task.FromResult<IActionResult>(NotFound());
-            }
+            return NotFound();
+        }
+
         var model = new Review
         {
-            ReviewId = id,
+            ReviewNumber = review.ReviewNumber,
             NNumber = review.NNumber,
             FullName = review.FullName,
             Email = review.Email,
@@ -65,12 +75,13 @@ namespace PGPARS.Controllers;
             DecRec = review.DecRec,
             FollowUp = review.FollowUp,
             FinalComments = review.FinalComments,
+            Applicant = review.Applicant,
         };
-            
-            return Task.FromResult<IActionResult>(View(model)); //return with form for editing
-        }
-        // POST: EditReview
-        [HttpPost]
+
+        return View(model); // return with form for editing
+    }
+    // POST: EditReview
+    [HttpPost]
         public IActionResult EditReview(Review review)
         {
             if (ModelState.IsValid)
