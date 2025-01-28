@@ -1,14 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PGPARS.Data;
 
 namespace PGPARS.Controllers
 {
     public class AuditController : Controller
     {
-        public IActionResult Index()
+        private readonly IAuditRepository _auditRepository;
+
+        public AuditController(IAuditRepository auditRepo)
         {
-            return View();
+            _auditRepository = auditRepo;
         }
 
-        
+        public IActionResult Index()
+        {
+            var logs = _auditRepository.GetLogs();
+            return View(logs);
+        }
+
+        // Add method to simplify the logging of actions
+
+
     }
 }

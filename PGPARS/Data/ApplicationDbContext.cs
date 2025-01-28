@@ -16,6 +16,8 @@ namespace PGPARS.Data
         public DbSet<Funding> Fundings { get;  set; }
         public DbSet<Review> Reviews { get; set; }
 
+        public DbSet<AuditLog> AuditLogs { get; set; }
+
         // Do not need a DbSet for AppUser because it's built into IdentityDbContext
 
     }
