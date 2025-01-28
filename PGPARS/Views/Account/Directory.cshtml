@@ -75,24 +75,24 @@
                                     <td>
                                         <div class="d-flex justify-content-center gap-3">
                                             <a asp-action="Detail" asp-controller="Account" asp-route-Id="@user.Id">
-                                                <button type="submit" class="btn btn-info btn-lg">
-                                                    <div class="bi bi-eye" style="color: black">&ensp;Details</div>
+                                                <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
+                                                    <div class="bi bi-eye">&ensp;Details</div>
                                                 </button>
                                             </a>
                                             <a asp-action="Edit" asp-controller="Account" asp-route-Id="@user.Id">
-                                                <button type="submit" class="btn btn-secondary btn-lg">
-                                                    <div class="bi bi-pencil" style="color: black">&ensp;Edit</div>
+                                                <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
+                                                    <div class="bi bi-pencil">&ensp;Edit</div>
                                                 </button>
                                             </a>
                                             <a asp-action="LinkedApplicants" asp-controller="Account" asp-route-email="@user.Email">
-                                                <button type="submit" class="btn btn-warning btn-lg">
-                                                    <div class="bi bi-people" style="color:black">&ensp;Linked Applicants</div>
+                                                <button type="submit" class="btn btn-lg" style="background-color:darkorange; color: white; border: 2px solid black;">
+                                                    <div class="bi bi-people">&ensp;Linked Applicants</div>
                                                 </button>
                                             </a>
                                             <form asp-action="Delete" asp-controller="Account" asp-route-Id="@user.Id"
                                                   method="post" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                                                <button type="submit" class="btn btn-danger btn-lg">
-                                                    <div class="bi bi-trash" style="color: black">&ensp;Delete</div>
+                                                <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;">
+                                                    <div class="bi bi-trash">&ensp;Delete</div>
                                                 </button>
                                             </form>
                                         </div>

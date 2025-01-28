@@ -10,22 +10,22 @@
         <div class="d-flex justify-content-between align-items-center">
 
             <!-- Upload CSV button that triggers the modal -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal">
+            <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
                 <div class="bi bi-upload">&ensp;Import CSV</div>
             </button>
 
             <!-- Search bar -->
             <form method="get" asp-action="ApplicantDirectory" class="d-flex align-items-center">
                 <div class="input-group me-2">
-                    <input type="text" name="searchString" class="form-control" placeholder="Search by name..." value="@ViewData["SearchString"]" />
+                    <input type="text" name="searchString" class="form-control" style="min-height: 50px;" placeholder="Search by name..." value="@ViewData["SearchString"]" />
                 </div>
-                <button type="submit" style="text-decoration: none;" class="btn btn-info">
+                <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
                     <div class="bi bi-search">&ensp;Search</div>
                 </button>
             </form>
         </div>
 
-        <div class="table-responsive shadow-sm rounded">
+        <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <thead class="text-uppercase">
                     <tr>
@@ -57,8 +57,8 @@
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
                                         <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none;">
-                                            <button type="submit" class="btn btn-lg" style="background-color:royalblue; border: 2px solid black">
-                                                <div class="bi bi-eye" style="color:white">&ensp;Details</div>
+                                            <button type="submit" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
+                                                <div class="bi bi-eye">&ensp;Details</div>
                                             </button>
                                         </a>
                                         <a asp-action="EditApplicant" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none;">
