@@ -11,14 +11,16 @@ namespace PGPARS.Data
             _context = context;
         }
 
-        public void LogAction(string action, string user, string details)
+        // category can be INFO, WARNING, ERROR, etc.
+        public void LogAction(string action, string user, string details, string category)
         {
             var log = new AuditLog
             {
                 Action = action,
                 User = user ?? "System", // If there is no User, default to "System"
                 TimeStamp = DateTime.Now,
-                Details = details
+                Details = details,
+                Category = category
             };
             _context.AuditLogs.Add(log);
             _context.SaveChanges();

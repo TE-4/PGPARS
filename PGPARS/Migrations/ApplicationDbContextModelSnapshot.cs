@@ -393,6 +393,10 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

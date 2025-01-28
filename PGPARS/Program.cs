@@ -32,6 +32,7 @@ builder.Services.AddScoped<IAuditRepository, AuditRepository>();
 builder.Services.AddTransient<CsvService>();
 builder.Services.AddTransient<DbSeederService>();
 builder.Services.AddTransient<ApplicantReviewAssignmentService>();
+builder.Services.AddTransient<AuditLogService>();
 
 
 // Add more services to the container.

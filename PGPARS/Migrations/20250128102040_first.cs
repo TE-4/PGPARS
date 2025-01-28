@@ -111,6 +111,7 @@ namespace PGPARS.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     User = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),

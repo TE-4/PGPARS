@@ -12,7 +12,7 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250128030136_first")]
+    [Migration("20250128102040_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -393,6 +393,10 @@ namespace PGPARS.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

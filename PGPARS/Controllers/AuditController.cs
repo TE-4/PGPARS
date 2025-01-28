@@ -18,8 +18,7 @@ namespace PGPARS.Controllers
             return View(logs);
         }
 
-        // Add method to simplify the logging of actions
-
+      
 
     }
 }

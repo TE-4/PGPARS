@@ -16,12 +16,15 @@ namespace PGPARS.Controllers
         private readonly CsvService _csvService;
         private readonly IApplicantRepository _applicantRepo;
         private readonly UserManager<AppUser> _userManager;
+        private readonly AuditLogService _logger;
 
-        public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager)
+        public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager, 
+            AuditLogService als)
         {
             _csvService = csvService;
             _applicantRepo = applicantRepo;
             _userManager = userManager;
+            _logger = als;
         }
           
 
@@ -38,6 +41,10 @@ namespace PGPARS.Controllers
                         // add applicants to the Applicant Table
                         var uploadCount = _applicantRepo.AddApplicants(applicants);
                         TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
+
+                        // Log the action
+                        _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
+
                         return RedirectToAction("ApplicantDirectory", "Applicant");
                     }
                     catch (ApplicationException ex)
@@ -114,6 +121,10 @@ namespace PGPARS.Controllers
                   
 
                     TempData["SuccessMessage"] = $"{uploadCount} faculty members uploaded successfully.";
+
+                    // Log the action
+                    _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} faculty members uploaded", "INFO");
+
                     return RedirectToAction("Directory", "Account"); 
                 }
                 catch (Exception ex)

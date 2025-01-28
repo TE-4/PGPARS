@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using System.Threading.Tasks;
+using PGPARS.Services;
 
 namespace PGPARS.Controllers
 {
@@ -18,20 +19,26 @@ namespace PGPARS.Controllers
         private readonly UserManager<AppUser> _userManager;  
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IApplicantRepository _applicantRepository;
+        private readonly AuditLogService _logger;
 
 
 
         public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager
-            , IApplicantRepository applicantRepo)
+            , IApplicantRepository applicantRepo, AuditLogService auditLogService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _applicantRepository = applicantRepo;
+            _logger = auditLogService;
         }
 
         private IActionResult RedirectBasedOnRole()
         {
+            // Log the user login
+            _logger.LogAction("Login", User.Identity.Name, "User logged in.", "INFO");
+
+            // Redirect based on role
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("AdminDashboard", "Admin");
@@ -127,6 +134,10 @@ namespace PGPARS.Controllers
                         Debug.WriteLine("Assigned role to new user successfully!");
                     }
                     TempData["UserCreated"] = "User successfully created!";
+
+                    // log the user creation
+                    _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "INFO");
+
                     return RedirectToAction("Directory", "Account");
                 }
                 foreach (var error in result.Errors)
