@@ -1,1 +1,46 @@
-﻿
+﻿@model IEnumerable<PGPARS.Models.AuditLog>
+
+<body>
+    <div class="main">
+        <div class="container-opaque">
+            <div class="text-center text-outline p-3">
+                <h2>Audit Trail</h2>
+            </div>
+        </div>
+        <br />
+
+        <!-- Table for Audit Logs -->
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table align-middle text-dark">
+                <thead class="text-uppercase">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No audit logs found.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var log in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@log.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td class="text-center">@log.User</td>
+                                <td class="text-center">@log.Action</td>
+                                <td>@log.Details</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>

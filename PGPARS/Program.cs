@@ -25,6 +25,9 @@ builder.Services.AddScoped<IFundingRepository, FundingRepository>();
 // Register the ReviewRepository with the interface; change me later x)
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
+// Register the audit repository
+builder.Services.AddScoped<IAuditRepository, AuditRepository>();
+
 // Register custom services
 builder.Services.AddTransient<CsvService>();
 builder.Services.AddTransient<DbSeederService>();
