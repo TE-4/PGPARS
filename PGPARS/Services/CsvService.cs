@@ -1,47 +1,53 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration;
+﻿using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
-using PGPARS.Data;
-using PGPARS.Models;
+using CsvHelper;
 using System.Globalization;
 
-namespace PGPARS.Services
+public class CsvService
 {
-    public class CsvService
+    public IEnumerable<T> ReadCsvFile<T>(Stream fileStream, ClassMap classMap) where T : class
     {
-        public IEnumerable<T> ReadCsvFile<T>(Stream fileStream, ClassMap classMap) where T : class
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                PrepareHeaderForMatch = args => args.Header.ToLower().Trim(), 
-                MissingFieldFound = null
-            };
+            PrepareHeaderForMatch = args => args.Header.ToLower().Trim(),
+            MissingFieldFound = null
+        };
 
-            try
+        try
+        {
+            using (var reader = new StreamReader(fileStream))
+            using (var csv = new CsvReader(reader, config))
             {
-                using (var reader = new StreamReader(fileStream))
-                using (var csv = new CsvReader(reader, config))
-                {
-                    // add the custom class mapping for Applicant
-                    csv.Context.RegisterClassMap(classMap);
+                csv.Context.RegisterClassMap(classMap);
 
-                    // get the records with the CsvReader and return them as a list
-                    var records = csv.GetRecords<T>();
-                    return records.ToList();
-                }
-            }
-            catch (HeaderValidationException ex)
-            {   
-                throw new ApplicationException("CSV file header is invalid.", ex);
-            }
-            catch (TypeConverterException ex)
-            {
-                throw new ApplicationException("CSV file contains invalid data format.", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Error reading CSV file", ex);
+                // Read all records and filter out any where key fields are missing
+                var records = csv.GetRecords<T>()
+                                 .Where(r => !IsEmptyRecord(r)) // Ensure only valid rows are returned
+                                 .ToList();
+                return records;
             }
         }
+        catch (HeaderValidationException ex)
+        {
+            throw new ApplicationException("CSV file header is invalid.", ex);
+        }
+        catch (TypeConverterException ex)
+        {
+            throw new ApplicationException("CSV file contains invalid data format.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Error reading CSV file", ex);
+        }
+    }
+
+    // Function to check if a record is empty
+    private bool IsEmptyRecord<T>(T record)
+    {
+        if (record == null) return true;
+
+        // Convert object to dictionary to check if all fields are empty
+        var properties = typeof(T).GetProperties();
+        return properties.All(p => p.GetValue(record) == null || string.IsNullOrWhiteSpace(p.GetValue(record)?.ToString()));
     }
 }
