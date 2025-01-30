@@ -2,6 +2,7 @@
 using CsvHelper.TypeConversion;
 using CsvHelper;
 using System.Globalization;
+using PGPARS.Models;
 
 public class CsvService
 {
@@ -46,8 +47,11 @@ public class CsvService
     {
         if (record == null) return true;
 
-        // Convert object to dictionary to check if all fields are empty
-        var properties = typeof(T).GetProperties();
-        return properties.All(p => p.GetValue(record) == null || string.IsNullOrWhiteSpace(p.GetValue(record)?.ToString()));
+        if(record is Applicant applicant)
+        {
+            return string.IsNullOrWhiteSpace(applicant.Nnumber);
+        }
+
+        return false;
     }
 }
