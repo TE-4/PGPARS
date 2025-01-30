@@ -44,7 +44,7 @@ namespace PGPARS.Data
             return uploadCount;
         }
 
-        public void DeleteApplicant(String Nnumber)
+        public void DeleteApplicant(string Nnumber)
         {
             var applicant = _context.Applicants.Find(Nnumber);
             _context.Applicants.Remove(applicant);
@@ -53,7 +53,7 @@ namespace PGPARS.Data
 
         public Applicant GetApplicantById(int applicantId)
         {
-            throw new NotImplementedException();
+            return _context.Applicants.Find(applicantId);
         }
 
         public void DeleteApplicant(int id)

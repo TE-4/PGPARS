@@ -2,13 +2,13 @@
 
 <div class="main">
     <div class="container-opaque">
-        <!--<div class="bg-light p-4 rounded shadow-sm">-->
-        <!--<div class="bg-light text-center p-4 rounded shadow-sm mb-4">-->
-        <!--<h1 class="display-6 fw-bold text-black">Applicant Directory</h1>-->
         <div class="text-center text-outline p-3">
             <h2>Admin Dashboard</h2>
         </div>
     </div>
+    <!--<div class="chart-container" style="width: 80%; margin: 0 auto;">
+        <canvas id="myChart"></canvas>
+    </div>-->
     <div class="dashboard-table">
         <div class="dashboard-body">
             <div class="dashboard-row">
@@ -76,3 +76,44 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function ()
+    {
+        fetch('/Admin/GetChartData') // Ensure the route matches your controller method
+            .then(response => response.json())
+            .then(data =>
+                {
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx,
+                    {
+                    type: 'bar',
+                    data:
+                    {
+                        labels: data.labels,
+                        datasets:
+                        [{
+                            label: 'Status of Applicants',
+                            data: data.values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options:
+                    {
+                        responsive: true,
+                        scales:
+                        {
+                            y:
+                            {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error("Error fetching chart data:", error));
+    });
+</script>

@@ -48,5 +48,16 @@ namespace PGPARS.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
+        [HttpGet]
+        public JsonResult GetChartData()
+        {
+            var data = new
+            {
+                labels = new[] { "Unassigned", "Reviews Pending", "Review Conflict", "Interview Pending", "Accepted", "Denied", "Funding Assigned" },
+                values = new[] { 12, 19, 3, 5, 2 }
+            };
+            return Json(data);
+        }
     }
 }

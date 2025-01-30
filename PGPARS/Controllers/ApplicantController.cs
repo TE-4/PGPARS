@@ -176,5 +176,18 @@ namespace PGPARS.Controllers
             TempData["ApplicantUpdated"] = "Applicant Details successfully updated!";
             return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteApplicant(string Nnumber)
+        {
+            var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == Nnumber);
+            if (applicant != null)
+            {
+                _applicantRepository.DeleteApplicant(Nnumber); // Delete the applicant from the repository
+            }
+            return RedirectToAction("ApplicantDirectory");
+        }
     } // END CLASS
 }
