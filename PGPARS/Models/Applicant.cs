@@ -6,7 +6,7 @@ namespace PGPARS.Models
     public class Applicant
     {
         [Key]  // Explicitly mark Nnumber as the primary key
-        //[Required]
+        [Required]
         [RegularExpression(@"^[nN]\d{8}$", ErrorMessage = "Nnumber must be in the format 'nXXXXXXXX' or 'NXXXXXXXX'.")]
         public string Nnumber { get; set; } //personal
 
@@ -57,8 +57,10 @@ namespace PGPARS.Models
          // Navigation property for the related Fundings
         public ICollection<Funding> Fundings { get; set; }
 
-        // Navigation property for Committee Members assigned to review the applicant
-        public List<AppUser> AssignedReviewers { get; set; }
+        // Navigation property
+        public List<ApplicantReviewer> ApplicantReviewers { get; set; } = new();
+
+
         public string FullName
         {
             get
