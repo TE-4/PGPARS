@@ -82,7 +82,7 @@ namespace PGPARS.Controllers
         // Commented out because Applicant is no longer part of the Funding model
         
         [HttpPost]
-        public IActionResult AssignFundingToApplicant(int fundingId, int applicantId)
+        public IActionResult AssignFundingToApplicant(int fundingId, string applicantId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
             var applicant = _applicantRepository.GetApplicantById(applicantId);

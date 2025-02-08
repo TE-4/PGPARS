@@ -1,48 +1,62 @@
-﻿@model LinkedApplicantsViewModel
+﻿@model LinkedApplicantsViewModel;
 
-<head>
-    <link rel="stylesheet" href="~/css/altsite.css" />
-    <style>
-       
-
-        .applicant-card {
-            background-color: white;
-            color: black;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-            .applicant-card h5 {
-                margin-bottom: 8px;
-            }
-    </style>
-</head>
 
 <body>
-    <div class="container mt-4">
-        <h2 class="mb-4">Linked Applicants</h2>
-        <h3><strong>Committee/Faculty:</strong> @Model.User.FirstName @Model.User.LastName</h3>
-        <hr />
+    <div class="main">
+        <div class="container-opaque">
+            <div class="text-center text-outline p-3">
+                <h2>Linked Applicants</h2>
+            </div>
+        </div>
 
-        @if (Model.LinkedApplicants != null && Model.LinkedApplicants.Any())
-        {
-            @foreach (var applicant in Model.LinkedApplicants)
-            {
-                <div class="applicant-card">
-                    <h5>@applicant.FirstName @applicant.LastName</h5>
-                    <p><strong>N-Number:</strong> @applicant.Nnumber</p>
-                    <p><strong>Email:</strong> @applicant.email</p>
-                    <p><strong>Phone:</strong> @applicant.Phone</p>
-                    <p><strong>Mentor(if any):</strong> @applicant.Mentor1</p>
-                </div>
-            }
-        }
-        else
-        {
-            <p>No applicants linked to this user.</p>
-        }
+        <br />
+
+        <div class="container">
+            <div class="card shadow-lg p-4">
+                <h3><i class="bi bi-person-circle"></i> <strong>Committee/Faculty:</strong> @Model.User.FirstName @Model.User.LastName</h3>
+                <hr />
+
+                @if (Model.LinkedApplicants != null && Model.LinkedApplicants.Any())
+                {
+                    <div class="table-responsive shadow-sm rounded">
+                        <table class="table align-middle text-dark">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th><i class="bi bi-card-heading"></i> Name</th>
+                                    <th><i class="bi bi-person-badge"></i> N-Number</th>
+                                    <th><i class="bi bi-envelope"></i> Email</th>
+                                    <th><i class="bi bi-telephone"></i> Phone</th>
+                                    <th><i class="bi bi-mortarboard"></i> Mentor</th>
+                                    <th><i class="bi bi-eye"></i> Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var applicant in Model.LinkedApplicants)
+                                {
+                                    <tr>
+                                        <td>@applicant.FirstName @applicant.LastName</td>
+                                        <td class="text-center">@applicant.Nnumber</td>
+                                        <td>@applicant.email</td>
+                                        <td>@applicant.Phone</td>
+                                        <td>@applicant.Mentor1</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-3">                                              
+                                                <!--Add some function here, details..-->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning text-center">
+                        <i class="bi bi-exclamation-circle"></i> No applicants assigned.
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </body>

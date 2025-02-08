@@ -66,7 +66,7 @@ namespace PGPARS.Services
         } // end method
 
         // manually assign a reviewer to an applicant
-        public async Task AssignReviewerAsync(int applicantId, string reviewerNnumber)
+        public async Task AssignReviewerAsync(string applicantId, string reviewerNnumber)
         {
             var applicant = _applicantRepository.GetApplicantById(applicantId);
             var reviewer = await _userManager.FindByIdAsync(reviewerNnumber);
