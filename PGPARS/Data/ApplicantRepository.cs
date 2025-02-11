@@ -51,11 +51,6 @@ namespace PGPARS.Data
             _context.SaveChanges();
         }
 
-        public Applicant GetApplicantById(int applicantId)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteApplicant(int id)
         {
             throw new NotImplementedException();
