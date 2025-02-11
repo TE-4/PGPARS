@@ -157,7 +157,7 @@ namespace PGPARS.Controllers
             // Deduct from funding source
             fundingSource.RemainingAmount -= model.Amount;
             _fundingRepository.UpdateFunding(fundingSource);
-            _fundingRepository.Save(); // Ensure the update is committed
+
 
             return RedirectToAction("FundingDirectory");
         }

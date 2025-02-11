@@ -84,8 +84,8 @@ public class FundingRepository : IFundingRepository
     public IEnumerable<FundingAllocations> GetFundingAllocations()
     {
         return _context.FundingAllocations
-            .Include(fa => fa.FundingSourceName)
-            .Include(fa => fa.Applicant)
+            .Include(fa => fa.FundingSource)
+            .Include(fa => fa.ApplicantId)
             .ToList();
     }
     public void AddAllocation(FundingAllocations allocation)
