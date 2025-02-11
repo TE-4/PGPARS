@@ -123,7 +123,7 @@ namespace PGPARS.Controllers
         }
 
         // GET: Assign
-        [HttpPost]
+        [HttpGet]
         public IActionResult Assign(FundingAssignmentViewModel model)
         {
             if (!ModelState.IsValid)
@@ -134,17 +134,10 @@ namespace PGPARS.Controllers
                 model.Applicants = applicants;
                 model.RemainingAmount = funding.RemainingAmount;
 
-                return View(model); // Return with validation errors
+                return View(model); // Ensure it returns the view instead of breaking
             }
 
-            var fundingSource = _fundingRepository.GetFundingById(model.FundingSourceId);
-            var applicant = _applicantRepository.GetApplicantById(model.ApplicantId);
-
-            if (fundingSource == null || applicant == null || fundingSource.RemainingAmount < model.Amount)
-            {
-                return RedirectToAction("FundingDirectory");
-            }
-
+            // Proceed with assigning funding
             var allocation = new FundingAllocations
             {
                 FundingSourceId = model.FundingSourceId,
@@ -154,13 +147,9 @@ namespace PGPARS.Controllers
 
             _fundingRepository.AddAllocation(allocation);
 
-            // Deduct from funding source
-            fundingSource.RemainingAmount -= model.Amount;
-            _fundingRepository.UpdateFunding(fundingSource);
-
-
             return RedirectToAction("FundingDirectory");
         }
+
 
     }
 }

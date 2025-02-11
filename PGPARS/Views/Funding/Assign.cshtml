@@ -8,7 +8,7 @@
         <strong>Remaining Funding Amount:</strong> $@Model.RemainingAmount
     </div>
 
-    <form asp-action="Assign" method="post">
+    <form asp-controller="Funding" asp-action="Assign" method="post">
         <input type="hidden" asp-for="FundingSourceId" />
 
         <div class="form-group">
