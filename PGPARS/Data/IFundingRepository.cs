@@ -1,4 +1,5 @@
-﻿using PGPARS.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PGPARS.Models;
 using System.Collections.Generic;
 
 namespace PGPARS.Data
@@ -10,9 +11,12 @@ namespace PGPARS.Data
         void AddFunding(Funding funding);
         void UpdateFunding(Funding funding);
         void DeleteFunding(int id);
+        IEnumerable<FundingAllocations> GetFundingAllocations();
 
-        // New method for searching fundings
+
+       
         IEnumerable<Funding> SearchFunding(string searchQuery);
+        void AddAllocation(FundingAllocations allocation);
     }
 
 }

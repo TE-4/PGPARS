@@ -14,6 +14,10 @@ namespace PGPARS.Data
         // DbSet for Applicant, which EF Core will manage
         public DbSet<Applicant> Applicants { get; set; }
         public DbSet<Funding> Fundings { get;  set; }
+        public DbSet<FundingAllocations> FundingAllocations { get; set; }
+        public DbSet<FundingUsage> FundingUsage { get; set; }
+        public DbSet<FundingSource> FundingSources { get; set; }
+
         public DbSet<Review> Reviews { get; set; }
 
         public DbSet<AuditLog> AuditLogs { get; set; }

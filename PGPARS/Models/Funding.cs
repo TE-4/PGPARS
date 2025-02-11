@@ -28,7 +28,6 @@ namespace PGPARS.Models
 
         // Navigation property for Applicant
         public Applicant? Applicant { get; set; }
-
-
+        public decimal RemainingAmount { get; internal set; }
     }
 }

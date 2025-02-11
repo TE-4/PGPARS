@@ -20,8 +20,11 @@ public class FundingRepository : IFundingRepository
     // Method to get a specific funding by ID
     public Funding GetFundingById(int fundingId)
     {
-        return _context.Fundings.FirstOrDefault(f => f.FundingID == fundingId);
+        return _context.Fundings
+            .Include(f => f.FundingAllocations) // Ensure allocations are loaded
+            .FirstOrDefault(f => f.FundingID == fundingId);
     }
+
 
     // Update method for funding
     public void UpdateFunding(Funding funding)
@@ -75,4 +78,33 @@ public class FundingRepository : IFundingRepository
                         (f.Cohort != null && EF.Functions.Like(f.Cohort, $"%{searchQuery}%")))
             .ToList();
     }
+
+    public IEnumerable<FundingAllocations> GetFundingAllocations()
+    {
+        return _context.FundingAllocations
+            .Include(fa => fa.FundingSource)
+            .Include(fa => fa.Applicant)
+            .ToList();
+    }
+    public void AddAllocation(FundingAllocations allocation)
+    {
+        var funding = _context.Fundings.FirstOrDefault(f => f.FundingID == allocation.FundingSourceId);
+        if (funding != null)
+        {
+            // Deduct the allocated amount
+            funding.RemainingAmount -= allocation.AllocatedAmount;
+            _context.Fundings.Update(funding); // Update the funding source
+        }
+
+        _context.FundingAllocations.Add(allocation); // Add the allocation
+        _context.SaveChanges(); // Save changes
+    }
+
+
+    public void UpdateFunding(FundingSource funding)
+    {
+        _context.FundingSources.Update(funding);
+        _context.SaveChanges();
+    }
+
 }

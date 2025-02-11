@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace PGPARS.Controllers
 {
@@ -78,25 +80,33 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingDirectory");
         }
 
+
         // POST: AssignFundingToApplicant
-        // Commented out because Applicant is no longer part of the Funding model
-        
         [HttpPost]
-        public IActionResult AssignFundingToApplicant(int fundingId, int applicantId)
+        public IActionResult AssignFunding(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
-            var applicant = _applicantRepository.GetApplicantById(applicantId);
+            var applicants = _applicantRepository.GetApplicants();
 
-            if (funding != null && applicant != null)
+            if (funding == null || applicants == null || applicants.Count() == 0)
             {
-                funding.Applicant = applicant;
-                funding.Nnumber = applicant.Nnumber;
-                _fundingRepository.UpdateFunding(funding);
+                return RedirectToAction("FundingDirectory");
             }
 
-            return RedirectToAction("FundingDirectory");
+            var model = new FundingAssignmentViewModel
+            {
+                FundingSourceId = funding.Id,
+                FundingSourceName = funding.Name,
+                Applicants = applicants,
+                RemainingAmount = funding.RemainingAmount
+            };
+
+            return View(model);
         }
-        
+
+
+
+
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
@@ -117,33 +127,36 @@ namespace PGPARS.Controllers
         }
 
         // GET: Assign
-       
-        public IActionResult Assign(int fundingId)
+
+        public IActionResult Assign(int fundingId, int applicantId, decimal amount)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
+            var applicant = _applicantRepository.GetApplicantById(applicantId);
 
-            if (funding == null)
+            if (funding == null || applicant == null || funding.RemainingAmount < amount)
             {
                 return RedirectToAction("FundingDirectory");
             }
 
-            var applicants = _applicantRepository.GetApplicants()
-                               .Where(a => a.Status == "Approved for Funding")
-                               .ToList();
-
-            if (applicants == null || !applicants.Any())
+            // Create a new funding allocation
+            var allocation = new FundingAllocations
             {
-                return RedirectToAction("FundingDirectory");
-            }
-
-            var viewModel = new FundingAssignmentViewModel
-            {
-                Funding = funding,
-                Applicants = applicants
+                FundingSourceId = fundingId,
+                ApplicantId = applicantId,
+                AllocatedAmount = amount
             };
 
-            return View(viewModel);
+            _fundingRepository.AddAllocation(allocation);
+
+            // Deduct from funding source
+            funding.RemainingAmount -= amount;
+            _fundingRepository.UpdateFunding(funding);
+            _fundingRepository.Save(); // Ensure the update is committed
+
+            return RedirectToAction("FundingDirectory");
         }
-        
+
+
+
     }
 }
