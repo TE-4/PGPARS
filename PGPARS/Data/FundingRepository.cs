@@ -47,9 +47,11 @@ public class FundingRepository : IFundingRepository
     // Add method for funding
     public void AddFunding(Funding funding)
     {
+        funding.RemainingAmount = funding.Amount ?? 0;  // Initialize RemainingAmount based on Amount
         _context.Fundings.Add(funding);
         _context.SaveChanges();
     }
+
 
     // Delete method for funding
     public void DeleteFunding(int fundingId)
@@ -82,7 +84,7 @@ public class FundingRepository : IFundingRepository
     public IEnumerable<FundingAllocations> GetFundingAllocations()
     {
         return _context.FundingAllocations
-            .Include(fa => fa.FundingSource)
+            .Include(fa => fa.FundingSourceName)
             .Include(fa => fa.Applicant)
             .ToList();
     }

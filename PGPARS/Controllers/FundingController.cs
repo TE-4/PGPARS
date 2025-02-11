@@ -83,9 +83,9 @@ namespace PGPARS.Controllers
 
         // POST: AssignFundingToApplicant
         [HttpPost]
-        public IActionResult AssignFunding(int fundingId)
+        public IActionResult AssignFunding(int fundingID)
         {
-            var funding = _fundingRepository.GetFundingById(fundingId);
+            var funding = _fundingRepository.GetFundingById(fundingID);
             var applicants = _applicantRepository.GetApplicants();
 
             if (funding == null || applicants == null || applicants.Count() == 0)
@@ -95,18 +95,14 @@ namespace PGPARS.Controllers
 
             var model = new FundingAssignmentViewModel
             {
-                FundingSourceId = funding.Id,
-                FundingSourceName = funding.Name,
+                FundingSourceId = funding.FundingID,
+                FundingSourceName = funding.Source,
                 Applicants = applicants,
                 RemainingAmount = funding.RemainingAmount
             };
 
             return View(model);
         }
-
-
-
-
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
@@ -127,36 +123,44 @@ namespace PGPARS.Controllers
         }
 
         // GET: Assign
-
-        public IActionResult Assign(int fundingId, int applicantId, decimal amount)
+        [HttpPost]
+        public IActionResult Assign(FundingAssignmentViewModel model)
         {
-            var funding = _fundingRepository.GetFundingById(fundingId);
-            var applicant = _applicantRepository.GetApplicantById(applicantId);
+            if (!ModelState.IsValid)
+            {
+                var funding = _fundingRepository.GetFundingById(model.FundingSourceId);
+                var applicants = _applicantRepository.GetApplicants();
 
-            if (funding == null || applicant == null || funding.RemainingAmount < amount)
+                model.Applicants = applicants;
+                model.RemainingAmount = funding.RemainingAmount;
+
+                return View(model); // Return with validation errors
+            }
+
+            var fundingSource = _fundingRepository.GetFundingById(model.FundingSourceId);
+            var applicant = _applicantRepository.GetApplicantById(model.ApplicantId);
+
+            if (fundingSource == null || applicant == null || fundingSource.RemainingAmount < model.Amount)
             {
                 return RedirectToAction("FundingDirectory");
             }
 
-            // Create a new funding allocation
             var allocation = new FundingAllocations
             {
-                FundingSourceId = fundingId,
-                ApplicantId = applicantId,
-                AllocatedAmount = amount
+                FundingSourceId = model.FundingSourceId,
+                ApplicantId = model.ApplicantId,
+                AllocatedAmount = model.Amount
             };
 
             _fundingRepository.AddAllocation(allocation);
 
             // Deduct from funding source
-            funding.RemainingAmount -= amount;
-            _fundingRepository.UpdateFunding(funding);
+            fundingSource.RemainingAmount -= model.Amount;
+            _fundingRepository.UpdateFunding(fundingSource);
             _fundingRepository.Save(); // Ensure the update is committed
 
             return RedirectToAction("FundingDirectory");
         }
-
-
 
     }
 }

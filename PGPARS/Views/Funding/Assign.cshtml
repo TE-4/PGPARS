@@ -8,27 +8,24 @@
         <strong>Remaining Funding Amount:</strong> $@Model.RemainingAmount
     </div>
 
-
     <form asp-action="Assign" method="post">
-        <input type="hidden" name="fundingId" value="@Model.FundingSourceId" />
-        <input type="hidden" name="applicantId" id="applicantId" />
-        <input type="hidden" name="amount" id="amount" />
+        <input type="hidden" asp-for="FundingSourceId" />
 
         <div class="form-group">
-            <label for="applicantSelect">Select Applicant:</label>
-            <select id="applicantSelect" name="applicantId" class="form-control" required>
+            <label for="ApplicantId">Select Applicant:</label>
+            <select asp-for="ApplicantId" class="form-control" required>
                 <option value="">-- Select an Applicant --</option>
                 @foreach (var applicant in Model.Applicants)
                 {
-                    <option value="@applicant.Id">@applicant.FullName</option>
+                    <option value="@applicant.Nnumber">@applicant.FullName</option>
                 }
             </select>
             <span asp-validation-for="ApplicantId" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="amount">Funding Amount:</label>
-            <input type="number" step="0.01" name="amount" class="form-control" placeholder="Enter allocation amount" required min="0" max="@Model.FundingSource.RemainingAmount" />
+            <label for="Amount">Funding Amount:</label>
+            <input asp-for="Amount" type="number" step="0.01" class="form-control" placeholder="Enter allocation amount" required min="0" max="@Model.RemainingAmount" />
             <span asp-validation-for="Amount" class="text-danger"></span>
         </div>
 
