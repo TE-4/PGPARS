@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using PGPARS.Data;
 using System.Linq;
+using PGPARS.Services;
 
 namespace PGPARS.Controllers
 {
@@ -17,12 +18,14 @@ namespace PGPARS.Controllers
     {
         private readonly IApplicantRepository _applicantRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly AuditLogService _logger;
 
         // Constructor to inject the repository and IWebHostEnvironment
-        public ApplicantController(IApplicantRepository applicantRepository, IWebHostEnvironment webHostEnvironment)
+        public ApplicantController(IApplicantRepository applicantRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
         {
             _applicantRepository = applicantRepository;
             _webHostEnvironment = webHostEnvironment;
+            _logger = auditLogService;
         }
 
         // Action to display the filtered list of applicants
@@ -173,8 +176,22 @@ namespace PGPARS.Controllers
             // Update using the repository method
             _applicantRepository.UpdateApplicant(applicant);
 
-            TempData["ApplicantUpdated"] = "Applicant Details successfully updated!";
+            _logger.LogAction("Edit", User.Identity.Name, "Edited " + applicant.FullName, "INFO");
             return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteApplicant(string Nnumber)
+        {
+            var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == Nnumber);
+            if (applicant != null)
+            {
+                _applicantRepository.DeleteApplicant(Nnumber); // Delete the applicant from the repository
+            }
+            _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "INFO");
+            return RedirectToAction("ApplicantDirectory");
         }
     } // END CLASS
 }

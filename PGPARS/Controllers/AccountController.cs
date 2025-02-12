@@ -20,17 +20,19 @@ namespace PGPARS.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IApplicantRepository _applicantRepository;
         private readonly AuditLogService _logger;
+        private readonly ApplicationDbContext _context;
 
 
 
         public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager
-            , IApplicantRepository applicantRepo, AuditLogService auditLogService)
+            , IApplicantRepository applicantRepo, AuditLogService auditLogService, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _applicantRepository = applicantRepo;
             _logger = auditLogService;
+            _context = context;
         }
 
         private IActionResult RedirectBasedOnRole()
@@ -227,11 +229,6 @@ namespace PGPARS.Controllers
                 user.Position = model.Position;
 
 
-           
-               
-           
-
-
             // Check if the password fields are populated for change
             if (!string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword))
             {
@@ -315,7 +312,6 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
-        // This method will display the linked applicants for a user
         public async Task<IActionResult> LinkedApplicants(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -324,10 +320,14 @@ namespace PGPARS.Controllers
                 return NotFound();
             }
 
-            var linkedApplicants = _applicantRepository.GetApplicants()
-                .Where(a => a.Reviewer1 == user.ShortName || a.Reviewer2 == user.ShortName)
+            // Retrieve applicants linked through the ApplicantReviewer table
+            var linkedApplicants = _context.ApplicantReviewers
+                .Where(ar => ar.AppUserId == user.Id) // Find records where the reviewer is the current user
+                .Select(ar => ar.Applicant) // Select the corresponding applicants
                 .ToList();
+
             Debug.WriteLine($"Linked Applicants Count: {linkedApplicants.Count}");
+
             var viewModel = new LinkedApplicantsViewModel
             {
                 User = user,

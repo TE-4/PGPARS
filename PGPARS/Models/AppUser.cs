@@ -6,7 +6,7 @@ namespace PGPARS.Models
 {
     public class AppUser : IdentityUser
     {
-
+        
         [Required]
         public string Nnumber { get; set; }
 
@@ -21,7 +21,7 @@ namespace PGPARS.Models
 
         public string MainRole { get; set; }
 
-        public List<Applicant>? AssignedApplicants { get; set; }
-
+        // Navigation property
+        public List<ApplicantReviewer> ApplicantReviewers { get; set; } = new();
     }
 }

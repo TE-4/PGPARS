@@ -71,6 +71,17 @@ body, html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+/*CHART / GRAPH*/
+.chart-container {
+    max-height: 500px;
+    background-color: rgb(128, 128, 128, 0.6);
+    color: white;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: stretch;
+    display: flex;
+}
+
 /*CONTAINERS*/
 .container {
     color: white;
@@ -367,7 +378,7 @@ body, html {
     background-color: #0d215f;
 }
 
-/* TExT */
+/* TEXT */
 .text-outline {
     color: white; /* Inner text color */
     text-shadow: 2px 2px 0 black, /* Top-left shadow */

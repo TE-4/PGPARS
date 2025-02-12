@@ -44,7 +44,7 @@ namespace PGPARS.Data
             return uploadCount;
         }
 
-        public void DeleteApplicant(String Nnumber)
+        public void DeleteApplicant(string Nnumber)
         {
             var applicant = _context.Applicants.Find(Nnumber);
             _context.Applicants.Remove(applicant);
