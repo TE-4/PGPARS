@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250212191806_Migrations")]
-    partial class Migrations
+    [Migration("20250212211430_ApplicantReview")]
+    partial class ApplicantReview
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -454,7 +454,7 @@ namespace PGPARS.Migrations
                     b.Property<string>("Nnumber")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("RemainingAmount")
+                    b.Property<decimal?>("RemainingAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<double?>("Scholarships")

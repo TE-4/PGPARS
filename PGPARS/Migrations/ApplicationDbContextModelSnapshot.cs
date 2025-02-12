@@ -451,7 +451,7 @@ namespace PGPARS.Migrations
                     b.Property<string>("Nnumber")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("RemainingAmount")
+                    b.Property<decimal?>("RemainingAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<double?>("Scholarships")
