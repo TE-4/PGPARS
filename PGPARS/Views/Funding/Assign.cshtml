@@ -1,5 +1,7 @@
 ﻿@model PGPARS.Models.ViewModels.FundingAssignmentViewModel
 
+<div class="main">
+    <div class="container-opaque">
 @if (Model.FundingSourceId != 0)
 {
     <h3>Assign Applicant to Funding: @Model.FundingSourceName</h3>
@@ -39,3 +41,5 @@ else
         <p>There was an error loading the funding or applicants data. Please try again later.</p>
     </div>
 }
+</div>
+</div>
