@@ -30,7 +30,7 @@ namespace PGPARS.Models
         public Applicant? Applicant { get; set; }
 
         // The RemainingAmount should be initialized to the total Amount initially
-        public decimal RemainingAmount { get; set; }
+        public decimal? RemainingAmount { get; set; }
 
         // Navigation property for funding allocations
         public ICollection<FundingAllocations>? FundingAllocations { get; set; } = new List<FundingAllocations>();
