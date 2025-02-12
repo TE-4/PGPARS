@@ -81,27 +81,38 @@ namespace PGPARS.Controllers
         }
 
 
-        // POST: AssignFundingToApplicant
+        // POST: Assign (Processes funding allocation)
         [HttpPost]
-        public IActionResult AssignFunding(int fundingID)
+        public IActionResult Assign(FundingAssignmentViewModel model)
         {
-            var funding = _fundingRepository.GetFundingById(fundingID);
-            var applicants = _applicantRepository.GetApplicants();
-
-            if (funding == null || applicants == null || applicants.Count() == 0)
+            if (!ModelState.IsValid || model.ApplicantId == null || model.Amount <= 0)
             {
-                return RedirectToAction("FundingDirectory");
+                ModelState.AddModelError("", "Invalid input. Please select an applicant and provide a valid amount.");
+                return View(model); // Return to form with errors
             }
 
-            var model = new FundingAssignmentViewModel
+            var funding = _fundingRepository.GetFundingById(model.FundingSourceId);
+            if (funding == null || funding.RemainingAmount < model.Amount)
             {
-                FundingSourceId = funding.FundingID,
-                FundingSourceName = funding.Source,
-                Applicants = applicants,
-                RemainingAmount = funding.RemainingAmount
+                ModelState.AddModelError("", "Insufficient funds or invalid funding source.");
+                return View(model);
+            }
+
+            // Create new allocation
+            var allocation = new FundingAllocations
+            {
+                FundingSourceId = model.FundingSourceId,
+                ApplicantId = model.ApplicantId,
+                AllocatedAmount = model.Amount
             };
 
-            return View(model);
+            _fundingRepository.AddAllocation(allocation);
+
+            // Update remaining funding amount
+            funding.RemainingAmount -= model.Amount;
+            _fundingRepository.UpdateFunding(funding);
+
+            return RedirectToAction("FundingDirectory"); // Redirect to funding list
         }
 
         // GET: FundingDirectory
@@ -122,33 +133,28 @@ namespace PGPARS.Controllers
             return View(fundingList);
         }
 
-        // GET: Assign
+        // GET: Assign (Displays the assignment form)
         [HttpGet]
-        public IActionResult Assign(FundingAssignmentViewModel model)
+        public IActionResult Assign(int fundingId)
         {
-            if (!ModelState.IsValid)
+            var funding = _fundingRepository.GetFundingById(fundingId);
+            if (funding == null)
             {
-                var funding = _fundingRepository.GetFundingById(model.FundingSourceId);
-                var applicants = _applicantRepository.GetApplicants();
-
-                model.Applicants = applicants;
-                model.RemainingAmount = funding.RemainingAmount;
-
-                return View(model); // Ensure it returns the view instead of breaking
+                return RedirectToAction("FundingDirectory"); // Redirect if funding not found
             }
 
-            // Proceed with assigning funding
-            var allocation = new FundingAllocations
+            var applicants = _applicantRepository.GetApplicants();
+            var model = new FundingAssignmentViewModel
             {
-                FundingSourceId = model.FundingSourceId,
-                ApplicantId = model.ApplicantId,
-                AllocatedAmount = model.Amount
+                FundingSourceId = funding.FundingID,
+                FundingSourceName = funding.Source,
+                Applicants = applicants,
+                RemainingAmount = (decimal)funding.RemainingAmount
             };
 
-            _fundingRepository.AddAllocation(allocation);
-
-            return RedirectToAction("FundingDirectory");
+            return View(model); // Display the assignment form
         }
+
 
         [HttpGet]
         public JsonResult CheckApplicants(int fundingId)

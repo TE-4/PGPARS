@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250211221240_FundingTables")]
-    partial class FundingTables
+    [Migration("20250212175907_Applicantcsv")]
+    partial class Applicantcsv
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -487,63 +487,7 @@ namespace PGPARS.Migrations
 
                     b.HasIndex("FundingID");
 
-                    b.HasIndex("FundingSourceId");
-
                     b.ToTable("FundingAllocations");
-                });
-
-            modelBuilder.Entity("PGPARS.Models.FundingSource", b =>
-                {
-                    b.Property<int>("FundingSourceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FundingSourceId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("RemainingAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("FundingSourceId");
-
-                    b.ToTable("FundingSources");
-                });
-
-            modelBuilder.Entity("PGPARS.Models.FundingUsage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateUsed")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FundingAllocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FundingAllocationsId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UsedAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FundingAllocationsId");
-
-                    b.ToTable("FundingUsage");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Review", b =>
@@ -719,25 +663,6 @@ namespace PGPARS.Migrations
                     b.HasOne("PGPARS.Models.Funding", null)
                         .WithMany("FundingAllocations")
                         .HasForeignKey("FundingID");
-
-                    b.HasOne("PGPARS.Models.FundingSource", "FundingSource")
-                        .WithMany("Allocations")
-                        .HasForeignKey("FundingSourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FundingSource");
-                });
-
-            modelBuilder.Entity("PGPARS.Models.FundingUsage", b =>
-                {
-                    b.HasOne("PGPARS.Models.FundingAllocations", "FundingAllocations")
-                        .WithMany("UsageRecords")
-                        .HasForeignKey("FundingAllocationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FundingAllocations");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Review", b =>
@@ -757,16 +682,6 @@ namespace PGPARS.Migrations
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
                     b.Navigation("FundingAllocations");
-                });
-
-            modelBuilder.Entity("PGPARS.Models.FundingAllocations", b =>
-                {
-                    b.Navigation("UsageRecords");
-                });
-
-            modelBuilder.Entity("PGPARS.Models.FundingSource", b =>
-                {
-                    b.Navigation("Allocations");
                 });
 #pragma warning restore 612, 618
         }

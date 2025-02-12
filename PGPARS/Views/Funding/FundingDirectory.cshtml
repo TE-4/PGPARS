@@ -76,6 +76,7 @@
                                         </button>
                                     }
                                 </td>
+
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
                                         <a asp-action="EditFunding" asp-route-id="@fund.FundingID">
@@ -104,18 +105,26 @@
             document.querySelectorAll(".assign-btn").forEach(button => {
                 button.addEventListener("click", function () {
                     let fundingId = this.getAttribute("data-funding-id");
+                    console.log("Funding ID clicked:", fundingId);
                     fetch(`/Funding/CheckApplicants?fundingId=${fundingId}`)
                         .then(response => response.json())
                         .then(data => {
+                            console.log("CheckApplicants Response:", data);
                             if (data.hasApplicants) {
+                                console.log("Redirecting to Assign page...");
                                 window.location.href = `/Funding/Assign?fundingId=${fundingId}`;
                             } else {
                                 alert("There are no applicants to assign.");
                             }
                         })
-                        .catch(error => console.error("Error:", error));
+                        .catch(error => {
+                            console.error("Error:", error);
+                            alert("An error occurred while checking applicants.");
+                        });
                 });
             });
         });
+
+
     </script>
 </body>
