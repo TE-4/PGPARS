@@ -138,11 +138,6 @@ namespace PGPARS.Controllers
         public IActionResult Assign(int fundingId)
         {
             var funding = _fundingRepository.GetFundingById(fundingId);
-            if (funding == null)
-            {
-                return RedirectToAction("FundingDirectory"); // Redirect if funding not found
-            }
-
             var applicants = _applicantRepository.GetApplicants();
             var model = new FundingAssignmentViewModel
             {
