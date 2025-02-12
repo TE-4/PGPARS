@@ -150,6 +150,13 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingDirectory");
         }
 
+        [HttpGet]
+        public JsonResult CheckApplicants(int fundingId)
+        {
+            var applicants = _applicantRepository.GetApplicants();
+            bool hasApplicants = applicants != null && applicants.Any();
+            return Json(new { hasApplicants });
+        }
 
     }
 }
