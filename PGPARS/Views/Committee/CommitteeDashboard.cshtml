@@ -15,20 +15,21 @@
                     <div class="table-responsive shadow-sm rounded">
                         <table class="table">
                             <tbody>
-                            <thead>
-                            <th>Applicant</th>
-                            <th>Status</th>
-                                @foreach (var applicant in Model.Applicants)
-                                {
-                                <tr>
-                                    <td>
-                                        <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none; color: white;">
-                                                @applicant.FullName
-                                        </a>
-                                    </td>
-                                    <td style="text-align: center;">(Status)</td>
-                                </tr>
-                                }
+                                <thead>
+                                    <th>Applicant</th>
+                                    <th>Status</th>
+                                        @foreach (var applicant in Model.Applicants)
+                                        {
+                                        <tr>
+                                            <td>
+                                                <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none; color: white;">
+                                                        @applicant.FullName
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center;">(Status)</td>
+                                        </tr>
+                                        }
+                                </thead>
                             </tbody>
                         </table>
                     </div>

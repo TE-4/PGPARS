@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250208094041_first")]
-    partial class first
+    [Migration("20250212191806_Migrations")]
+    partial class Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -454,6 +454,9 @@ namespace PGPARS.Migrations
                     b.Property<string>("Nnumber")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("RemainingAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<double?>("Scholarships")
                         .HasColumnType("float");
 
@@ -468,6 +471,33 @@ namespace PGPARS.Migrations
                     b.HasIndex("Nnumber");
 
                     b.ToTable("Fundings");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.FundingAllocations", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AllocatedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ApplicantId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("FundingID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FundingSourceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FundingID");
+
+                    b.ToTable("FundingAllocations");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Review", b =>
@@ -642,6 +672,13 @@ namespace PGPARS.Migrations
                     b.Navigation("Applicant");
                 });
 
+            modelBuilder.Entity("PGPARS.Models.FundingAllocations", b =>
+                {
+                    b.HasOne("PGPARS.Models.Funding", null)
+                        .WithMany("FundingAllocations")
+                        .HasForeignKey("FundingID");
+                });
+
             modelBuilder.Entity("PGPARS.Models.Review", b =>
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
@@ -661,6 +698,11 @@ namespace PGPARS.Migrations
                     b.Navigation("ApplicantReviewers");
 
                     b.Navigation("Fundings");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.Funding", b =>
+                {
+                    b.Navigation("FundingAllocations");
                 });
 #pragma warning restore 612, 618
         }

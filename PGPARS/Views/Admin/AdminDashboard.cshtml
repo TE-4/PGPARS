@@ -1,14 +1,14 @@
 ﻿@model AdminDashboardViewModel
 
 <div class="main">
-    <div class="container-opaque">
+    <!--<div class="container-opaque">
         <div class="text-center text-outline p-3">
             <h2>Admin Dashboard</h2>
         </div>
-    </div>
-    <!--<div class="chart-container" style="width: 80%; margin: 0 auto;">
-        <canvas id="myChart"></canvas>
     </div>-->
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
     <div class="dashboard-table">
         <div class="dashboard-body">
             <div class="dashboard-row">
@@ -68,10 +68,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="dashboard-cell">
-                    <h3>Funding</h3>
-                    Coming Soon!
-                </div>
             </div>
         </div>
     </div>
@@ -96,19 +92,40 @@
                         [{
                             label: 'Status of Applicants',
                             data: data.values,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
+                            borderWidth: 10,
+                            backgroundColor: '#0d215f'
                         }]
                     },
-                    options:
-                    {
+                    options: {
                         responsive: true,
-                        scales:
-                        {
-                            y:
-                            {
-                                beginAtZero: true
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: 'white', // Changes x-axis label color
+                                    font: {size: 16}
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: 'white', // Changes y-axis label color
+                                    font: {size: 20}
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'white', // Changes legend text color
+                                    font: {size: 20}
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Applicant Status Distribution',
+                                color: 'white', // Changes chart title color
+                                font: {
+                                    size: 20
+                                }
                             }
                         }
                     }

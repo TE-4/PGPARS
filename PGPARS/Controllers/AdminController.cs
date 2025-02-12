@@ -52,10 +52,30 @@ namespace PGPARS.Controllers
         [HttpGet]
         public JsonResult GetChartData()
         {
+            var applicants = _applicantRepository.GetApplicants();
+            var statusCount = new Dictionary<string, int>
+            {
+                {"Unassigned", 0},
+                {"1st Review", 0},
+                {"Review Conflict", 0},
+                {"Interview Pending", 0},
+                {"Accepted", 0},
+                {"Denied", 0},
+                {"Funds Assigned", 0}
+            };
+
+            foreach (var applicant in applicants)
+            {
+                if (applicant.Status != null && statusCount.ContainsKey(applicant.Status))
+                {
+                    statusCount[applicant.Status]++;
+                }
+            }
+
             var data = new
             {
-                labels = new[] { "Unassigned", "Reviews Pending", "Review Conflict", "Interview Pending", "Accepted", "Denied", "Funding Assigned" },
-                values = new[] { 12, 19, 3, 5, 2 }
+                labels = statusCount.Keys.ToArray(),
+                values = statusCount.Values.ToArray()
             };
             return Json(data);
         }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class FundingTables : Migration
+    public partial class Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -123,21 +123,6 @@ namespace PGPARS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FundingSources",
-                columns: table => new
-                {
-                    FundingSourceId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RemainingAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FundingSources", x => x.FundingSourceId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Fundings",
                 columns: table => new
                 {
@@ -230,24 +215,26 @@ namespace PGPARS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppUserApplicant",
+                name: "ApplicantReviewers",
                 columns: table => new
                 {
-                    AssignedApplicantsNnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AssignedReviewersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUserApplicant", x => new { x.AssignedApplicantsNnumber, x.AssignedReviewersId });
+                    table.PrimaryKey("PK_ApplicantReviewers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppUserApplicant_Applicants_AssignedApplicantsNnumber",
-                        column: x => x.AssignedApplicantsNnumber,
+                        name: "FK_ApplicantReviewers_Applicants_Nnumber",
+                        column: x => x.Nnumber,
                         principalTable: "Applicants",
                         principalColumn: "Nnumber",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppUserApplicant_AspNetUsers_AssignedReviewersId",
-                        column: x => x.AssignedReviewersId,
+                        name: "FK_ApplicantReviewers_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -353,45 +340,21 @@ namespace PGPARS.Migrations
                 {
                     table.PrimaryKey("PK_FundingAllocations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FundingAllocations_FundingSources_FundingSourceId",
-                        column: x => x.FundingSourceId,
-                        principalTable: "FundingSources",
-                        principalColumn: "FundingSourceId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_FundingAllocations_Fundings_FundingID",
                         column: x => x.FundingID,
                         principalTable: "Fundings",
                         principalColumn: "FundingID");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "FundingUsage",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FundingAllocationId = table.Column<int>(type: "int", nullable: false),
-                    FundingAllocationsId = table.Column<int>(type: "int", nullable: false),
-                    UsedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DateUsed = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FundingUsage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FundingUsage_FundingAllocations_FundingAllocationsId",
-                        column: x => x.FundingAllocationsId,
-                        principalTable: "FundingAllocations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicantReviewers_AppUserId",
+                table: "ApplicantReviewers",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppUserApplicant_AssignedReviewersId",
-                table: "AppUserApplicant",
-                column: "AssignedReviewersId");
+                name: "IX_ApplicantReviewers_Nnumber",
+                table: "ApplicantReviewers",
+                column: "Nnumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -438,19 +401,9 @@ namespace PGPARS.Migrations
                 column: "FundingID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FundingAllocations_FundingSourceId",
-                table: "FundingAllocations",
-                column: "FundingSourceId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Fundings_Nnumber",
                 table: "Fundings",
                 column: "Nnumber");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FundingUsage_FundingAllocationsId",
-                table: "FundingUsage",
-                column: "FundingAllocationsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ApplicantNnumber",
@@ -462,7 +415,7 @@ namespace PGPARS.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppUserApplicant");
+                name: "ApplicantReviewers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -483,7 +436,7 @@ namespace PGPARS.Migrations
                 name: "AuditLogs");
 
             migrationBuilder.DropTable(
-                name: "FundingUsage");
+                name: "FundingAllocations");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
@@ -493,12 +446,6 @@ namespace PGPARS.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "FundingAllocations");
-
-            migrationBuilder.DropTable(
-                name: "FundingSources");
 
             migrationBuilder.DropTable(
                 name: "Fundings");

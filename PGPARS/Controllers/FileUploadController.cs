@@ -40,10 +40,14 @@ namespace PGPARS.Controllers
                         var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
                         // add applicants to the Applicant Table
                         var uploadCount = _applicantRepo.AddApplicants(applicants);
+                        foreach (var applicant in applicants)
+                        {
+                            _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "INFO");
+                        }
                         TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
 
                         // Log the action
-                        _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
+                        //_logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
 
                         return RedirectToAction("ApplicantDirectory", "Applicant");
                     }
