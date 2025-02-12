@@ -1,105 +1,121 @@
 ﻿@using Microsoft.IdentityModel.Tokens
 @model IEnumerable<PGPARS.Models.Funding>
+
 <body>
-<div class="main">
-    <div class="container-opaque">
-        <!-- Title -->
-        <div class="text-center text-outline p-3">
-            <h2>Funding Directory</h2>
-        </div>
-    </div>
-    <br />
-    <div class="d-flex justify-content-between align-items-center">
-        <!-- Add Funding button -->
-        <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
-            <i class="bi bi-upload"></i>&ensp;Add New Funding
-        </a>
-        <!-- Search bar -->
-        <form method="get" asp-action="FundingDirectory" class="d-flex align-items-center">
-            <div class="input-group me-2">
-                <input type="text" name="searchQuery" class="form-control" style="min-height: 50px;" placeholder="Search by Source or Cohort..." value="@ViewData["SearchQuery"]" />
+    <div class="main">
+        <div class="container-opaque">
+            <!-- Title -->
+            <div class="text-center text-outline p-3">
+                <h2>Funding Directory</h2>
             </div>
-            <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
-                <div class="bi bi-search">&ensp;Search</div>
-            </button>
-        </form>
-    </div>
-    <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
-        <table class="table align-middle text-dark">
-            <thead class="text-uppercase">
-                <tr>
-                    <th>Cohort</th>
-                    <th>Source</th>
-                    <th>Amount</th>
-                    <th>Applicant</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+        </div>
+        <br />
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Add Funding button -->
+            <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
+                <i class="bi bi-upload"></i>&ensp;Add New Funding
+            </a>
+            <!-- Search bar -->
+            <form method="get" asp-action="FundingDirectory" class="d-flex align-items-center">
+                <div class="input-group me-2">
+                    <input type="text" name="searchQuery" class="form-control" style="min-height: 50px;" placeholder="Search by Source or Cohort..." value="@ViewData["SearchQuery"]" />
+                </div>
+                <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
+                    <div class="bi bi-search">&ensp;Search</div>
+                </button>
+            </form>
+        </div>
+        <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
+            <table class="table align-middle text-dark">
+                <thead class="text-uppercase">
+                    <tr>
+                        <th>Cohort</th>
+                        <th>Source</th>
+                        <th>Amount</th>
+                        <th>Applicant</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @if (!Model.Any())
                     {
-                       @if (!Model.Any())
-                            {
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted">
-                                        @{
-                                            var searchQuery = ViewData["SearchQuery"]?.ToString();
-                                        }
-                                        @if (string.IsNullOrEmpty(searchQuery))
-                                        {
-                                            <span>No Funding found.</span>
-                                        }
-                                        else
-                                        {
-                                            <span>Nothing matches your search criteria.</span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                @{
+                                    var searchQuery = ViewData["SearchQuery"]?.ToString();
+                                }
+                                @if (string.IsNullOrEmpty(searchQuery))
+                                {
+                                    <span>No Funding found.</span>
+                                }
+                                else
+                                {
+                                    <span>Nothing matches your search criteria.</span>
+                                }
+                            </td>
+                        </tr>
                     }
                     else
                     {
                         @foreach (var fund in Model)
                         {
-                                <tr>
-                                    <td>@fund.Cohort</td>
-                                    <td>@fund.Source</td>
-                                    <td>@fund.Amount?.ToString("C")</td>
-                                    <td>
+                            <tr>
+                                <td>@fund.Cohort</td>
+                                <td>@fund.Source</td>
+                                <td>@fund.Amount?.ToString("C")</td>
+                                <td>
                                     @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
                                     {
                                         @fund.Applicant.FullName
                                     }
                                     else
                                     {
-                                                <a asp-action="Assign" asp-route-fundingId="@fund.FundingID">
-                                                    <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
-                                                        <div class="bi bi-plus-circle">&ensp;Assign</div>
-                                                    </button>
-                                                </a>
+                                        <button type="button" class="btn btn-lg assign-btn" data-funding-id="@fund.FundingID"
+                                                style="background-color:royalblue; color: white; border: 2px solid black;">
+                                            <div class="bi bi-plus-circle">&ensp;Assign</div>
+                                        </button>
                                     }
-                                    </td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-3">
-                                            <a asp-action="EditFunding" asp-route-id="@fund.FundingID">
-                                                <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
-                                                    <div class="bi bi-pencil">&ensp;Edit</div>
-                                                </button>
-                                            </a>
-                                            <form asp-action="DeleteFunding" asp-route-id="@fund.FundingID" method="post" style="display: inline-block;">
-                                                <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;"
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-3">
+                                        <a asp-action="EditFunding" asp-route-id="@fund.FundingID">
+                                            <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
+                                                <div class="bi bi-pencil">&ensp;Edit</div>
+                                            </button>
+                                        </a>
+                                        <form asp-action="DeleteFunding" asp-route-id="@fund.FundingID" method="post" style="display: inline-block;">
+                                            <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;"
                                                     onclick="return confirm('Are you sure you want to delete this funding?');">
-                                                    <div class="bi bi-trash">&ensp;Delete</div>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                                                <div class="bi bi-trash">&ensp;Delete</div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         }
                     }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".assign-btn").forEach(button => {
+                button.addEventListener("click", function () {
+                    let fundingId = this.getAttribute("data-funding-id");
+                    fetch(`/Funding/CheckApplicants?fundingId=${fundingId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.hasApplicants) {
+                                window.location.href = `/Funding/Assign?fundingId=${fundingId}`;
+                            } else {
+                                alert("There are no applicants to assign.");
+                            }
+                        })
+                        .catch(error => console.error("Error:", error));
+                });
+            });
+        });
+    </script>
 </body>

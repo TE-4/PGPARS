@@ -14,7 +14,11 @@ namespace PGPARS.Data
 
         // DbSet properties for the models
         public DbSet<Applicant> Applicants { get; set; }
-        public DbSet<Funding> Fundings { get; set; }
+
+        public DbSet<Funding> Fundings { get;  set; }
+        public DbSet<FundingAllocations> FundingAllocations { get; set; }
+
+
         public DbSet<Review> Reviews { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
         public DbSet<ApplicantReviewer> ApplicantReviewers { get; set; } // Register join table

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PGPARS.Data;
 
@@ -11,9 +12,11 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250211221240_FundingTables")]
+    partial class FundingTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace PGPARS.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.Property<string>("AssignedApplicantsNnumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignedReviewersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AssignedApplicantsNnumber", "AssignedReviewersId");
+
+                    b.HasIndex("AssignedReviewersId");
+
+                    b.ToTable("AppUserApplicant");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -366,31 +384,6 @@ namespace PGPARS.Migrations
                     b.ToTable("Applicants");
                 });
 
-            modelBuilder.Entity("PGPARS.Models.ApplicantReviewer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Nnumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("Nnumber");
-
-                    b.ToTable("ApplicantReviewers");
-                });
-
             modelBuilder.Entity("PGPARS.Models.AuditLog", b =>
                 {
                     b.Property<int>("Id")
@@ -646,6 +639,21 @@ namespace PGPARS.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("AppUserApplicant", b =>
+                {
+                    b.HasOne("PGPARS.Models.Applicant", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedApplicantsNnumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PGPARS.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedReviewersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -697,25 +705,6 @@ namespace PGPARS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PGPARS.Models.ApplicantReviewer", b =>
-                {
-                    b.HasOne("PGPARS.Models.AppUser", "AppUser")
-                        .WithMany("ApplicantReviewers")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
-                        .WithMany("ApplicantReviewers")
-                        .HasForeignKey("Nnumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Applicant");
-                });
-
             modelBuilder.Entity("PGPARS.Models.Funding", b =>
                 {
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
@@ -760,15 +749,8 @@ namespace PGPARS.Migrations
                     b.Navigation("Applicant");
                 });
 
-            modelBuilder.Entity("PGPARS.Models.AppUser", b =>
-                {
-                    b.Navigation("ApplicantReviewers");
-                });
-
             modelBuilder.Entity("PGPARS.Models.Applicant", b =>
                 {
-                    b.Navigation("ApplicantReviewers");
-
                     b.Navigation("Fundings");
                 });
 

@@ -50,7 +50,7 @@ namespace PGPARS.Data
             _context.Applicants.Remove(applicant);
             _context.SaveChanges();
         }
-      
+
         public void DeleteApplicant(int id)
         {
             throw new NotImplementedException();
