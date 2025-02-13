@@ -60,6 +60,8 @@ namespace PGPARS.Models
         // Navigation property
         public List<ApplicantReviewer> ApplicantReviewers { get; set; } = new();
 
+        // For CheckBox
+        // public bool IsSelected { get; set; }
 
         public string FullName
         {
