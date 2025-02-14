@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AppUser>;
+﻿@model IEnumerable<AppUser>
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> UserManager
 
 <body> 
     <div class="main">
@@ -49,7 +50,7 @@
                     <thead class="text-uppercase">
                         <tr>
                             <th>Email</th>
-                            <th>Short Name</th>
+                            <th>Name</th>
                             <th>N-Number</th>
                             <th>Role</th>
                             <th>Full Name</th>
@@ -69,9 +70,9 @@
                             {
                                 <tr>
                                     <td class="text-center">@user.Email</td>
-                                    <td class="text-center">@user.ShortName</td>
+                                    <td class="text-center">@user.FirstName @user.LastName</td>
                                     <td class="text-center">@user.Nnumber</td>
-                                    <td class="text-center">@user.MainRole</td>
+                                    <td class="text-center">@(string.Join(", ", await UserManager.GetRolesAsync(user)))</td>
                                     <td>@user.FirstName @user.LastName</td>
                                     <td>
                                         <div class="d-flex justify-content-center gap-3">
@@ -106,7 +107,7 @@
             </div>
         </div>
     </div>
-    </div>
+    
 
     <!-- Modal -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">

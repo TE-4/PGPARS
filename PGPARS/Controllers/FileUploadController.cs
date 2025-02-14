@@ -101,8 +101,7 @@ namespace PGPARS.Controllers
                             continue;
                         }
 
-                        faculty.UserName = faculty.Email;
-                        faculty.MainRole = "Faculty";
+                        faculty.UserName = faculty.Email;                   
 
                         var result = await _userManager.CreateAsync(faculty, "Password123!");
                         if (!result.Succeeded)

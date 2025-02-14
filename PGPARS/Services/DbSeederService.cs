@@ -74,8 +74,7 @@ namespace PGPARS.Data
                     Email = email,
                     Nnumber = "n00009308",
                     UserName = email,
-                    Position = "Professor",
-                    MainRole = "Admin"
+                    Position = "Professor"               
                 };
 
                 var result = await _userManager.CreateAsync(newUser, "Admin@1234");
@@ -110,8 +109,7 @@ namespace PGPARS.Data
                     Email = email,
                     Nnumber = "n00000001",
                     UserName = email,
-                    Position = "Committee Positions?",
-                    MainRole = "Committee"
+                    Position = "Committee Positions?"
                 };
 
                 var result = await _userManager.CreateAsync(newUser, "Com@1234");
@@ -145,8 +143,7 @@ namespace PGPARS.Data
                     Email = email,
                     Nnumber = "n00000003",
                     UserName = email,
-                    Position = "Committee Positions?",
-                    MainRole = "Committee"
+                    Position = "Committee Positions?"                 
                 };
 
                 var result = await _userManager.CreateAsync(newUser, "Com@12345");
@@ -181,8 +178,7 @@ namespace PGPARS.Data
                     Email = email,
                     Nnumber = "n00000002",
                     UserName = email,
-                    Position = "Faculty Positions?",
-                    MainRole = "Faculty"
+                    Position = "Faculty Positions?"                
                 };
 
                 var result = await _userManager.CreateAsync(newUser, "Fac@1234");

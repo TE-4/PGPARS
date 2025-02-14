@@ -1,4 +1,5 @@
 ﻿@model PGPARS.Models.AppUser
+@inject Microsoft.AspNetCore.Identity.UserManager<PGPARS.Models.AppUser> UserManager
 
 <body>
     <div class="main">
@@ -27,7 +28,7 @@
                     <div class="col-md-6">
                         <p><strong><i class="bi bi-person-badge"></i> Short Name:</strong> @Model.ShortName</p>
                         <p><strong><i class="bi bi-briefcase"></i> Position:</strong> @(Model.Position ?? "Not specified")</p>
-                        <p><strong><i class="bi bi-people"></i> Role:</strong> @Model.MainRole</p>
+                        <p><strong><i class="bi bi-people"></i> Role:</strong> @string.Join(", ", await UserManager.GetRolesAsync(Model))</p>
                     </div>
                 </div>
 

@@ -41,7 +41,7 @@ namespace PGPARS.Services
 
                 if (existingReviewers.Count >= 2)
                 {
-                    continue; // Skip if already assigned two reviewers
+                    continue; // skip if already assigned two reviewers
                 }
 
                 bool updated = false;
@@ -55,7 +55,7 @@ namespace PGPARS.Services
 
                     var reviewer = reviewers[count];
 
-                    // Ensure the same reviewer is not assigned twice
+                    // make sure the same reviewer is not assigned twice***
                     if (!existingReviewers.Any(ar => ar.AppUserId == reviewer.Id))
                     {
                         var applicantReviewer = new ApplicantReviewer
@@ -65,7 +65,7 @@ namespace PGPARS.Services
                         };
 
                         _context.ApplicantReviewers.Add(applicantReviewer);
-                        _context.SaveChanges(); // Persist changes
+                        _context.SaveChanges(); 
                         existingReviewers.Add(applicantReviewer);
                         updated = true;
                     }
