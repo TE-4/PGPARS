@@ -180,7 +180,7 @@ namespace PGPARS.Controllers
             return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
         }
 
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteApplicant(string Nnumber)
@@ -192,7 +192,7 @@ namespace PGPARS.Controllers
             }
             
             return RedirectToAction("ApplicantDirectory");
-        }
+        }*/
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
