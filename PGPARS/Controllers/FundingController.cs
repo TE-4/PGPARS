@@ -38,7 +38,7 @@ namespace PGPARS.Controllers
             if (ModelState.IsValid)
             {
                 _fundingRepository.AddFunding(funding); // Add the funding to the repository
-                _logger.LogAction("Delete", User.Identity.Name, "Added " + funding.Source, "INFO");
+                _logger.LogAction("Add", User.Identity.Name, "Added " + funding.Source, "INFO");
                 return RedirectToAction("FundingDirectory"); // Redirect to FundingDirectory after successful submission
             }
             return View(funding); // Return the form with validation errors and user input
@@ -66,7 +66,7 @@ namespace PGPARS.Controllers
                 _fundingRepository.UpdateFunding(funding);
 
                 //log for editing
-                _logger.LogAction("Delete", User.Identity.Name, "Edited " + funding.Source, "INFO");
+                _logger.LogAction("Edit", User.Identity.Name, "Edited " + funding.Source, "INFO");
 
                 // Redirect back to the directory after updating
                 return RedirectToAction("FundingDirectory");
