@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
+using PGPARS.Services;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,11 +14,14 @@ namespace PGPARS.Controllers
     {
         private readonly IFundingRepository _fundingRepository;
         private readonly IApplicantRepository _applicantRepository;
+        private readonly AuditLogService _logger;
+        
 
-        public FundingController(IFundingRepository fundingRepository, IApplicantRepository applicantRepository)
+        public FundingController(IFundingRepository fundingRepository, IApplicantRepository applicantRepository, AuditLogService auditLogService)
         {
             _fundingRepository = fundingRepository;
             _applicantRepository = applicantRepository;
+            _logger = auditLogService;
         }
 
         // GET: AddFunding
