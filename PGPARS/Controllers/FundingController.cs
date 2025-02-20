@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
+using PGPARS.Services;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,11 +14,14 @@ namespace PGPARS.Controllers
     {
         private readonly IFundingRepository _fundingRepository;
         private readonly IApplicantRepository _applicantRepository;
+        private readonly AuditLogService _logger;
+        
 
-        public FundingController(IFundingRepository fundingRepository, IApplicantRepository applicantRepository)
+        public FundingController(IFundingRepository fundingRepository, IApplicantRepository applicantRepository, AuditLogService auditLogService)
         {
             _fundingRepository = fundingRepository;
             _applicantRepository = applicantRepository;
+            _logger = auditLogService;
         }
 
         // GET: AddFunding
@@ -34,6 +38,7 @@ namespace PGPARS.Controllers
             if (ModelState.IsValid)
             {
                 _fundingRepository.AddFunding(funding); // Add the funding to the repository
+                _logger.LogAction("Add", User.Identity.Name, "Added " + funding.Source, "INFO");
                 return RedirectToAction("FundingDirectory"); // Redirect to FundingDirectory after successful submission
             }
             return View(funding); // Return the form with validation errors and user input
@@ -60,6 +65,9 @@ namespace PGPARS.Controllers
                 // Call the repository method to update the funding in the database
                 _fundingRepository.UpdateFunding(funding);
 
+                //log for editing
+                _logger.LogAction("Edit", User.Identity.Name, "Edited " + funding.Source, "INFO");
+
                 // Redirect back to the directory after updating
                 return RedirectToAction("FundingDirectory");
             }
@@ -77,6 +85,7 @@ namespace PGPARS.Controllers
             {
                 _fundingRepository.DeleteFunding(id); // Delete the funding from the repository
             }
+            _logger.LogAction("Delete", User.Identity.Name, "Deleted " + funding.Source, "INFO");
             return RedirectToAction("FundingDirectory");
         }
 
