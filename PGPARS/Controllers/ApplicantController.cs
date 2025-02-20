@@ -180,7 +180,7 @@ namespace PGPARS.Controllers
             return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
         }
 
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteApplicant(string Nnumber)
@@ -190,8 +190,29 @@ namespace PGPARS.Controllers
             {
                 _applicantRepository.DeleteApplicant(Nnumber); // Delete the applicant from the repository
             }
-            _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "INFO");
+            
+            return RedirectToAction("ApplicantDirectory");
+        }*/
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteSelectedApplicants(List<string> SelectedApplicants)
+        {
+            if (SelectedApplicants == null || !SelectedApplicants.Any())
+            {
+                return RedirectToAction("ApplicantDirectory");
+            }
+            foreach (var Nnumber in SelectedApplicants)
+            {
+                var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber.Equals(Nnumber));
+                if (applicant != null)
+                {
+                    _applicantRepository.DeleteApplicant(Nnumber);
+                    _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "INFO");
+                }
+            }
             return RedirectToAction("ApplicantDirectory");
         }
-    } // END CLASS
+    }
 }

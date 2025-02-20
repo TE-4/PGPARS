@@ -60,7 +60,6 @@ namespace PGPARS.Models
         // Navigation property
         public List<ApplicantReviewer> ApplicantReviewers { get; set; } = new();
 
-
         public string FullName
         {
             get
