@@ -75,7 +75,8 @@ namespace PGPARS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+                // isPersistent set to true for easier testing - set to false for production
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if(result.Succeeded)
                 {
                     return RedirectBasedOnRole();
@@ -121,8 +122,7 @@ namespace PGPARS.Controllers
                                          LastName = model.LastName,
                                          Email = model.Email,
                                          UserName = model.Email,
-                                         Nnumber = model.Nnumber,
-                                         MainRole = role.Name};
+                                         Nnumber = model.Nnumber};
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -174,9 +174,7 @@ namespace PGPARS.Controllers
                 LastName = user.LastName,
                 Nnumber = user.Nnumber,
                 Position = user.Position,
-                Email = user.Email,
-                Role = user.MainRole
-            };
+                Email = user.Email};
 
 
 
@@ -208,11 +206,14 @@ namespace PGPARS.Controllers
                 return View(model);
             }
 
+            // Obtain the User's current role
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
             // if role is changed, remove the user from the old role and add to the new role
-            if (user.MainRole != model.Role)
+            if (!currentRoles.Contains(model.Role))
             {
                 // remove them from their current role
-                await _userManager.RemoveFromRoleAsync(user, user.MainRole);
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
                 var role = await _roleManager.FindByNameAsync(model.Role);
                 if (role != null)
                 {
@@ -225,7 +226,6 @@ namespace PGPARS.Controllers
                 user.LastName = model.LastName;
                 user.Email = model.Email;
                 user.Nnumber = model.Nnumber;
-                user.MainRole = model.Role;
                 user.Position = model.Position;
 
 
@@ -287,7 +287,7 @@ namespace PGPARS.Controllers
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
-                TempData["UserDeleted"] = "User account successfully deleted!";
+                TempData["UserDeleted"] = "User account successfully deleted.";
                 return RedirectToAction("Directory");
             }
 
@@ -359,27 +359,22 @@ namespace PGPARS.Controllers
                     u.Email.ToLower().Contains(query)); // Matches email
             }
 
-            // this if-statement filters users by Role and works with a hierarchical structure where all committee members are faculty
-            // and the admin can serve as faculty or committee
+            List<AppUser> users;
+
+            // this if-statement filters users by Role from the drop down filter select option
             if (!string.IsNullOrEmpty(role))
             {
-                if(role == "Faculty")
-                {
-                    userQuery = userQuery.Where(u => u.MainRole == "Faculty" || u.MainRole == "Committee" || u.MainRole == "Admin");
-                }
-                else if(role == "Committee")
-                {
-                    userQuery = userQuery.Where(u => u.MainRole == "Committee" || u.MainRole == "Admin");
-                }
-                else 
-                { 
-                userQuery = userQuery.Where(u => u.MainRole == role);
-                }
+                var usersInRole = await _userManager.GetUsersInRoleAsync(role);
+                users = usersInRole.Where(u => userQuery.Any(filteredUser => filteredUser.Id == u.Id)).ToList();
+            }
+            else
+            {
+                users = await userQuery.ToListAsync();
             }
 
-            var users = await userQuery.ToListAsync();
 
-            return View("Directory", users);
+
+                return View("Directory", users);
         }
 
 

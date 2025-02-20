@@ -19,8 +19,6 @@ namespace PGPARS.Models
 
         public string? Position { get; set; }
 
-        public string MainRole { get; set; }
-
         // Navigation property
         public List<ApplicantReviewer> ApplicantReviewers { get; set; } = new();
     }
