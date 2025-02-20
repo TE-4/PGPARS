@@ -163,10 +163,10 @@ namespace PGPARS.Controllers
         [HttpGet]
         public JsonResult CheckApplicants(int fundingId)
         {
-            var applicants = _applicantRepository.GetApplicants();
-            bool hasApplicants = applicants != null && applicants.Any();
+            bool hasApplicants = _fundingRepository.GetAllocationsByFundingId(fundingId).Any();
             return Json(new { hasApplicants });
         }
+
 
     }
 }

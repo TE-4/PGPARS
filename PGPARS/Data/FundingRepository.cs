@@ -88,6 +88,13 @@ public class FundingRepository : IFundingRepository
             .Include(fa => fa.ApplicantId)
             .ToList();
     }
+    public IEnumerable<FundingAllocations> GetAllocationsByFundingId(int fundingId)
+    {
+        return _context.FundingAllocations
+            .Where(a => a.FundingSourceId == fundingId)
+            .ToList();
+    }
+
     public void AddAllocation(FundingAllocations allocation)
     {
         var funding = _context.Fundings.FirstOrDefault(f => f.FundingID == allocation.FundingSourceId);

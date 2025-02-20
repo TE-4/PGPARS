@@ -64,7 +64,7 @@
                                 <td>@fund.Source</td>
                                 <td>@fund.Amount?.ToString("C")</td>
                                 <td>
-                                    @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
+                                    @if (fund.Nnumber != null)
                                     {
                                         @fund.Applicant.FullName
                                     }
@@ -76,6 +76,7 @@
                                         </button>
                                     }
                                 </td>
+
 
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
