@@ -17,7 +17,7 @@ namespace PGPARS.Data
             var log = new AuditLog
             {
                 Action = action,
-                User = user ?? "System", // If there is no User, default to "System"
+                Actor = user ?? "System", // If there is no User, default to "System"
                 TimeStamp = DateTime.Now,
                 Details = details,
                 Category = category

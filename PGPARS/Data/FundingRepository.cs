@@ -22,14 +22,14 @@ public class FundingRepository : IFundingRepository
     {
         return _context.Fundings
             .Include(f => f.FundingAllocations) // Ensure allocations are loaded
-            .FirstOrDefault(f => f.FundingID == fundingId);
+            .FirstOrDefault(f => f.Id == fundingId);
     }
 
 
     // Update method for funding
     public void UpdateFunding(Funding funding)
     {
-        var existingFunding = _context.Fundings.FirstOrDefault(f => f.FundingID == funding.FundingID);
+        var existingFunding = _context.Fundings.FirstOrDefault(f => f.Id == funding.Id);
 
         if (existingFunding != null)
         {
@@ -40,14 +40,14 @@ public class FundingRepository : IFundingRepository
         }
         else
         {
-            throw new KeyNotFoundException($"Funding with ID {funding.FundingID} not found.");
+            throw new KeyNotFoundException($"Funding with ID {funding.Id} not found.");
         }
     }
 
     // Add method for funding
     public void AddFunding(Funding funding)
     {
-        funding.RemainingAmount = funding.Amount ?? 0;  // Initialize RemainingAmount based on Amount
+        funding.Remaining = funding.Amount ?? 0;  // Initialize RemainingAmount based on Amount
         _context.Fundings.Add(funding);
         _context.SaveChanges();
     }
@@ -56,7 +56,7 @@ public class FundingRepository : IFundingRepository
     // Delete method for funding
     public void DeleteFunding(int fundingId)
     {
-        var funding = _context.Fundings.FirstOrDefault(f => f.FundingID == fundingId);
+        var funding = _context.Fundings.FirstOrDefault(f => f.Id == fundingId);
         if (funding != null)
         {
             _context.Fundings.Remove(funding);
@@ -83,18 +83,17 @@ public class FundingRepository : IFundingRepository
 
     public IEnumerable<FundingAllocations> GetFundingAllocations()
     {
-        return _context.FundingAllocations
-            .Include(fa => fa.FundingSourceId)
-            .Include(fa => fa.ApplicantId)
+        return _context.FundingAllocations          
+            .Include(fa => fa.Nnumber)
             .ToList();
     }
     public void AddAllocation(FundingAllocations allocation)
     {
-        var funding = _context.Fundings.FirstOrDefault(f => f.FundingID == allocation.FundingSourceId);
+        var funding = _context.Fundings.FirstOrDefault(f => f.Id == allocation.FundingID);
         if (funding != null)
         {
             // Deduct the allocated amount
-            funding.RemainingAmount -= allocation.AllocatedAmount;
+            funding.Remaining -= allocation.AllocatedAmount;
             _context.Fundings.Update(funding); // Update the funding source
         }
 

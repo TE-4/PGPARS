@@ -23,7 +23,7 @@ namespace PGPARS.Controllers
             _applicantRepository = applicantRepository;
             _logger = auditLogService;
         }
-
+        
         // GET: AddFunding
         [HttpGet]
         public IActionResult AddFunding()
@@ -101,7 +101,7 @@ namespace PGPARS.Controllers
             }
 
             var funding = _fundingRepository.GetFundingById(model.FundingSourceId);
-            if (funding == null || funding.RemainingAmount < model.Amount)
+            if (funding == null || funding.Remaining < model.Amount)
             {
                 ModelState.AddModelError("", "Insufficient funds or invalid funding source.");
                 return View(model);
@@ -110,15 +110,15 @@ namespace PGPARS.Controllers
             // Create new allocation
             var allocation = new FundingAllocations
             {
-                FundingSourceId = model.FundingSourceId,
-                ApplicantId = model.ApplicantId,
+                FundingID = model.FundingSourceId,
+                Nnumber = model.ApplicantId,
                 AllocatedAmount = model.Amount
             };
 
             _fundingRepository.AddAllocation(allocation);
 
             // Update remaining funding amount
-            funding.RemainingAmount -= model.Amount;
+            funding.Remaining -= model.Amount;
             _fundingRepository.UpdateFunding(funding);
 
             return RedirectToAction("FundingDirectory"); // Redirect to funding list
@@ -150,10 +150,10 @@ namespace PGPARS.Controllers
             var applicants = _applicantRepository.GetApplicants();
             var model = new FundingAssignmentViewModel
             {
-                FundingSourceId = funding.FundingID,
+                FundingSourceId = funding.Id,
                 FundingSourceName = funding.Source,
                 Applicants = applicants,
-                RemainingAmount = (decimal)funding.RemainingAmount
+                RemainingAmount = (decimal)funding.Remaining
             };
 
             return View(model); // Display the assignment form
@@ -167,6 +167,7 @@ namespace PGPARS.Controllers
             bool hasApplicants = applicants != null && applicants.Any();
             return Json(new { hasApplicants });
         }
+        
 
     }
 }

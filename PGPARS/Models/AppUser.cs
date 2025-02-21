@@ -20,6 +20,6 @@ namespace PGPARS.Models
         public string? Position { get; set; }
 
         // Navigation property
-        public List<ApplicantReviewer> ApplicantReviewers { get; set; } = new();
+        public ICollection<Review> Reviews { get; set; }
     }
 }

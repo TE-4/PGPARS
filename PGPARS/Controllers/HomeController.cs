@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using PGPARS.Models;
+using PGPARS.Models.ViewModels;
 using System.Diagnostics;
 
 namespace PGPARS.Controllers

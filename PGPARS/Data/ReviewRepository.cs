@@ -36,17 +36,7 @@ namespace PGPARS.Data
             if (existingReview != null)
             {
 
-                existingReview.NNumber = review.NNumber;
-                existingReview.FullName = review.FullName;
-                existingReview.Email = review.Email;
-                existingReview.PhoneNumber = review.PhoneNumber;
-                existingReview.Status = review.Status;
-                existingReview.Reviewer = review.Reviewer;
-                existingReview.AllGPA = review.AllGPA;
-                existingReview.PsychGPA = review.PsychGPA;
-                existingReview.GPAComment = review.GPAComment;
-                existingReview.CourseReqMet = review.CourseReqMet;
-                existingReview.CourseReqComments = review.CourseReqComments;
+                existingReview.NNumber = review.NNumber;               
                 existingReview.LetterQuality = review.LetterQuality;
                 existingReview.ResumeQuality = review.ResumeQuality;
                 existingReview.ResExpQuality = review.ResExpQuality;
@@ -58,8 +48,8 @@ namespace PGPARS.Data
                 existingReview.LORComments = review.LORComments;
                 existingReview.OverallFitQuality = review.OverallFitQuality;
                 existingReview.OverallFitComments = review.OverallFitComments;
-                existingReview.DecRec = review.DecRec;
-                existingReview.FollowUp = review.FollowUp;
+                existingReview.DecisionRecommendation = review.DecisionRecommendation;
+                existingReview.FollowUpRequired = review.FollowUpRequired;
                 existingReview.FinalComments = review.FinalComments;
                 // Update additional fields as needed
                 _context.SaveChanges();

@@ -18,6 +18,7 @@ namespace PGPARS.Services
             _context = context;
         }
 
+        /*
         // Assign reviewers to applicants
         public async Task AssignReviewers()
         {
@@ -35,15 +36,10 @@ namespace PGPARS.Services
             foreach (var applicant in applicants)
             {
                 // Check if applicant already has 2 reviewers
-                var existingReviewers = _context.ApplicantReviewers
-                    .Where(ar => ar.Nnumber == applicant.Nnumber)
-                    .ToList();
+                
 
-                if (existingReviewers.Count >= 2)
-                {
-                    continue; // skip if already assigned two reviewers
-                }
-
+               
+              
                 bool updated = false;
 
                 while (existingReviewers.Count < 2)
@@ -122,5 +118,6 @@ namespace PGPARS.Services
             _context.ApplicantReviewers.Add(applicantReviewer);
             await _context.SaveChangesAsync();
         }
+        */
     }
 }

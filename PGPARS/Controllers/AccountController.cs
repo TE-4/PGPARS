@@ -312,6 +312,8 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
+        /* This needs to be redone **************
+         * 
         public async Task<IActionResult> LinkedApplicants(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -336,7 +338,7 @@ namespace PGPARS.Controllers
 
             return View(viewModel);
         }
-
+        */
 
 
 

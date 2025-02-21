@@ -64,13 +64,13 @@
                                 <td>@fund.Source</td>
                                 <td>@fund.Amount?.ToString("C")</td>
                                 <td>
-                                    @if (!string.IsNullOrEmpty(fund.Applicant?.FullName))
+                                    @if (!string.IsNullOrEmpty(fund.Source))
                                     {
-                                        @fund.Applicant.FullName
+                                        @fund.Id
                                     }
                                     else
                                     {
-                                        <button type="button" class="btn btn-lg assign-btn" data-funding-id="@fund.FundingID"
+                                        <button type="button" class="btn btn-lg assign-btn" data-funding-id="@fund.Id"
                                                 style="background-color:royalblue; color: white; border: 2px solid black;">
                                             <div class="bi bi-plus-circle">&ensp;Assign</div>
                                         </button>
@@ -79,12 +79,12 @@
 
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
-                                        <a asp-action="EditFunding" asp-route-id="@fund.FundingID">
+                                        <a asp-action="EditFunding" asp-route-id="@fund.Id">
                                             <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
                                                 <div class="bi bi-pencil">&ensp;Edit</div>
                                             </button>
                                         </a>
-                                        <form asp-action="DeleteFunding" asp-route-id="@fund.FundingID" method="post" style="display: inline-block;">
+                                        <form asp-action="DeleteFunding" asp-route-id="@fund.Id" method="post" style="display: inline-block;">
                                             <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;"
                                                     onclick="return confirm('Are you sure you want to delete this funding?');">
                                                 <div class="bi bi-trash">&ensp;Delete</div>

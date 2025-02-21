@@ -20,7 +20,7 @@
 
     <!-- Funding Type -->
     <div class="mb-3 text-center">
-        <label asp-for="FundingType" class="form-label fw-bold"></label>
+        <label asp-for="FundType" class="form-label fw-bold"></label>
             <select class="form-control w-50 mx-auto" id="FundingType" name="FundingType">
             <option value="GRA">GRA</option>
             <option value="Tonsfeldt">Tonsfeldt</option>
@@ -29,7 +29,7 @@
             <option value="Startup">Startup</option>
             <!-- Other options -->
         </select>
-        <span asp-validation-for="FundingType" class="text-danger"></span>
+        <span asp-validation-for="FundType" class="text-danger"></span>
     </div>
 
         <!-- Funding Source -->
@@ -55,9 +55,9 @@
 
         <!-- Scholarships -->
         <div class="mb-3 text-center">
-            <label asp-for="Scholarships" class="form-label fw-bold"></label>
-            <input asp-for="Scholarships" class="form-control w-50 mx-auto" />
-            <span asp-validation-for="Scholarships" class="text-danger"></span>
+            <label asp-for="Scholarship" class="form-label fw-bold"></label>
+            <input asp-for="Scholarship" class="form-control w-50 mx-auto" />
+            <span asp-validation-for="Scholarship" class="text-danger"></span>
         </div>
 
         <!-- Comment -->
@@ -67,7 +67,7 @@
             <span asp-validation-for="Comment" class="text-danger"></span>
         </div>
 
-    <input type="hidden" asp-for="FundingID" />
+    <input type="hidden" asp-for="Id" />
     <!-- Submit Button -->
     <div class="text-center">
         <button type="submit" class="btn btn-success btn-lg">

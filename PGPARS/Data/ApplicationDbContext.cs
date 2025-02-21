@@ -18,28 +18,12 @@ namespace PGPARS.Data
         public DbSet<Funding> Fundings { get;  set; }
         public DbSet<FundingAllocations> FundingAllocations { get; set; }
 
-
-        public DbSet<Review> Reviews { get; set; }
+        // Review is now the Join table for Applicant and AppUser (Committee)
+        public DbSet<Review> Reviews { get; set; } 
         public DbSet<AuditLog> AuditLogs { get; set; }
-        public DbSet<ApplicantReviewer> ApplicantReviewers { get; set; } // Register join table
 
-        // fluent API to configure the relationship between committee(AppUser) and applicant
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // Define Many-to-Many Relationship
-            modelBuilder.Entity<ApplicantReviewer>()
-                .HasOne(ar => ar.Applicant)
-                .WithMany(a => a.ApplicantReviewers)
-                .HasForeignKey(ar => ar.Nnumber);
-
-            modelBuilder.Entity<ApplicantReviewer>()
-                .HasOne(ar => ar.AppUser)
-                .WithMany(au => au.ApplicantReviewers)
-                .HasForeignKey(ar => ar.AppUserId);
-        }
+        // I removed OnModelCreating for now, but it can be added back in if needed
 
     }
 }

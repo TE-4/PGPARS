@@ -25,7 +25,7 @@
             <div class="mb-3 text-center">
 
                 <label for="FundType" class="form-label fw-bold">Funding Type</label>
-                <select class="form-control w-50 mx-auto" id="FundingType" name="FundingType">
+                <select class="form-control w-50 mx-auto" id="FundType" name="FundType">
 
                     <option value="GRA">GRA</option>
                     <option value="Tonsfeldt">Tonsfeldt</option>
@@ -34,7 +34,7 @@
                     <option value="Startup">Startup</option>
                     <!-- Add more fund types as needed -->
                 </select>
-                <span asp-validation-for="FundingType" class="text-danger"></span>
+                <span asp-validation-for="FundType" class="text-danger"></span>
 
             </div>
 
@@ -76,7 +76,7 @@
                 <textarea class="form-control w-50 mx-auto" id="Comment" name="Comment" rows="3"></textarea>
             </div>
 
-            <input type="hidden" asp-for="FundingID" />
+            <input type="hidden" asp-for="Id" />
                 <!-- Submit and Cancel Buttons -->
         <div class="d-flex justify-content-center gap-2 mt-3">
             <button type="submit" class="btn btn-success btn-sm">
