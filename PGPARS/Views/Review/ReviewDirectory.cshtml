@@ -25,6 +25,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if (!Model.Any())
+                    {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">
+                                <span>No reviews found.</span>
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
                     @foreach (var review in Model)
                     {
                         <tr>
@@ -49,6 +59,7 @@
                                 </div>
                             </td>
                         </tr>
+                    }
                     }
                 </tbody>
             </table>
