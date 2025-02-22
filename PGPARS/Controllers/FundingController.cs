@@ -24,24 +24,27 @@ namespace PGPARS.Controllers
             _logger = auditLogService;
         }
         
-        // GET: AddFunding
+       
         [HttpGet]
         public IActionResult AddFunding()
         {
             return View(new Funding()); // Return a blank form for adding funding
         }
 
-        // POST: AddFunding
         [HttpPost]
         public IActionResult AddFunding(Funding funding)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _fundingRepository.AddFunding(funding); // Add the funding to the repository
-                _logger.LogAction("Add", User.Identity.Name, "Added " + funding.Source, "INFO");
-                return RedirectToAction("FundingDirectory"); // Redirect to FundingDirectory after successful submission
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                Console.WriteLine("Validation Errors:");
+                errors.ForEach(error => Console.WriteLine(error));
+                return View(funding);
             }
-            return View(funding); // Return the form with validation errors and user input
+
+            Console.WriteLine("ModelState is valid. Funding is being added.");
+            _fundingRepository.AddFunding(funding);
+            return RedirectToAction("FundingDirectory");
         }
 
         // GET: EditFunding
