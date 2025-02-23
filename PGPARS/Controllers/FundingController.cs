@@ -90,42 +90,7 @@ namespace PGPARS.Controllers
             }
             _logger.LogAction("Delete", User.Identity.Name, "Deleted " + funding.Source, "INFO");
             return RedirectToAction("FundingDirectory");
-        }
-
-
-        // POST: Assign (Processes funding allocation)
-        [HttpPost]
-        public IActionResult Assign(FundingAssignmentViewModel model)
-        {
-            if (!ModelState.IsValid || model.ApplicantId == null || model.Amount <= 0)
-            {
-                ModelState.AddModelError("", "Invalid input. Please select an applicant and provide a valid amount.");
-                return View(model); // Return to form with errors
-            }
-
-            var funding = _fundingRepository.GetFundingById(model.FundingSourceId);
-            if (funding == null || funding.Remaining < model.Amount)
-            {
-                ModelState.AddModelError("", "Insufficient funds or invalid funding source.");
-                return View(model);
-            }
-
-            // Create new allocation
-            var allocation = new FundingAllocations
-            {
-                FundingID = model.FundingSourceId,
-                Nnumber = model.ApplicantId,
-                AllocatedAmount = model.Amount
-            };
-
-            _fundingRepository.AddAllocation(allocation);
-
-            // Update remaining funding amount
-            funding.Remaining -= model.Amount;
-            _fundingRepository.UpdateFunding(funding);
-
-            return RedirectToAction("FundingDirectory"); // Redirect to funding list
-        }
+        } 
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
@@ -145,32 +110,63 @@ namespace PGPARS.Controllers
             return View(fundingList);
         }
 
-        // GET: Assign (Displays the assignment form)
         [HttpGet]
-        public IActionResult Assign(int fundingId)
+        public IActionResult Assign(int id)
         {
-            var funding = _fundingRepository.GetFundingById(fundingId);
-            var applicants = _applicantRepository.GetApplicants();
-            var model = new FundingAssignmentViewModel
+            var funding = _fundingRepository.GetFundingById(id);
+            if (funding == null)
             {
-                FundingSourceId = funding.Id,
-                FundingSourceName = funding.Source,
-                Applicants = applicants,
-                RemainingAmount = (decimal)funding.Remaining
+                return NotFound("Funding not found.");
+            }
+
+            var applicants = _applicantRepository.GetApplicants().ToList();
+
+            ViewBag.Applicants = applicants;
+            ViewBag.FundingSource = funding.Source;
+            ViewBag.FundingAmount = funding.Amount;
+            ViewBag.FundingRemaining = funding.Remaining;
+
+            return View(new FundingAllocation
+            {
+                FundingID = funding.Id
+            });
+        }
+
+
+        [HttpPost]
+        public IActionResult Assign(FundingAllocation allocation)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                errors.ForEach(error => System.Diagnostics.Debug.WriteLine("❌ " + error));
+
+                ViewBag.Applicants = _applicantRepository.GetApplicants();
+                return View(allocation);
+            }
+
+            // Manually create a new FundingAllocation object to ensure all fields are correctly mapped ( was having an issue with direct model binding where the 
+            // Id field was being set manually and causing an error as it is supposed to autoincrement)
+            var newAllocation = new FundingAllocation
+            {
+                FundingID = allocation.FundingID,
+                Nnumber = allocation.Nnumber,
+                AllocatedAmount = allocation.AllocatedAmount,
+                StipendValue = allocation.StipendValue,
+                TuitionWaiver = allocation.TuitionWaiver,
+                TuitionWaiverType = allocation.TuitionWaiverType,
+                Status = allocation.Status
             };
 
-            return View(model); // Display the assignment form
+            _fundingRepository.AddAllocation(newAllocation);
+
+            return RedirectToAction("FundingDirectory");
         }
 
 
-        [HttpGet]
-        public JsonResult CheckApplicants(int fundingId)
-        {
-            var applicants = _applicantRepository.GetApplicants();
-            bool hasApplicants = applicants != null && applicants.Any();
-            return Json(new { hasApplicants });
-        }
-        
+
+
+
 
     }
 }

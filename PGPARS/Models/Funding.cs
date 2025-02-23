@@ -21,7 +21,7 @@ namespace PGPARS.Models
         public DateTime? DateModified { get; set; }  // Date Modified in the System
         public string? Comment { get; set; }  // Additional Comments
 
-        public ICollection<FundingAllocations>? FundingAllocations { get; set; } = new List<FundingAllocations>();
+        public ICollection<FundingAllocation>? FundingAllocations { get; set; } = new List<FundingAllocation>();
     }
 
 }
