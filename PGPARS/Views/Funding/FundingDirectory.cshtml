@@ -15,6 +15,12 @@
             <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
                 <i class="bi bi-upload"></i>&ensp;Add New Funding
             </a>
+
+            <!-- View Funding Allocations button -->
+            <a asp-action="FundingAllocations" asp-controller="Funding" class="btn btn-info btn-lg" style="border: 2px solid black; min-height: 50px;">
+                <i class="bi bi-list-check"></i>&ensp;View Allocations
+            </a>
+
             <!-- Search bar -->
             <form method="get" asp-action="FundingDirectory" class="d-flex align-items-center">
                 <div class="input-group me-2">

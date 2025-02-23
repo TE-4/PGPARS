@@ -163,6 +163,13 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingDirectory");
         }
 
+        [HttpGet]
+        public IActionResult FundingAllocations()
+        {
+            var allocations = _fundingRepository.GetFundingAllocations();
+            return View(allocations);
+        }
+
 
 
 
