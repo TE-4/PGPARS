@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<PGPARS.Models.Applicant>
 <body>
     <div class="main">
-        <div class="container-opaque">
+        <!--Old header
+            <div class="container-opaque">
             <div class="text-center text-outline p-3">
                 <h2>Applicant Directory</h2>
             </div>
         </div>
-        <br />
+        <br />-->
         <!-- Buttons -->
         <form id="applicantForm" method="post" onsubmit="return confirm('CAUTION! Confirm Selection?');">
             <div class="d-flex justify-content-between gap-1 flex-wrap">
@@ -41,11 +42,11 @@
                                     <input type="checkbox" id="selectAll" />
                                     <span class="checkmark"></span>
                                 </th>
-                                <th>N-Number</th>
                                 <th>Name</th>
                                 <th>Status</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>N-Number</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,15 +67,15 @@
                                             <span class="checkmark"></span>
                                         </label>
                                         </td>
-                                        <td class="text-center">@applicant.Nnumber</td>
                                         <td class="text-center specialtext">
                                             <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="color: white; text-decoration: none;">
                                                 @applicant.FullName
                                             </a>
                                         </td>
-                                        <td class="text-center">@applicant.Status ~</td>
+                                        <td class="text-center">@applicant.Status</td>
                                         <td class="text-center">@applicant.email</td>
                                         <td class="text-center">@applicant.Phone</td>
+                                        <td class="text-center">@applicant.Nnumber</td>
                                         <!--<td>
                                             <div class="d-flex justify-content-center gap-3">
                                                 <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none;">

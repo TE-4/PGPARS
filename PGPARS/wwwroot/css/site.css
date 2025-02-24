@@ -12,7 +12,6 @@
 }
 body, html {
     padding-top: 45px;
-    height: 100%;
     /*background-image: url('/images/Generic-Background.jpg');*/
     background: rgb(142,142,142);
     background: linear-gradient(0deg, rgba(142,142,142,1) 0%, rgba(17,79,158,1) 50%, rgba(35,66,121,1) 100%);
@@ -373,7 +372,7 @@ body, html {
 /*MAIN*/
 .main {
     margin-left: 200px;
-    font-size: 22px;
+    font-size: 18px;
     padding: 0;
     color: white;
     text-decoration: none;

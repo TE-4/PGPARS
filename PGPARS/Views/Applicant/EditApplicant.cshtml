@@ -1,11 +1,13 @@
 ﻿@model ApplicantEditViewModel
-
+<body>
 <div class="main">
     <div class="container-opaque">
-        <div class="text-center text-outline p-2">
-            <strong>Edit Applicant</strong>
+        <div class="text-center text-outline p-3">
+            <h2>Edit Applicant</h2>
         </div>
     </div>
+    <br />
+
     <form asp-action="EditApplicant" asp-controller="Applicant" method="post">
         <div class="grid-container">
             <label asp-for="FirstName" class="form-label"></label>
@@ -16,11 +18,13 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
             <label asp-for="Status" class="form-label"></label>
             <select asp-for="Status" class="form-control" data-val="false">
-                <option value="">-- Select Status --</option>
-                <option value="Committee Review">Committee Review</option>
-                <option value="Committee Review Complete">Committee Review Complete</option>
-                <option value="Faculty Review">Faculty Review</option>
-                <option value="Withdrawn">Withdrawn</option>
+                <option value="Unassigned">-- Select Status --</option>
+                <option value="1st Review">1st Review</option>
+                <option value="Review Conflict">Review Conflict</option>
+                <option value="Interview Pending">Interview Pending</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Denied">Denied</option>
+                <option value="Funds Assigned">Funds Assigned</option>
             </select>
             <span asp-validation-for="Status" class="text-danger"></span>
         </div>
@@ -342,3 +346,4 @@
         </div>
     </form>
 </div>
+</body>
