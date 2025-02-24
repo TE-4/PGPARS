@@ -71,11 +71,11 @@ using (var scope = app.Services.CreateScope())
     var DbSeeder = services.GetRequiredService<DbSeederService>();
     DbSeeder.SeedRolesAndUsers().Wait();
 
-    
-    
-    var assignApplicants = services.GetRequiredService<ReviewAssignmentService>();
-    assignApplicants.AssignReviewers().Wait();
-    
+
+    // This will be changed to use the new REVIEW table instead of the previous ReviewAssignment table
+    //var assignApplicants = services.GetRequiredService<ReviewAssignmentService>();
+    //assignApplicants.AssignReviewers().Wait();
+
 }
 
 app.MapControllerRoute(

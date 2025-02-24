@@ -15,11 +15,13 @@ namespace PGPARS.Controllers;
     public class ReviewController : Controller
     {
         private readonly IReviewRepository _reviewRepository;
+        private readonly IApplicantRepository _applicantRepository;
 
-        public ReviewController(IReviewRepository reviewRepository)
-        {
+    public ReviewController(IReviewRepository reviewRepository, IApplicantRepository applicantRepository)
+    {
             _reviewRepository = reviewRepository;
-        }
+            _applicantRepository = applicantRepository;
+    }
         // GET: AddReview
         [HttpGet]
         public IActionResult AddReview()
@@ -50,17 +52,7 @@ namespace PGPARS.Controllers;
         var model = new Review
         {
             ReviewNumber = review.ReviewNumber,
-            NNumber = review.NNumber,
-            FullName = review.FullName,
-            Email = review.Email,
-            PhoneNumber = review.PhoneNumber,
-            Status = review.Status,
-            Reviewer = review.Reviewer,
-            AllGPA = review.AllGPA,
-            PsychGPA = review.PsychGPA,
-            GPAComment = review.GPAComment,
-            CourseReqMet = review.CourseReqMet,
-            CourseReqComments = review.CourseReqComments,
+            NNumber = review.NNumber,        
             LetterQuality = review.LetterQuality,
             ResumeQuality = review.ResumeQuality,
             ResExpQuality = review.ResExpQuality,
@@ -71,9 +63,7 @@ namespace PGPARS.Controllers;
             LORQuality = review.LORQuality,
             LORComments = review.LORComments,
             OverallFitQuality = review.OverallFitQuality,
-            OverallFitComments = review.OverallFitComments,
-            DecRec = review.DecRec,
-            FollowUp = review.FollowUp,
+            OverallFitComments = review.OverallFitComments,     
             FinalComments = review.FinalComments,
             Applicant = review.Applicant,
         };

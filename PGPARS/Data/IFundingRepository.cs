@@ -11,12 +11,12 @@ namespace PGPARS.Data
         void AddFunding(Funding funding);
         void UpdateFunding(Funding funding);
         void DeleteFunding(int id);
-        IEnumerable<FundingAllocations> GetFundingAllocations();
+        IEnumerable<FundingAllocation> GetFundingAllocations();
 
 
        
         IEnumerable<Funding> SearchFunding(string searchQuery);
-        void AddAllocation(FundingAllocations allocation);
+        void AddAllocation(FundingAllocation allocation);
     }
 
 }

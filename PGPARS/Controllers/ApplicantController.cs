@@ -79,13 +79,10 @@ namespace PGPARS.Controllers
                 AdvisorEmail = applicant.AdvisorEmail,
                 Status = applicant.Status,
                 Race = applicant.Race,
-                Sex = applicant.Sex,
-                Reviewer1 = applicant.Reviewer1,
-                Reviewer2 = applicant.Reviewer2,
+                Sex = applicant.Sex,               
                 Rev1Decision = applicant.Rev1Decision,
                 Rev2Decision = applicant.Rev2Decision,
-                RevAgree = applicant.RevAgree,
-                CommitteeReview = applicant.CommitteeReview,
+                RevAgree = applicant.RevAgree,            
                 Mentor1 = applicant.Mentor1,
                 Mentor2 = applicant.Mentor2,
                 Mentor3 = applicant.Mentor3,
@@ -94,22 +91,7 @@ namespace PGPARS.Controllers
                 GPAPsych = applicant.GPAPsych,
                 GPAComment = applicant.GPAComment,
                 Course_Req_Met = applicant.Course_Req_Met,
-                CrsReqComment = applicant.CrsReqComment,
-                LetterQuality = applicant.LetterQuality,
-                LetterComment = applicant.LetterComment,
-                ResumeQuality = applicant.ResumeQuality,
-                ResExpQuality = applicant.ResExpQuality,
-                ResumeComment = applicant.ResumeComment,
-                WritSampQuality = applicant.WritSampQuality,
-                WritSampComment = applicant.WritSampComment,
-                LORRelevance = applicant.LORRelevance,
-                LORQuality = applicant.LORQuality,
-                LORComment = applicant.LORComment,
-                OverallFitQuality = applicant.OverallFitQuality,
-                OverallFitComments = applicant.OverallFitComments,
-                DecRec = applicant.DecRec,
-                FollowUp = applicant.FollowUp,
-                FinalComments = applicant.FinalComments
+                CrsReqComment = applicant.CrsReqComment                           
             };
             return Task.FromResult<IActionResult>(View(model));
         }
@@ -140,13 +122,10 @@ namespace PGPARS.Controllers
             applicant.AdvisorEmail = model.AdvisorEmail;
             applicant.Status = model.Status;
             applicant.Race = model.Race;
-            applicant.Sex = model.Sex;
-            applicant.Reviewer1 = model.Reviewer1;
-            applicant.Reviewer2 = model.Reviewer2;
+            applicant.Sex = model.Sex;           
             applicant.Rev1Decision = model.Rev1Decision;
             applicant.Rev2Decision = model.Rev2Decision;
-            applicant.RevAgree = model.RevAgree;
-            applicant.CommitteeReview = model.CommitteeReview;
+            applicant.RevAgree = model.RevAgree;      
             applicant.Mentor1 = model.Mentor1;
             applicant.Mentor2 = model.Mentor2;
             applicant.Mentor3 = model.Mentor3;
@@ -155,22 +134,7 @@ namespace PGPARS.Controllers
             applicant.GPAPsych = model.GPAPsych;
             applicant.GPAComment = model.GPAComment;
             applicant.Course_Req_Met = model.Course_Req_Met;
-            applicant.CrsReqComment = model.CrsReqComment;
-            applicant.LetterQuality = model.LetterQuality;
-            applicant.LetterComment = model.LetterComment;
-            applicant.ResumeQuality = model.ResumeQuality;
-            applicant.ResExpQuality = model.ResExpQuality;
-            applicant.ResumeComment = model.ResumeComment;
-            applicant.WritSampQuality = model.WritSampQuality;
-            applicant.WritSampComment = model.WritSampComment;
-            applicant.LORRelevance = model.LORRelevance;
-            applicant.LORQuality = model.LORQuality;
-            applicant.LORComment = model.LORComment;
-            applicant.OverallFitQuality = model.OverallFitQuality;
-            applicant.OverallFitComments = model.OverallFitComments;
-            applicant.DecRec = model.DecRec;
-            applicant.FollowUp = model.FollowUp;
-            applicant.FinalComments = model.FinalComments;
+            applicant.CrsReqComment = model.CrsReqComment;         
 
 
             // Update using the repository method

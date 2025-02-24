@@ -14,7 +14,7 @@ namespace PGPARS.Services
             _applicantRepository = applicantRepository;
             _userManager = userManager;
         }
-
+        /* This will need to be reworked :/
         // assign reviewers to applicants
         public async Task AssignReviewers()
         {
@@ -84,6 +84,6 @@ namespace PGPARS.Services
             // Assign the reviewer to the applicant here
         }
 
-
+        */
     } // end class
 } // end namespace

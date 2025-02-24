@@ -19,42 +19,26 @@ namespace PGPARS.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppSubmitDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Cohort = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdvisorEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Race = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Reviewer1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Reviewer2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rev1Decision = table.Column<bool>(type: "bit", nullable: true),
                     Rev2Decision = table.Column<bool>(type: "bit", nullable: true),
                     RevAgree = table.Column<bool>(type: "bit", nullable: true),
-                    CommitteeReview = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mentor4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SelectMentor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GPAOverall = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     GPAPsych = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     GPAComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Course_Req_Met = table.Column<bool>(type: "bit", nullable: true),
-                    CrsReqComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LetterQuality = table.Column<int>(type: "int", nullable: true),
-                    LetterComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResumeQuality = table.Column<int>(type: "int", nullable: true),
-                    ResExpQuality = table.Column<int>(type: "int", nullable: true),
-                    ResumeComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WritSampQuality = table.Column<int>(type: "int", nullable: true),
-                    WritSampComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LORRelevance = table.Column<int>(type: "int", nullable: true),
-                    LORQuality = table.Column<int>(type: "int", nullable: true),
-                    LORComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OverallFitQuality = table.Column<int>(type: "int", nullable: true),
-                    OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DecRec = table.Column<bool>(type: "bit", nullable: true),
-                    FollowUp = table.Column<bool>(type: "bit", nullable: true),
-                    FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CrsReqComment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,7 +68,6 @@ namespace PGPARS.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MainRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -113,7 +96,7 @@ namespace PGPARS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    User = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Actor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -126,71 +109,23 @@ namespace PGPARS.Migrations
                 name: "Fundings",
                 columns: table => new
                 {
-                    FundingID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Cohort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FundingType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Stipends = table.Column<double>(type: "float", nullable: true),
-                    Scholarships = table.Column<double>(type: "float", nullable: true),
+                    FundType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cohort = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Stipends = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    NumberOfAwards = table.Column<int>(type: "int", nullable: true),
+                    Scholarship = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RemainingAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Fundings", x => x.FundingID);
-                    table.ForeignKey(
-                        name: "FK_Fundings_Applicants_Nnumber",
-                        column: x => x.Nnumber,
-                        principalTable: "Applicants",
-                        principalColumn: "Nnumber");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    ReviewNumber = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Reviewer = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AllGPA = table.Column<double>(type: "float", nullable: true),
-                    PsychGPA = table.Column<double>(type: "float", nullable: true),
-                    GPAComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CourseReqMet = table.Column<bool>(type: "bit", nullable: true),
-                    CourseReqComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LetterQuality = table.Column<int>(type: "int", nullable: true),
-                    ResumeQuality = table.Column<int>(type: "int", nullable: true),
-                    ResExpQuality = table.Column<int>(type: "int", nullable: true),
-                    ResumeComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WritingSampleQuality = table.Column<int>(type: "int", nullable: true),
-                    WritingSampleComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LORRelevance = table.Column<int>(type: "int", nullable: true),
-                    LORQuality = table.Column<int>(type: "int", nullable: true),
-                    LORComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OverallFitQuality = table.Column<int>(type: "int", nullable: true),
-                    OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DecRec = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FollowUp = table.Column<bool>(type: "bit", nullable: true),
-                    FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApplicantNnumber = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.ReviewNumber);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Applicants_ApplicantNnumber",
-                        column: x => x.ApplicantNnumber,
-                        principalTable: "Applicants",
-                        principalColumn: "Nnumber");
+                    table.PrimaryKey("PK_Fundings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,32 +145,6 @@ namespace PGPARS.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ApplicantReviewers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicantReviewers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ApplicantReviewers_Applicants_Nnumber",
-                        column: x => x.Nnumber,
-                        principalTable: "Applicants",
-                        principalColumn: "Nnumber",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ApplicantReviewers_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -326,35 +235,76 @@ namespace PGPARS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LetterQuality = table.Column<int>(type: "int", nullable: true),
+                    ResumeQuality = table.Column<int>(type: "int", nullable: true),
+                    ResExpQuality = table.Column<int>(type: "int", nullable: true),
+                    ResumeComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WritingSampleQuality = table.Column<int>(type: "int", nullable: true),
+                    WritingSampleComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LORRelevance = table.Column<int>(type: "int", nullable: true),
+                    LORQuality = table.Column<int>(type: "int", nullable: true),
+                    LORComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OverallFitQuality = table.Column<int>(type: "int", nullable: true),
+                    OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DecisionRecommendation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FollowUpRequired = table.Column<bool>(type: "bit", nullable: true),
+                    FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewNumber);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Applicants_NNumber",
+                        column: x => x.NNumber,
+                        principalTable: "Applicants",
+                        principalColumn: "Nnumber",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FundingAllocations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FundingSourceId = table.Column<int>(type: "int", nullable: false),
-                    ApplicantId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AllocatedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    FundingID = table.Column<int>(type: "int", nullable: true)
+                    FundingID = table.Column<int>(type: "int", nullable: false),
+                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AllocatedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    StipendValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TuitionWaiver = table.Column<bool>(type: "bit", nullable: true),
+                    TuitionWaiverType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FundingAllocations", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_FundingAllocations_Applicants_Nnumber",
+                        column: x => x.Nnumber,
+                        principalTable: "Applicants",
+                        principalColumn: "Nnumber",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_FundingAllocations_Fundings_FundingID",
                         column: x => x.FundingID,
                         principalTable: "Fundings",
-                        principalColumn: "FundingID");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ApplicantReviewers_AppUserId",
-                table: "ApplicantReviewers",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ApplicantReviewers_Nnumber",
-                table: "ApplicantReviewers",
-                column: "Nnumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -401,22 +351,24 @@ namespace PGPARS.Migrations
                 column: "FundingID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fundings_Nnumber",
-                table: "Fundings",
+                name: "IX_FundingAllocations_Nnumber",
+                table: "FundingAllocations",
                 column: "Nnumber");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_ApplicantNnumber",
+                name: "IX_Reviews_AppUserId",
                 table: "Reviews",
-                column: "ApplicantNnumber");
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_NNumber",
+                table: "Reviews",
+                column: "NNumber");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ApplicantReviewers");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -445,13 +397,13 @@ namespace PGPARS.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Fundings");
 
             migrationBuilder.DropTable(
                 name: "Applicants");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

@@ -23,6 +23,8 @@ namespace PGPARS.Controllers
             _reviewRepository = reviewRepository;
         }
 
+        
+         
         public IActionResult AdminDashboard()
         {
             if (User.Identity.IsAuthenticated)
@@ -79,5 +81,7 @@ namespace PGPARS.Controllers
             };
             return Json(data);
         }
+
+        
     }
 }

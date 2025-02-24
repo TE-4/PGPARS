@@ -5,71 +5,7 @@
     </div>
     <form asp-action="EditReview" method="post">
         <input type="hidden" asp-for="ReviewNumber" />
-
-        <div class="form-group">
-            <label asp-for="FullName" class="control-label"><strong>Full Name</strong></label>
-            <input asp-for="FullName" class="form-control" />
-            <span asp-validation-for="FullName" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="NNumber" class="control-label"><strong>N-Number</strong></label>
-            <input asp-for="NNumber" class="form-control" />
-            <span asp-validation-for="NNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email" class="control-label"><strong>Email</strong></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PhoneNumber" class="control-label"><strong>Phone Number</strong></label>
-            <input asp-for="PhoneNumber" class="form-control" />
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Status" class="control-label"><strong>Status</strong></label>
-            <select asp-for="Status" class="form-control">
-                <option value="">-- Select Status --</option>
-                <option value="Committee Review">Committee Review</option>
-                <option value="Committee Review Complete">Committee Review Complete</option>
-                <option value="Faculty Review">Faculty Review</option>
-                <option value="Withdrawn">Withdrawn</option>
-            </select>
-            <span asp-validation-for="Status" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Reviewer" class="control-label"><strong>Reviewer</strong></label>
-            <input asp-for="Reviewer" class="form-control" />
-            <span asp-validation-for="Reviewer" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="AllGPA" class="control-label"><strong>GPA Overall</strong></label>
-            <input asp-for="AllGPA" class="form-control" />
-            <span asp-validation-for="AllGPA" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PsychGPA" class="control-label"><strong>GPA Psych</strong></label>
-            <input asp-for="PsychGPA" class="form-control" />
-            <span asp-validation-for="PsychGPA" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="GPAComment" class="control-label"><strong>GPA Comments</strong></label>
-            <input asp-for="GPAComment" class="form-control" />
-            <span asp-validation-for="GPAComment" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CourseReqMet" class="control-label"><strong>Course Requirements Met?</strong></label>
-            <select asp-for="CourseReqMet" class="form-control">
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
-            <span asp-validation-for="CourseReqMet" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CourseReqComments" class="control-label"><strong>Course Req Comments</strong></label>
-            <input asp-for="CourseReqComments" class="form-control" />
-            <span asp-validation-for="CourseReqComments" class="text-danger"></span>
-        </div>
+     
         <div class="form-group">
             <label asp-for="LetterQuality" class="control-label"><strong>Letter Quality</strong></label>
             <select asp-for="LetterQuality" class="form-control">
