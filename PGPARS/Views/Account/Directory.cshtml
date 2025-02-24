@@ -50,11 +50,10 @@
                 <table class="table align-middle text-dark">
                     <thead class="text-uppercase">
                         <tr>
-                            <th>Email</th>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>N-Number</th>
                             <th>Role</th>
-                            <th>Full Name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -70,11 +69,10 @@
                             @foreach (var user in Model)
                             {
                                 <tr>
-                                    <td class="text-center">@user.Email</td>
                                     <td class="text-center">@user.FirstName @user.LastName</td>
+                                    <td class="text-center">@user.Email</td>
                                     <td class="text-center">@user.Nnumber</td>
                                     <td class="text-center">@(string.Join(", ", await UserManager.GetRolesAsync(user)))</td>
-                                    <td>@user.FirstName @user.LastName</td>
                                     <td>
                                         <div class="d-flex justify-content-center gap-3">
                                             <a asp-action="Detail" asp-controller="Account" asp-route-Id="@user.Id">
