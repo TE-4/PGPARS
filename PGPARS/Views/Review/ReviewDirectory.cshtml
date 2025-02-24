@@ -10,7 +10,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <!-- Add Button -->
             <a asp-action="AddReview" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
-                <i class="bi bi-upload"></i>&ensp;Add Review
+                <div class="bi bi-upload text-outline">&ensp;Add Review</div>
             </a>
         </div>
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
@@ -37,13 +37,13 @@
                                 <div class="d-flex justify-content-center gap-3">
                                     <a asp-action="EditReview" asp-route-id="@review.ReviewNumber">
                                         <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
-                                            <div class="bi bi-pencil">&ensp;Edit</div>
+                                            <div class="bi bi-pencil text-outline">&ensp;Edit</div>
                                         </button>
                                     </a>
                                     <form asp-action="DeleteReview" asp-route-id="@review.ReviewNumber" method="post" style="d-inline-block">
                                         <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;"
                                                 onclick="return confirm('Are you sure you want to delete this review?');">
-                                            <div class="bi bi-trash">&ensp;Delete</div>
+                                            <div class="bi bi-trash text-outline">&ensp;Delete</div>
                                         </button>
                                     </form>
                                 </div>

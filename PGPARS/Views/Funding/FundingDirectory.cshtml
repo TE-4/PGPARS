@@ -13,7 +13,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <!-- Add Funding button -->
             <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
-                <i class="bi bi-upload"></i>&ensp;Add New Funding
+                <div class="bi bi-upload text-outline">&ensp;Add New Funding</div>
             </a>
             <!-- Search bar -->
             <form method="get" asp-action="FundingDirectory" class="d-flex align-items-center">
@@ -21,7 +21,7 @@
                     <input type="text" name="searchQuery" class="form-control" style="min-height: 50px;" placeholder="Search by Source or Cohort..." value="@ViewData["SearchQuery"]" />
                 </div>
                 <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
-                    <div class="bi bi-search">&ensp;Search</div>
+                    <div class="bi bi-search text-outline">&ensp;Search</div>
                 </button>
             </form>
         </div>

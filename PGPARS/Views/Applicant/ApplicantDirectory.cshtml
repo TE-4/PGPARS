@@ -13,11 +13,11 @@
                 <div class="d-flex gap-3">
                 <!-- Upload CSV button that triggers the modal -->
                 <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                    <div class="bi bi-upload">&ensp;Import CSV</div>
+                    <div class="bi bi-upload text-outline">&ensp;Import CSV</div>
                 </button>
 
                 <button type="submit" formaction="@Url.Action("DeleteSelectedApplicants", "Applicant")" formmethod="post" class="btn btn-danger btn-lg" style="border: 2px solid black">
-                    <div class="bi bi-trash">&ensp;Delete Selected</div>
+                    <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
                 </button>
 
                 <button type="submit" formaction="@Url.Action("AssignToFaculty", "Applicant")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
@@ -28,11 +28,11 @@
                 <div class="d-flex gap-2">
                     <input type="text" name="searchString" class="form-control" style="min-height: 50px;" placeholder="Search by name..." value="@ViewData["SearchString"]" />
                     <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
-                        <div class="bi bi-search">&ensp;Search</div>
+                        <div class="bi bi-search text-outline">&ensp;Search</div>
                     </button>
                 </div>
-                <!-- Table -->
             </div>
+            <!-- Table -->
                 <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
                     <table class="table align-middle text-dark">
                         <thead class="text-uppercase">

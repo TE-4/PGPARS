@@ -1,192 +1,197 @@
 ﻿@model PGPARS.Models.Review;
-<div class="main">
-    <div class="text-center text-outline p-3">
-        <h2 class="display-6 fw-bold" style="color: #212529;">Add New Review</h2>
+<body>
+    <div class="main">
+        <div class="container-opaque">
+            <div class="text-center text-outline p-3">
+                <h2>Add New Review</h2>
+            </div>
+        </div>
+        <br />
+        <form asp-action="AddReview" method="post">
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"><strong>Full Name</strong></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NNumber" class="control-label"><strong>N-Number</strong></label>
+                <input asp-for="NNumber" class="form-control" />
+                <span asp-validation-for="NNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"><strong>Email</strong></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"><strong>Phone Number</strong></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"><strong>Status</strong></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">-- Select Status --</option>
+                    <option value="Committee Review">Committee Review</option>
+                    <option value="Committee Review Complete">Committee Review Complete</option>
+                    <option value="Faculty Review">Faculty Review</option>
+                    <option value="Withdrawn">Withdrawn</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reviewer" class="control-label"><strong>Reviewer</strong></label>
+                <input asp-for="Reviewer" class="form-control" />
+                <span asp-validation-for="Reviewer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AllGPA" class="control-label"><strong>GPA Overall</strong></label>
+                <input asp-for="AllGPA" class="form-control" />
+                <span asp-validation-for="AllGPA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PsychGPA" class="control-label"><strong>GPA Psych</strong></label>
+                <input asp-for="PsychGPA" class="form-control" />
+                <span asp-validation-for="PsychGPA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GPAComment" class="control-label"><strong>GPA Comments</strong></label>
+                <input asp-for="GPAComment" class="form-control" />
+                <span asp-validation-for="GPAComment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseReqMet" class="control-label"><strong>Course Requirements Met?</strong></label>
+                <select asp-for="CourseReqMet" class="form-control">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="CourseReqMet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseReqComments" class="control-label"><strong>Course Req Comments</strong></label>
+                <input asp-for="CourseReqComments" class="form-control" />
+                <span asp-validation-for="CourseReqComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LetterQuality" class="control-label"><strong>Letter Quality</strong></label>
+                <select asp-for="LetterQuality" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LetterQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResumeQuality" class="control-label"><strong>Resume Quality</strong></label>
+                <select asp-for="ResumeQuality" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="ResumeQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResExpQuality" class="control-label"><strong>Resume Exp Quality</strong></label>
+                <select asp-for="ResExpQuality" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="ResExpQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResumeComments" class="control-label"><strong>Resume Comments</strong></label>
+                <input asp-for="ResumeComments" class="form-control" />
+                <span asp-validation-for="ResumeComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WritingSampleQuality" class="control-label"><strong>Resume Exp Quality</strong></label>
+                <select asp-for="WritingSampleQuality" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="WritingSampleQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WritingSampleComments" class="control-label"><strong>Resume Comments</strong></label>
+                <input asp-for="WritingSampleComments" class="form-control" />
+                <span asp-validation-for="WritingSampleComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LORRelevance" class="control-label"><strong>LOR Relevance</strong></label>
+                <select asp-for="LORRelevance" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LORRelevance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LORQuality" class="control-label"><strong>LOR Quality</strong></label>
+                <select asp-for="LORQuality" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="LORQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LORComments" class="control-label"><strong>LOR Comments</strong></label>
+                <input asp-for="LORComments" class="form-control" />
+                <span asp-validation-for="LORComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OverallFitQuality" class="control-label"><strong>Overall Fit Quality</strong></label>
+                <select asp-for="OverallFitQuality" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="OverallFitQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OverallFitComments" class="control-label"><strong>Overall Fit Comments</strong></label>
+                <input asp-for="OverallFitComments" class="form-control" />
+                <span asp-validation-for="OverallFitComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DecRec" class="control-label"><strong>DecRec</strong></label>
+                <select asp-for="DecRec" class="form-control">
+                    <option value="Admit">Admit</option>
+                    <option value="Waitlist">Waitlist</option>
+                    <option value="Do Not Admit">Do Not Admit</option>
+                </select>
+                <span asp-validation-for="DecRec" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FollowUp" class="control-label"><strong>Follow Up?</strong></label>
+                <select asp-for="FollowUp" class="form-control">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="FollowUp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinalComments" class="control-label"><strong>Final Comments</strong></label>
+                <input asp-for="FinalComments" class="form-control" />
+                <span asp-validation-for="FinalComments" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-    <form asp-action="AddReview" method="post">
-        <div class="form-group">
-            <label asp-for="FullName" class="control-label"><strong>Full Name</strong></label>
-            <input asp-for="FullName" class="form-control" />
-            <span asp-validation-for="FullName" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="NNumber" class="control-label"><strong>N-Number</strong></label>
-            <input asp-for="NNumber" class="form-control" />
-            <span asp-validation-for="NNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email" class="control-label"><strong>Email</strong></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PhoneNumber" class="control-label"><strong>Phone Number</strong></label>
-            <input asp-for="PhoneNumber" class="form-control" />
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Status" class="control-label"><strong>Status</strong></label>
-            <select asp-for="Status" class="form-control">
-                <option value="">-- Select Status --</option>
-                <option value="Committee Review">Committee Review</option>
-                <option value="Committee Review Complete">Committee Review Complete</option>
-                <option value="Faculty Review">Faculty Review</option>
-                <option value="Withdrawn">Withdrawn</option>
-            </select>
-            <span asp-validation-for="Status" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Reviewer" class="control-label"><strong>Reviewer</strong></label>
-            <input asp-for="Reviewer" class="form-control" />
-            <span asp-validation-for="Reviewer" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="AllGPA" class="control-label"><strong>GPA Overall</strong></label>
-            <input asp-for="AllGPA" class="form-control" />
-            <span asp-validation-for="AllGPA" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="PsychGPA" class="control-label"><strong>GPA Psych</strong></label>
-            <input asp-for="PsychGPA" class="form-control" />
-            <span asp-validation-for="PsychGPA" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="GPAComment" class="control-label"><strong>GPA Comments</strong></label>
-            <input asp-for="GPAComment" class="form-control" />
-            <span asp-validation-for="GPAComment" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CourseReqMet" class="control-label"><strong>Course Requirements Met?</strong></label>
-            <select asp-for="CourseReqMet" class="form-control">
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
-            <span asp-validation-for="CourseReqMet" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CourseReqComments" class="control-label"><strong>Course Req Comments</strong></label>
-            <input asp-for="CourseReqComments" class="form-control" />
-            <span asp-validation-for="CourseReqComments" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="LetterQuality" class="control-label"><strong>Letter Quality</strong></label>
-            <select asp-for="LetterQuality" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="LetterQuality" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="ResumeQuality" class="control-label"><strong>Resume Quality</strong></label>
-            <select asp-for="ResumeQuality" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="ResumeQuality" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="ResExpQuality" class="control-label"><strong>Resume Exp Quality</strong></label>
-            <select asp-for="ResExpQuality" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="ResExpQuality" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="ResumeComments" class="control-label"><strong>Resume Comments</strong></label>
-            <input asp-for="ResumeComments" class="form-control" />
-            <span asp-validation-for="ResumeComments" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="WritingSampleQuality" class="control-label"><strong>Resume Exp Quality</strong></label>
-            <select asp-for="WritingSampleQuality" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="WritingSampleQuality" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="WritingSampleComments" class="control-label"><strong>Resume Comments</strong></label>
-            <input asp-for="WritingSampleComments" class="form-control" />
-            <span asp-validation-for="WritingSampleComments" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="LORRelevance" class="control-label"><strong>LOR Relevance</strong></label>
-            <select asp-for="LORRelevance" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="LORRelevance" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="LORQuality" class="control-label"><strong>LOR Quality</strong></label>
-            <select asp-for="LORQuality" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="LORQuality" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="LORComments" class="control-label"><strong>LOR Comments</strong></label>
-            <input asp-for="LORComments" class="form-control" />
-            <span asp-validation-for="LORComments" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="OverallFitQuality" class="control-label"><strong>Overall Fit Quality</strong></label>
-            <select asp-for="OverallFitQuality" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="OverallFitQuality" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="OverallFitComments" class="control-label"><strong>Overall Fit Comments</strong></label>
-            <input asp-for="OverallFitComments" class="form-control" />
-            <span asp-validation-for="OverallFitComments" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="DecRec" class="control-label"><strong>DecRec</strong></label>
-            <select asp-for="DecRec" class="form-control">
-                <option value="Admit">Admit</option>
-                <option value="Waitlist">Waitlist</option>
-                <option value="Do Not Admit">Do Not Admit</option>
-            </select>
-            <span asp-validation-for="DecRec" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="FollowUp" class="control-label"><strong>Follow Up?</strong></label>
-            <select asp-for="FollowUp" class="form-control">
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-            </select>
-            <span asp-validation-for="FollowUp" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="FinalComments" class="control-label"><strong>Final Comments</strong></label>
-            <input asp-for="FinalComments" class="form-control" />
-            <span asp-validation-for="FinalComments" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+</body>
