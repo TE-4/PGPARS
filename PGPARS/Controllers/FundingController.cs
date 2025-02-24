@@ -44,6 +44,7 @@ namespace PGPARS.Controllers
 
             Console.WriteLine("ModelState is valid. Funding is being added.");
             _fundingRepository.AddFunding(funding);
+            TempData["SuccessMessage"] = "New funding created!";
             return RedirectToAction("FundingDirectory");
         }
 
@@ -84,13 +85,30 @@ namespace PGPARS.Controllers
         public IActionResult DeleteFunding(int id)
         {
             var funding = _fundingRepository.GetFundingById(id);
-            if (funding != null)
+            var allocations = _fundingRepository.GetFundingAllocations().Where(a => a.FundingID == id).ToList();
+
+            if (funding == null)
             {
-                _fundingRepository.DeleteFunding(id); // Delete the funding from the repository
+                TempData["ErrorMessage"] = "Funding record not found.";
+                return RedirectToAction("FundingDirectory");
             }
-            _logger.LogAction("Delete", User.Identity.Name, "Deleted " + funding.Source, "INFO");
+
+            // Check if there are existing funding allocations
+            if (allocations.Any())
+            {
+                TempData["ErrorMessage"] = "This funding source has existing allocations. Delete them first before removing the funding.";
+                return RedirectToAction("FundingDirectory");
+            }
+
+            // Proceed with deletion
+            _fundingRepository.DeleteFunding(id);
+            _logger.LogAction("Delete", User.Identity.Name, $"Deleted funding: {funding.Source}", "INFO");
+
+            TempData["SuccessMessage"] = "Funding deleted successfully.";
             return RedirectToAction("FundingDirectory");
-        } 
+        }
+
+
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
