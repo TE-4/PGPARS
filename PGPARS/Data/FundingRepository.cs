@@ -81,19 +81,20 @@ public class FundingRepository : IFundingRepository
             .ToList();
     }
 
-    public IEnumerable<FundingAllocations> GetFundingAllocations()
+    public IEnumerable<FundingAllocation> GetFundingAllocations()
     {
-        return _context.FundingAllocations          
-            .Include(fa => fa.Nnumber)
+        return _context.FundingAllocations
+            .Include(fa => fa.Funding)  
+            .Include(fa => fa.Applicant)
             .ToList();
     }
-    public void AddAllocation(FundingAllocations allocation)
+    public void AddAllocation(FundingAllocation allocation)
     {
         var funding = _context.Fundings.FirstOrDefault(f => f.Id == allocation.FundingID);
         if (funding != null)
         {
             // Deduct the allocated amount
-            funding.Remaining -= allocation.AllocatedAmount;
+            funding.Remaining -= allocation.AllocatedAmount ?? 0;
             _context.Fundings.Update(funding); // Update the funding source
         }
 
@@ -102,5 +103,6 @@ public class FundingRepository : IFundingRepository
     }
 
 
- 
+
+
 }

@@ -3,11 +3,9 @@
     public class FundingAssignmentViewModel
     {
 
-        public int FundingSourceId { get; set; }
-        public string? FundingSourceName { get; set; }
-        public IEnumerable<Applicant>? Applicants { get; set; }
-        public decimal RemainingAmount { get; set; }
-        public string? ApplicantId { get; set; } // Ensure this is a string to match the Nnumber type
+        public int FundingId { get; set; }
+        public IEnumerable<Applicant>? Applicants { get; set; } = new List<Applicant>();
+        public string? ApplicantId { get; set; } 
         public decimal Amount { get; set; }
     }
 }

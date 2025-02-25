@@ -41,7 +41,7 @@ namespace PGPARS.Models
 
         // Navigation properties
         public ICollection<Review> Reviews { get; set; }
-        public ICollection<FundingAllocations> FundingAllocations { get; set; } 
+        public ICollection<FundingAllocation> FundingAllocations { get; set; } 
 
 
         public string FullName

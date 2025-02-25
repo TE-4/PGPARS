@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:PGPARS/Migrations/20250222162842_Migrations.cs
     public partial class Migrations : Migration
+========
+    public partial class DBUpdate : Migration
+>>>>>>>> 94a515a6a38f6f4bcba71d5dc106164eec9d3efd:PGPARS/Migrations/20250224204348_DBUpdate.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -116,7 +120,7 @@ namespace PGPARS.Migrations
                     Cohort = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stipends = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     NumberOfAwards = table.Column<int>(type: "int", nullable: true),
-                    Scholarship = table.Column<bool>(type: "bit", nullable: true),
+                    Scholarship = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -282,22 +286,22 @@ namespace PGPARS.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FundingID = table.Column<int>(type: "int", nullable: false),
-                    Nnumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApplicantNnumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    AllocatedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StipendValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TuitionWaiver = table.Column<bool>(type: "bit", nullable: false),
-                    TuitionWaiverType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AllocatedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    StipendValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    TuitionWaiver = table.Column<bool>(type: "bit", nullable: true),
+                    TuitionWaiverType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FundingAllocations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FundingAllocations_Applicants_ApplicantNnumber",
-                        column: x => x.ApplicantNnumber,
+                        name: "FK_FundingAllocations_Applicants_Nnumber",
+                        column: x => x.Nnumber,
                         principalTable: "Applicants",
-                        principalColumn: "Nnumber");
+                        principalColumn: "Nnumber",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FundingAllocations_Fundings_FundingID",
                         column: x => x.FundingID,
@@ -346,14 +350,14 @@ namespace PGPARS.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FundingAllocations_ApplicantNnumber",
-                table: "FundingAllocations",
-                column: "ApplicantNnumber");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_FundingAllocations_FundingID",
                 table: "FundingAllocations",
                 column: "FundingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FundingAllocations_Nnumber",
+                table: "FundingAllocations",
+                column: "Nnumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_AppUserId",

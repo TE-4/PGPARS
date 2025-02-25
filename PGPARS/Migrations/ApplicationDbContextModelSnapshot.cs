@@ -22,50 +22,6 @@ namespace PGPARS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FundingAllocations", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("AllocatedAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ApplicantNnumber")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("FundingID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nnumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("StipendValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("TuitionWaiver")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TuitionWaiverType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicantNnumber");
-
-                    b.HasIndex("FundingID");
-
-                    b.ToTable("FundingAllocations");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -423,8 +379,8 @@ namespace PGPARS.Migrations
                     b.Property<decimal?>("Remaining")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool?>("Scholarship")
-                        .HasColumnType("bit");
+                    b.Property<int?>("Scholarship")
+                        .HasColumnType("int");
 
                     b.Property<string>("Source")
                         .IsRequired()
@@ -436,6 +392,45 @@ namespace PGPARS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Fundings");
+                });
+
+            modelBuilder.Entity("PGPARS.Models.FundingAllocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal?>("AllocatedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("FundingID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nnumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("StipendValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool?>("TuitionWaiver")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TuitionWaiverType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FundingID");
+
+                    b.HasIndex("Nnumber");
+
+                    b.ToTable("FundingAllocations");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Review", b =>
@@ -508,23 +503,6 @@ namespace PGPARS.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("FundingAllocations", b =>
-                {
-                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
-                        .WithMany("FundingAllocations")
-                        .HasForeignKey("ApplicantNnumber");
-
-                    b.HasOne("PGPARS.Models.Funding", "Funding")
-                        .WithMany("FundingAllocations")
-                        .HasForeignKey("FundingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Applicant");
-
-                    b.Navigation("Funding");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -574,6 +552,25 @@ namespace PGPARS.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PGPARS.Models.FundingAllocation", b =>
+                {
+                    b.HasOne("PGPARS.Models.Funding", "Funding")
+                        .WithMany("FundingAllocations")
+                        .HasForeignKey("FundingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PGPARS.Models.Applicant", "Applicant")
+                        .WithMany("FundingAllocations")
+                        .HasForeignKey("Nnumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Applicant");
+
+                    b.Navigation("Funding");
                 });
 
             modelBuilder.Entity("PGPARS.Models.Review", b =>
