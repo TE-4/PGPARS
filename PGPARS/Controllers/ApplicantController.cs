@@ -117,7 +117,7 @@ namespace PGPARS.Controllers
             applicant.FirstName = model.FirstName;
             applicant.LastName = model.LastName;
             applicant.AppSubmitDate = model.AppSubmitDate;
-            applicant.Email = model.email;
+            applicant.Email = model.Email;
             applicant.Phone = model.Phone;
             applicant.AdvisorEmail = model.AdvisorEmail;
             applicant.Status = model.Status;
