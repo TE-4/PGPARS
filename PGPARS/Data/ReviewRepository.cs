@@ -36,7 +36,7 @@ namespace PGPARS.Data
             if (existingReview != null)
             {
 
-                existingReview.NNumber = review.NNumber;               
+                existingReview.Nnumber = review.Nnumber;               
                 existingReview.LetterQuality = review.LetterQuality;
                 existingReview.ResumeQuality = review.ResumeQuality;
                 existingReview.ResExpQuality = review.ResExpQuality;

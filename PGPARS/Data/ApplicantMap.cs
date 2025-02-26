@@ -10,7 +10,7 @@ namespace PGPARS.Data
             Map(m => m.Nnumber).Name("Slate Id");
             Map(m => m.FirstName).Name("First name");
             Map(m => m.LastName).Name("Last name");
-            Map(m => m.email).Name("Email");
+            Map(m => m.Email).Name("Email");
             Map(m => m.Phone).Name("Cell phone");
             Map(m => m.Status).Name("Application status");
             // Status

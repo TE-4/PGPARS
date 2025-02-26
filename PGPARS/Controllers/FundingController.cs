@@ -156,9 +156,11 @@ namespace PGPARS.Controllers
         {
             if (!ModelState.IsValid)
             {
+                // Log errors to the console
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
                 errors.ForEach(error => System.Diagnostics.Debug.WriteLine("❌ " + error));
 
+                // if error, reload applicants and return to the form
                 ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
             }
@@ -177,6 +179,7 @@ namespace PGPARS.Controllers
             };
 
             _fundingRepository.AddAllocation(newAllocation);
+            TempData["SuccessMessage"] = "Funding allocation added successfully.";
 
             return RedirectToAction("FundingDirectory");
         }
