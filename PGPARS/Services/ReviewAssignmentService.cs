@@ -9,115 +9,58 @@ namespace PGPARS.Services
     {
         private readonly IApplicantRepository _applicantRepository;
         private readonly UserManager<AppUser> _userManager;
-        private readonly ApplicationDbContext _context;
+        private readonly IReviewRepository _reviewRepository;
 
-        public ReviewAssignmentService(IApplicantRepository applicantRepository, UserManager<AppUser> userManager, ApplicationDbContext context)
+        public ReviewAssignmentService(IApplicantRepository applicantRepository, UserManager<AppUser> userManager, IReviewRepository reviewRepository)
         {
             _applicantRepository = applicantRepository;
             _userManager = userManager;
-            _context = context;
+            _reviewRepository = reviewRepository;
         }
 
-        /*
+        // Look into if these should be async or not (thinking yes)
+        
+
         // Assign reviewers to applicants
-        public async Task AssignReviewers()
+        public async Task AssignReviewersAsync()
         {
+            // first get all applicants
             var applicants = _applicantRepository.GetApplicants();
-            var reviewers = await _userManager.GetUsersInRoleAsync("Committee");
 
-            if (reviewers.Count == 0)
+            // This will get all committee members and the admin user too
+            var committeeReviewers = await _userManager.GetUsersInRoleAsync("Committee");
+            var adminReviewers = await _userManager.GetUsersInRoleAsync("Admin");
+
+            // concatenate the two lists 
+            var reviewers = committeeReviewers.Concat(adminReviewers).ToList();
+
+            // retrieve the reviews 
+            var reviews = _reviewRepository.GetReviews();
+
+            // loop through the applicants and assign reviewers
+            foreach ( var applicant in applicants)
             {
-                throw new Exception("No reviewers available.");
-            }
-
-            int limit = reviewers.Count;
-            int count = 0;
-
-            foreach (var applicant in applicants)
-            {
-                // Check if applicant already has 2 reviewers
-                
-
                
-              
-                bool updated = false;
-
-                while (existingReviewers.Count < 2)
-                {
-                    if (count >= limit)
-                    {
-                        count = 0;
-                    }
-
-                    var reviewer = reviewers[count];
-
-                    // make sure the same reviewer is not assigned twice***
-                    if (!existingReviewers.Any(ar => ar.AppUserId == reviewer.Id))
-                    {
-                        var applicantReviewer = new ApplicantReviewer
-                        {
-                            Nnumber = applicant.Nnumber,
-                            AppUserId = reviewer.Id
-                        };
-
-                        _context.ApplicantReviewers.Add(applicantReviewer);
-                        _context.SaveChanges(); 
-                        existingReviewers.Add(applicantReviewer);
-                        updated = true;
-                    }
-
-                    count++;
-                }
-
-                if (updated)
-                {
-                    _applicantRepository.UpdateApplicant(applicant);
-                }
             }
+
         }
 
         // Unassign all reviewers from all applicants
         public async Task UnassignReviewers()
         {
-            var allAssignments = _context.ApplicantReviewers.ToList();
-            _context.ApplicantReviewers.RemoveRange(allAssignments);
-            await _context.SaveChangesAsync();
+            
         }
 
         // Manually assign a reviewer to an applicant
-        public async Task AssignReviewerAsync(string nnumber, string reviewerId)
+        public async Task AssignReviewer(string nnumber, string reviewerId)
         {
-            var applicant = _applicantRepository.GetApplicantById(nnumber);
-            var reviewer = await _userManager.FindByIdAsync(reviewerId);
 
-            if (applicant == null)
-            {
-                throw new Exception("Applicant not found.");
-            }
-
-            if (reviewer == null)
-            {
-                throw new Exception("Reviewer not found.");
-            }
-
-            // Check if reviewer is already assigned
-            bool alreadyAssigned = _context.ApplicantReviewers
-                .Any(ar => ar.Nnumber == applicant.Nnumber && ar.AppUserId == reviewer.Id);
-
-            if (alreadyAssigned)
-            {
-                throw new Exception("Reviewer is already assigned to this applicant.");
-            }
-
-            var applicantReviewer = new ApplicantReviewer
-            {
-                Nnumber = applicant.Nnumber,
-                AppUserId = reviewer.Id
-            };
-
-            _context.ApplicantReviewers.Add(applicantReviewer);
-            await _context.SaveChangesAsync();
         }
-        */
+
+        public async Task AssignRangeOfReviewers(string[] Nnumbers)
+        {
+
+        }
+        
     }
 }

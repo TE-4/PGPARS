@@ -4,26 +4,30 @@
         <div class="loginContainer">
             <div class="text-outline h1">
                 Login
-                <hr class="hr"/>
-                <div class="loginForm">
-                    <div asp-validation-summary="All">
-                        <form asp-action="Login">
-                            <div>
-                                <label asp-for="Email" class="form-label"></label>
-                                <input asp-for="Email" class="form-control" placeholder="Enter your email">
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                            <br />
-                            <div>
-                                <label asp-for="Password" class="form-label"></label>
-                                <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password">
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-                            <br />
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </form>
+            </div>
+            <hr class="hr"/>
+            <div class="loginForm text-outline h2">
+                <form asp-action="Login">
+                    <div>
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                </div>
+                    <br />
+                    <div>
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div style="display: flex; justify-content: center;">
+                        <button type="submit" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
+                            <div class="text-outline">Login</div>
+                        </button>
+                    </div>
+                    <br />
+                    <div asp-validation-summary="All" class="text-danger" style="list-style-type: none;"></div>
+                </form>
             </div>
         </div>
     </div>
