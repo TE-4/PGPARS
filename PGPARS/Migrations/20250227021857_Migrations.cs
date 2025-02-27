@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class DBUpdate : Migration
+    public partial class Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,27 +18,47 @@ namespace PGPARS.Migrations
                     Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AppSubmitDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Cohort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdvisorEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Race = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PrimaryCitizenship = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CitizenshipStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MissingItems = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Program = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppSubmitDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GPAPsych = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    GPAOverall = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    GPAComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Course_Req_Met = table.Column<bool>(type: "bit", nullable: true),
+                    CrsReqComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rev1Decision = table.Column<bool>(type: "bit", nullable: true),
                     Rev2Decision = table.Column<bool>(type: "bit", nullable: true),
                     RevAgree = table.Column<bool>(type: "bit", nullable: true),
+                    NumberOfReviews = table.Column<int>(type: "int", nullable: true),
+                    School1Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School1Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School1GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    School2Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School2Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School2GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    School3Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School3Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School3GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    School4Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School4Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School4GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    School5Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School5Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School5GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Mentor1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SelectMentor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GPAOverall = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    GPAPsych = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    GPAComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Course_Req_Met = table.Column<bool>(type: "bit", nullable: true),
-                    CrsReqComment = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    SelectMentor = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,7 +260,7 @@ namespace PGPARS.Migrations
                 {
                     ReviewNumber = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LetterQuality = table.Column<int>(type: "int", nullable: true),
@@ -262,8 +282,8 @@ namespace PGPARS.Migrations
                 {
                     table.PrimaryKey("PK_Reviews", x => x.ReviewNumber);
                     table.ForeignKey(
-                        name: "FK_Reviews_Applicants_NNumber",
-                        column: x => x.NNumber,
+                        name: "FK_Reviews_Applicants_Nnumber",
+                        column: x => x.Nnumber,
                         principalTable: "Applicants",
                         principalColumn: "Nnumber",
                         onDelete: ReferentialAction.Cascade);
@@ -361,9 +381,9 @@ namespace PGPARS.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_NNumber",
+                name: "IX_Reviews_Nnumber",
                 table: "Reviews",
-                column: "NNumber");
+                column: "Nnumber");
         }
 
         /// <inheritdoc />

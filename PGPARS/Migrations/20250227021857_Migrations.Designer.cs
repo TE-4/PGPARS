@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250224204348_DBUpdate")]
-    partial class DBUpdate
+    [Migration("20250227021857_Migrations")]
+    partial class Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -249,6 +249,9 @@ namespace PGPARS.Migrations
                     b.Property<DateTime?>("AppSubmitDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CitizenshipStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Cohort")
                         .HasColumnType("nvarchar(max)");
 
@@ -256,6 +259,9 @@ namespace PGPARS.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("CrsReqComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -285,7 +291,19 @@ namespace PGPARS.Migrations
                     b.Property<string>("Mentor4")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MissingItems")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NumberOfReviews")
+                        .HasColumnType("int");
+
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryCitizenship")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Program")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Race")
@@ -300,6 +318,51 @@ namespace PGPARS.Migrations
                     b.Property<bool?>("RevAgree")
                         .HasColumnType("bit");
 
+                    b.Property<decimal?>("School1GPA")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("School1Institution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("School1Major")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("School2GPA")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("School2Institution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("School2Major")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("School3GPA")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("School3Institution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("School3Major")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("School4GPA")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("School4Institution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("School4Major")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("School5GPA")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("School5Institution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("School5Major")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SelectMentor")
                         .HasColumnType("nvarchar(max)");
 
@@ -307,9 +370,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Nnumber");
@@ -469,7 +529,7 @@ namespace PGPARS.Migrations
                     b.Property<int?>("LetterQuality")
                         .HasColumnType("int");
 
-                    b.Property<string>("NNumber")
+                    b.Property<string>("Nnumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -501,7 +561,7 @@ namespace PGPARS.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("NNumber");
+                    b.HasIndex("Nnumber");
 
                     b.ToTable("Reviews");
                 });
@@ -586,7 +646,7 @@ namespace PGPARS.Migrations
 
                     b.HasOne("PGPARS.Models.Applicant", "Applicant")
                         .WithMany("Reviews")
-                        .HasForeignKey("NNumber")
+                        .HasForeignKey("Nnumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

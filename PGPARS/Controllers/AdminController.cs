@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using PGPARS.Models.ViewModels;
+using PGPARS.Services;
 
 namespace PGPARS.Controllers
 {
@@ -15,12 +16,14 @@ namespace PGPARS.Controllers
         private readonly IApplicantRepository _applicantRepository;
         private readonly IFundingRepository _fundingRepository;
         private readonly IReviewRepository _reviewRepository;
+        private readonly IAuditRepository _auditRepository;
 
-        public AdminController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository)
+        public AdminController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository, IAuditRepository auditRepository)
         {
             _applicantRepository = applicantRepository;
             _fundingRepository = fundingRepository;
             _reviewRepository = reviewRepository;
+            _auditRepository = auditRepository;
         }
 
         
@@ -32,6 +35,7 @@ namespace PGPARS.Controllers
                 // Fetch data from services/repositories
                 var applicants = _applicantRepository.GetApplicants();
                 var reviews = _reviewRepository.GetReviews();
+                var auditlogs = _auditRepository.GetLogs();
                 //var budgetRemaining = _fundingService.GetBudgetRemaining();
                 //var fundings = _fundingRepository.GetFunding();
 
@@ -40,6 +44,7 @@ namespace PGPARS.Controllers
                 {
                     Applicants = applicants,
                     Reviews = reviews,
+                    AuditLogs = auditlogs,
                     //BudgetRemaining = budgetRemaining,
                     //Fundings = fundings
                 };
@@ -62,8 +67,8 @@ namespace PGPARS.Controllers
                 {"Review Conflict", 0},
                 {"Interview Pending", 0},
                 {"Accepted", 0},
-                {"Denied", 0},
-                {"Funds Assigned", 0}
+                {"Funds Assigned", 0},
+                {"Denied", 0}
             };
 
             foreach (var applicant in applicants)
