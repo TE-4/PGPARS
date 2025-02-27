@@ -20,7 +20,7 @@ namespace PGPARS.Models.ViewModels
         public DateTime? AppSubmitDate { get; set; }
 
         [Display(Name = "Email")]
-        public string? email { get; set; }
+        public string? Email { get; set; }
 
         [Display(Name = "Phone Number")]
         public string? Phone { get; set; }
