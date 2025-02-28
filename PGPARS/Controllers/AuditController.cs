@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PGPARS.Data;
+using PGPARS.Models;
+using System.Threading.Tasks;
 
 namespace PGPARS.Controllers
 {
@@ -12,14 +15,21 @@ namespace PGPARS.Controllers
             _auditRepository = auditRepo;
         }
 
-        public IActionResult Index(string filter)
+        public async Task<IActionResult> Index(string filter)
         {
-            if(filter != null)
-            {
-                var filteredLogs = _auditRepository.GetLogs().Where(log => log.Category == filter);
-                return View(filteredLogs);
-            }
-            var logs = _auditRepository.GetLogs();
+            // Debugging 
+            Console.WriteLine($"Filter: {filter}");
+
+            var categories = await _auditRepository.GetCategoriesAsync();
+            ViewBag.Categories = categories;
+
+            // Fetch logs, filtered if a category is selected
+            var logs = string.IsNullOrEmpty(filter)
+                ? await _auditRepository.GetLogsAsync()
+                : await _auditRepository.GetLogsByCategoryAsync(filter);
+
+
+
             return View(logs);
         }
 

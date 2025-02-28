@@ -38,7 +38,7 @@ namespace PGPARS.Controllers
         private IActionResult RedirectBasedOnRole()
         {
             // Log the user login
-            _logger.LogAction("Login", User.Identity.Name, "User logged in.", "INFO");
+            _logger.LogAction("Login", User.Identity.Name, "User logged in.", "ACCOUNT");
 
             // Redirect based on role
             if (User.IsInRole("Admin"))
@@ -138,7 +138,7 @@ namespace PGPARS.Controllers
                     TempData["UserCreated"] = "User successfully created!";
 
                     // log the user creation
-                    _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "INFO");
+                    _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "ACCOUNT");
 
                     return RedirectToAction("Directory", "Account");
                 }

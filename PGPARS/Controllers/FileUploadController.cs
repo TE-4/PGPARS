@@ -42,7 +42,7 @@ namespace PGPARS.Controllers
                         var uploadCount = _applicantRepo.AddApplicants(applicants);
                         foreach (var applicant in applicants)
                         {
-                            _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "INFO");
+                            _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "APPLICANT");
                         }
                         TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
 
@@ -118,6 +118,8 @@ namespace PGPARS.Controllers
                         {
                             // if everything has succeeded this far, we can increment our upload count
                             uploadCount++;
+                            // Log the action
+                            await _logger.LogAction("Upload", User.Identity.Name, faculty.FirstName + " " + faculty.LastName, "ACCOUNT");
                         }
                     }
 
@@ -125,8 +127,7 @@ namespace PGPARS.Controllers
 
                     TempData["SuccessMessage"] = $"{uploadCount} faculty members uploaded successfully.";
 
-                    // Log the action
-                    _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} faculty members uploaded", "INFO");
+                    
 
                     return RedirectToAction("Directory", "Account"); 
                 }

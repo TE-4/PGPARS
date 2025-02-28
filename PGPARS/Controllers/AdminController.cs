@@ -28,14 +28,14 @@ namespace PGPARS.Controllers
 
         
          
-        public IActionResult AdminDashboard()
+        public async Task<IActionResult> AdminDashboard()
         {
             if (User.Identity.IsAuthenticated)
             {
                 // Fetch data from services/repositories
                 var applicants = _applicantRepository.GetApplicants();
                 var reviews = _reviewRepository.GetReviews();
-                var auditlogs = _auditRepository.GetLogs();
+                var auditlogs = await _auditRepository.GetLogsAsync();
                 //var budgetRemaining = _fundingService.GetBudgetRemaining();
                 //var fundings = _fundingRepository.GetFunding();
 

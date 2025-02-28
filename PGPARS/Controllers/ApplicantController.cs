@@ -140,7 +140,7 @@ namespace PGPARS.Controllers
             // Update using the repository method
             _applicantRepository.UpdateApplicant(applicant);
 
-            _logger.LogAction("Edit", User.Identity.Name, "Edited " + applicant.FullName, "INFO");
+            _logger.LogAction("Edit", User.Identity.Name, "Edited " + applicant.FullName, "APPLICANT");
             return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
         }
 
@@ -173,7 +173,7 @@ namespace PGPARS.Controllers
                 if (applicant != null)
                 {
                     _applicantRepository.DeleteApplicant(Nnumber);
-                    _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "INFO");
+                    _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
                 }
             }
             return RedirectToAction("ApplicantDirectory");
