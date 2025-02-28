@@ -15,25 +15,20 @@ namespace PGPARS.Controllers
             _auditRepository = auditRepo;
         }
 
-        public async Task<IActionResult> Index(string filter)
+        public async Task<IActionResult> Index(string filter, DateTime? startDate, DateTime? endDate)
         {
-            // Debugging 
-            Console.WriteLine($"Filter: {filter}");
+            Console.WriteLine($"Filter: {filter}, StartDate: {startDate}, EndDate: {endDate}");
 
             var categories = await _auditRepository.GetCategoriesAsync();
             ViewBag.Categories = categories;
 
-            // Fetch logs, filtered if a category is selected
-            var logs = string.IsNullOrEmpty(filter)
-                ? await _auditRepository.GetLogsAsync()
-                : await _auditRepository.GetLogsByCategoryAsync(filter);
-
-
+            // Fetch logs based on selected category and date range
+            var logs = await _auditRepository.GetLogsByFiltersAsync(filter, startDate, endDate);
 
             return View(logs);
         }
 
-      
+
 
     }
 }

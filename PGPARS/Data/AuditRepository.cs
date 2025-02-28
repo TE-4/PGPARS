@@ -36,12 +36,27 @@ namespace PGPARS.Data
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<AuditLog>> GetLogsByCategoryAsync(string category)
+        public async Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(string category, DateTime? startDate, DateTime? endDate)
         {
-            return await _context.AuditLogs
-                .Where(a => a.Category == category)
-                .OrderByDescending(a => a.TimeStamp)
-                .ToListAsync();
+            var query = _context.AuditLogs.AsQueryable();
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(a => a.Category == category);
+            }
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(a => a.TimeStamp >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                // Ensure we include logs from the entire day (if filtering by day only)
+                query = query.Where(a => a.TimeStamp <= endDate.Value.AddDays(1).AddTicks(-1));
+            }
+
+            return await query.OrderByDescending(a => a.TimeStamp).ToListAsync();
         }
 
         public async Task<List<string>> GetCategoriesAsync()
@@ -52,7 +67,10 @@ namespace PGPARS.Data
                 .ToListAsync();
         }
 
-     
+
+
+
+
 
     }
 }
