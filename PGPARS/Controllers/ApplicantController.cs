@@ -37,7 +37,7 @@ namespace PGPARS.Controllers
             // If the search string is not empty, filter the applicants by full name
             if (!string.IsNullOrEmpty(searchString))
             {
-                applicants = applicants.Where(a => a.FullName.Contains(searchString)).ToList();
+                applicants = applicants.Where(a => a.FullName.ToLower().Contains(searchString.ToLower())).ToList();
             }
 
             // Pass the search string back to the view to retain the search term
@@ -61,12 +61,12 @@ namespace PGPARS.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public Task<IActionResult> EditApplicant(string Nnumber)
+        public IActionResult EditApplicant(string Nnumber)
         {
             var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == Nnumber);
             if (applicant == null)
             {
-                return Task.FromResult<IActionResult>(NotFound());
+                return NotFound();
             }
             var model = new ApplicantEditViewModel
             {
@@ -93,23 +93,23 @@ namespace PGPARS.Controllers
                 Course_Req_Met = applicant.Course_Req_Met,
                 CrsReqComment = applicant.CrsReqComment                           
             };
-            return Task.FromResult<IActionResult>(View(model));
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> EditApplicant(ApplicantEditViewModel model)
+        public async Task<IActionResult> EditApplicant(ApplicantEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return Task.FromResult<IActionResult>(View(model));
+                return View(model);
             }
 
             var applicant = _applicantRepository.GetApplicants().FirstOrDefault(a => a.Nnumber == model.Nnumber);
             if (applicant == null)
             {
-                return Task.FromResult<IActionResult>(NotFound());
+                return NotFound();
             }
 
             // Update Applicant details
@@ -140,8 +140,8 @@ namespace PGPARS.Controllers
             // Update using the repository method
             _applicantRepository.UpdateApplicant(applicant);
 
-            _logger.LogAction("Edit", User.Identity.Name, "Edited " + applicant.FullName, "APPLICANT");
-            return Task.FromResult<IActionResult>(RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber }));
+            await _logger.LogAction("Edit", User.Identity.Name, "Edited " + applicant.FullName, "APPLICANT");
+            return RedirectToAction("ApplicantDetails", new { Nnumber = model.Nnumber });
         }
 
         /*[Authorize(Roles = "Admin")]
@@ -161,7 +161,7 @@ namespace PGPARS.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteSelectedApplicants(List<string> SelectedApplicants)
+        public async Task<IActionResult> DeleteSelectedApplicants(List<string> SelectedApplicants)
         {
             if (SelectedApplicants == null || !SelectedApplicants.Any())
             {
@@ -173,7 +173,7 @@ namespace PGPARS.Controllers
                 if (applicant != null)
                 {
                     _applicantRepository.DeleteApplicant(Nnumber);
-                    _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
+                    await _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
                 }
             }
             return RedirectToAction("ApplicantDirectory");

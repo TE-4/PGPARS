@@ -87,6 +87,10 @@
                 <table class="table align-middle text-light">
                     <thead class="text-uppercase border-bottom border-secondary">
                         <tr>
+                            <th class="container-checkbox">
+                                <input type="checkbox" id="selectAll" />
+                                <span class="checkmark"></span>
+                            </th>
                             <th><i class="bi bi-clock"></i> Timestamp</th>
                             <th><i class="bi bi-person"></i> User</th>
                             <th><i class="bi bi-pencil-square"></i> Action</th>
@@ -106,6 +110,12 @@
                             @foreach (var log in Model)
                             {
                                 <tr>
+                                    <td class="container-checkbox align-content-center">
+                                        <label>
+                                            <input type="checkbox" name="SelectedApplicants" value="@log.Id" class="selectApplicant" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
                                     <td class="text-center">@log.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
                                     <td class="text-center">@log.Actor</td>
                                     <td class="text-center">@log.Action</td>
