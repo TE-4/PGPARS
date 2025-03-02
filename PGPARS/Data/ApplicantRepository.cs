@@ -4,6 +4,7 @@ using CsvHelper;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace PGPARS.Data
 {
@@ -19,6 +20,11 @@ namespace PGPARS.Data
         public IEnumerable<Applicant> GetApplicants()
         {
             return _context.Applicants.ToList();
+        }
+
+        public async Task<IEnumerable<Applicant>> GetApplicantsAsync()
+        {
+            return await _context.Applicants.ToListAsync();
         }
         public void UpdateApplicant(Applicant applicant)
         {

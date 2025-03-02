@@ -20,6 +20,7 @@ namespace PGPARS.Models
         public AppUser AppUser { get; set; }  // Navigation Property
 
         // Review Details
+        public bool ReviewComplete { get; set; } = false; // Is the Review Complete?
         public DateTime? ReviewDate { get; set; }  // Date of the Review
         public int? LetterQuality { get; set; }
         public int? ResumeQuality { get; set; }

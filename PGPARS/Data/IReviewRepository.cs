@@ -6,6 +6,7 @@ namespace PGPARS.Data
     public interface IReviewRepository
     {
         IEnumerable<Review> GetReviews();
+        Task<IEnumerable<Review>> GetReviewsAsync();
         Review GetReviewById(int ReviewId);
         void AddReview(Review review);
         void UpdateReview(Review review);

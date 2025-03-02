@@ -25,7 +25,7 @@ namespace PGPARS.Services
         public async Task AssignReviewersAsync()
         {
             // first get all applicants
-            var applicants = _applicantRepository.GetApplicants();
+            var applicants = await _applicantRepository.GetApplicantsAsync();
 
             // This will get all committee members and the admin user too
             var committeeReviewers = await _userManager.GetUsersInRoleAsync("Committee");
