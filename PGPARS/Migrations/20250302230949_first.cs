@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class TeamDBUPdate : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,6 +88,10 @@ namespace PGPARS.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastAssignedReview = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastCompletedReview = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastAssignedInterview = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastCompletedInterview = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -262,7 +266,9 @@ namespace PGPARS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReviewComplete = table.Column<bool>(type: "bit", nullable: false),
                     ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReviewEdited = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LetterQuality = table.Column<int>(type: "int", nullable: true),
                     ResumeQuality = table.Column<int>(type: "int", nullable: true),
                     ResExpQuality = table.Column<int>(type: "int", nullable: true),

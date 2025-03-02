@@ -1,75 +1,83 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.EntityFrameworkCore;
+using PGPARS.Data;
 using PGPARS.Models;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
-namespace PGPARS.Data
+public class ReviewRepository : IReviewRepository
 {
-    public class ReviewRepository : IReviewRepository
+    private readonly ApplicationDbContext _context;
+
+    public ReviewRepository(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public ReviewRepository(ApplicationDbContext context)
+    public IEnumerable<Review> GetReviews()
+    {
+        return _context.Reviews.ToList();
+    }
+
+    public async Task<IEnumerable<Review>> GetReviewsAsync()
+    {
+        return await _context.Reviews.ToListAsync();
+    }
+
+    public Review GetReviewById(int reviewId)
+    {
+        return _context.Reviews.FirstOrDefault(r => r.ReviewNumber == reviewId);
+    }
+
+    public async Task<Review> GetReviewByIdAsync(int reviewId)
+    {
+        return await _context.Reviews.FirstOrDefaultAsync(r => r.ReviewNumber == reviewId);
+    }
+
+
+    public void AddReview(Review review)
+    {
+        _context.Reviews.Add(review);
+    }
+
+    
+    public async Task AddReviewAsync(Review review)
+    {
+        await _context.Reviews.AddAsync(review);
+    }
+
+    
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
+
+    public void UpdateReview(Review review)
+    {
+        var existingReview = _context.Reviews.FirstOrDefault(r => r.ReviewNumber == review.ReviewNumber);
+        if (existingReview != null)
         {
-            _context = context;
+            existingReview.Nnumber = review.Nnumber;
+            existingReview.LetterQuality = review.LetterQuality;
+            existingReview.ResumeQuality = review.ResumeQuality;
+            existingReview.ResExpQuality = review.ResExpQuality;
+            existingReview.ResumeComments = review.ResumeComments;
+            existingReview.WritingSampleQuality = review.WritingSampleQuality;
+            existingReview.WritingSampleComments = review.WritingSampleComments;
+            existingReview.LORRelevance = review.LORRelevance;
+            existingReview.LORQuality = review.LORQuality;
+            existingReview.LORComments = review.LORComments;
+            existingReview.OverallFitQuality = review.OverallFitQuality;
+            existingReview.OverallFitComments = review.OverallFitComments;
+            existingReview.DecisionRecommendation = review.DecisionRecommendation;
+            existingReview.FollowUpRequired = review.FollowUpRequired;
+            existingReview.FinalComments = review.FinalComments;
         }
+    }
 
-        public IEnumerable<Review> GetReviews()
+    public void DeleteReview(int reviewId)
+    {
+        var review = _context.Reviews.FirstOrDefault(r => r.ReviewNumber == reviewId);
+        if (review != null)
         {
-            return _context.Reviews.ToList();
-        }
-
-        public async Task<IEnumerable<Review>> GetReviewsAsync()
-        {
-            return await _context.Reviews.ToListAsync();
-        }
-
-        public Review GetReviewById(int reviewId)
-        {
-            return _context.Reviews.FirstOrDefault(r => r.ReviewNumber == reviewId);
-        }
-
-        public void AddReview(Review review)
-        {
-            _context.Reviews.Add(review);
-            _context.SaveChanges(); // Commit the transaction to the database
-        }
-
-        public void UpdateReview(Review review)
-        {
-            var existingReview = _context.Reviews.FirstOrDefault(r => r.ReviewNumber == review.ReviewNumber);
-            if (existingReview != null)
-            {
-
-                existingReview.Nnumber = review.Nnumber;               
-                existingReview.LetterQuality = review.LetterQuality;
-                existingReview.ResumeQuality = review.ResumeQuality;
-                existingReview.ResExpQuality = review.ResExpQuality;
-                existingReview.ResumeComments = review.ResumeComments;
-                existingReview.WritingSampleQuality = review.WritingSampleQuality;
-                existingReview.WritingSampleComments = review.WritingSampleComments;
-                existingReview.LORRelevance = review.LORRelevance;
-                existingReview.LORQuality = review.LORQuality;
-                existingReview.LORComments = review.LORComments;
-                existingReview.OverallFitQuality = review.OverallFitQuality;
-                existingReview.OverallFitComments = review.OverallFitComments;
-                existingReview.DecisionRecommendation = review.DecisionRecommendation;
-                existingReview.FollowUpRequired = review.FollowUpRequired;
-                existingReview.FinalComments = review.FinalComments;
-                // Update additional fields as needed
-                _context.SaveChanges();
-            }
-        }
-
-        public void DeleteReview(int reviewId)
-        {
-            var review = _context.Reviews.FirstOrDefault(r => r.ReviewNumber == reviewId);
-            if (review != null)
-            {
-                _context.Reviews.Remove(review);
-                _context.SaveChanges();
-            }
+            _context.Reviews.Remove(review);
         }
     }
 }

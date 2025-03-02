@@ -178,6 +178,18 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("LastAssignedInterview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastAssignedReview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastCompletedInterview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastCompletedReview")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -545,7 +557,13 @@ namespace PGPARS.Migrations
                     b.Property<int?>("ResumeQuality")
                         .HasColumnType("int");
 
+                    b.Property<bool>("ReviewComplete")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ReviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ReviewEdited")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WritingSampleComments")

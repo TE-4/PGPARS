@@ -45,7 +45,8 @@ namespace PGPARS.Services
 
             // shuffle the reviewers to randomize the assignment
             var shuffledReviewers = reviewers.OrderBy(x => Guid.NewGuid()).ToList();
-            int reviewerCount = shuffledReviewers.Count;
+            int reviewerIndex = 0;
+            int reviewCount = shuffledReviewers.Count;
 
             foreach (var applicant in applicants)
             {
@@ -58,7 +59,31 @@ namespace PGPARS.Services
                 while (applicant.NumberOfReviews < 2)
                 {
                     // get the next reviewer
-                    
+                    var reviewer = shuffledReviewers[reviewerIndex];
+
+                    // Assign the reviewer and the applicant to a review
+                    var review = new Review
+                    {
+                        Nnumber = applicant.Nnumber,
+                        AppUserId = reviewer.Id
+                    };
+
+                    // add the review to the database
+                    await _reviewRepository.AddReviewAsync(review);
+
+                    // update the applicant's number of reviews
+                    applicant.NumberOfReviews++;
+
+                    // update the Last Assigned Review for AppUser
+                    reviewer.LastAssignedReview = DateTime.Now;
+
+                    // increment the reviewer index and use modulus operator to wrap around when needed 
+                    reviewerIndex = (reviewerIndex + 1) % reviewCount;
+
+
+                    // Save changes to the database in one call to reduce latency
+                    await _reviewRepository.SaveChangesAsync();
+                    await _applicantRepository.SaveChangesAsync();
                 }
             }
                 

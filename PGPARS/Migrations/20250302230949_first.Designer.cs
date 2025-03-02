@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250227231409_TeamDBUPdate")]
-    partial class TeamDBUPdate
+    [Migration("20250302230949_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,6 +180,18 @@ namespace PGPARS.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastAssignedInterview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastAssignedReview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastCompletedInterview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastCompletedReview")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -548,7 +560,13 @@ namespace PGPARS.Migrations
                     b.Property<int?>("ResumeQuality")
                         .HasColumnType("int");
 
+                    b.Property<bool>("ReviewComplete")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ReviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ReviewEdited")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WritingSampleComments")
