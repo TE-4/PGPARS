@@ -18,7 +18,7 @@ namespace PGPARS.Services
             _reviewRepository = reviewRepository;
         }
 
-        // Look into if these should be async or not (thinking yes)
+        // Convert to Async later possibly for optimization 
         
 
         // Assign reviewers to applicants
@@ -34,16 +34,37 @@ namespace PGPARS.Services
             // concatenate the two lists 
             var reviewers = committeeReviewers.Concat(adminReviewers).ToList();
 
-            // retrieve the reviews 
-            var reviews = _reviewRepository.GetReviews();
-
-            // loop through the applicants and assign reviewers
-            foreach ( var applicant in applicants)
+            // verify there are at least two reviewers
+            if (reviewers.Count < 2)
             {
-               
+                throw new System.Exception("There must be at least two reviewers to assign");
             }
 
-        }
+            // obtain the existing reviews from the review table
+            var reviews = await _reviewRepository.GetReviewsAsync();
+
+            // shuffle the reviewers to randomize the assignment
+            var shuffledReviewers = reviewers.OrderBy(x => Guid.NewGuid()).ToList();
+            int reviewerCount = shuffledReviewers.Count;
+
+            foreach (var applicant in applicants)
+            {
+                // skip if the applicant already has two reviews
+                if (applicant.NumberOfReviews >= 2)
+                {
+                    continue;
+                }
+
+                while (applicant.NumberOfReviews < 2)
+                {
+                    // get the next reviewer
+                    
+                }
+            }
+                
+            
+
+        } // end method
 
         // Unassign all reviewers from all applicants
         public async Task UnassignReviewers()
@@ -51,12 +72,13 @@ namespace PGPARS.Services
             
         }
 
-        // Manually assign a reviewer to an applicant
+        // Manually assign a single reviewer to an applicant
         public async Task AssignReviewer(string nnumber, string reviewerId)
         {
 
         }
 
+        // Manually assign a range of reviews
         public async Task AssignRangeOfReviewers(string[] Nnumbers)
         {
 

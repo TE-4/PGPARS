@@ -22,6 +22,7 @@ namespace PGPARS.Models
         // Review Details
         public bool ReviewComplete { get; set; } = false; // Is the Review Complete?
         public DateTime? ReviewDate { get; set; }  // Date of the Review
+        public DateTime? ReviewEdited { get; set; }  // Date of the Review Edit
         public int? LetterQuality { get; set; }
         public int? ResumeQuality { get; set; }
         public int? ResExpQuality { get; set; }

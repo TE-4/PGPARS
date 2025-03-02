@@ -19,6 +19,12 @@ namespace PGPARS.Models
 
         public string? Position { get; set; }
 
+        // Properties for keeping track of assigned tasks and how long it takes to complete them
+        public DateTime? LastAssignedReview { get; set; }
+        public DateTime? LastCompletedReview { get; set; }
+        public DateTime? LastAssignedInterview { get; set; }
+        public DateTime? LastCompletedInterview { get; set; }
+
         // Navigation property
         public ICollection<Review> Reviews { get; set; }
     }

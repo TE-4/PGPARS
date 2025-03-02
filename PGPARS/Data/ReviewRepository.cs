@@ -2,6 +2,7 @@
 using PGPARS.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace PGPARS.Data
 {
@@ -17,6 +18,11 @@ namespace PGPARS.Data
         public IEnumerable<Review> GetReviews()
         {
             return _context.Reviews.ToList();
+        }
+
+        public async Task<IEnumerable<Review>> GetReviewsAsync()
+        {
+            return await _context.Reviews.ToListAsync();
         }
 
         public Review GetReviewById(int reviewId)
