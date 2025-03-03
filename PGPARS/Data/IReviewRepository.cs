@@ -11,6 +11,7 @@ namespace PGPARS.Data
         Task<Review> GetReviewByIdAsync(int ReviewId);
         void AddReview(Review review);
         Task AddReviewAsync(Review review);
+        Task AddReviewsAsync(List<Review> reviews);
         Task SaveChangesAsync();
         void UpdateReview(Review review);
         void DeleteReview(int ReviewId);

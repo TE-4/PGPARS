@@ -18,7 +18,10 @@ public class ReviewRepository : IReviewRepository
 
     public async Task<IEnumerable<Review>> GetReviewsAsync()
     {
-        return await _context.Reviews.ToListAsync();
+        return await _context.Reviews
+            .Include(r => r.Applicant)
+            .Include(r => r.AppUser)
+            .ToListAsync();
     }
 
     public Review GetReviewById(int reviewId)
@@ -43,7 +46,12 @@ public class ReviewRepository : IReviewRepository
         await _context.Reviews.AddAsync(review);
     }
 
-    
+    public async Task AddReviewsAsync(List<Review> reviews)
+    {
+        await _context.Reviews.AddRangeAsync(reviews);
+    }
+
+
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

@@ -2,6 +2,8 @@
 using PGPARS.Models;
 using PGPARS.Data;
 using System.Threading.Tasks;
+using PGPARS.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PGPARS.Controllers
 {
@@ -9,11 +11,13 @@ namespace PGPARS.Controllers
     {
         private readonly IReviewRepository _reviewRepository;
         private readonly IApplicantRepository _applicantRepository;
+        private readonly ReviewAssignmentService reviewAssignmentService;
 
-        public ReviewController(IReviewRepository reviewRepository, IApplicantRepository applicantRepository)
+        public ReviewController(IReviewRepository reviewRepository, IApplicantRepository applicantRepository, ReviewAssignmentService ras)
         {
             _reviewRepository = reviewRepository;
             _applicantRepository = applicantRepository;
+            reviewAssignmentService = ras;
         }
 
         // GET: AddReview
@@ -100,6 +104,39 @@ namespace PGPARS.Controllers
         {
             var reviewList = await _reviewRepository.GetReviewsAsync(); 
             return View(reviewList);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AssignReviewers()
+        {
+            try
+            {
+                await reviewAssignmentService.AssignReviewersAsync();
+                TempData["SuccessMessage"] = "Reviewers have been assigned successfully.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error assigning reviewers: {ex.Message}";
+            }
+            return RedirectToAction("ReviewDirectory");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> UnassignIncompleteReviews()
+        {
+            try
+            {
+                await reviewAssignmentService.UnassignIncompleteReviewsAsync();
+                TempData["SuccessMessage"] = "All incomplete reviews have been unassigned successfully.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Error: {ex.Message}";
+            }
+
+            return RedirectToAction("ReviewDirectory");
         }
     }
 }
