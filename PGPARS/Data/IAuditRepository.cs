@@ -12,8 +12,6 @@ namespace PGPARS.Data
 
         Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(string category, DateTime? startDate, DateTime? endDate);
 
-        // Implement these later
-        // Task ClearLogsAsync();
-        // Task DeleteLogAsync(int id);
+        Task DeleteLogsAsync(List<int> logIds);
     }
 }

@@ -67,6 +67,21 @@ namespace PGPARS.Data
                 .ToListAsync();
         }
 
+        public async Task DeleteLogsAsync(List<int> logIds)
+        {
+            if (logIds == null || !logIds.Any())
+                return;
+
+            var logsToDelete = await _context.AuditLogs
+                .Where(log => logIds.Contains(log.Id))
+                .ToListAsync();
+
+            if (logsToDelete.Any())
+            {
+                _context.AuditLogs.RemoveRange(logsToDelete);
+                await _context.SaveChangesAsync();
+            }
+        }
 
 
 

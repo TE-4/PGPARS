@@ -312,35 +312,7 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
-        /* This needs to be redone **************
-         * 
-        public async Task<IActionResult> LinkedApplicants(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            // Retrieve applicants linked through the ApplicantReviewer table
-            var linkedApplicants = _context.ApplicantReviewers
-                .Where(ar => ar.AppUserId == user.Id) // Find records where the reviewer is the current user
-                .Select(ar => ar.Applicant) // Select the corresponding applicants
-                .ToList();
-
-            Debug.WriteLine($"Linked Applicants Count: {linkedApplicants.Count}");
-
-            var viewModel = new LinkedApplicantsViewModel
-            {
-                User = user,
-                LinkedApplicants = linkedApplicants
-            };
-
-            return View(viewModel);
-        }
-        */
-
-
+        
 
         // This method will filter the users by search query and filter by role
         [HttpGet]

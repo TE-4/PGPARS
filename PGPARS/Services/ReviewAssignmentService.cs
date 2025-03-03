@@ -18,9 +18,7 @@ namespace PGPARS.Services
             _reviewRepository = reviewRepository;
         }
 
-        // Convert to Async later possibly for optimization 
-
-
+        
         // Assign reviewers to applicants
         public async Task AssignReviewersAsync()
         {

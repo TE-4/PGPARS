@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
 using System.Threading.Tasks;
@@ -26,6 +27,21 @@ namespace PGPARS.Controllers
             var logs = await _auditRepository.GetLogsByFiltersAsync(filter, startDate, endDate);
 
             return View(logs);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSelectedLogs(List<int> SelectedLogs)
+        {
+            if (SelectedLogs == null || !SelectedLogs.Any())
+            {
+                TempData["Message"] = "No logs selected!";
+                return RedirectToAction("Index");
+            }
+
+            await _auditRepository.DeleteLogsAsync(SelectedLogs);
+
+            TempData["Message"] = $"{SelectedLogs.Count} logs deleted.";
+            return RedirectToAction("Index");
         }
 
 
