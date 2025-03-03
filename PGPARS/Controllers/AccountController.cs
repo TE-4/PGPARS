@@ -21,11 +21,12 @@ namespace PGPARS.Controllers
         private readonly IApplicantRepository _applicantRepository;
         private readonly AuditLogService _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IReviewRepository _reviewRepository;
 
 
 
         public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager
-            , IApplicantRepository applicantRepo, AuditLogService auditLogService, ApplicationDbContext context)
+            , IApplicantRepository applicantRepo, AuditLogService auditLogService, ApplicationDbContext context, IReviewRepository reviewRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -33,6 +34,7 @@ namespace PGPARS.Controllers
             _applicantRepository = applicantRepo;
             _logger = auditLogService;
             _context = context;
+            _reviewRepository = reviewRepository;
         }
 
         private IActionResult RedirectBasedOnRole()
@@ -349,6 +351,17 @@ namespace PGPARS.Controllers
 
 
                 return View("Directory", users);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AssignedReviews(string Id)
+        {
+            var reviews = await _reviewRepository.GetReviewsAsync();
+            var user = await _userManager.FindByIdAsync(Id);
+            ViewBag.UserName = $"{user.FirstName} {user.LastName}";
+            reviews = reviews.Where(r => r.AppUserId == Id).ToList();
+            return View(reviews);
         }
 
 

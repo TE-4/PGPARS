@@ -116,10 +116,54 @@ namespace PGPARS.Services
 
 
         // Manually assign a single reviewer to an applicant
+        // Manually assign a single reviewer to an applicant
         public async Task AssignReviewer(string nnumber, string reviewerId)
         {
+            // get the applicant first by nnumber
+            var applicant = await _applicantRepository.GetApplicantByIdAsync(nnumber);
+            if (applicant == null)
+            {
+                throw new InvalidOperationException("Applicant not found.");
+            }
 
+            // make sure applicant doesnt already have 2 reviews
+            if (applicant.NumberOfReviews >= 2)
+            {
+                throw new InvalidOperationException("This applicant already has two assigned reviews.");
+            }
+
+            // get the reviewer based on the input parameter reviewerId
+            var reviewer = await _userManager.FindByIdAsync(reviewerId);
+            if (reviewer == null)
+            {
+                throw new InvalidOperationException("Reviewer not found.");
+            }
+
+            // check if this reviewer has already been assigned to this applicant
+            var existingReviews = await _reviewRepository.GetReviewsAsync();
+            if (existingReviews.Any(r => r.Nnumber == nnumber && r.AppUserId == reviewerId))
+            {
+                throw new InvalidOperationException("This reviewer has already been assigned to this applicant.");
+            }
+
+            // create and assign the review
+            var review = new Review
+            {
+                Nnumber = nnumber,
+                AppUserId = reviewer.Id,
+                ReviewDate = DateTime.Now
+            };
+
+            await _reviewRepository.AddReviewAsync(review);
+
+            // 6️⃣ Update applicant's review count
+            applicant.NumberOfReviews++;
+
+            // 7️⃣ Save changes in one operation
+            await _reviewRepository.SaveChangesAsync();
+            await _applicantRepository.SaveChangesAsync();
         }
+
 
         // Manually assign a range of reviews
         public async Task AssignRangeOfReviewers(string[] Nnumbers)

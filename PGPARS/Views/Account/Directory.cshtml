@@ -85,9 +85,9 @@
                                                     <div class="bi bi-pencil text-outline">&ensp;Edit</div>
                                                 </button>
                                             </a>
-                                            <a asp-action="LinkedApplicants" asp-controller="Account" asp-route-email="@user.Email">
+                                            <a asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@user.Id">
                                                 <button type="submit" class="btn btn-lg" style="background-color:darkorange; color: white; border: 2px solid black;">
-                                                    <div class="bi bi-people text-outline">&ensp;Linked Applicants</div>
+                                                    <div class="bi bi-people text-outline">&ensp;Assigned Reviews</div>
                                                 </button>
                                             </a>
                                             <form asp-action="Delete" asp-controller="Account" asp-route-Id="@user.Id"
