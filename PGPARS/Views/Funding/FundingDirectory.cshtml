@@ -69,7 +69,10 @@
                         {
                             <tr>
                                 <td>@fund.Cohort</td>
-                                <td>@fund.Source</td>
+                                <td class="text-center specialtext">
+                                      <a asp-action="FundingDetails" asp-controller="Funding" asp-route-id="@fund.Id" style="color: white; text-decoration: none;">
+                                    @fund.Source
+                                    </a></td>
                                 <td>@fund.Amount?.ToString("C")</td>
                                 <td>
                                     @if (fund.FundingAllocations?.Any() == true)

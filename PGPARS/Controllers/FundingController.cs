@@ -192,6 +192,17 @@ namespace PGPARS.Controllers
             return View(allocations);
         }
 
+        public IActionResult FundingDetails(int id)
+        {
+            var funding = _fundingRepository.GetFundingById(id);
+            if (funding == null)
+            {
+                return NotFound();
+            }
+
+            // Now funding.RemainingAmount will return the amount left after allocations
+            return View(funding);
+        }
 
 
 
