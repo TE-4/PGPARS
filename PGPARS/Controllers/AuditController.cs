@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
+using PGPARS.Models;
+using System.Threading.Tasks;
 
 namespace PGPARS.Controllers
 {
@@ -12,18 +16,35 @@ namespace PGPARS.Controllers
             _auditRepository = auditRepo;
         }
 
-        public IActionResult Index(string filter)
+        public async Task<IActionResult> Index(string filter, DateTime? startDate, DateTime? endDate)
         {
-            if(filter != null)
-            {
-                var filteredLogs = _auditRepository.GetLogs().Where(log => log.Category == filter);
-                return View(filteredLogs);
-            }
-            var logs = _auditRepository.GetLogs();
+            Console.WriteLine($"Filter: {filter}, StartDate: {startDate}, EndDate: {endDate}");
+
+            var categories = await _auditRepository.GetCategoriesAsync();
+            ViewBag.Categories = categories;
+
+            // Fetch logs based on selected category and date range
+            var logs = await _auditRepository.GetLogsByFiltersAsync(filter, startDate, endDate);
+
             return View(logs);
         }
 
-      
+        [HttpPost]
+        public async Task<IActionResult> DeleteSelectedLogs(List<int> SelectedLogs)
+        {
+            if (SelectedLogs == null || !SelectedLogs.Any())
+            {
+                TempData["Message"] = "No logs selected!";
+                return RedirectToAction("Index");
+            }
+
+            await _auditRepository.DeleteLogsAsync(SelectedLogs);
+
+            TempData["Message"] = $"{SelectedLogs.Count} logs deleted.";
+            return RedirectToAction("Index");
+        }
+
+
 
     }
 }

@@ -1,14 +1,17 @@
 ﻿using PGPARS.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PGPARS.Data
 {
     public interface IAuditRepository
     {
-        void LogAction(string action, string user, string details, string category);
-        IEnumerable<AuditLog> GetLogs();
+        Task LogActionAsync(string action, string user, string details, string category);
+        Task<IEnumerable<AuditLog>> GetLogsAsync();
+        Task<List<string>> GetCategoriesAsync();
 
-        //Implement these later******
-        // void ClearLogs();
-        // void DeleteLog(int id);
+        Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(string category, DateTime? startDate, DateTime? endDate);
+
+        Task DeleteLogsAsync(List<int> logIds);
     }
 }

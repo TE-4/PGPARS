@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<PGPARS.Models.Review>
+
 <body>
     <div class="main">
         <div class="container-opaque">
@@ -6,60 +7,140 @@
                 <h2>Review Directory</h2>
             </div>
         </div>
+
         <br />
+
         <div class="d-flex justify-content-between align-items-center">
-            <!-- Add Button -->
-            <a asp-action="AddReview" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
-                <div class="bi bi-upload text-outline">&ensp;Add Review</div>
-            </a>
+            <!-- Assign Reviewers Button (Admin Only) -->
+            @if (User.IsInRole("Admin"))
+            {
+                <form method="post" asp-action="AssignReviewers" asp-controller="Review">
+                    <button type="submit" class="btn btn-primary btn-lg" style="border: 2px solid black; min-height: 50px;">
+                        <div class="bi bi-person-check text-outline">&ensp;Assign Reviewers</div>
+                    </button>
+                </form>
+
+                <!-- Unassign Incomplete Reviews Button (Admin Only) -->
+                <form method="post" asp-action="UnassignIncompleteReviews" asp-controller="Review">
+                    <button type="submit" class="btn btn-danger btn-lg" style="border: 2px solid black; min-height: 50px;"
+                            onclick="return confirm('Are you sure you want to unassign all incomplete reviews?');">
+                        <div class="bi bi-trash text-outline">&ensp;Unassign Incomplete Reviews</div>
+                    </button>
+                </form>
+            }
         </div>
+
+        <br />
+
+        <!-- Success/Error Message Alerts -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success text-center">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger text-center">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <thead class="text-uppercase">
                     <tr>
-                        <th>Name</th>
+                        <th>Applicant Name</th>
                         <th>N Number</th>
-                        <th>Status</th>
-                        <th>Review ID</th>
+                        <th>Reviewer</th>
+                        <th>Review Date</th>
+                        <th>Last Edited</th>
+                        <th>Review Complete</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if (!Model.Any())
                     {
-                    <tr>
-                        <td colspan="5" class="text-center text-muted">
-                                <span>No reviews found.</span>
-                        </td>
-                    </tr>
-                    }
-                    else
-                    {
-                    @foreach (var review in Model)
-                    {
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <!-- Actions column -->
-                            <td>
-                                <div class="d-flex justify-content-center gap-3">
-                                    <a asp-action="EditReview" asp-route-id="@review.ReviewNumber">
-                                        <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
-                                            <div class="bi bi-pencil text-outline">&ensp;Edit</div>
-                                        </button>
-                                    </a>
-                                    <form asp-action="DeleteReview" asp-route-id="@review.ReviewNumber" method="post" style="d-inline-block">
-                                        <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;"
-                                                onclick="return confirm('Are you sure you want to delete this review?');">
-                                            <div class="bi bi-trash text-outline">&ensp;Delete</div>
-                                        </button>
-                                    </form>
-                                </div>
+                            <td colspan="7" class="text-center text-muted">
+                                <span>No reviews found.</span>
                             </td>
                         </tr>
                     }
+                    else
+                    {
+                        @foreach (var review in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Nnumber">
+                                        @review.Applicant?.FullName
+                                    </a>
+                                </td>
+                                <td>@review.Nnumber</td>
+
+                                <!-- appuser name and a link to their details -->
+                                <td>
+                                    <a asp-action="Detail" asp-controller="Account" asp-route-Id="@review.AppUserId">
+                                        @review.AppUser?.FirstName @review.AppUser?.LastName
+                                    </a>
+                                </td>
+
+                                <!-- when the review was created -->
+                                <td>
+                                    @if (review.ReviewDate.HasValue)
+                                    {
+                                        @review.ReviewDate.Value.ToString("MM/dd/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+
+                                <!-- when the review was last edited -->
+                                <td>
+                                    @if (review.ReviewEdited.HasValue)
+                                    {
+                                        @review.ReviewEdited.Value.ToString("MM/dd/yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
+                                </td>
+
+                                <!-- Shows if the Review is complete or not -->
+                                <td class="text-center">
+                                    @if (review.ReviewComplete)
+                                    {
+                                        <span class="text-success"><i class="bi bi-check-circle-fill"></i></span> <!-- green check for completed -->
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger"><i class="bi bi-x-circle-fill"></i></span> <!-- red x for incomplete -->
+                                    }
+                                </td>
+
+                                <!-- Actions column -->
+                                <td>
+                                    <div class="d-flex justify-content-center gap-3">
+                                        <a asp-action="EditReview" asp-route-id="@review.ReviewNumber">
+                                            <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
+                                                <div class="bi bi-pencil text-outline">&ensp;Edit</div>
+                                            </button>
+                                        </a>
+                                        <form asp-action="DeleteReview" asp-route-id="@review.ReviewNumber" method="post" style="display:inline-block">
+                                            <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;"
+                                                    onclick="return confirm('Are you sure you want to delete this review?');">
+                                                <div class="bi bi-trash text-outline">&ensp;Delete</div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

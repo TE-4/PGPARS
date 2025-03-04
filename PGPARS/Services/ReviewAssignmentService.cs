@@ -18,45 +18,154 @@ namespace PGPARS.Services
             _reviewRepository = reviewRepository;
         }
 
-        // Look into if these should be async or not (thinking yes)
         
-
         // Assign reviewers to applicants
         public async Task AssignReviewersAsync()
         {
-            // first get all applicants
-            var applicants = _applicantRepository.GetApplicants();
+            var applicants = await _applicantRepository.GetApplicantsAsync();
 
-            // This will get all committee members and the admin user too
             var committeeReviewers = await _userManager.GetUsersInRoleAsync("Committee");
             var adminReviewers = await _userManager.GetUsersInRoleAsync("Admin");
 
-            // concatenate the two lists 
             var reviewers = committeeReviewers.Concat(adminReviewers).ToList();
 
-            // retrieve the reviews 
-            var reviews = _reviewRepository.GetReviews();
-
-            // loop through the applicants and assign reviewers
-            foreach ( var applicant in applicants)
+            // ensures there are at least two committee members/admin
+            if (reviewers.Count < 2)
             {
-               
+                throw new Exception("There must be at least two reviewers to assign");
             }
 
+            // shuffle the reviewers
+            var shuffledReviewers = reviewers.OrderBy(x => Guid.NewGuid()).ToList();
+            int reviewerIndex = 0;
+            int reviewCount = shuffledReviewers.Count;
+
+            // this list is to save in memory and only save to the database once at the end (performaance optimization)
+            List<Review> newReviews = new List<Review>();
+
+            foreach (var applicant in applicants)
+            {
+                // skip applicants that already have 2 reviews
+                if (applicant.NumberOfReviews >= 2) continue;
+
+                while (applicant.NumberOfReviews < 2)
+                {
+                    var reviewer = shuffledReviewers[reviewerIndex];
+
+                    var review = new Review
+                    {
+                        Nnumber = applicant.Nnumber,
+                        AppUserId = reviewer.Id,
+                        ReviewDate = DateTime.Now
+                    };
+
+                    newReviews.Add(review);
+
+                    // Update the applicant and reviewer
+                    applicant.NumberOfReviews++; 
+                    reviewer.LastAssignedReview = DateTime.Now;
+
+                    reviewerIndex = (reviewerIndex + 1) % reviewCount; 
+                }
+            }
+
+            // Save all changes
+            if (newReviews.Count > 0)
+            {
+                await _reviewRepository.AddReviewsAsync(newReviews);
+                await _reviewRepository.SaveChangesAsync();
+                await _applicantRepository.SaveChangesAsync();
+            }
         }
 
-        // Unassign all reviewers from all applicants
-        public async Task UnassignReviewers()
+        // Unassign all incomplete reviews
+        public async Task UnassignIncompleteReviewsAsync()
         {
-            
+            // get all incomplete reviews
+            var incompleteReviews = await _reviewRepository.GetReviewsAsync();
+            var reviewsToDelete = incompleteReviews.Where(r => !r.ReviewComplete).ToList();
+
+            if (!reviewsToDelete.Any())
+            {
+                throw new InvalidOperationException("No incomplete reviews found to unassign.");
+            }
+
+            // get affected applicants
+            var affectedApplicantIds = reviewsToDelete.Select(r => r.Nnumber).Distinct().ToList();
+            var affectedApplicants = await _applicantRepository.GetApplicantsAsync();
+
+            // 3️⃣ Reset NumberOfReviews for these applicants
+            foreach (var applicant in affectedApplicants)
+            {
+                if (affectedApplicantIds.Contains(applicant.Nnumber))
+                {
+                    applicant.NumberOfReviews = 0;
+                }
+            }
+
+            // delete all incomplete reviews
+            foreach (var review in reviewsToDelete)
+            {
+                _reviewRepository.DeleteReview(review.ReviewNumber);
+            }
+
+            // save all changes at the end (performance optimization)
+            await _reviewRepository.SaveChangesAsync();
+            await _applicantRepository.SaveChangesAsync();
         }
 
-        // Manually assign a reviewer to an applicant
+
+        // Manually assign a single reviewer to an applicant
+        // Manually assign a single reviewer to an applicant
         public async Task AssignReviewer(string nnumber, string reviewerId)
         {
+            // get the applicant first by nnumber
+            var applicant = await _applicantRepository.GetApplicantByIdAsync(nnumber);
+            if (applicant == null)
+            {
+                throw new InvalidOperationException("Applicant not found.");
+            }
 
+            // make sure applicant doesnt already have 2 reviews
+            if (applicant.NumberOfReviews >= 2)
+            {
+                throw new InvalidOperationException("This applicant already has two assigned reviews.");
+            }
+
+            // get the reviewer based on the input parameter reviewerId
+            var reviewer = await _userManager.FindByIdAsync(reviewerId);
+            if (reviewer == null)
+            {
+                throw new InvalidOperationException("Reviewer not found.");
+            }
+
+            // check if this reviewer has already been assigned to this applicant
+            var existingReviews = await _reviewRepository.GetReviewsAsync();
+            if (existingReviews.Any(r => r.Nnumber == nnumber && r.AppUserId == reviewerId))
+            {
+                throw new InvalidOperationException("This reviewer has already been assigned to this applicant.");
+            }
+
+            // create and assign the review
+            var review = new Review
+            {
+                Nnumber = nnumber,
+                AppUserId = reviewer.Id,
+                ReviewDate = DateTime.Now
+            };
+
+            await _reviewRepository.AddReviewAsync(review);
+
+            // 6️⃣ Update applicant's review count
+            applicant.NumberOfReviews++;
+
+            // 7️⃣ Save changes in one operation
+            await _reviewRepository.SaveChangesAsync();
+            await _applicantRepository.SaveChangesAsync();
         }
 
+
+        // Manually assign a range of reviews
         public async Task AssignRangeOfReviewers(string[] Nnumbers)
         {
 

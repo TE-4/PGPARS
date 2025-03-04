@@ -31,10 +31,6 @@ builder.Services.AddScoped<IAuditRepository, AuditRepository>();
 // Register custom services
 builder.Services.AddTransient<CsvService>();
 builder.Services.AddTransient<DbSeederService>();
-
-//builder.Services.AddTransient<ApplicantReviewAssignmentService>();
-
-// New prototype of review assignment using link tables 
 builder.Services.AddTransient<ReviewAssignmentService>();
 builder.Services.AddTransient<AuditLogService>();
 

@@ -1,0 +1,119 @@
+﻿@model IEnumerable<PGPARS.Models.Review>
+
+<body>
+    <div class="main">
+        <div class="container-opaque">
+            <div class="text-center text-outline p-3">
+                <h2><i class="bi bi-journal-check"></i> Assigned Reviews</h2>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="card shadow-lg p-4 bg-dark text-light">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-person-circle" style="font-size: 3rem; margin-right: 15px;"></i>
+                <h3 class="mb-0">Assigned Reviews for @ViewBag.UserName</h3>
+            </div>
+            <hr class="border-light" />
+
+            <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
+                <table class="table align-middle text-light">
+                    <thead class="text-uppercase">
+                        <tr>
+                            <th><i class="bi bi-person-badge"></i> Applicant</th>
+                            <th><i class="bi bi-person-vcard"></i> N-Number</th>
+                            <th><i class="bi bi-calendar"></i> Review Date</th>
+                            <th><i class="bi bi-pencil-square"></i> Last Edited</th>
+                            <th><i class="bi bi-clipboard-check"></i> Review Complete</th>
+                            <th><i class="bi bi-tools"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">
+                                    <span>No assigned reviews found.</span>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var review in Model)
+                            {
+                                <tr>
+                                    <!-- applicant name with a link to the applicant's details' -->
+                                    <td>
+                                        <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Nnumber" class="text-light">
+                                            <i class="bi bi-person"></i> @review.Applicant?.FullName
+                                        </a>
+                                    </td>
+
+                                    
+                                    <td>
+                                        @review.Nnumber
+                                    </td>
+
+                                    <td>
+                                        @if (review.ReviewDate.HasValue)
+                                        {
+                                            @review.ReviewDate.Value.ToString("MM/dd/yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+
+                                    
+                                    <td>
+                                        @if (review.ReviewEdited.HasValue)
+                                        {
+                                            @review.ReviewEdited.Value.ToString("MM/dd/yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span>Not yet edited</span>
+                                        }
+                                    </td>
+
+                                    
+                                    <td class="text-center">
+                                        @if (review.ReviewComplete)
+                                        {
+                                            <span class="text-success"><i class="bi bi-check-circle-fill"></i></span> <!-- green check -->
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger"><i class="bi bi-x-circle-fill"></i></span> <!-- red x -->
+                                        }
+                                    </td>
+
+                                    <!-- Actions -->
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-3">
+                                            <a asp-action="EditReview" asp-route-id="@review.ReviewNumber">
+                                                <button type="submit" class="btn btn-secondary btn-lg" style="color: white; border: 2px solid black;">
+                                                    <i class="bi bi-pencil"></i> Edit
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- This will take the user back to where they were previously -->
+            <div class="d-flex justify-content-end mt-4">
+                <a href="javascript:history.back()" class="btn btn-lg btn-outline-light">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</body>

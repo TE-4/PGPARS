@@ -29,7 +29,7 @@ namespace PGPARS.Controllers
           
 
         [HttpPost]
-        public IActionResult ApplicantUpload(IFormFile csvFile)
+        public async Task<IActionResult> ApplicantUpload(IFormFile csvFile)
         {
             if (csvFile != null && csvFile.Length > 0)
             {
@@ -40,14 +40,17 @@ namespace PGPARS.Controllers
                         var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
                         // add applicants to the Applicant Table
                         var uploadCount = _applicantRepo.AddApplicants(applicants);
+
+                        // save changes to the database after adding all applicants
+                        await _applicantRepo.SaveChangesAsync();
                         foreach (var applicant in applicants)
                         {
-                            _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "INFO");
+                            await _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "APPLICANT");
                         }
                         TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
 
                         // Log the action
-                        //_logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
+                        await _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
 
                         return RedirectToAction("ApplicantDirectory", "Applicant");
                     }
@@ -118,6 +121,8 @@ namespace PGPARS.Controllers
                         {
                             // if everything has succeeded this far, we can increment our upload count
                             uploadCount++;
+                            // Log the action
+                            await _logger.LogAction("Upload", User.Identity.Name, faculty.FirstName + " " + faculty.LastName, "ACCOUNT");
                         }
                     }
 
@@ -125,8 +130,7 @@ namespace PGPARS.Controllers
 
                     TempData["SuccessMessage"] = $"{uploadCount} faculty members uploaded successfully.";
 
-                    // Log the action
-                    _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} faculty members uploaded", "INFO");
+                    
 
                     return RedirectToAction("Directory", "Account"); 
                 }

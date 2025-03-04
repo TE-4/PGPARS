@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
 using CsvHelper;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 using PGPARS.Models;
 using PGPARS.Models.ViewModels;
 
@@ -16,19 +16,26 @@ namespace PGPARS.Data
             _context = context;
         }
 
-        public IEnumerable<Applicant> GetApplicants()
+        public List<Applicant> GetApplicants()
         {
             return _context.Applicants.ToList();
         }
+
+        public async Task<List<Applicant>> GetApplicantsAsync()
+        {
+            return await _context.Applicants.ToListAsync(); 
+        }
+
+        public async Task<Applicant> GetApplicantByIdAsync(string Nnumber)
+        {
+            return await _context.Applicants.FindAsync(Nnumber); 
+        }
+
         public void UpdateApplicant(Applicant applicant)
         {
             _context.Applicants.Update(applicant);
-            _context.SaveChanges();
         }
-        public Applicant GetApplicantById(String Nnumber)
-        {
-            return _context.Applicants.Find(Nnumber);
-        }
+
         public int AddApplicants(List<Applicant> applicants)
         {
             int uploadCount = 0;
@@ -38,20 +45,23 @@ namespace PGPARS.Data
                 {
                     _context.Applicants.Add(applicant);
                     uploadCount++;
-                }            
+                }
             }
-            _context.SaveChanges();
             return uploadCount;
         }
 
         public void DeleteApplicant(string Nnumber)
         {
-            var applicant = _context.Applicants.Find(Nnumber);
-            _context.Applicants.Remove(applicant);
-            _context.SaveChanges();
+            var applicant = _context.Applicants.FirstOrDefault(a => a.Nnumber == Nnumber); 
+            if (applicant != null)
+            {
+                _context.Applicants.Remove(applicant);
+            }
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
-
 }
-

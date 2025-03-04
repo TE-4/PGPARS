@@ -10,9 +10,9 @@ namespace PGPARS.Services
             _auditRepository = auditRepo;
         }
 
-        public void LogAction(string action, string user, string details, string category)
+        public async Task LogAction(string action, string user, string details, string category)
         {
-            _auditRepository.LogAction(action, user, details, category);
+            await _auditRepository.LogActionAsync(action, user, details, category);
         }
 
     }

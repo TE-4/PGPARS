@@ -21,11 +21,12 @@ namespace PGPARS.Controllers
         private readonly IApplicantRepository _applicantRepository;
         private readonly AuditLogService _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IReviewRepository _reviewRepository;
 
 
 
         public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager
-            , IApplicantRepository applicantRepo, AuditLogService auditLogService, ApplicationDbContext context)
+            , IApplicantRepository applicantRepo, AuditLogService auditLogService, ApplicationDbContext context, IReviewRepository reviewRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -33,12 +34,13 @@ namespace PGPARS.Controllers
             _applicantRepository = applicantRepo;
             _logger = auditLogService;
             _context = context;
+            _reviewRepository = reviewRepository;
         }
 
         private IActionResult RedirectBasedOnRole()
         {
             // Log the user login
-            _logger.LogAction("Login", User.Identity.Name, "User logged in.", "INFO");
+            _logger.LogAction("Login", User.Identity.Name, "User logged in.", "ACCOUNT");
 
             // Redirect based on role
             if (User.IsInRole("Admin"))
@@ -138,7 +140,7 @@ namespace PGPARS.Controllers
                     TempData["UserCreated"] = "User successfully created!";
 
                     // log the user creation
-                    _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "INFO");
+                    _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "ACCOUNT");
 
                     return RedirectToAction("Directory", "Account");
                 }
@@ -312,35 +314,7 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
-        /* This needs to be redone **************
-         * 
-        public async Task<IActionResult> LinkedApplicants(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            // Retrieve applicants linked through the ApplicantReviewer table
-            var linkedApplicants = _context.ApplicantReviewers
-                .Where(ar => ar.AppUserId == user.Id) // Find records where the reviewer is the current user
-                .Select(ar => ar.Applicant) // Select the corresponding applicants
-                .ToList();
-
-            Debug.WriteLine($"Linked Applicants Count: {linkedApplicants.Count}");
-
-            var viewModel = new LinkedApplicantsViewModel
-            {
-                User = user,
-                LinkedApplicants = linkedApplicants
-            };
-
-            return View(viewModel);
-        }
-        */
-
-
+        
 
         // This method will filter the users by search query and filter by role
         [HttpGet]
@@ -377,6 +351,17 @@ namespace PGPARS.Controllers
 
 
                 return View("Directory", users);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AssignedReviews(string Id)
+        {
+            var reviews = await _reviewRepository.GetReviewsAsync();
+            var user = await _userManager.FindByIdAsync(Id);
+            ViewBag.UserName = $"{user.FirstName} {user.LastName}";
+            reviews = reviews.Where(r => r.AppUserId == Id).ToList();
+            return View(reviews);
         }
 
 

@@ -70,7 +70,7 @@ namespace PGPARS.Controllers
                 _fundingRepository.UpdateFunding(funding);
 
                 //log for editing
-                _logger.LogAction("Edit", User.Identity.Name, "Edited " + funding.Source, "INFO");
+                _logger.LogAction("Edit", User.Identity.Name, "Edited " + funding.Source, "FUNDING");
 
                 // Redirect back to the directory after updating
                 return RedirectToAction("FundingDirectory");
@@ -102,7 +102,7 @@ namespace PGPARS.Controllers
 
             // Proceed with deletion
             _fundingRepository.DeleteFunding(id);
-            _logger.LogAction("Delete", User.Identity.Name, $"Deleted funding: {funding.Source}", "INFO");
+            _logger.LogAction("Delete", User.Identity.Name, $"Deleted funding: {funding.Source}", "FUNDING");
 
             TempData["SuccessMessage"] = "Funding deleted successfully.";
             return RedirectToAction("FundingDirectory");

@@ -1,20 +1,23 @@
 ﻿using PGPARS.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PGPARS.Data
 {
     public interface IApplicantRepository
     {
-        IEnumerable<Applicant> GetApplicants();
+        List<Applicant> GetApplicants(); 
 
-        Applicant GetApplicantById(string Nnumber);
+        Task<List<Applicant>> GetApplicantsAsync(); 
+
+        Task<Applicant> GetApplicantByIdAsync(string Nnumber); 
 
         int AddApplicants(List<Applicant> applicants);
 
-        //Applicant GetApplicantById(int id);
         void UpdateApplicant(Applicant applicant);
+
         void DeleteApplicant(string Nnumber);
-        //void AddApplicant(Applicant applicant);
 
-
+        Task SaveChangesAsync();
     }
 }
