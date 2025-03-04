@@ -1,99 +1,133 @@
 ﻿@model PGPARS.Models.Funding
 
 <div class="main">
-    <!-- Title -->
-    <div class="text-center text-outline p-3">
-        <h2 class="display-6 fw-bold">Add New Funding</h2>
+    <div class="container-opaque">
+        <div class="text-center text-outline p-3">
+            <h2><i class="bi bi-plus-circle"></i> Add New Funding</h2>
+        </div>
     </div>
 
-    <!-- Form -->
-    <form asp-action="AddFunding" asp-controller="Funding" method="post">
-        <!-- Cohort -->
-        <div class="mb-3 text-center">
-            <label asp-for="Cohort" class="form-label fw-bold">Cohort</label>
-            <select asp-for="Cohort" class="form-control w-50 mx-auto">
-                <option value="">Select a cohort</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-            </select>
-            <span asp-validation-for="Cohort" class="text-danger"></span>
-        </div>
+    <br />
 
-        <!-- Funding Type -->
-        <div class="mb-3 text-center">
-            <label asp-for="FundType" class="form-label fw-bold">Funding Type</label>
-            <select asp-for="FundType" class="form-control w-50 mx-auto">
-                <option value="">Select a type</option>
-                <option value="GRA">GRA</option>
-                <option value="Tonsfeldt">Tonsfeldt</option>
-                <option value="Grad Scholar">Grad Scholar</option>
-                <option value="JZAG">JZAG</option>
-                <option value="Startup">Startup</option>
-            </select>
-            <span asp-validation-for="FundType" class="text-danger"></span>
-        </div>
+    <div class="container">
+        <div class="card shadow-lg p-4 bg-dark text-light">
+            <form asp-action="AddFunding" asp-controller="Funding" method="post">
+                <!-- Funding Information Section -->
+                <fieldset class="border rounded p-3">
+                    <legend class="fw-bold"><i class="bi bi-info-circle"></i> Funding Information</legend>
+                    <hr class="border-light" />
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <!-- Cohort -->
+                            <label asp-for="Cohort" class="form-label"><i class="bi bi-calendar"></i> Cohort</label>
+                            <select asp-for="Cohort" class="form-control" required>
+                                <option value="">Select a cohort</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select>
+                            <span asp-validation-for="Cohort" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Funding Type -->
+                            <label asp-for="FundType" class="form-label"><i class="bi bi-credit-card"></i> Funding Type</label>
+                            <select asp-for="FundType" class="form-control" required>
+                                <option value="">Select a type</option>
+                                <option value="GRA">GRA</option>
+                                <option value="Tonsfeldt">Tonsfeldt</option>
+                                <option value="Grad Scholar">Grad Scholar</option>
+                                <option value="JZAG">JZAG</option>
+                                <option value="Startup">Startup</option>
+                            </select>
+                            <span asp-validation-for="FundType" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Funding Source -->
+                            <label asp-for="Source" class="form-label"><i class="bi bi-building"></i> Funding Source</label>
+                            <select asp-for="Source" class="form-control" required>
+                                <option value="">Select a source</option>
+                                <option value="COAS">COAS</option>
+                                <option value="Foundation">Foundation</option>
+                                <option value="Graduate School">Graduate School</option>
+                                <option value="Jacksonville Zoo">Jacksonville Zoo</option>
+                                <option value="Startup">Startup</option>
+                            </select>
+                            <span asp-validation-for="Source" class="text-danger"></span>
+                        </div>
+                    </div>
+                </fieldset>
 
-        <!-- Funding Source -->
-        <div class="mb-3 text-center">
-            <label asp-for="Source" class="form-label fw-bold">Funding Source</label>
-            <select asp-for="Source" class="form-control w-50 mx-auto">
-                <option value="">Select a source</option>
-                <option value="COAS">COAS</option>
-                <option value="Foundation">Foundation</option>
-                <option value="Graduate School">Graduate School</option>
-                <option value="Jacksonville Zoo">Jacksonville Zoo</option>
-                <option value="Startup">Startup</option>
-            </select>
-            <span asp-validation-for="Source" class="text-danger"></span>
-        </div>
+                <!-- Allocation Details Section -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-cash-stack"></i> Funding Allocation</legend>
+                    <hr class="border-light" />
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <!-- Amount -->
+                            <label asp-for="Amount" class="form-label">
+                                <i class="bi bi-currency-dollar"></i> Amount
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="Amount" type="number" step="0.01" class="form-control" required />
+                            </div>
+                            <span asp-validation-for="Amount" class="text-danger"></span>
 
-        <!-- Amount -->
-        <div class="mb-3 text-center">
-            <label asp-for="Amount" class="form-label fw-bold">Amount</label>
-            <input asp-for="Amount" type="number" step="0.01" class="form-control w-50 mx-auto" required />
-            <span asp-validation-for="Amount" class="text-danger"></span>
-        </div>
+                            <!-- Display formatted amount if available -->
+                            @if (Model?.Amount != null)
+                            {
+                                <p class="text-muted">Current Amount: @Model.Amount?.ToString("C")</p>
+                            }
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Stipends -->
+                            <label asp-for="Stipends" class="form-label"><i class="bi bi-cash"></i> Stipends</label>
+                            <input asp-for="Stipends" type="number" step="0.01" class="form-control" />
+                            <span asp-validation-for="Stipends" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <!-- Number of Awards -->
+                            <label asp-for="NumberOfAwards" class="form-label"><i class="bi bi-award"></i> Number of Awards</label>
+                            <input asp-for="NumberOfAwards" type="number" class="form-control" />
+                            <span asp-validation-for="NumberOfAwards" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Scholarship -->
+                            <label asp-for="Scholarship" class="form-label"><i class="bi bi-gift"></i> Scholarship</label>
+                            <input asp-for="Scholarship" type="number" class="form-control" />
+                            <span asp-validation-for="Scholarship" class="text-danger"></span>
+                        </div>
+                    </div>
+                </fieldset>
 
-        <!-- Stipends -->
-        <div class="mb-3 text-center">
-            <label asp-for="Stipends" class="form-label fw-bold">Stipends</label>
-            <input asp-for="Stipends" type="number" step="0.01" class="form-control w-50 mx-auto" />
-            <span asp-validation-for="Stipends" class="text-danger"></span>
-        </div>
+                <!-- Comment Section -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-chat-left-text"></i> Additional Notes</legend>
+                    <hr class="border-light" />
+                    <div class="mb-3">
+                        <label asp-for="Comment" class="form-label"><i class="bi bi-pencil"></i> Comments (optional):</label>
+                        <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+                </fieldset>
 
-        <!-- Number of Awards -->
-        <div class="mb-3 text-center">
-            <label asp-for="NumberOfAwards" class="form-label fw-bold">Number of Awards</label>
-            <input asp-for="NumberOfAwards" type="number" class="form-control w-50 mx-auto" />
-            <span asp-validation-for="NumberOfAwards" class="text-danger"></span>
-        </div>
+                <!-- Hidden ID -->
+                <input type="hidden" asp-for="Id" />
 
-        <!-- Scholarship -->
-        <div class="mb-3 text-center">
-            <label asp-for="Scholarship" class="form-label fw-bold">Scholarship</label>
-            <input asp-for="Scholarship" type="number" class="form-control w-50 mx-auto"/>
-            <span asp-validation-for="Scholarship" class="text-danger"></span>
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="FundingDirectory" class="btn btn-outline-light">
+                        <i class="bi bi-arrow-left-circle"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Funding
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <!-- Comment -->
-        <div class="mb-3 text-center">
-            <label asp-for="Comment" class="form-label fw-bold">Comment</label>
-            <textarea asp-for="Comment" class="form-control w-50 mx-auto" rows="3"></textarea>
-        </div>
-
-        <!-- Hidden ID -->
-        <input type="hidden" asp-for="Id" />
-
-        <!-- Submit & Cancel Buttons -->
-        <div class="d-flex justify-content-center gap-2 mt-3">
-            <button type="submit" class="btn btn-success btn-sm">
-                <i class="bi bi-plus-circle"></i> Add Funding
-            </button>
-            <a asp-action="FundingDirectory" class="btn btn-secondary btn-sm">
-                <i class="bi bi-arrow-left-circle"></i> Cancel
-            </a>
-        </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts {
