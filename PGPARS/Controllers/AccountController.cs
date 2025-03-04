@@ -287,7 +287,7 @@ namespace PGPARS.Controllers
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
-                TempData["UserDeleted"] = "User account successfully deleted.";
+                TempData["SuccessMessage"] = "User account successfully deleted.";
                 return RedirectToAction("Directory");
             }
 

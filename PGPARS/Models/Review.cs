@@ -11,7 +11,7 @@ namespace PGPARS.Models
 
         // Foreign Key to Applicant
         [ForeignKey("Applicant")]
-        public string NNumber { get; set; }  // Applicant's ID (FK)
+        public string Nnumber { get; set; }  // Applicant's ID (FK)
         public Applicant Applicant { get; set; }  // Navigation Property
 
         // Foreign Key to AppUser (Committee Reviewer)

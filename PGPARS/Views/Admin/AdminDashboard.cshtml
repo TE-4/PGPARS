@@ -1,41 +1,53 @@
 ﻿@model AdminDashboardViewModel
-
-<div class="main">
-    <!--<div class="container-opaque">
-        <div class="text-center text-outline p-3">
-            <h2>Admin Dashboard</h2>
+<body>
+    <div class="main">
+        <!--<div class="container-opaque">
+            <div class="text-center text-outline p-3">
+                <h2>Admin Dashboard</h2>
+            </div>
+        </div>-->
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
         </div>
-    </div>-->
-    <div class="chart-container">
-        <canvas id="myChart"></canvas>
-    </div>
-    <div class="dashboard-table">
-        <div class="dashboard-body">
-            <div class="dashboard-row">
-                <div class="dashboard-cell">
-                    <div class="table-responsive shadow-sm rounded">
-                        <table class="table align-middle text-dark">
-                            <tbody>
-                                <thead>
-                                    <th>Applicant</th>
-                                    <th>Status</th>
-                                </thead>
-                                @foreach (var applicant in Model.Applicants)
-                                {
-                                    <tr>
-                                        <td>
-                                            <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none; color: white;">
-                                                @applicant.FullName
-                                            </a>
-                                        </td>
-                                        <td style="text-align: center;">(Status)</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="dashboard-cell">
+        <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
+            <table class="table align-middle text-dark">
+                <thead class="text-uppercase">
+                    <tr>
+                        <th>Applicant</th>
+                        <th>Status</th>
+                        <th>Last Interaction</th>
+                    </tr>    
+                </thead>
+                @foreach (var applicant in Model.Applicants)
+                {
+                    <tr>
+                        <td class="specialtext">
+                            <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none; color: white;">
+                            @applicant.FullName
+                            </a>
+                        </td>
+                        <td>@applicant.Status</td>
+                        <td>
+                            @{
+                                var lastInteraction = Model.AuditLogs
+                                    .Where(log => log.Details.Equals(applicant.FullName))
+                                    .OrderByDescending(log => log.Action)
+                                    .FirstOrDefault();
+                            }
+                            @if (lastInteraction != null)
+                            {
+                                @lastInteraction.TimeStamp
+                            }
+                            else
+                            {
+                                <span>No recent interactions</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+                <!--<div class="dashboard-cell">
                     <div class="table-responsive shadow-sm rounded">
                         <table class="table align-middle text-dark">
                             <tbody>
@@ -44,7 +56,7 @@
                                     <th>Reviews</th>
                                 </thead>
 
-                                @{
+                                {
                                     var reviews = new List<(string NNumber, DateTime DateTime)>
                                     {
                                         ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-10)),
@@ -59,7 +71,7 @@
                                         <tr>
                                             <td>Applicant</td>
                                             <td>
-                                                @review.NNumber - @review.DateTime.ToString("MM/dd/yyyy HH:mm")
+                                                review.NNumber - review.DateTime.ToString("MM/dd/yyyy HH:mm")
                                             </td>
                                         </tr>
                                     }
@@ -69,9 +81,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+                    </div>-->
     </div>
-</div>
+</body>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

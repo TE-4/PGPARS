@@ -52,7 +52,7 @@ namespace PGPARS.Controllers;
         var model = new Review
         {
             ReviewNumber = review.ReviewNumber,
-            NNumber = review.NNumber,        
+            Nnumber = review.Nnumber,        
             LetterQuality = review.LetterQuality,
             ResumeQuality = review.ResumeQuality,
             ResExpQuality = review.ResExpQuality,
