@@ -1,6 +1,7 @@
 ﻿@using Microsoft.IdentityModel.Tokens
 @model IEnumerable<PGPARS.Models.Funding>
 
+
 <body>
     <div class="main">
         <div class="container-opaque">
@@ -69,17 +70,28 @@
                             <tr>
                                 <td>@fund.Cohort</td>
                                 <td>@fund.Source</td>
-                                <td>@fund.Amount?.ToString("C")</td>                           
+                                <td>@fund.Amount?.ToString("C")</td>
                                 <td>
-                                    <div class="d-flex justify-content-center gap-3">
+                                    @if (fund.FundingAllocations?.Any() == true)
+                                    {
+                                        @foreach (var allocation in fund.FundingAllocations)
+                                        {
+                                            <div>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted">No Applicant Assigned</div>
+                                    }
+
+                                    <div class="d-flex justify-content-center gap-3 mt-2">
                                         <!-- Assign Button -->
-                                        <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg"
-                                           style="border: 2px solid black;">
+                                        <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg" style="border: 2px solid black;">
                                             <i class="bi bi-plus-circle"></i> Assign
                                         </a>
-                                       
                                     </div>
                                 </td>
+
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
                                         <!-- Edit Button -->
