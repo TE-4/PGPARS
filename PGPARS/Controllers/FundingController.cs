@@ -45,6 +45,7 @@ namespace PGPARS.Controllers
             Console.WriteLine("ModelState is valid. Funding is being added.");
             _fundingRepository.AddFunding(funding);
             TempData["SuccessMessage"] = "New funding created!";
+             _logger.LogAction("Add", User.Identity.Name, "Added " + funding.Source, "FUNDING");
             return RedirectToAction("FundingDirectory");
         }
 
@@ -180,7 +181,7 @@ namespace PGPARS.Controllers
 
             _fundingRepository.AddAllocation(newAllocation);
             TempData["SuccessMessage"] = "Funding allocation added successfully.";
-
+            _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount?.ToString("C"), "FUNDING");
             return RedirectToAction("FundingDirectory");
         }
 
