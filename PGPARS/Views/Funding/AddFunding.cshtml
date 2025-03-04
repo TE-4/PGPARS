@@ -63,8 +63,20 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <!-- Amount -->
-                            <label asp-for="Amount" class="form-label"><i class="bi bi-currency-dollar"></i> Amount</label>
-                            <input asp-for="Amount" type="number" step="0.01" class="form-control" required />
+                            <label asp-for="Amount" class="form-label">
+                                <i class="bi bi-currency-dollar"></i> Amount
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="Amount" type="number" step="0.01" class="form-control" required />
+                            </div>
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+
+                            <!-- Display formatted amount if available -->
+                            @if (Model?.Amount != null)
+                            {
+                                <p class="text-muted">Current Amount: @Model.Amount?.ToString("C")</p>
+                            }
                             <span asp-validation-for="Amount" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
