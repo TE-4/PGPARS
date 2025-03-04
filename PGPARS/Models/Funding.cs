@@ -28,9 +28,12 @@ namespace PGPARS.Models
             get
             {
                 decimal allocatedAmount = FundingAllocations?.Sum(a => a.AllocatedAmount) ?? 0;
-                return (decimal)(Amount - allocatedAmount);
+                return Math.Max(0, (decimal)(Amount - allocatedAmount));
+
             }
+
         }
+
     }
 
 }
