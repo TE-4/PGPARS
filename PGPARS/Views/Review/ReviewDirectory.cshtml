@@ -73,16 +73,16 @@
                         @foreach (var review in Model)
                         {
                             <tr>
-                                <td>
-                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Nnumber">
+                                <td class="text-center specialtext">
+                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber=" @review.Nnumber" style="color: white; text-decoration: none;">
                                         @review.Applicant?.FullName
                                     </a>
                                 </td>
                                 <td>@review.Nnumber</td>
 
                                 <!-- appuser name and a link to their details -->
-                                <td>
-                                    <a asp-action="Detail" asp-controller="Account" asp-route-Id="@review.AppUserId">
+                                <td class="text-center specialtext">
+                                    <a asp-action="Detail" asp-controller="Account" asp-route-Id="@review.AppUserId" style="color: white; text-decoration: none;">
                                         @review.AppUser?.FirstName @review.AppUser?.LastName
                                     </a>
                                 </td>
