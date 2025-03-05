@@ -17,8 +17,8 @@
             </a>
 
             <!-- View Funding Allocations button -->
-            <a asp-action="FundingAllocations" asp-controller="Funding" class="btn btn-info btn-lg" style="border: 2px solid black; min-height: 50px;">
-                <i class="bi bi-list-check"></i>&ensp;View Allocations
+            <a asp-action="FundingAllocations" asp-controller="Funding" class="btn btn-info btn-lg" style="background-color:darkorange; border: 2px solid black; min-height: 50px;">
+                <div class="bi bi-list-check text-outline">&ensp;View Allocations</div>
             </a>
 
             <!-- Search bar -->
@@ -99,14 +99,16 @@
                                     <div class="d-flex justify-content-center gap-3">
                                       
                                         <!-- Edit Button -->
-                                        <a asp-action="EditFunding" asp-route-id="@fund.Id" class="btn btn-warning btn-lg" style="border: 2px solid black;">
-                                            <i class="bi bi-pencil-square"></i> Edit
+                                        <a asp-action="EditFunding" asp-route-id="@fund.Id">
+                                            <button type="submit" class="btn btn-secondary btn-lg" style="border: 2px solid black">
+                                                <div class="bi bi-pencil-square text-outline">&ensp;Edit</div>
+                                            </button>
                                         </a>
                                         <!-- Delete Button -->
                                         <form asp-action="DeleteFunding" method="post" onsubmit="return confirm('Are you sure you want to delete @fund.Source?');">
                                             <input type="hidden" name="id" value="@fund.Id" />
                                             <button type="submit" class="btn btn-danger btn-lg" style="border: 2px solid black;">
-                                                <i class="bi bi-trash"></i> Delete
+                                                <div class="bi bi-trash text-outline">&ensp;Delete</div>
                                             </button>
                                         </form>
                                     </div>
