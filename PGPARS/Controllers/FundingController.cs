@@ -165,6 +165,19 @@ namespace PGPARS.Controllers
                 ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
             }
+            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+            if (funding == null)
+            {
+                return NotFound("Funding not found.");
+            }
+            System.Diagnostics.Debug.WriteLine($"Remaining Amount: {funding.RemainingAmount}, Allocated Amount: {allocation.AllocatedAmount}");
+
+            // Check if the allocated amount exceeds the remaining funding
+            if (allocation.AllocatedAmount > funding.RemainingAmount)
+            {
+                TempData["ErrorMessage"] = "Allocated amount exceeds remaining funding.";
+                return View(allocation);
+            }
 
             // Manually create a new FundingAllocation object to ensure all fields are correctly mapped ( was having an issue with direct model binding where the 
             // Id field was being set manually and causing an error as it is supposed to autoincrement)
@@ -192,6 +205,17 @@ namespace PGPARS.Controllers
             return View(allocations);
         }
 
+        public IActionResult FundingDetails(int id)
+        {
+            var funding = _fundingRepository.GetFundingById(id);
+            if (funding == null)
+            {
+                return NotFound();
+            }
+
+            // Now funding.RemainingAmount will return the amount left after allocations
+            return View(funding);
+        }
 
 
 

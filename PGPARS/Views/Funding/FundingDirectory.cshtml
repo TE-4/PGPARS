@@ -7,7 +7,7 @@
             <!-- Title -->
             <div class="text-center text-outline p-3">
                 <h2>Funding Directory</h2>
-            </div>                
+            </div>
         </div>
         <br />
         <div class="d-flex justify-content-between align-items-center">
@@ -48,10 +48,7 @@
                     {
                         <tr>
                             <td colspan="5" class="text-center text-muted">
-                                @{
-                                    var searchQuery = ViewData["SearchQuery"]?.ToString();
-                                }
-                                @if (string.IsNullOrEmpty(searchQuery))
+                                @if (string.IsNullOrEmpty(ViewData["SearchQuery"]?.ToString()))
                                 {
                                     <span>No Funding found.</span>
                                 }
@@ -68,20 +65,39 @@
                         {
                             <tr>
                                 <td>@fund.Cohort</td>
-                                <td>@fund.Source</td>
-                                <td>@fund.Amount?.ToString("C")</td>                           
-                                <td>
-                                    <div class="d-flex justify-content-center gap-3">
-                                        <!-- Assign Button -->
-                                        <a asp-action="Assign" asp-route-id="@fund.Id">
-                                            <button type="submit" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
-                                                <div class="bi bi-plus-circle text-outline">&ensp;Assign</div>
-                                            </button>
-                                        </a>
-                                    </div>
+                                <td class="text-center specialtext">
+                                    <a asp-action="FundingDetails" asp-controller="Funding" asp-route-id="@fund.Id" style="color: white; text-decoration: none;">
+                                        @fund.Source
+                                    </a>
                                 </td>
+                                <td>@fund.Amount?.ToString("C")</td>
+                                <td>
+                                    @if (fund.FundingAllocations?.Any() == true)
+                                    {
+                                        @foreach (var allocation in fund.FundingAllocations)
+                                        {
+                                            <div>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted">No Applicant Assigned</div>
+                                    }
+                                    <p>Remaining: @fund.RemainingAmount</p>
+                                    <p>Amount: @fund.Amount</p>
+
+                                    <!-- Assign Button (only visible if Amount < 0) -->
+                                    @if (fund.RemainingAmount > 0)
+                                    {
+                                        <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg" style="border: 2px solid black;">
+                                            <i class="bi bi-plus-circle"></i> Assign
+                                        </a>
+                                    }
+                                </td>
+
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
+                                      
                                         <!-- Edit Button -->
                                         <a asp-action="EditFunding" asp-route-id="@fund.Id">
                                             <button type="submit" class="btn btn-secondary btn-lg" style="border: 2px solid black">
@@ -95,7 +111,6 @@
                                                 <div class="bi bi-trash text-outline">&ensp;Delete</div>
                                             </button>
                                         </form>
-
                                     </div>
                                 </td>
                             </tr>
@@ -105,6 +120,4 @@
             </table>
         </div>
     </div>
-
-
 </body>

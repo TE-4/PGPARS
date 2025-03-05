@@ -22,6 +22,18 @@ namespace PGPARS.Models
         public string? Comment { get; set; }  // Additional Comments
 
         public ICollection<FundingAllocation>? FundingAllocations { get; set; } = new List<FundingAllocation>();
+
+        public decimal? RemainingAmount
+        {
+            get
+            {
+                decimal allocatedAmount = FundingAllocations?.Sum(a => a.AllocatedAmount) ?? 0;
+                return Math.Max(0, (decimal)(Amount - allocatedAmount));
+
+            }
+
+        }
+
     }
 
 }
