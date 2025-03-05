@@ -170,10 +170,10 @@ namespace PGPARS.Controllers
             {
                 return NotFound("Funding not found.");
             }
-            System.Diagnostics.Debug.WriteLine($"Remaining Amount: {funding.RemainingAmount}, Allocated Amount: {allocation.AllocatedAmount}");
+           
 
             // Check if the allocated amount exceeds the remaining funding
-            if (allocation.AllocatedAmount > funding.RemainingAmount)
+            if (allocation.AllocatedAmount > funding.Remaining)
             {
                 TempData["ErrorMessage"] = "Allocated amount exceeds remaining funding.";
                 return View(allocation);

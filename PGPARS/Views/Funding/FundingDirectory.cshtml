@@ -37,9 +37,8 @@
                     <tr>
                         <th>Cohort</th>
                         <th>Source</th>
-                        <th>Amount</th>
-                        <th>Applicant</th>
-                        <!--Show applicant name if they are assigned to this allocation -->
+                        <th>Total Amount</th>
+                        <th>Remaining Amount</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -71,33 +70,20 @@
                                     </a>
                                 </td>
                                 <td>@fund.Amount?.ToString("C")</td>
-                                <td>
-                                    @if (fund.FundingAllocations?.Any() == true)
-                                    {
-                                        @foreach (var allocation in fund.FundingAllocations)
-                                        {
-                                            <div>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <div class="text-muted">No Applicant Assigned</div>
-                                    }
-                                    <p>Remaining: @fund.RemainingAmount</p>
-                                    <p>Amount: @fund.Amount</p>
-
-                                    <!-- Assign Button (only visible if Amount < 0) -->
-                                    @if (fund.RemainingAmount > 0)
-                                    {
-                                        <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg" style="border: 2px solid black;">
-                                            <i class="bi bi-plus-circle"></i> Assign
-                                        </a>
-                                    }
+                                <td>@fund.Remaining?.ToString("C")
+                             
+   
                                 </td>
 
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
-                                      
+                                        <!-- Assign Button (only visible if Amount < 0) -->
+                                        @if (fund.Remaining > 0)
+                                        {
+                                            <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg" style="border: 2px solid black;">
+                                                <i class="bi bi-plus-circle"></i> Assign
+                                            </a>
+                                        }
                                         <!-- Edit Button -->
                                         <a asp-action="EditFunding" asp-route-id="@fund.Id">
                                             <button type="submit" class="btn btn-secondary btn-lg" style="border: 2px solid black">
