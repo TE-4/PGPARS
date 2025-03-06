@@ -12,12 +12,14 @@ namespace PGPARS.Controllers
         private readonly IReviewRepository _reviewRepository;
         private readonly IApplicantRepository _applicantRepository;
         private readonly ReviewAssignmentService reviewAssignmentService;
+        private readonly AuditLogService _logger;
 
-        public ReviewController(IReviewRepository reviewRepository, IApplicantRepository applicantRepository, ReviewAssignmentService ras)
+        public ReviewController(IReviewRepository reviewRepository, IApplicantRepository applicantRepository, ReviewAssignmentService ras, AuditLogService als)
         {
             _reviewRepository = reviewRepository;
             _applicantRepository = applicantRepository;
             reviewAssignmentService = ras;
+            _logger = als;
         }
 
         // GET: AddReview
@@ -113,6 +115,7 @@ namespace PGPARS.Controllers
             try
             {
                 await reviewAssignmentService.AssignReviewersAsync();
+                await _logger.LogAction("Assign Reviewers", User.Identity.Name, "Reviewers automatically assigned", "REVIEW");
                 TempData["SuccessMessage"] = "Reviewers have been assigned successfully.";
             }
             catch (Exception ex)
@@ -129,6 +132,7 @@ namespace PGPARS.Controllers
             try
             {
                 await reviewAssignmentService.UnassignIncompleteReviewsAsync();
+                await _logger.LogAction("Unassign Incomplete Reviews", User.Identity.Name, "Incomplete reviews automatically unassigned", "REVIEW");
                 TempData["SuccessMessage"] = "All incomplete reviews have been unassigned successfully.";
             }
             catch (Exception ex)

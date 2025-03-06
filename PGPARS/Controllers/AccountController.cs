@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using System.Threading.Tasks;
 using PGPARS.Services;
+using PGPARS.Infrastructure;
 
 namespace PGPARS.Controllers
 {
@@ -141,7 +142,7 @@ namespace PGPARS.Controllers
                     TempData["UserCreated"] = "User successfully created!";
 
                     // log the user creation
-                    _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "ACCOUNT");
+                    await _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "ACCOUNT");
 
                     return RedirectToAction("Directory", "Account");
                 }
@@ -153,10 +154,17 @@ namespace PGPARS.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Directory()
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Directory(int page = 1, int pageSize = 10)
         {
             var users = await _userManager.Users.ToListAsync();
-            return View(users);
+
+            int totalItems = users.Count;
+            var items = users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            var model = new PaginatedList<AppUser>(items, totalItems, page, pageSize);
+
+            return View(model);
         }
 
 
@@ -315,30 +323,27 @@ namespace PGPARS.Controllers
             return View(user);
         }
 
-        
+
 
         // This method will filter the users by search query and filter by role
         [HttpGet]
-        public async Task<IActionResult> SearchUsers(string query, string role)
+        public async Task<IActionResult> SearchUsers(string query, string role, int page = 1, int pageSize = 10)
         {
-            // using AsQueryable() to allow for dynamic filtering
             var userQuery = _userManager.Users.AsQueryable();
 
-            // remove leading and trailing whitespace and convert to lowercase
             query = query?.Trim().ToLower();
 
             if (!string.IsNullOrEmpty(query))
             {
                 userQuery = userQuery.Where(u =>
-                    u.FirstName.ToLower().Contains(query) || // Matches first name
-                    u.LastName.ToLower().Contains(query) || // Matches last name
-                    (u.FirstName + " " + u.LastName).ToLower().Contains(query) || // Matches full name
-                    u.Email.ToLower().Contains(query)); // Matches email
+                    u.FirstName.ToLower().Contains(query) ||
+                    u.LastName.ToLower().Contains(query) ||
+                    (u.FirstName + " " + u.LastName).ToLower().Contains(query) ||
+                    u.Email.ToLower().Contains(query));
             }
 
             List<AppUser> users;
 
-            // this if-statement filters users by Role from the drop down filter select option
             if (!string.IsNullOrEmpty(role))
             {
                 var usersInRole = await _userManager.GetUsersInRoleAsync(role);
@@ -349,10 +354,14 @@ namespace PGPARS.Controllers
                 users = await userQuery.ToListAsync();
             }
 
+            int totalItems = users.Count;
+            var pagedUsers = users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
+            var model = new PaginatedList<AppUser>(pagedUsers, totalItems, page, pageSize);
 
-                return View("Directory", users);
+            return View("Directory", model);
         }
+
 
         [HttpGet]
         //[Authorize(Roles = "Admin")]
