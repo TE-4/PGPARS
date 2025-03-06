@@ -36,6 +36,14 @@
                     <div class="bi bi-search text-outline">&ensp;Search</div>
                 </button>
             </form>
+            <div class="d-flex gap-2">
+                <a asp-action="Register" asp-controller="Account" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
+                    <div class="bi bi-person-plus text-outline">&ensp;Add New User</div>
+                </a>
+                <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    <div class="bi bi-upload text-outline">&ensp;Import CSV</div>
+                </button>
+            </div>
         </div>
 
         <!-- Table -->
@@ -78,6 +86,11 @@
                                                 <div class="bi bi-pencil text-outline">&ensp;Edit</div>
                                             </button>
                                         </a>
+                                        <a asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@user.Id">
+                                            <button type="submit" class="btn btn-lg" style="background-color:darkorange; color: white; border: 2px solid black;">
+                                                <div class="bi bi-people text-outline">&ensp;Assigned Reviews</div>
+                                            </button>
+                                        </a>
                                         <form asp-action="Delete" asp-controller="Account" asp-route-Id="@user.Id" method="post" class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this user?');">
                                             <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;">
                                                 <div class="bi bi-trash text-outline">&ensp;Delete</div>
@@ -103,6 +116,30 @@
             {
                 <a class="btn btn-primary mx-2" asp-action="SearchUsers" asp-route-query="@Context.Request.Query["query"]" asp-route-role="@Context.Request.Query["role"]" asp-route-page="@(Model.PageIndex + 1)" asp-route-pageSize="@Model.PageSize">Next</a>
             }
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel" style="color:black">Upload Applicants</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for CSV upload -->
+                        <form asp-controller="FileUpload" asp-action="FacultyUpload" method="post" enctype="multipart/form-data">
+                            <div class="form-group mb-4">
+                                <label for="csvFile" class="form-label"><strong style="color:black">Choose CSV File(Faculty User List):</strong></label>
+                                <input type="file" id="csvFile" name="csvFile" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-lg w-100" style="background-color:royalblue; color: white; border: 2px solid black;">
+                                <div class="text-outline">Upload</div>
+                            </button>
+                            <!--<button type="submit" class="btn btn-primary w-100">Upload</button>-->
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
