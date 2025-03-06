@@ -25,14 +25,14 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong><i class="bi bi-person-badge"></i> Short Name:</strong> @Model.ShortName</p>
-                        <p><strong><i class="bi bi-briefcase"></i> Position:</strong> @(Model.Position ?? "Not specified")</p>
+                        <p><strong><i class="bi bi-briefcase"></i> Position:</strong> @Model.Position</p>
                         <p><strong><i class="bi bi-people"></i> Role:</strong> @string.Join(", ", await UserManager.GetRolesAsync(Model))</p>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <a asp-action="Directory" asp-controller="Account" class="btn btn-lg btn-outline-light">
-                        <i class="bi bi-arrow-left"></i> Back to Directory
+                    <a href="javascript:void(0);" onclick="history.back()" class="btn btn-lg btn-outline-light">
+                        <i class="bi bi-arrow-left"></i> Back
                     </a>
 
                     <div class="d-flex gap-3">

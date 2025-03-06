@@ -32,7 +32,7 @@
 
         <br />
 
-        <!-- Success/Error Message Alerts -->
+        <!-- Success/Error Message Alerts ( may remove this later and just have the toastr notifications -->
         @if (TempData["SuccessMessage"] != null)
         {
             <div class="alert alert-success text-center">
@@ -53,8 +53,8 @@
                         <th>Applicant Name</th>
                         <th>N Number</th>
                         <th>Reviewer</th>
-                        <th>Review Date</th>
-                        <th>Last Edited</th>
+                        <th>Review Assigned</th>
+                        <th>Last Edit</th>
                         <th>Review Complete</th>
                         <th>Actions</th>
                     </tr>
@@ -74,7 +74,7 @@
                         {
                             <tr>
                                 <td class="text-center specialtext">
-                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber=" @review.Nnumber" style="color: white; text-decoration: none;">
+                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Nnumber" style="color: white; text-decoration: none;">
                                         @review.Applicant?.FullName
                                     </a>
                                 </td>
