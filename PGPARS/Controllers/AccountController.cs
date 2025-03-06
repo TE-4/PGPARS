@@ -49,7 +49,8 @@ namespace PGPARS.Controllers
             }
             if (User.IsInRole("Committee"))
             {
-                return RedirectToAction("CommitteeDashboard", "Committee");
+                string id = _userManager.GetUserId(User);
+                return RedirectToAction("AssignedReviews", new { Id = id });
             }
             if (User.IsInRole("Faculty"))
             {
@@ -354,7 +355,8 @@ namespace PGPARS.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Committee")]
         public async Task<IActionResult> AssignedReviews(string Id)
         {
             var reviews = await _reviewRepository.GetReviewsAsync();
