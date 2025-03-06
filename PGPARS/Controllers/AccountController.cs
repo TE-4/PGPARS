@@ -271,7 +271,7 @@ namespace PGPARS.Controllers
             var updateResult = await _userManager.UpdateAsync(user);
             if (updateResult.Succeeded)
             {
-                TempData["UserUpdated"] = "User details successfully updated!";
+                TempData["SuccessMessage"] = "User details updated";
                 return RedirectToAction("Directory");
             }
 

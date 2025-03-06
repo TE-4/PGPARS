@@ -37,6 +37,12 @@
                     </a>
 
                     <div class="d-flex gap-3">
+                        <a asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@Model.Id">
+                            <button type="button" class="btn btn-lg" style="background-color:green; color: white; border: 2px solid black;">
+                                <div class="bi bi-journal-check text-outline">&ensp;Assigned Reviews</div>
+                            </button>
+                        </a>
+
                         <a asp-action="Edit" asp-controller="Account" asp-route-id="@Model.Id">
                             <button type="button" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
                                 <div class="bi bi-pencil text-outline">&ensp;Edit</div>
