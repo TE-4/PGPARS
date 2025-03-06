@@ -5,7 +5,7 @@
     <div class="main">
         <div class="container-opaque">
             <div class="text-center text-outline p-3">
-                <h2>User Directory</h2>
+                <h2><i class="bi bi-person"></i> User Directory</h2>
             </div>
         </div>
         <br />
@@ -21,11 +21,11 @@
         <div class="d-flex justify-content-between gap-1 flex-wrap">
             <form asp-action="SearchUsers" asp-controller="Account" method="get" class="d-flex gap-3" style="min-height: 50px;">
                 <div class="input-group me-2">
-                    <input type="text" name="query" class="form-control" placeholder="Search Site Users..." value="@Context.Request.Query["query"]" />
+                    <input type="text" name="query" class="form-control" placeholder="Search site users..." value="@Context.Request.Query["query"]" />
                 </div>
                 <div class="input-group me-2">
                     <select name="role" class="form-select">
-                        <option value="">Filter by Role</option>
+                        <option value="">All Roles</option>
                         <option value="Admin">Admin</option>
                         <option value="Faculty">Faculty</option>
                         <option value="Committee">Committee</option>
