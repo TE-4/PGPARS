@@ -32,20 +32,6 @@
 
         <br />
 
-        <!-- Success/Error Message Alerts ( may remove this later and just have the toastr notifications -->
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success text-center">
-                @TempData["SuccessMessage"]
-            </div>
-        }
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="alert alert-danger text-center">
-                @TempData["ErrorMessage"]
-            </div>
-        }
-
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <thead class="text-uppercase">

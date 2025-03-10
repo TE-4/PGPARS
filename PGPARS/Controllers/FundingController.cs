@@ -6,6 +6,7 @@ using PGPARS.Models.ViewModels;
 using PGPARS.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace PGPARS.Controllers
@@ -205,9 +206,9 @@ namespace PGPARS.Controllers
             return View(allocations);
         }
 
-        public IActionResult FundingDetails(int id)
+        public async Task<IActionResult> FundingDetails(int id)
         {
-            var funding = _fundingRepository.GetFundingById(id);
+            var funding = await _fundingRepository.GetFundingDetailsByIdAsync(id);
             if (funding == null)
             {
                 return NotFound();

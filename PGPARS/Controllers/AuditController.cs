@@ -34,13 +34,13 @@ namespace PGPARS.Controllers
         {
             if (SelectedLogs == null || !SelectedLogs.Any())
             {
-                TempData["Message"] = "No logs selected!";
+                TempData["ErrorMessage"] = "No logs selected";
                 return RedirectToAction("Index");
             }
 
             await _auditRepository.DeleteLogsAsync(SelectedLogs);
 
-            TempData["Message"] = $"{SelectedLogs.Count} logs deleted.";
+            TempData["SuccessMessage"] = $"{SelectedLogs.Count} logs deleted.";
             return RedirectToAction("Index");
         }
 
