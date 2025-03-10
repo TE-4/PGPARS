@@ -23,6 +23,8 @@ namespace PGPARS.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                return View("CommitteeDashboard", "Committee");
+                /*
                 // Fetch data from services/repositories
                 var applicants = _applicantRepository.GetApplicants();
                 var reviews = _reviewRepository.GetReviews();
@@ -33,7 +35,7 @@ namespace PGPARS.Controllers
                     Applicants = applicants,
                     Reviews = reviews
                 };
-                return View(viewModel);
+                return View(viewModel);*/
             }
             else
             {

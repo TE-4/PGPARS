@@ -32,20 +32,6 @@
 
         <br />
 
-        <!-- Success/Error Message Alerts -->
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success text-center">
-                @TempData["SuccessMessage"]
-            </div>
-        }
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <div class="alert alert-danger text-center">
-                @TempData["ErrorMessage"]
-            </div>
-        }
-
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <thead class="text-uppercase">
@@ -53,8 +39,8 @@
                         <th>Applicant Name</th>
                         <th>N Number</th>
                         <th>Reviewer</th>
-                        <th>Review Date</th>
-                        <th>Last Edited</th>
+                        <th>Review Assigned</th>
+                        <th>Last Edit</th>
                         <th>Review Complete</th>
                         <th>Actions</th>
                     </tr>
@@ -74,7 +60,7 @@
                         {
                             <tr>
                                 <td class="text-center specialtext">
-                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber=" @review.Nnumber" style="color: white; text-decoration: none;">
+                                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Nnumber" style="color: white; text-decoration: none;">
                                         @review.Applicant?.FullName
                                     </a>
                                 </td>

@@ -158,7 +158,7 @@ namespace PGPARS.Controllers
                     await _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
                 }
             }
-
+            TempData["SuccessMessage"] = "Applicants deleted";
             await _applicantRepository.SaveChangesAsync();
 
             return RedirectToAction("ApplicantDirectory");

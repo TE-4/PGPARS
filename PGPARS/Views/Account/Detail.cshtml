@@ -25,17 +25,24 @@
                     </div>
                     <div class="col-md-6">
                         <p><strong><i class="bi bi-person-badge"></i> Short Name:</strong> @Model.ShortName</p>
-                        <p><strong><i class="bi bi-briefcase"></i> Position:</strong> @(Model.Position ?? "Not specified")</p>
+                        <p><strong><i class="bi bi-briefcase"></i> Position:</strong> @Model.Position</p>
                         <p><strong><i class="bi bi-people"></i> Role:</strong> @string.Join(", ", await UserManager.GetRolesAsync(Model))</p>
                     </div>
                 </div>
 
+                <!-- This button will go to the last URL -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a asp-action="Directory" asp-controller="Account" class="btn btn-lg btn-outline-light">
-                        <i class="bi bi-arrow-left"></i> Back to Directory
+                    <a href="javascript:void(0);" onclick="history.back()" class="btn btn-lg btn-outline-light">
+                        <i class="bi bi-arrow-left"></i> Back
                     </a>
 
                     <div class="d-flex gap-3">
+                        <a asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@Model.Id">
+                            <button type="button" class="btn btn-lg" style="background-color:green; color: white; border: 2px solid black;">
+                                <div class="bi bi-journal-check text-outline">&ensp;Assigned Reviews</div>
+                            </button>
+                        </a>
+
                         <a asp-action="Edit" asp-controller="Account" asp-route-id="@Model.Id">
                             <button type="button" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
                                 <div class="bi bi-pencil text-outline">&ensp;Edit</div>

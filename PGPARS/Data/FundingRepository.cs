@@ -25,6 +25,16 @@ public class FundingRepository : IFundingRepository
             .FirstOrDefault(f => f.Id == fundingId);
     }
 
+    public async Task<Funding> GetFundingDetailsByIdAsync(int fundingId)
+    {
+        // this query will include the allocations and applicants along with the funding details
+
+        return await _context.Fundings
+            .Include(f => f.FundingAllocations)
+                .ThenInclude(fa => fa.Applicant) 
+            .FirstOrDefaultAsync(f => f.Id == fundingId);
+    }
+
 
     // Update method for funding
     public void UpdateFunding(Funding funding)

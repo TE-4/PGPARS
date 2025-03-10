@@ -13,8 +13,10 @@ namespace PGPARS.Data
         void DeleteFunding(int id);
         IEnumerable<FundingAllocation> GetFundingAllocations();
 
+        Task<Funding> GetFundingDetailsByIdAsync(int fundingId);
 
-       
+
+
         IEnumerable<Funding> SearchFunding(string searchQuery);
         void AddAllocation(FundingAllocation allocation);
     }
