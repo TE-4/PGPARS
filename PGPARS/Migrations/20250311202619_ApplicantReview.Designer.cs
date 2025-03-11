@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250304212924_Migrations")]
-    partial class Migrations
+    [Migration("20250311202619_ApplicantReview")]
+    partial class ApplicantReview
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
