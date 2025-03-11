@@ -70,8 +70,8 @@
                                     </a>
                                 </td>
                                 <td>@fund.Amount?.ToString("C")</td>
-                                <td>@fund.Remaining?.ToString("C")
-                                </td>
+                                <td>@fund.Remaining.GetValueOrDefault(0).ToString("C")</td>
+                                
 
                                 <td>
                                     <div class="d-flex justify-content-center gap-3">
