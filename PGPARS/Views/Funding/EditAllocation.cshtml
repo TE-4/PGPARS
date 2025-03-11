@@ -1,0 +1,99 @@
+﻿@model PGPARS.Models.FundingAllocation
+
+<div class="main">
+    <div class="container-opaque">
+        <div class="text-center text-outline p-3">
+            <h2><i class="bi bi-pencil-square"></i> Edit Funding Allocation</h2>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="container">
+        <div class="card shadow-lg p-4 bg-dark text-light">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="FundingID" />
+
+                <!-- Funding Information -->
+                <fieldset class="border rounded p-3">
+                    <legend class="fw-bold"><i class="bi bi-cash-stack"></i> Funding Information</legend>
+                    <hr class="border-light" />
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong><i class="bi bi-bank"></i> Funding Source:</strong> @ViewBag.FundingSource
+                        </div>
+                        <div class="col-md-3">
+                            <strong><i class="bi bi-cash"></i> Total Amount:</strong> @(ViewBag.FundingAmount != null ? ViewBag.FundingAmount.ToString("C") : "N/A")
+                        </div>
+                        <div class="col-md-3">
+                            <strong><i class="bi bi-currency-dollar"></i> Remaining:</strong> @(ViewBag.FundingRemaining != null ? ViewBag.FundingRemaining.ToString("C") : "N/A")
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Applicant Information -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-people"></i> Applicant</legend>
+                    <hr class="border-light" />
+                    <div class="mb-3">
+                        <label asp-for="Nnumber" class="form-label"><i class="bi bi-person"></i> Applicant:</label>
+                        <select asp-for="Nnumber" class="form-control" required>
+                            <option value="">-- Select an Applicant --</option>
+                            @if (ViewBag.Applicants != null)
+                            {
+                                @foreach (var applicant in ViewBag.Applicants as List<Applicant>)
+                                {
+                                    <option value="@applicant.Nnumber" selected="@(Model.Nnumber == applicant.Nnumber ? "selected" : null)">@applicant.FirstName @applicant.LastName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </fieldset>
+
+                <!-- Funding Details -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-cash-coin"></i> Funding Details</legend>
+                    <hr class="border-light" />
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="AllocatedAmount" class="form-label"><i class="bi bi-wallet"></i> Allocated Amount:</label>
+                            <input asp-for="AllocatedAmount" type="number" step="0.01" class="form-control" required min="0" max="@ViewBag.FundingRemaining" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="StipendValue" class="form-label"><i class="bi bi-cash-stack"></i> Stipend Value:</label>
+                            <input asp-for="StipendValue" type="number" step="0.1" class="form-control" placeholder="Enter stipend value" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Status -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-flag"></i> Status</legend>
+                    <hr class="border-light" />
+                    <div class="mb-3">
+                        <label asp-for="Status" class="form-label"><i class="bi bi-clipboard-check"></i> Status:</label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="Approved">Approved</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Denied">Denied</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="FundingDirectory" class="btn btn-outline-light">
+                        <i class="bi bi-arrow-left-circle"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

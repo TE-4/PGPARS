@@ -31,7 +31,7 @@ public class FundingRepository : IFundingRepository
 
         return await _context.Fundings
             .Include(f => f.FundingAllocations)
-                .ThenInclude(fa => fa.Applicant) 
+                .ThenInclude(fa => fa.Applicant)
             .FirstOrDefaultAsync(f => f.Id == fundingId);
     }
 
@@ -98,6 +98,12 @@ public class FundingRepository : IFundingRepository
             .Include(fa => fa.Applicant)
             .ToList();
     }
+    public FundingAllocation GetFundingAllocationById(int id)
+    {
+        return _context.FundingAllocations
+            .Include(fa => fa.Applicant) // Ensure Applicant is included if needed
+            .FirstOrDefault(fa => fa.Id == id);
+    }
     public void AddAllocation(FundingAllocation allocation)
     {
         var funding = _context.Fundings.FirstOrDefault(f => f.Id == allocation.FundingID);
@@ -113,6 +119,22 @@ public class FundingRepository : IFundingRepository
     }
 
 
+
+    public void UpdateAllocation(FundingAllocation allocation)
+    {
+        _context.FundingAllocations.Update(allocation);
+        _context.SaveChanges();
+    }
+
+    public void DeleteAllocation(int id)
+    {
+        var allocation = _context.FundingAllocations.Find(id);
+        if (allocation != null)
+        {
+            _context.FundingAllocations.Remove(allocation);
+            _context.SaveChanges();
+        }
+    }
 
 
 }

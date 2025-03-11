@@ -1,0 +1,64 @@
+﻿@model PGPARS.Models.Funding
+
+<body>
+    <div class="main">
+        <div class="container-opaque">
+            <!-- Title -->
+            <div class="text-center text-outline p-3">
+                <h2>Confirm Deletion</h2>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="card shadow-sm" style="max-width: 600px; width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        Are you sure you want to delete funding: @Model.Source?
+                    </h5>
+                    <p class="card-text text-center">
+                        <strong>Source:</strong> @Model.Source <br />
+                        <strong>Total Amount:</strong> @Model.Amount?.ToString("C") <br />
+                    </p>
+
+
+                    <!-- Display Associated Allocations -->
+                    <div class="container-opaque mt-4">
+                        <h4>Associated Allocations:</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Applicant</th>
+                                    <th>Allocated Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var allocation in (List<FundingAllocation>)ViewData["AssociatedAllocations"])
+                                {
+                                    <tr>
+                                        <td>@allocation.Applicant.FirstName @allocation.Applicant.LastName</td>
+                                        <td>@allocation.AllocatedAmount?.ToString("C")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Buttons: Confirm or Cancel -->
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <!-- Confirm Delete Button -->
+                        <form method="post" asp-action="DeleteFunding" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn btn-danger btn-lg" style="border: 2px solid black;">
+                                <div class="bi bi-trash text-outline">&ensp;Confirm Delete</div>
+                            </button>
+                        </form>
+
+                        <!-- Cancel Button -->
+                        <a href="@Url.Action("FundingDirectory")" class="btn btn-secondary btn-lg" style="border: 2px solid black;">
+                            <div class="bi bi-x-circle text-outline">&ensp;Cancel</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
