@@ -285,7 +285,14 @@ namespace PGPARS.Controllers
                 TempData["ErrorMessage"] = "Funding allocation not found.";
                 return RedirectToAction("FundingAllocations");
             }
-
+            // Retrieve the associated funding record
+            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+            if (funding != null)
+            {
+                // Update the remaining funding by adding back the allocated amount
+                funding.Remaining += allocation.AllocatedAmount;
+                _fundingRepository.UpdateFunding(funding);  // Make sure this method updates the funding in the database
+            }
             _fundingRepository.DeleteAllocation(id);
             _ = _logger.LogAction("Delete", User.Identity.Name,
                 $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
