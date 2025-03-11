@@ -95,20 +95,52 @@ namespace PGPARS.Controllers
                 return RedirectToAction("FundingDirectory");
             }
 
-            // Check if there are existing funding allocations
+            // Delete allocations first
             if (allocations.Any())
             {
-                TempData["ErrorMessage"] = "This funding source has existing allocations. Delete them first before removing the funding.";
-                return RedirectToAction("FundingDirectory");
+                foreach (var allocation in allocations)
+                {
+                    _fundingRepository.DeleteAllocation(allocation.Id);
+                }
+
+                _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocations for funding: {funding.Source}", "ALLOCATIONS");
             }
 
-            // Proceed with deletion
+            // Proceed with deleting the funding record
             _fundingRepository.DeleteFunding(id);
             _logger.LogAction("Delete", User.Identity.Name, $"Deleted funding: {funding.Source}", "FUNDING");
 
-            TempData["SuccessMessage"] = "Funding deleted successfully.";
+            TempData["SuccessMessage"] = "Funding and associated allocations deleted successfully.";
             return RedirectToAction("FundingDirectory");
         }
+
+        // Show confirmation warning before deleting
+        public IActionResult ConfirmDeleteFunding(int id)
+        {
+            // Fetch the funding source
+            var fundingSource = _fundingRepository.GetFundingById(id);
+
+            if (fundingSource == null)
+            {
+                return NotFound();
+            }
+
+            // Fetch associated allocations
+            var associatedAllocations = _fundingRepository.GetFundingAllocations()
+                .Where(a => a.FundingID == id)
+                .ToList();
+
+            // Pass data to the view using ViewBag or ViewData
+            ViewBag.FundingSource = fundingSource.Source;
+            ViewBag.Amount = fundingSource.Amount;
+            ViewBag.Remaining = fundingSource.Remaining;
+            ViewData["AssociatedAllocations"] = associatedAllocations;
+
+            return View(fundingSource); // Pass the full model to the view
+        }
+
+
+
 
 
 
@@ -255,7 +287,7 @@ namespace PGPARS.Controllers
             }
 
             _fundingRepository.DeleteAllocation(id);
-            _logger.LogAction("Delete", User.Identity.Name,
+            _ = _logger.LogAction("Delete", User.Identity.Name,
                 $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
                 "FUNDING");
 
