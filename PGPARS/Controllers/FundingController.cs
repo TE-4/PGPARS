@@ -218,7 +218,50 @@ namespace PGPARS.Controllers
             return View(funding);
         }
 
+        [HttpGet]
+        public IActionResult EditAllocation(int id)
+        {
+            var allocation = _fundingRepository.GetFundingAllocationById(id);
+            if (allocation == null)
+            {
+                return NotFound();
+            }
+            return View(allocation);
+        }
 
+        [HttpPost]
+        public IActionResult EditAllocation(FundingAllocation allocation)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(allocation);
+            }
+
+            _fundingRepository.UpdateAllocation(allocation);
+            _logger.LogAction("Edit", User.Identity.Name, $"Edited allocation for {allocation.Nnumber}", "FUNDING");
+
+            TempData["SuccessMessage"] = "Funding allocation updated successfully.";
+            return RedirectToAction("FundingAllocations");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAllocation(int id)
+        {
+            var allocation = _fundingRepository.GetFundingAllocationById(id);
+            if (allocation == null)
+            {
+                TempData["ErrorMessage"] = "Funding allocation not found.";
+                return RedirectToAction("FundingAllocations");
+            }
+
+            _fundingRepository.DeleteAllocation(id);
+            _logger.LogAction("Delete", User.Identity.Name,
+                $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
+                "FUNDING");
+
+            TempData["SuccessMessage"] = "Funding allocation deleted successfully.";
+            return RedirectToAction("FundingAllocations");
+        }
 
 
 

@@ -19,6 +19,9 @@ namespace PGPARS.Data
 
         IEnumerable<Funding> SearchFunding(string searchQuery);
         void AddAllocation(FundingAllocation allocation);
+        void DeleteAllocation(int id);
+        object GetFundingAllocationById(int id);
+        void UpdateAllocation(FundingAllocation allocation);
     }
 
 }

@@ -48,17 +48,19 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <!-- Edit Button -->
-                                    <a asp-action="EditFundingAllocation" asp-route-id="@allocation.Id" class="btn btn-warning btn-sm">
+                                    <a asp-action="EditAllocation" asp-route-id="@allocation.Id" class="btn btn-warning btn-sm">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </a>
+
                                     <!-- Delete Button -->
-                                    <form asp-action="DeleteFundingAllocation" asp-route-id="@allocation.Id" method="post" style="display: inline-block;">
+                                    <form asp-action="DeleteAllocation" asp-route-id="@allocation.Id" method="post" style="display: inline-block;">
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 onclick="return confirm('Are you sure you want to delete this allocation?');">
                                             <i class="bi bi-trash"></i> Delete
                                         </button>
                                     </form>
                                 </div>
+
                             </td>
                         </tr>
                     }
