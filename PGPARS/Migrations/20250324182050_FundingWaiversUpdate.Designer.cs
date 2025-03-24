@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250324180115_FundingTWs")]
-    partial class FundingTWs
+    [Migration("20250324182050_FundingWaiversUpdate")]
+    partial class FundingWaiversUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
