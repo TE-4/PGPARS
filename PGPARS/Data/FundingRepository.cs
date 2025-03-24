@@ -84,12 +84,13 @@ public class FundingRepository : IFundingRepository
         if (string.IsNullOrEmpty(searchQuery))
             return _context.Fundings.ToList();
 
-        // Perform a case-insensitive search
         return _context.Fundings
             .Where(f => (f.Source != null && EF.Functions.Like(f.Source, $"%{searchQuery}%")) ||
-                        (f.Cohort != null && EF.Functions.Like(f.Cohort, $"%{searchQuery}%")))
+                        f.Cohort.ToString().Contains(searchQuery)) // Convert Cohort to string before filtering
             .ToList();
     }
+
+
 
     public IEnumerable<FundingAllocation> GetFundingAllocations()
     {
