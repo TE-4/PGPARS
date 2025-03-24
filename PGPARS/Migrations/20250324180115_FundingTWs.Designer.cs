@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250304212924_Migrations")]
-    partial class Migrations
+    [Migration("20250324180115_FundingTWs")]
+    partial class FundingTWs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -448,7 +448,7 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfAwards")
+                    b.Property<int?>("NumberOfTW")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Remaining")

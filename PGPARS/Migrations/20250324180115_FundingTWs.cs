@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class FundingTWs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -139,7 +139,7 @@ namespace PGPARS.Migrations
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cohort = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Stipends = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    NumberOfAwards = table.Column<int>(type: "int", nullable: true),
+                    NumberOfTW = table.Column<int>(type: "int", nullable: true),
                     Scholarship = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
