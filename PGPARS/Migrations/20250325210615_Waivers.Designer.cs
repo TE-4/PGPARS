@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250304212924_Migrations")]
-    partial class Migrations
+    [Migration("20250325210615_Waivers")]
+    partial class Waivers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -431,9 +431,8 @@ namespace PGPARS.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Cohort")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Cohort")
+                        .HasColumnType("int");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -448,7 +447,7 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfAwards")
+                    b.Property<int?>("NumberOfTW")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Remaining")

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class Waivers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -137,9 +137,9 @@ namespace PGPARS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FundType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cohort = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cohort = table.Column<int>(type: "int", nullable: false),
                     Stipends = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    NumberOfAwards = table.Column<int>(type: "int", nullable: true),
+                    NumberOfTW = table.Column<int>(type: "int", nullable: true),
                     Scholarship = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Remaining = table.Column<decimal>(type: "decimal(18,2)", nullable: true),

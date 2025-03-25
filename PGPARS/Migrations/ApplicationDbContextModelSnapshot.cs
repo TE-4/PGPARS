@@ -428,9 +428,8 @@ namespace PGPARS.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Cohort")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Cohort")
+                        .HasColumnType("int");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -445,7 +444,7 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfAwards")
+                    b.Property<int?>("NumberOfTW")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Remaining")
