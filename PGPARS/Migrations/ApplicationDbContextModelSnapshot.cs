@@ -445,7 +445,7 @@ namespace PGPARS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfAwards")
+                    b.Property<int?>("NumberOfTW")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("Remaining")

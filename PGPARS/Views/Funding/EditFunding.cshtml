@@ -21,9 +21,10 @@
                             <label asp-for="Cohort" class="form-label"><i class="bi bi-calendar"></i> Cohort</label>
                             <select asp-for="Cohort" class="form-control" required>
                                 <option value="">Select a cohort</option>
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
+                                <option value="@(DateTime.Now.Year)" selected>@DateTime.Now.Year</option>
+                                <option value="@(DateTime.Now.Year + 1)">@(DateTime.Now.Year + 1)</option>
                             </select>
+
                             <span asp-validation-for="Cohort" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
@@ -74,9 +75,9 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label asp-for="NumberOfAwards" class="form-label"><i class="bi bi-award"></i> Number of Awards</label>
-                            <input asp-for="NumberOfAwards" type="number" class="form-control" />
-                            <span asp-validation-for="NumberOfAwards" class="text-danger"></span>
+                            <label asp-for="NumberOfTW" class="form-label"><i class="bi bi-award"></i>Number of Tuition Waivers</label>
+                            <input asp-for="NumberOfTW" type="number" class="form-control" />
+                            <span asp-validation-for="NumberOfTW" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
                             <label asp-for="Scholarship" class="form-label"><i class="bi bi-gift"></i> Scholarship</label>
