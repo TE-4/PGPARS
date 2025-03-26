@@ -222,7 +222,8 @@ namespace PGPARS.Controllers
                 StipendValue = allocation.StipendValue,
                 TuitionWaiver = allocation.TuitionWaiver,
                 TuitionWaiverType = allocation.TuitionWaiverType,
-                Status = allocation.Status
+                Status = allocation.Status,
+                AllocatedNotes = allocation.AllocatedNotes
             };
 
             _fundingRepository.AddAllocation(newAllocation);

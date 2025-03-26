@@ -23,5 +23,7 @@ namespace PGPARS.Models
         public string? TuitionWaiverType { get; set; }  // "Full", "Half", "None", "Pending"
 
         public string? Status { get; set; }  // "Approved", "In Progress", "Denied"
+
+        public string AllocatedNotes { get; set; } //Notes or "Comment section" for the allocation to the student
     }
 }
