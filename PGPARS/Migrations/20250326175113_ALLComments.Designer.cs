@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250325210615_Waivers")]
-    partial class Waivers
+    [Migration("20250326175113_ALLComments")]
+    partial class ALLComments
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -478,6 +478,10 @@ namespace PGPARS.Migrations
 
                     b.Property<decimal?>("AllocatedAmount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("AllocatedNotes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FundingID")
                         .HasColumnType("int");

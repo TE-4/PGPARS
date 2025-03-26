@@ -476,6 +476,10 @@ namespace PGPARS.Migrations
                     b.Property<decimal?>("AllocatedAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("AllocatedNotes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FundingID")
                         .HasColumnType("int");
 

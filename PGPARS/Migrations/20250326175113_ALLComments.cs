@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class Waivers : Migration
+    public partial class ALLComments : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -313,7 +313,8 @@ namespace PGPARS.Migrations
                     StipendValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TuitionWaiver = table.Column<bool>(type: "bit", nullable: true),
                     TuitionWaiverType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AllocatedNotes = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
