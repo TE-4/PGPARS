@@ -24,13 +24,10 @@ namespace PGPARS.Controllers
             _applicantRepository = applicantRepository;
             _logger = auditLogService;
         }
-        
-       
+
+
         [HttpGet]
-        public IActionResult AddFunding()
-        {
-            return View(new Funding()); // Return a blank form for adding funding
-        }
+        public IActionResult AddFunding() => View(new Funding());
 
         [HttpPost]
         public IActionResult AddFunding(Funding funding)
@@ -138,11 +135,6 @@ namespace PGPARS.Controllers
 
             return View(fundingSource); // Pass the full model to the view
         }
-
-
-
-
-
 
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)

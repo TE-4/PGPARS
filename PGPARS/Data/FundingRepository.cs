@@ -48,9 +48,8 @@ public class FundingRepository : IFundingRepository
             existingFunding.Source = funding.Source;
             existingFunding.Amount = funding.Amount;
 
-            // Ensure Remaining is correctly recalculated
-            var totalAllocated = existingFunding.FundingAllocations.Sum(a => a.AllocatedAmount);
-            existingFunding.Remaining = existingFunding.Amount - totalAllocated;
+            // Ensure remaining amount is recalculated
+            existingFunding.Remaining = existingFunding.Amount - existingFunding.FundingAllocations.Sum(a => a.AllocatedAmount);
 
             existingFunding.DateModified = DateTime.UtcNow;
             _context.SaveChanges();
@@ -73,6 +72,8 @@ public class FundingRepository : IFundingRepository
         var funding = _context.Fundings.FirstOrDefault(f => f.Id == fundingId);
         if (funding != null)
         {
+            // Delete related allocations first
+            _context.FundingAllocations.RemoveRange(funding.FundingAllocations);
             _context.Fundings.Remove(funding);
             _context.SaveChanges();
         }
@@ -106,9 +107,6 @@ public class FundingRepository : IFundingRepository
     }
 
 
-
-
-
     public IEnumerable<FundingAllocation> GetFundingAllocations()
     {
         return _context.FundingAllocations
@@ -132,14 +130,20 @@ public class FundingRepository : IFundingRepository
             _context.Fundings.Update(funding); // Update the funding source
         }
 
-        _context.FundingAllocations.Add(allocation); // Add the allocation
-        _context.SaveChanges(); // Save changes
+        funding.Remaining -= allocation.AllocatedAmount;
+        _context.FundingAllocations.Add(allocation);
+        _context.SaveChanges();
     }
 
 
 
     public void UpdateAllocation(FundingAllocation allocation)
     {
+        var existingAllocation = _context.FundingAllocations.Find(allocation.Id);
+        if (existingAllocation != null)
+        {
+            _context.Entry(existingAllocation).State = EntityState.Detached;
+        }
         _context.FundingAllocations.Update(allocation);
         _context.SaveChanges();
     }

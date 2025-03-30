@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class FundingCommentEdit : Migration
+    public partial class FundingDeleteUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
