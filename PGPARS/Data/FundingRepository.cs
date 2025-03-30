@@ -39,20 +39,24 @@ public class FundingRepository : IFundingRepository
     // Update method for funding
     public void UpdateFunding(Funding funding)
     {
-        var existingFunding = _context.Fundings.FirstOrDefault(f => f.Id == funding.Id);
+        var existingFunding = _context.Fundings
+            .Include(f => f.FundingAllocations) // Include allocations
+            .FirstOrDefault(f => f.Id == funding.Id);
 
         if (existingFunding != null)
         {
-            // Update all properties (automatically handles new fields)
-            _context.Entry(existingFunding).CurrentValues.SetValues(funding);
-            existingFunding.DateModified = DateTime.UtcNow; // Update timestamp
+            existingFunding.Source = funding.Source;
+            existingFunding.Amount = funding.Amount;
+
+            // Ensure Remaining is correctly recalculated
+            var totalAllocated = existingFunding.FundingAllocations.Sum(a => a.AllocatedAmount);
+            existingFunding.Remaining = existingFunding.Amount - totalAllocated;
+
+            existingFunding.DateModified = DateTime.UtcNow;
             _context.SaveChanges();
         }
-        else
-        {
-            throw new KeyNotFoundException($"Funding with ID {funding.Id} not found.");
-        }
     }
+
 
     // Add method for funding
     public void AddFunding(Funding funding)
