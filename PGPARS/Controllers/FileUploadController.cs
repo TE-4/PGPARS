@@ -120,72 +120,91 @@ namespace PGPARS.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> FacultyUpload(IFormFile csvFile)
+        public async Task<IActionResult> FacultyUpload(IFormFile fileUpload)
         {
-            if (csvFile == null || csvFile.Length == 0)
+            if (fileUpload == null || fileUpload.Length == 0)
             {
-                // Return to the User Directory or display an error
-                TempData["ErrorMessage"] = "Please select a valid CSV file.";
-                return RedirectToAction("Directory", "Account"); 
+                TempData["ErrorMessage"] = "Please select a valid file.";
+                return RedirectToAction("Directory", "Account");
             }
 
-            
+            var extension = Path.GetExtension(fileUpload.FileName).ToLower();
+            int uploadCount = 0;
 
-            using (var stream = csvFile.OpenReadStream())
+            try
             {
-                try
-                {
-                    var faculties = _csvService.ReadCsvFile<AppUser>(stream, new FacultyMap()).ToList();
-                    int uploadCount = 0; // This is to keep track of how many users are uploaded successfully for the Toastr notification
+                List<AppUser> faculties = new();
 
-                    foreach (var faculty in faculties)
+                if (extension == ".csv")
+                {
+                    using var stream = fileUpload.OpenReadStream();
+                    faculties = _csvService.ReadCsvFile<AppUser>(stream, new FacultyMap()).ToList();
+                }
+                else if (extension == ".xlsx")
+                {
+                    using var stream = new MemoryStream();
+                    await fileUpload.CopyToAsync(stream);
+                    stream.Position = 0;
+
+                    using var workbook = new XLWorkbook(stream);
+                    var worksheet = workbook.Worksheet(1);
+                    var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // skip header
+
+                    foreach (var row in rows)
                     {
-                        // check if the user already exists in our AspNetUsers table
-                        var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
-
-                        // if the user does already exist, we skip this iteration in our loop to prevent duplicates in our database
-                        if (userExists != null)
-                        {                            
-                            continue;
-                        }
-
-                        faculty.UserName = faculty.Email;                   
-
-                        var result = await _userManager.CreateAsync(faculty, "Password123!");
-                        if (!result.Succeeded)
+                        var faculty = new AppUser
                         {
-                            continue;
-                        }
+                            Nnumber = row.Cell(1).GetValue<string>(),
+                            FirstName = row.Cell(2).GetValue<string>(),
+                            LastName = row.Cell(3).GetValue<string>(),
+                            Email = row.Cell(5).GetValue<string>(),
+                            UserName = row.Cell(5).GetValue<string>(),
+                            Position = row.Cell(6).GetValue<string>(),
+                             
+                            // can add more if needed
+                        };
 
-                        var roleResult = await _userManager.AddToRoleAsync(faculty, "Faculty");
-                        if (!roleResult.Succeeded)
-                        {
-                            Debug.WriteLine("Error adding role to user");
-                        }
-                        else
-                        {
-                            // if everything has succeeded this far, we can increment our upload count
-                            uploadCount++;
-                            // Log the action
-                            await _logger.LogAction("Upload", User.Identity.Name, faculty.FirstName + " " + faculty.LastName, "ACCOUNT");
-                        }
+                        faculties.Add(faculty);
                     }
-
-                  
-
-                    TempData["SuccessMessage"] = $"{uploadCount} faculty members uploaded successfully.";
-
-                    
-
-                    return RedirectToAction("Directory", "Account"); 
                 }
-                catch (Exception ex)
+                else
                 {
-                    TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
-                    return RedirectToAction("Directory", "Account"); 
+                    TempData["ErrorMessage"] = "Unsupported file type. Please upload a .csv or .xlsx file.";
+                    return RedirectToAction("Directory", "Account");
                 }
+
+                foreach (var faculty in faculties)
+                {
+                    var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
+                    if (userExists != null)
+                        continue;
+
+                    var result = await _userManager.CreateAsync(faculty, "Password123!");
+                    if (!result.Succeeded)
+                        continue;
+
+                    var roleResult = await _userManager.AddToRoleAsync(faculty, "Faculty");
+                    if (roleResult.Succeeded)
+                    {
+                        uploadCount++;
+                        await _logger.LogAction("Upload", User.Identity.Name, $"{faculty.FirstName} {faculty.LastName}", "ACCOUNT");
+                    }
+                }
+
+                TempData["SuccessMessage"] = uploadCount == 0
+                    ? "No new faculty members added."
+                    : $"{uploadCount} faculty members uploaded successfully.";
+
+                await _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} faculty users uploaded", "INFO");
             }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+            }
+
+            return RedirectToAction("Directory", "Account");
         }
+
 
 
     } // end class
