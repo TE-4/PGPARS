@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class FundingEditAllocations : Migration
+    public partial class FundingCommentEdit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -309,12 +309,12 @@ namespace PGPARS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FundingID = table.Column<int>(type: "int", nullable: false),
                     Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AllocatedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    AllocatedAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StipendValue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     TuitionWaiver = table.Column<bool>(type: "bit", nullable: true),
                     TuitionWaiverType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AllocatedNotes = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AllocatedNotes = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

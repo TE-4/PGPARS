@@ -11,8 +11,10 @@
 
     <div class="container">
         <div class="card shadow-lg p-4 bg-dark text-light">
-            <form asp-action="Edit" method="post">
+            <form asp-action="EditAllocation" method="post">
+                <!-- Hidden fields for FundingID and Allocation Id -->
                 <input type="hidden" asp-for="FundingID" />
+                <input type="hidden" asp-for="Id" />
 
                 <!-- Funding Information -->
                 <fieldset class="border rounded p-3">
@@ -43,7 +45,9 @@
                             {
                                 @foreach (var applicant in ViewBag.Applicants as List<Applicant>)
                                 {
-                                    <option value="@applicant.Nnumber" selected="@(Model.Nnumber == applicant.Nnumber ? "selected" : null)">@applicant.FirstName @applicant.LastName</option>
+                                    <option value="@applicant.Nnumber" selected="@(Model.Nnumber == applicant.Nnumber ? "selected" : null)">
+                                        @applicant.FirstName @applicant.LastName
+                                    </option>
                                 }
                             }
                         </select>

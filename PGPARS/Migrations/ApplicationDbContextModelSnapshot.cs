@@ -473,11 +473,10 @@ namespace PGPARS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal?>("AllocatedAmount")
+                    b.Property<decimal>("AllocatedAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("AllocatedNotes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FundingID")

@@ -262,6 +262,16 @@ namespace PGPARS.Controllers
 
             // Load the list of applicants for the dropdown
             ViewBag.Applicants = _applicantRepository.GetApplicants();
+
+            // Additionally, load funding details for display if needed
+            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+            if (funding != null)
+            {
+                ViewBag.FundingSource = funding.Source;
+                ViewBag.FundingAmount = funding.Amount;
+                ViewBag.FundingRemaining = funding.Remaining;
+            }
+
             return View(allocation);
         }
 
@@ -270,9 +280,37 @@ namespace PGPARS.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Re-populate the applicants if the model state is invalid
                 ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
+            }
+
+            // Fetch the existing allocation from DB
+            var existingAllocation = _fundingRepository.GetFundingAllocationById(allocation.Id);
+            if (existingAllocation == null)
+            {
+                TempData["ErrorMessage"] = "Allocation not found.";
+                return RedirectToAction("FundingAllocations");
+            }
+
+            // Fetch the associated funding record
+            var funding = _fundingRepository.GetFundingById(existingAllocation.FundingID);
+            if (funding != null)
+            {
+                // Calculate the difference in allocated amounts
+                decimal amountDifference = existingAllocation.AllocatedAmount - allocation.AllocatedAmount;
+
+                // Update the remaining amount accordingly
+                funding.Remaining += amountDifference;
+
+                // Ensure remaining amount never goes negative
+                if (funding.Remaining < 0)
+                {
+                    TempData["ErrorMessage"] = "Allocation exceeds available funds.";
+                    ViewBag.Applicants = _applicantRepository.GetApplicants();
+                    return View(allocation);
+                }
+
+                _fundingRepository.UpdateFunding(funding);
             }
 
             _fundingRepository.UpdateAllocation(allocation);
@@ -282,31 +320,6 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingAllocations");
         }
 
-        [HttpPost]
-        public IActionResult DeleteAllocation(int id)
-        {
-            var allocation = _fundingRepository.GetFundingAllocationById(id);
-            if (allocation == null)
-            {
-                TempData["ErrorMessage"] = "Funding allocation not found.";
-                return RedirectToAction("FundingAllocations");
-            }
-            // Retrieve the associated funding record
-            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
-            if (funding != null)
-            {
-                // Update the remaining funding by adding back the allocated amount
-                funding.Remaining += allocation.AllocatedAmount;
-                _fundingRepository.UpdateFunding(funding);  // Make sure this method updates the funding in the database
-            }
-            _fundingRepository.DeleteAllocation(id);
-            _ = _logger.LogAction("Delete", User.Identity.Name,
-                $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
-                "FUNDING");
-
-            TempData["SuccessMessage"] = "Funding allocation deleted successfully.";
-            return RedirectToAction("FundingAllocations");
-        }
 
 
 
