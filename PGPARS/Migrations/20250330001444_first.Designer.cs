@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250326184127_Migrations")]
-    partial class Migrations
+    [Migration("20250330001444_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -264,8 +264,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("CitizenshipStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cohort")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Cohort")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("Course_Req_Met")
                         .HasColumnType("bit");

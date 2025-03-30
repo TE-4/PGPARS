@@ -6,6 +6,7 @@ using PGPARS.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using ClosedXML.Excel;
 
 namespace PGPARS.Controllers
 {
@@ -26,50 +27,94 @@ namespace PGPARS.Controllers
             _userManager = userManager;
             _logger = als;
         }
-          
 
         [HttpPost]
-        public async Task<IActionResult> ApplicantUpload(IFormFile csvFile)
+        public async Task<IActionResult> ApplicantUpload(IFormFile fileUpload, int cohort)
         {
-            if (csvFile != null && csvFile.Length > 0)
+            if (fileUpload == null || fileUpload.Length == 0)
             {
-                using (var stream = csvFile.OpenReadStream())
+                TempData["ErrorMessage"] = "Please select a file.";
+                return RedirectToAction("ApplicantDirectory", "Applicant");
+            }
+
+            var extension = Path.GetExtension(fileUpload.FileName).ToLower();
+
+            try
+            {
+                List<Applicant> applicants = new();
+
+                if (extension == ".csv")
                 {
-                    try
-                    {
-                        var applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
-                        // add applicants to the Applicant Table
-                        var uploadCount = _applicantRepo.AddApplicants(applicants);
+                    using var stream = fileUpload.OpenReadStream();
+                    applicants = _csvService.ReadCsvFile<Applicant>(stream, new ApplicantMap()).ToList();
 
-                        // save changes to the database after adding all applicants
-                        await _applicantRepo.SaveChangesAsync();
-                        foreach (var applicant in applicants)
-                        {
-                            await _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "APPLICANT");
-                        }
-                        TempData["SuccessMessage"] = $"{uploadCount} applicants have been added successfully.";
-
-                        // Log the action
-                        await _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
-
-                        return RedirectToAction("ApplicantDirectory", "Applicant");
-                    }
-                    catch (ApplicationException ex)
+                    // for CSV uploads, ensure the selected cohort is applied to all applicants in the list
+                    foreach(var applicant in applicants)
                     {
-                        TempData["ErrorMessage"] = ex.Message;
-                    }
-                    catch (Exception ex)
-                    {
-                        TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+                        applicant.Cohort = cohort;
                     }
                 }
+                else if (extension == ".xlsx")
+                {
+                    using var stream = new MemoryStream();
+                    await fileUpload.CopyToAsync(stream);
+                    stream.Position = 0;
+
+                    using var workbook = new XLWorkbook(stream);
+                    var worksheet = workbook.Worksheet(1);
+                    var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // skip header row
+
+                    foreach (var row in rows)
+                    {
+                        var applicant = new Applicant
+                        {
+                            Nnumber = row.Cell(1).GetValue<string>(),
+                            FirstName = row.Cell(2).GetValue<string>(),
+                            LastName = row.Cell(3).GetValue<string>(),
+                            Email = row.Cell(4).GetValue<string>(),
+                            Phone = row.Cell(5).GetValue<string>(),
+                            PrimaryCitizenship = row.Cell(6).GetValue<string>(),
+                            CitizenshipStatus = row.Cell(7).GetValue<string>(),
+                            Status = row.Cell(11).GetValue<string>(),
+                            Cohort = cohort,
+
+                            // add more later as needed
+                        };
+                        applicants.Add(applicant);
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Unsupported file type. Please upload a .csv or .xlsx file.";
+                    return RedirectToAction("ApplicantDirectory", "Applicant");
+                }
+
+                var uploadCount = _applicantRepo.AddApplicants(applicants);
+                await _applicantRepo.SaveChangesAsync();
+
+                foreach (var applicant in applicants)
+                {
+                    await _logger.LogAction("Upload", User.Identity.Name, applicant.FullName, "APPLICANT");
+                }
+
+                TempData["SuccessMessage"] = uploadCount == 0
+                    ? "No new applicants added."
+                    : $"{uploadCount} applicants have been added successfully.";
+
+                await _logger.LogAction("Upload", User.Identity.Name, $"{uploadCount} applicants uploaded", "INFO");
             }
-            else
+            catch (ApplicationException ex)
             {
-                TempData["ErrorMessage"] = "Please select a valid CSV file.";
+                TempData["ErrorMessage"] = ex.Message;
             }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+            }
+
             return RedirectToAction("ApplicantDirectory", "Applicant");
         }
+
 
 
 

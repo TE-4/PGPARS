@@ -261,8 +261,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("CitizenshipStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cohort")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Cohort")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("Course_Req_Met")
                         .HasColumnType("bit");
