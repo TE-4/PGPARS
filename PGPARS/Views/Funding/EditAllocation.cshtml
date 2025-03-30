@@ -80,6 +80,16 @@
                     </div>
                 </fieldset>
 
+                <!-- Comment Section -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-chat-left-text"></i> Additional Notes</legend>
+                    <hr class="border-light" />
+                    <div class="mb-3">
+                        <label asp-for="AllocatedNotes" class="form-label"><i class="bi bi-pencil"></i> Comments (optional):</label>
+                        <textarea asp-for="AllocatedNotes" class="form-control" rows="3"></textarea>
+                    </div>
+                </fieldset>
+
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between mt-4">
                     <a asp-action="FundingDirectory" class="btn btn-outline-light">
