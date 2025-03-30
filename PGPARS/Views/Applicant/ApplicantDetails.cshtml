@@ -74,7 +74,18 @@
                     <i class="bi bi-arrow-left"></i> Back
                 </a>
 
+
                 <div class="d-flex gap-3">
+
+                    @if (!string.IsNullOrEmpty(Model.SharePointPdfUrl))
+                    {
+                        <a href="@Model.SharePointPdfUrl" target="_blank">
+                            <button type="button" class="btn btn-lg" style="background-color:goldenrod; color: white; border: 2px solid black;">
+                                <div class="bi bi-file-earmark-pdf-fill text-outline">&ensp;View PDF</div>
+                            </button>
+                        </a>
+                    }
+
                     <a asp-action="EditApplicant" asp-controller="Applicant" asp-route-Nnumber="@Model.Nnumber">
                         <button type="button" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
                             <div class="bi bi-pencil text-outline">&ensp;Edit</div>
