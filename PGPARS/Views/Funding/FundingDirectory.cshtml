@@ -78,8 +78,8 @@
                                         <!-- Assign Button (only visible if Amount < 0) -->
                                         @if (fund.Remaining > 0)
                                         {
-                                            <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg" style="border: 2px solid black;">
-                                                <i class="bi bi-plus-circle"></i> Assign
+                                            <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
+                                                <div class="bi bi-plus-circle text-outline">&ensp;Assign</div>
                                             </a>
                                         }
                                         <!-- Edit Button -->
