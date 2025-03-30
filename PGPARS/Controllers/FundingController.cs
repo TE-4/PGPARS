@@ -321,6 +321,35 @@ namespace PGPARS.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult DeleteAllocation(int id)
+        {
+            // Retrieve the allocation by its id
+            var allocation = _fundingRepository.GetFundingAllocationById(id);
+            if (allocation == null)
+            {
+                TempData["ErrorMessage"] = "Funding allocation not found.";
+                return RedirectToAction("FundingAllocations");
+            }
+
+            // Retrieve the associated funding record
+            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+            if (funding != null)
+            {
+                // Add back the allocated amount to the funding's remaining amount
+                funding.Remaining += allocation.AllocatedAmount;
+                _fundingRepository.UpdateFunding(funding); // Update funding in the database
+            }
+
+            // Delete the allocation record
+            _fundingRepository.DeleteAllocation(id);
+            _logger.LogAction("Delete", User.Identity.Name,
+                $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
+                "ALLOCATION");
+
+            TempData["SuccessMessage"] = "Funding allocation deleted successfully.";
+            return RedirectToAction("FundingAllocations");
+        }
 
 
     }
