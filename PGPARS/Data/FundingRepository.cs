@@ -128,7 +128,7 @@ public class FundingRepository : IFundingRepository
         if (funding != null)
         {
             // Deduct the allocated amount
-            funding.Remaining -= allocation.AllocatedAmount ?? 0;
+            funding.Remaining -= allocation.AllocatedAmount;
             _context.Fundings.Update(funding); // Update the funding source
         }
 

@@ -228,7 +228,7 @@ namespace PGPARS.Controllers
 
             _fundingRepository.AddAllocation(newAllocation);
             TempData["SuccessMessage"] = "Funding allocation added successfully.";
-            _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount?.ToString("C"), "FUNDING");
+            _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount.ToString("C"), "FUNDING");
             return RedirectToAction("FundingDirectory");
         }
 
@@ -259,6 +259,9 @@ namespace PGPARS.Controllers
             {
                 return NotFound();
             }
+
+            // Load the list of applicants for the dropdown
+            ViewBag.Applicants = _applicantRepository.GetApplicants();
             return View(allocation);
         }
 
@@ -267,6 +270,8 @@ namespace PGPARS.Controllers
         {
             if (!ModelState.IsValid)
             {
+                // Re-populate the applicants if the model state is invalid
+                ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
             }
 

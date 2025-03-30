@@ -16,7 +16,7 @@ namespace PGPARS.Models
         public string Nnumber { get; set; }
         public Applicant? Applicant { get; set; }
 
-        public decimal? AllocatedAmount { get; set; }  // Amount of stipend awarded
+        public decimal AllocatedAmount { get; set; }  // Amount of stipend awarded
         public decimal? StipendValue { get; set; }  // 1.0 = full, 0.5 = half
 
         public bool? TuitionWaiver { get; set; }  // Indicates if a tuition waiver is included
@@ -24,6 +24,6 @@ namespace PGPARS.Models
 
         public string? Status { get; set; }  // "Approved", "In Progress", "Denied"
 
-        public string AllocatedNotes { get; set; } //Notes or "Comment section" for the allocation to the student
+        public string? AllocatedNotes { get; set; } //Notes or "Comment section" for the allocation to the student
     }
 }
