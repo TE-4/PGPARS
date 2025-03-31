@@ -24,13 +24,10 @@ namespace PGPARS.Controllers
             _applicantRepository = applicantRepository;
             _logger = auditLogService;
         }
-        
-       
+
+
         [HttpGet]
-        public IActionResult AddFunding()
-        {
-            return View(new Funding()); // Return a blank form for adding funding
-        }
+        public IActionResult AddFunding() => View(new Funding());
 
         [HttpPost]
         public IActionResult AddFunding(Funding funding)
@@ -139,11 +136,6 @@ namespace PGPARS.Controllers
             return View(fundingSource); // Pass the full model to the view
         }
 
-
-
-
-
-
         // GET: FundingDirectory
         public IActionResult FundingDirectory(string searchQuery)
         {
@@ -190,30 +182,25 @@ namespace PGPARS.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Log errors to the console
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                errors.ForEach(error => System.Diagnostics.Debug.WriteLine("❌ " + error));
-
-                // if error, reload applicants and return to the form
                 ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
             }
+
             var funding = _fundingRepository.GetFundingById(allocation.FundingID);
             if (funding == null)
             {
                 return NotFound("Funding not found.");
             }
-           
 
-            // Check if the allocated amount exceeds the remaining funding
+            // Check if allocated amount exceeds remaining funds
             if (allocation.AllocatedAmount > funding.Remaining)
             {
                 TempData["ErrorMessage"] = "Allocated amount exceeds remaining funding.";
                 return View(allocation);
             }
+            _fundingRepository.UpdateFunding(funding);  // Save the updated remaining amount
 
-            // Manually create a new FundingAllocation object to ensure all fields are correctly mapped ( was having an issue with direct model binding where the 
-            // Id field was being set manually and causing an error as it is supposed to autoincrement)
+            // Create the allocation record
             var newAllocation = new FundingAllocation
             {
                 FundingID = allocation.FundingID,
@@ -228,9 +215,11 @@ namespace PGPARS.Controllers
 
             _fundingRepository.AddAllocation(newAllocation);
             TempData["SuccessMessage"] = "Funding allocation added successfully.";
-            _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount?.ToString("C"), "FUNDING");
+            _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount.ToString("C"), "FUNDING");
+
             return RedirectToAction("FundingDirectory");
         }
+
 
         [HttpGet]
         public IActionResult FundingAllocations()
@@ -259,6 +248,19 @@ namespace PGPARS.Controllers
             {
                 return NotFound();
             }
+
+            // Load the list of applicants for the dropdown
+            ViewBag.Applicants = _applicantRepository.GetApplicants();
+
+            // Additionally, load funding details for display if needed
+            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+            if (funding != null)
+            {
+                ViewBag.FundingSource = funding.Source;
+                ViewBag.FundingAmount = funding.Amount;
+                ViewBag.FundingRemaining = funding.Remaining;
+            }
+
             return View(allocation);
         }
 
@@ -267,15 +269,46 @@ namespace PGPARS.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
             }
 
+            var existingAllocation = _fundingRepository.GetFundingAllocationById(allocation.Id);
+            if (existingAllocation == null)
+            {
+                TempData["ErrorMessage"] = "Allocation not found.";
+                return RedirectToAction("FundingAllocations");
+            }
+
+            var funding = _fundingRepository.GetFundingById(existingAllocation.FundingID);
+            if (funding == null)
+            {
+                TempData["ErrorMessage"] = "Funding source not found.";
+                return RedirectToAction("FundingAllocations");
+            }
+
+            // Calculate the difference in allocated amounts
+            decimal amountDifference = allocation.AllocatedAmount - existingAllocation.AllocatedAmount;
+
+            // Update remaining amount
+            funding.Remaining -= amountDifference;
+
+            // Ensure remaining funds do not go negative
+            if (funding.Remaining < 0)
+            {
+                TempData["ErrorMessage"] = "Allocation exceeds available funds.";
+                ViewBag.Applicants = _applicantRepository.GetApplicants();
+                return View(allocation);
+            }
+
+            _fundingRepository.UpdateFunding(funding);
             _fundingRepository.UpdateAllocation(allocation);
-            _logger.LogAction("Edit", User.Identity.Name, $"Edited allocation for {allocation.Nnumber}", "FUNDING");
+            _logger.LogAction("Edit", User.Identity.Name, $"Edited allocation for {allocation.Nnumber}", "ALLOCATION");
 
             TempData["SuccessMessage"] = "Funding allocation updated successfully.";
             return RedirectToAction("FundingAllocations");
         }
+
 
         [HttpPost]
         public IActionResult DeleteAllocation(int id)
@@ -283,21 +316,20 @@ namespace PGPARS.Controllers
             var allocation = _fundingRepository.GetFundingAllocationById(id);
             if (allocation == null)
             {
-                TempData["ErrorMessage"] = "Funding allocation not found.";
+                TempData["ErrorMessage"] = "Allocation not found.";
                 return RedirectToAction("FundingAllocations");
             }
-            // Retrieve the associated funding record
+
             var funding = _fundingRepository.GetFundingById(allocation.FundingID);
             if (funding != null)
             {
-                // Update the remaining funding by adding back the allocated amount
+                // Restore the allocated amount back to remaining funds
                 funding.Remaining += allocation.AllocatedAmount;
-                _fundingRepository.UpdateFunding(funding);  // Make sure this method updates the funding in the database
+                _fundingRepository.UpdateFunding(funding);
             }
+
             _fundingRepository.DeleteAllocation(id);
-            _ = _logger.LogAction("Delete", User.Identity.Name,
-                $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
-                "FUNDING");
+            _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocation for {allocation.Nnumber}", "ALLOCATION");
 
             TempData["SuccessMessage"] = "Funding allocation deleted successfully.";
             return RedirectToAction("FundingAllocations");

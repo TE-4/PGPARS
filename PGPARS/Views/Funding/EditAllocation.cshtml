@@ -11,8 +11,10 @@
 
     <div class="container">
         <div class="card shadow-lg p-4 bg-dark text-light">
-            <form asp-action="Edit" method="post">
-                <input type="hidden" asp-for="FundingID" />
+            <!-- No asp-route-id in the form tag so that the hidden field binds the model's Id -->
+            <form asp-action="EditAllocation" method="post">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.FundingID)
 
                 <!-- Funding Information -->
                 <fieldset class="border rounded p-3">
@@ -41,9 +43,11 @@
                             <option value="">-- Select an Applicant --</option>
                             @if (ViewBag.Applicants != null)
                             {
-                                @foreach (var applicant in ViewBag.Applicants as List<Applicant>)
+                                foreach (var applicant in ViewBag.Applicants as List<PGPARS.Models.Applicant>)
                                 {
-                                    <option value="@applicant.Nnumber" selected="@(Model.Nnumber == applicant.Nnumber ? "selected" : null)">@applicant.FirstName @applicant.LastName</option>
+                                    <option value="@applicant.Nnumber" selected="@(Model.Nnumber == applicant.Nnumber ? "selected" : null)">
+                                        @applicant.FirstName @applicant.LastName
+                                    </option>
                                 }
                             }
                         </select>
@@ -61,7 +65,9 @@
                         </div>
                         <div class="col-md-6">
                             <label asp-for="StipendValue" class="form-label"><i class="bi bi-cash-stack"></i> Stipend Value:</label>
-                            <input asp-for="StipendValue" type="number" step="0.1" class="form-control" placeholder="Enter stipend value" />
+                            <input asp-for="StipendValue" type="number" step="any" class="form-control"
+                                   placeholder="Enter stipend value"
+                                   value="@(Model.StipendValue.HasValue ? Model.StipendValue.Value.ToString() : "")" />
                         </div>
                     </div>
                 </fieldset>
@@ -77,6 +83,16 @@
                             <option value="In Progress">In Progress</option>
                             <option value="Denied">Denied</option>
                         </select>
+                    </div>
+                </fieldset>
+
+                <!-- Comment Section -->
+                <fieldset class="border rounded p-3 mt-4">
+                    <legend class="fw-bold"><i class="bi bi-chat-left-text"></i> Additional Notes</legend>
+                    <hr class="border-light" />
+                    <div class="mb-3">
+                        <label asp-for="AllocatedNotes" class="form-label"><i class="bi bi-pencil"></i> Comments (optional):</label>
+                        <textarea asp-for="AllocatedNotes" class="form-control" rows="3"></textarea>
                     </div>
                 </fieldset>
 

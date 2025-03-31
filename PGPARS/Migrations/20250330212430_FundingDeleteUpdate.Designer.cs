@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PGPARS.Data;
 
@@ -11,9 +12,11 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250330212430_FundingDeleteUpdate")]
+    partial class FundingDeleteUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,8 +264,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("CitizenshipStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Cohort")
-                        .HasColumnType("int");
+                    b.Property<string>("Cohort")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Course_Req_Met")
                         .HasColumnType("bit");
@@ -376,9 +379,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sex")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SharePointPdfUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

@@ -40,7 +40,7 @@
                         <tr>
                             <td>@(allocation.Funding?.Source ?? "Unknown")</td>
                             <td>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</td>
-                            <td>@allocation.AllocatedAmount?.ToString("C")</td>
+                            <td>@allocation.AllocatedAmount.ToString("C")</td>
                             <td>@(allocation.StipendValue.HasValue ? allocation.StipendValue.ToString() : "N/A")</td>
                             <td>@(allocation.TuitionWaiver.HasValue ? (allocation.TuitionWaiver.Value ? "Yes" : "No") : "N/A")</td>
                             <td>@allocation.TuitionWaiverType</td>
