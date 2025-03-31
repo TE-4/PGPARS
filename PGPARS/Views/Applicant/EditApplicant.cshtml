@@ -1,349 +1,302 @@
 ﻿@model ApplicantEditViewModel
 <body>
-<div class="main">
-    <div class="container-opaque">
-        <div class="text-center text-outline p-3">
-            <h2>Edit Applicant</h2>
+    <div class="main">
+        <!--<div class="container-opaque">
+            <div class="text-center text-outline p-3">
+                <h2>Edit Applicant</h2>
+            </div>
+            </div>
+        <br />-->
+        <div class="container">
+            <div class="card shadow-lg p-4 bg-dark text-light">
+                <form asp-action="EditApplicant" asp-controller="Applicant" method="post">
+
+                    <fieldset class="border rounded p-3">
+                        <legend class="fw-bold"><i class="bi bi-person-badge"></i>Applicant Information</legend>
+                        <hr class="border-light" />
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="FirstName" class="form-label"><i class="bi bi-person"></i> First Name</label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="LastName" class="form-label"><i class="bi bi-person"></i> Last Name</label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Status" class="form-label"><i class="bi bi-graph-up"></i> Status</label>
+                                <select asp-for="Status" class="form-control" data-val="false">
+                                    <option value="Unassigned">-- Select Status --</option>
+                                    <option value="1st Review">1st Review</option>
+                                    <option value="Review Conflict">Review Conflict</option>
+                                    <option value="Interview Pending">Interview Pending</option>
+                                    <option value="Accepted">Accepted</option>
+                                    <option value="Denied">Denied</option>
+                                    <option value="Funds Assigned">Funds Assigned</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="Nnumber" class="form-label"><i class="bi bi-person-vcard"></i> N-Number</label>
+                                <input asp-for="Nnumber" class="form-control" />
+                                <span asp-validation-for="Nnumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Email" class="form-label"><i class="bi bi-envelope"></i> Email</label>
+                                <input asp-for="Email" class="form-control" data-val="false" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Phone" class="form-label"><i class="bi bi-telephone-fill"></i> Phone Number</label>
+                                <input asp-for="Phone" class="form-control" data-val="false" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="Sex" class="form-label"><i class="bi bi-flag"></i> Sex</label>
+                                <input asp-for="Sex" class="form-control" data-val="false" />
+                                <span asp-validation-for="Sex" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Race" class="form-label"><i class="bi bi-fingerprint"></i> Race</label>
+                                <input asp-for="Race" class="form-control" data-val="false" />
+                                <span asp-validation-for="Race" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="AdvisorEmail" class="form-label"><i class="bi bi-envelope"></i> Advisor Email</label>
+                                <input asp-for="AdvisorEmail" class="form-control" data-val="false" />
+                                <span asp-validation-for="AdvisorEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border rounded p-3">
+                        <legend class="fw-bold"><i class="bi bi-clipboard-check"></i>Course Information</legend>
+                        <hr class="border-light" />
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="GPAOverall" class="form-label"></label>
+                                <input asp-for="GPAOverall" class="form-control" type="number" step="0.01" data-val="true" />
+                                <span asp-validation-for="GPAOverall" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="GPAPsych" class="form-label"></label>
+                                <input asp-for="GPAPsych" class="form-control" type="number" step="0.01" data-val="true" />
+                                <span asp-validation-for="GPAPsych" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Course_Req_Met" class="form-label"></label>
+                                <select asp-for="Course_Req_Met" class="form-control" data-val="false">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <span asp-validation-for="Course_Req_Met" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="border rounded p-3" style="">
+                        <legend class="fw-bold"><i class="bi bi-card-checklist"></i>Review Information</legend>
+                        <hr class="border-light" />
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="Reviewer1" class="form-label"></label>
+                                <input asp-for="Reviewer1" class="form-control" data-val="false" />
+                                <span asp-validation-for="Reviewer1" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Reviewer2" class="form-label"></label>
+                                <input asp-for="Reviewer2" class="form-control" data-val="false" />
+                                <span asp-validation-for="Reviewer2" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                (Interviewer)
+                                <!--<label asp-for="" class="form-label"></label>
+                                <input asp-for="" class="form-control" data-val="false" />
+                                <span asp-validation-for="" class="text-danger"></span>-->
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="Rev1Decision" class="form-label"></label>
+                                <select asp-for="Rev1Decision" class="form-control" data-val="false">
+                                    <option value=true>Yes</option>
+                                    <option value=false>No</option>
+                                </select>
+                                <span asp-validation-for="Rev1Decision" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Rev2Decision" class="form-label"></label>
+                                <select asp-for="Rev2Decision" class="form-control" data-val="false">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <span asp-validation-for="Rev2Decision" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="DecRec" class="form-label"></label>
+                                <select asp-for="DecRec" class="form-control" data-val="false">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <span asp-validation-for="DecRec" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
+                            <div class="bi bi-save text-outline">&ensp;Save Changes</div>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <br />
-
-    <form asp-action="EditApplicant" asp-controller="Applicant" method="post">
-        <div class="grid-container">
-            <label asp-for="FirstName" class="form-label"></label>
-            <input asp-for="FirstName" class="form-control" />
-            <span asp-validation-for="FirstName" class="text-danger"></span>
-            <label asp-for="LastName" class="form-label"></label>
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
-            <label asp-for="Status" class="form-label"></label>
-            <select asp-for="Status" class="form-control" data-val="false">
-                <option value="Unassigned">-- Select Status --</option>
-                <option value="1st Review">1st Review</option>
-                <option value="Review Conflict">Review Conflict</option>
-                <option value="Interview Pending">Interview Pending</option>
-                <option value="Accepted">Accepted</option>
-                <option value="Denied">Denied</option>
-                <option value="Funds Assigned">Funds Assigned</option>
-            </select>
-            <span asp-validation-for="Status" class="text-danger"></span>
-        </div>
-        <div class="grid-container">
-            <div class="personalInfo">
-                <strong style="font-size: 25px">Personal Information</strong>
-                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
-                    <tr>
-                        <td>
-                            <label asp-for="Nnumber" class="form-label"></label>
-                            <input asp-for="Nnumber" class="form-control" />
-                            <span asp-validation-for="Nnumber" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="Email" class="form-label"></label>
-                            <input asp-for="Email" class="form-control" data-val="false" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="Phone" class="form-label"></label>
-                            <input asp-for="Phone" class="form-control" data-val="false" />
-                            <span asp-validation-for="Phone" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="Sex" class="form-label"></label>
-                            <input asp-for="Sex" class="form-control" data-val="false" />
-                            <span asp-validation-for="Sex" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="Race" class="form-label"></label>
-                            <input asp-for="Race" class="form-control" data-val="false" />
-                            <span asp-validation-for="Race" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="AdvisorEmail" class="form-label"></label>
-                            <input asp-for="AdvisorEmail" class="form-control" data-val="false" />
-                            <span asp-validation-for="AdvisorEmail" class="text-danger"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="reviewInfo">
-                <strong style="font-size: 25px">Review Information</strong>
-                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
-                    <tr>
-                        <td>
-                            <label asp-for="Reviewer1" class="form-label"></label>
-                            <input asp-for="Reviewer1" class="form-control" data-val="false" />
-                            <span asp-validation-for="Reviewer1" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="Rev1Decision" class="form-label"></label>
-                            <select asp-for="Rev1Decision" class="form-control" data-val="false">
-                                <option value=true>Yes</option>
-                                <option value=false>No</option>
-                            </select>
-                            <span asp-validation-for="Rev1Decision" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="Reviewer2" class="form-label"></label>
-                            <input asp-for="Reviewer2" class="form-control" data-val="false" />
-                            <span asp-validation-for="Reviewer2" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="Rev2Decision" class="form-label"></label>
-                            <select asp-for="Rev2Decision" class="form-control" data-val="false">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                            <span asp-validation-for="Rev2Decision" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="RevAgree" class="form-label"></label>
-                            <select asp-for="RevAgree" class="form-control" data-val="false">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                            <span asp-validation-for="RevAgree" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="CommitteeReview" class="form-label"></label>
-                            <input asp-for="CommitteeReview" class="form-control" data-val="false" />
-                            <span asp-validation-for="CommitteeReview" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="Mentor1" class="form-label"></label>
-                            <input asp-for="Mentor1" class="form-control" data-val="false" />
-                            <span asp-validation-for="Mentor1" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="Mentor2" class="form-label"></label>
-                            <input asp-for="Mentor2" class="form-control" data-val="false" />
-                            <span asp-validation-for="Mentor2" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="Mentor3" class="form-label"></label>
-                            <input asp-for="Mentor3" class="form-control" data-val="false" />
-                            <span asp-validation-for="Mentor3" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="SelectMentor" class="form-label"></label>
-                            <input asp-for="SelectMentor" class="form-control" data-val="false" />
-                            <span asp-validation-for="SelectMentor" class="text-danger"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="courseInfo">
-                <strong style="font-size: 25px">Course Information</strong>
-                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
-                    <tr>
-                        <td>
-                            <label asp-for="GPAOverall" class="form-label"></label>
-                            <input asp-for="GPAOverall" class="form-control" type="number" step="0.01" data-val="true" />
-                            <span asp-validation-for="GPAOverall" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="GPAPsych" class="form-label"></label>
-                            <input asp-for="GPAPsych" class="form-control" type="number" step="0.01" data-val="true" />
-                            <span asp-validation-for="GPAPsych" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="Course_Req_Met" class="form-label"></label>
-                            <select asp-for="Course_Req_Met" class="form-control" data-val="false">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                            <span asp-validation-for="Course_Req_Met" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="GPAComment" class="form-label"></label>
-                            <input asp-for="GPAComment" class="form-control" data-val="false" />
-                            <span asp-validation-for="GPAComment" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="CrsReqComment" class="form-label"></label>
-                            <input asp-for="CrsReqComment" class="form-control" data-val="false" />
-                            <span asp-validation-for="CrsReqComment" class="text-danger"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="applicationInfo">
-                <strong style="font-size: 25px">Application Information</strong>
-                <table class="table" style="background-color: rgb(13, 33, 95, 0.7);">
-                    <tr>
-                        <td>
-                            <label asp-for="AppSubmitDate" class="form-label"></label>
-                            <input asp-for="AppSubmitDate" class="form-control" type="date" data-val="false" />
-                            <span asp-validation-for="AppSubmitDate" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="LORQuality" class="form-label"></label>
-                            <select asp-for="LORQuality" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="LORQuality" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="LetterQuality" class="form-label"></label>
-                            <select asp-for="LetterQuality" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="LetterQuality" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="LORRelevance" class="form-label"></label>
-                            <select asp-for="LORRelevance" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="LORRelevance" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="LetterComment" class="form-label"></label>
-                            <input asp-for="LetterComment" class="form-control" data-val="false" />
-                            <span asp-validation-for="LetterComment" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="LORComment" class="form-label"></label>
-                            <input asp-for="LORComment" class="form-control" data-val="false" />
-                            <span asp-validation-for="LORComment" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="ResumeQuality" class="form-label"></label>
-                            <select asp-for="ResumeQuality" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="ResumeQuality" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="OverallFitQuality" class="form-label"></label>
-                            <select asp-for="OverallFitQuality" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="OverallFitQuality" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="ResExpQuality" class="form-label"></label>
-                            <select asp-for="ResExpQuality" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="ResExpQuality" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="OverallFitComments" class="form-label"></label>
-                            <input asp-for="OverallFitComments" class="form-control" data-val="false" />
-                            <span asp-validation-for="OverallFitComments" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="ResumeComment" class="form-label"></label>
-                            <input asp-for="ResumeComment" class="form-control" data-val="false" />
-                            <span asp-validation-for="ResumeComment" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="DecRec" class="form-label"></label>
-                            <select asp-for="DecRec" class="form-control" data-val="false">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                            <span asp-validation-for="DecRec" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="WritSampQuality" class="form-label"></label>
-                            <select asp-for="WritSampQuality" class="form-control" data-val="false">
-                                <option value=1>1</option>
-                                <option value=2>2</option>
-                                <option value=3>3</option>
-                                <option value=4>4</option>
-                                <option value=5>5</option>
-                            </select>
-                            <span asp-validation-for="WritSampQuality" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="FollowUp" class="form-label"></label>
-                            <select asp-for="FollowUp" class="form-control" data-val="false">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                            <span asp-validation-for="FollowUp" class="text-danger"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label asp-for="WritSampComment" class="form-label"></label>
-                            <input asp-for="WritSampComment" class="form-control" data-val="false" />
-                            <span asp-validation-for="WritSampComment" class="text-danger"></span>
-                        </td>
-                        <td>
-                            <label asp-for="FinalComments" class="form-label"></label>
-                            <input asp-for="FinalComments" class="form-control" data-val="false" />
-                            <span asp-validation-for="FinalComments" class="text-danger"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-        </div>
-    </form>
-</div>
 </body>
+
+<!--
+    <label asp-for="RevAgree" class="form-label"></label>
+    <select asp-for="RevAgree" class="form-control" data-val="false">
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+    </select>
+    <span asp-validation-for="RevAgree" class="text-danger"></span>
+
+    <label asp-for="CommitteeReview" class="form-label"></label>
+    <input asp-for="CommitteeReview" class="form-control" data-val="false" />
+    <span asp-validation-for="CommitteeReview" class="text-danger"></span>
+
+    <label asp-for="Mentor1" class="form-label"></label>
+    <input asp-for="Mentor1" class="form-control" data-val="false" />
+    <span asp-validation-for="Mentor1" class="text-danger"></span>
+
+    <label asp-for="Mentor2" class="form-label"></label>
+    <input asp-for="Mentor2" class="form-control" data-val="false" />
+    <span asp-validation-for="Mentor2" class="text-danger"></span>
+
+    <label asp-for="Mentor3" class="form-label"></label>
+    <input asp-for="Mentor3" class="form-control" data-val="false" />
+    <span asp-validation-for="Mentor3" class="text-danger"></span>
+
+    <label asp-for="SelectMentor" class="form-label"></label>
+    <input asp-for="SelectMentor" class="form-control" data-val="false" />
+    <span asp-validation-for="SelectMentor" class="text-danger"></span>
+
+    <label asp-for="GPAComment" class="form-label"></label>
+    <input asp-for="GPAComment" class="form-control" data-val="false" />
+    <span asp-validation-for="GPAComment" class="text-danger"></span>
+
+    <label asp-for="CrsReqComment" class="form-label"></label>
+    <input asp-for="CrsReqComment" class="form-control" data-val="false" />
+    <span asp-validation-for="CrsReqComment" class="text-danger"></span>
+
+    <label asp-for="AppSubmitDate" class="form-label"></label>
+    <input asp-for="AppSubmitDate" class="form-control" type="date" data-val="false" />
+    <span asp-validation-for="AppSubmitDate" class="text-danger"></span>
+
+    <label asp-for="LORQuality" class="form-label"></label>
+    <select asp-for="LORQuality" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="LORQuality" class="text-danger"></span>
+
+    <label asp-for="LetterQuality" class="form-label"></label>
+    <select asp-for="LetterQuality" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="LetterQuality" class="text-danger"></span>
+
+    <label asp-for="LORRelevance" class="form-label"></label>
+    <select asp-for="LORRelevance" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="LORRelevance" class="text-danger"></span>
+
+    <label asp-for="LetterComment" class="form-label"></label>
+    <input asp-for="LetterComment" class="form-control" data-val="false" />
+    <span asp-validation-for="LetterComment" class="text-danger"></span>
+
+    <label asp-for="LORComment" class="form-label"></label>
+    <input asp-for="LORComment" class="form-control" data-val="false" />
+    <span asp-validation-for="LORComment" class="text-danger"></span>
+
+    <label asp-for="ResumeQuality" class="form-label"></label>
+    <select asp-for="ResumeQuality" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="ResumeQuality" class="text-danger"></span>
+
+    <label asp-for="OverallFitQuality" class="form-label"></label>
+    <select asp-for="OverallFitQuality" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="OverallFitQuality" class="text-danger"></span>
+
+    <label asp-for="ResExpQuality" class="form-label"></label>
+    <select asp-for="ResExpQuality" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="ResExpQuality" class="text-danger"></span>
+
+    <label asp-for="OverallFitComments" class="form-label"></label>
+    <input asp-for="OverallFitComments" class="form-control" data-val="false" />
+    <span asp-validation-for="OverallFitComments" class="text-danger"></span>
+
+    <label asp-for="ResumeComment" class="form-label"></label>
+    <input asp-for="ResumeComment" class="form-control" data-val="false" />
+    <span asp-validation-for="ResumeComment" class="text-danger"></span>
+
+    <label asp-for="WritSampQuality" class="form-label"></label>
+    <select asp-for="WritSampQuality" class="form-control" data-val="false">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    </select>
+    <span asp-validation-for="WritSampQuality" class="text-danger"></span>
+
+    <label asp-for="FollowUp" class="form-label"></label>
+    <select asp-for="FollowUp" class="form-control" data-val="false">
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+    </select>
+    <span asp-validation-for="FollowUp" class="text-danger"></span>
+
+    <label asp-for="WritSampComment" class="form-label"></label>
+    <input asp-for="WritSampComment" class="form-control" data-val="false" />
+    <span asp-validation-for="WritSampComment" class="text-danger"></span>
+
+    <label asp-for="FinalComments" class="form-label"></label>
+    <input asp-for="FinalComments" class="form-control" data-val="false" />
+    <span asp-validation-for="FinalComments" class="text-danger"></span>
+-->

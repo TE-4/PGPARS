@@ -10,23 +10,23 @@
         <br />
 
         <!-- filter box styled with dark background -->
-        <div class="container">
-            <div class="card shadow-lg p-4 bg-dark text-light">
-                <div class="card-header bg-secondary text-white d-flex align-items-center">
+        <div style="padding-bottom: 10px;">
+            <div class="card shadow-lg p-1 bg-dark text-light">
+              <!--  <div class="card-header bg-secondary text-white d-flex align-items-center">
                     <i class="bi bi-funnel me-2"></i> Filter Audit Logs
-                </div>
+                  </div>-->
                 <div class="card-body">
                     <form asp-action="Index" asp-controller="Audit" method="get" class="row g-3">
                         <!-- Category Dropdown -->
                         <div class="col-md-4">
                             <label class="form-label">
-                                <i class="bi bi-list-check me-1"></i> Category
+                                <h5 class="bi bi-list-check me-1">&ensp;Category</h5>
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text bg-secondary text-white">
+                                <span class="input-group-text" style="background-color:dimgray; color:white; border: 1px solid white;">
                                     <i class="bi bi-tag"></i>
                                 </span>
-                                <select name="filter" class="form-select bg-dark text-light border-secondary">
+                                <select name="filter" class="form-select" style="background-color:dimgray; color:white; border: 1px solid white;">
                                     <option value="">All Categories</option>
                                     @foreach (var category in ViewBag.Categories)
                                     {
@@ -39,13 +39,13 @@
                         <!-- Start Date -->
                         <div class="col-md-4">
                             <label class="form-label">
-                                <i class="bi bi-calendar-event me-1"></i> Start Date
+                                <h5 class="bi bi-calendar-event me-1">&ensp;Start Date</h5>
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text bg-secondary text-white">
+                                <span class="input-group-text" style="background-color:dimgray; color:white; border: 1px solid white;">
                                     <i class="bi bi-calendar"></i>
                                 </span>
-                                <input type="date" name="startDate" class="form-control bg-dark text-light border-secondary"
+                                <input type="date" name="startDate" class="form-control" style="background-color:dimgray; color:white; border: 1px solid white;"
                                        value="@Context.Request.Query["startDate"]">
                             </div>
                         </div>
@@ -53,24 +53,24 @@
                         <!-- End Date -->
                         <div class="col-md-4">
                             <label class="form-label">
-                                <i class="bi bi-calendar-check me-1"></i> End Date
+                                <h5 class="bi bi-calendar-check me-1">&ensp;End Date</h5>
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text bg-secondary text-white">
+                                <span class="input-group-text" style="background-color:dimgray; color:white; border: 1px solid white;">
                                     <i class="bi bi-calendar"></i>
                                 </span>
-                                <input type="date" name="endDate" class="form-control bg-dark text-light border-secondary"
+                                <input type="date" name="endDate" class="form-control" style="background-color:dimgray; color:white; border: 1px solid white;"
                                        value="@Context.Request.Query["endDate"]">
                             </div>
                         </div>
 
                         <!-- buttons -->
                         <div class="col-12 d-flex justify-content-between mt-3">
-                            <a href="/Audit/Index" class="btn btn-outline-light d-flex align-items-center px-3">
-                                <i class="bi bi-x-circle me-2"></i> Reset
+                            <a href="/Audit/Index" class="btn btn-lg" style="background-color:dimgray; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
+                                <div class="bi bi-x-circle text-outline">&ensp;Reset</div>
                             </a>
-                            <button type="submit" class="btn btn-primary d-flex align-items-center px-4">
-                                <i class="bi bi-funnel me-2"></i> Filter
+                            <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
+                                <div class="bi bi-funnel text-outline">&ensp;Filter</div>
                             </button>
                         </div>
                     </form>
@@ -79,19 +79,19 @@
         </div>
 
         <!-- beginning of the table -->
-        <div class="container mt-4">
+        <div>
             <form id="auditForm" method="post" onsubmit="return confirm('Are you sure you want to delete selected logs?');">
 
                 <!-- bulk delete button -->
-                <div class="d-flex justify-content-start mb-3">
-                    <button type="submit" formaction="@Url.Action("DeleteSelectedLogs", "Audit")" class="btn btn-danger">
-                        <i class="bi bi-trash"></i> Delete Selected
+                <div class="d-flex">
+                    <button type="submit" formaction="@Url.Action("DeleteSelectedLogs", "Audit")" class="btn btn-danger btn-lg" style="border: 2px solid black">
+                        <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
                     </button>
                 </div>
 
-                <div class="table-responsive shadow-lg rounded p-3">
-                    <table class="table align-middle text-light">
-                        <thead class="text-uppercase border-bottom border-secondary">
+                <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
+                    <table class="table align-middle text-dark">
+                        <thead class="text-uppercase">
                             <tr>
                                 <th class="container-checkbox">
                                     <input type="checkbox" id="selectAll" />

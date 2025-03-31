@@ -23,16 +23,37 @@ namespace PGPARS.Controllers
             _logger = auditLogService;
         }
 
-        public async Task<IActionResult> ApplicantDirectory(string searchString)
+        public async Task<IActionResult> ApplicantDirectory(string searchString, int? cohort)
         {
             var applicants = await _applicantRepository.GetApplicantsAsync();
+
+            // get all possible unique cohorts from repository
+            var cohortYears = applicants
+                .Select(a => a.Cohort)
+                .Where(c => c.HasValue)
+                .Distinct()
+                .ToList();
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 applicants = applicants.Where(a => a.FullName.ToLower().Contains(searchString.ToLower())).ToList();
             }
 
+            if (cohort != null)
+            {
+                applicants = applicants.Where(a => a.Cohort == cohort.Value).ToList();
+            }
+
+            // Obtain current year
+            var year = DateTime.Now.Year;
+
+            // Items to pass to the view
+            ViewData["CurrentYear"] = year;
+            ViewBag.CohortYears = cohortYears;
+            ViewBag.Cohort = cohort;
             ViewData["SearchString"] = searchString;
+
+
             return View(applicants);
         }
 
