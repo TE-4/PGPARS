@@ -182,30 +182,25 @@ namespace PGPARS.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Log errors to the console
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                errors.ForEach(error => System.Diagnostics.Debug.WriteLine("❌ " + error));
-
-                // if error, reload applicants and return to the form
                 ViewBag.Applicants = _applicantRepository.GetApplicants();
                 return View(allocation);
             }
+
             var funding = _fundingRepository.GetFundingById(allocation.FundingID);
             if (funding == null)
             {
                 return NotFound("Funding not found.");
             }
-           
 
-            // Check if the allocated amount exceeds the remaining funding
+            // Check if allocated amount exceeds remaining funds
             if (allocation.AllocatedAmount > funding.Remaining)
             {
                 TempData["ErrorMessage"] = "Allocated amount exceeds remaining funding.";
                 return View(allocation);
             }
+            _fundingRepository.UpdateFunding(funding);  // Save the updated remaining amount
 
-            // Manually create a new FundingAllocation object to ensure all fields are correctly mapped ( was having an issue with direct model binding where the 
-            // Id field was being set manually and causing an error as it is supposed to autoincrement)
+            // Create the allocation record
             var newAllocation = new FundingAllocation
             {
                 FundingID = allocation.FundingID,
@@ -221,8 +216,10 @@ namespace PGPARS.Controllers
             _fundingRepository.AddAllocation(newAllocation);
             TempData["SuccessMessage"] = "Funding allocation added successfully.";
             _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount.ToString("C"), "FUNDING");
+
             return RedirectToAction("FundingDirectory");
         }
+
 
         [HttpGet]
         public IActionResult FundingAllocations()
