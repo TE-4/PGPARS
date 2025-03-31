@@ -137,14 +137,35 @@ public class FundingRepository : IFundingRepository
 
     public void UpdateAllocation(FundingAllocation allocation)
     {
+        // Fetch the existing allocation from the database
         var existingAllocation = _context.FundingAllocations.Find(allocation.Id);
+
         if (existingAllocation != null)
         {
-            _context.Entry(existingAllocation).State = EntityState.Detached;
+            // Recalculate the remaining amount of funding before updating the allocation
+            var funding = _context.Fundings.Include(f => f.FundingAllocations)
+                                           .FirstOrDefault(f => f.Id == allocation.FundingID);
+
+            if (funding != null)
+            {
+                // Update the allocated amount for the allocation
+                existingAllocation.AllocatedAmount = allocation.AllocatedAmount;
+
+                // Recalculate the remaining funding amount after the allocation update
+                funding.Remaining = funding.Amount - funding.FundingAllocations
+                    .Sum(a => a.AllocatedAmount);
+
+                // Save the changes to the allocation
+                _context.FundingAllocations.Update(existingAllocation);
+                _context.SaveChanges(); // Save allocation update first
+
+                // Save the changes to the funding
+                _context.Fundings.Update(funding);
+                _context.SaveChanges(); // Save funding update
+            }
         }
-        _context.FundingAllocations.Update(allocation);
-        _context.SaveChanges();
     }
+
 
     public void DeleteAllocation(int id)
     {
@@ -156,16 +177,22 @@ public class FundingRepository : IFundingRepository
                                            .FirstOrDefault(f => f.Id == allocation.FundingID);
             if (funding != null)
             {
+                // Recalculate the remaining amount before deleting the allocation
+                funding.Remaining = funding.Amount - funding.FundingAllocations
+                    .Where(a => a.Id != id) // Exclude the allocation being deleted
+                    .Sum(a => a.AllocatedAmount);
+
+                // Update the funding first
+                _context.Fundings.Update(funding);
+                _context.SaveChanges(); // Save funding update
+
                 // Remove the allocation
                 _context.FundingAllocations.Remove(allocation);
-                _context.SaveChanges(); // Save deletion first
-
-                // Update the remaining amount
-                funding.Remaining = funding.Amount - funding.FundingAllocations.Sum(a => a.AllocatedAmount);
-                _context.SaveChanges(); // Save the updated funding record
+                _context.SaveChanges(); // Save allocation deletion
             }
         }
     }
+
 
 
 
