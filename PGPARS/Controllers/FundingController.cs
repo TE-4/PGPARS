@@ -276,7 +276,6 @@ namespace PGPARS.Controllers
                 return View(allocation);
             }
 
-            // Fetch the existing allocation from DB
             var existingAllocation = _fundingRepository.GetFundingAllocationById(allocation.Id);
             if (existingAllocation == null)
             {
@@ -284,29 +283,30 @@ namespace PGPARS.Controllers
                 return RedirectToAction("FundingAllocations");
             }
 
-            // Fetch the associated funding record
             var funding = _fundingRepository.GetFundingById(existingAllocation.FundingID);
-            if (funding != null)
+            if (funding == null)
             {
-                // Calculate the difference in allocated amounts
-                decimal amountDifference = existingAllocation.AllocatedAmount - allocation.AllocatedAmount;
-
-                // Update the remaining amount accordingly
-                funding.Remaining += amountDifference;
-
-                // Ensure remaining amount never goes negative
-                if (funding.Remaining < 0)
-                {
-                    TempData["ErrorMessage"] = "Allocation exceeds available funds.";
-                    ViewBag.Applicants = _applicantRepository.GetApplicants();
-                    return View(allocation);
-                }
-
-                _fundingRepository.UpdateFunding(funding);
+                TempData["ErrorMessage"] = "Funding source not found.";
+                return RedirectToAction("FundingAllocations");
             }
 
+            // Calculate the difference in allocated amounts
+            decimal amountDifference = allocation.AllocatedAmount - existingAllocation.AllocatedAmount;
+
+            // Update remaining amount
+            funding.Remaining -= amountDifference;
+
+            // Ensure remaining funds do not go negative
+            if (funding.Remaining < 0)
+            {
+                TempData["ErrorMessage"] = "Allocation exceeds available funds.";
+                ViewBag.Applicants = _applicantRepository.GetApplicants();
+                return View(allocation);
+            }
+
+            _fundingRepository.UpdateFunding(funding);
             _fundingRepository.UpdateAllocation(allocation);
-            _logger.LogAction("Edit", User.Identity.Name, $"Edited allocation for {allocation.Nnumber}", "FUNDING");
+            _logger.LogAction("Edit", User.Identity.Name, $"Edited allocation for {allocation.Nnumber}", "ALLOCATION");
 
             TempData["SuccessMessage"] = "Funding allocation updated successfully.";
             return RedirectToAction("FundingAllocations");
@@ -316,32 +316,28 @@ namespace PGPARS.Controllers
         [HttpPost]
         public IActionResult DeleteAllocation(int id)
         {
-            // Retrieve the allocation by its id
             var allocation = _fundingRepository.GetFundingAllocationById(id);
             if (allocation == null)
             {
-                TempData["ErrorMessage"] = "Funding allocation not found.";
+                TempData["ErrorMessage"] = "Allocation not found.";
                 return RedirectToAction("FundingAllocations");
             }
 
-            // Retrieve the associated funding record
             var funding = _fundingRepository.GetFundingById(allocation.FundingID);
             if (funding != null)
             {
-                // Add back the allocated amount to the funding's remaining amount
+                // Restore the allocated amount back to remaining funds
                 funding.Remaining += allocation.AllocatedAmount;
-                _fundingRepository.UpdateFunding(funding); // Update funding in the database
+                _fundingRepository.UpdateFunding(funding);
             }
 
-            // Delete the allocation record
             _fundingRepository.DeleteAllocation(id);
-            _logger.LogAction("Delete", User.Identity.Name,
-                $"Deleted allocation for {allocation.Applicant?.FirstName ?? "Unknown"} {allocation.Applicant?.LastName ?? ""}",
-                "ALLOCATION");
+            _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocation for {allocation.Nnumber}", "ALLOCATION");
 
             TempData["SuccessMessage"] = "Funding allocation deleted successfully.";
             return RedirectToAction("FundingAllocations");
         }
+
 
 
     }
