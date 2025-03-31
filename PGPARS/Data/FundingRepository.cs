@@ -129,8 +129,6 @@ public class FundingRepository : IFundingRepository
             funding.Remaining -= allocation.AllocatedAmount;
             _context.Fundings.Update(funding); // Update the funding source
         }
-
-        funding.Remaining -= allocation.AllocatedAmount;
         _context.FundingAllocations.Add(allocation);
         _context.SaveChanges();
     }
@@ -153,10 +151,22 @@ public class FundingRepository : IFundingRepository
         var allocation = _context.FundingAllocations.Find(id);
         if (allocation != null)
         {
-            _context.FundingAllocations.Remove(allocation);
-            _context.SaveChanges();
+            // Get the associated funding
+            var funding = _context.Fundings.Include(f => f.FundingAllocations)
+                                           .FirstOrDefault(f => f.Id == allocation.FundingID);
+            if (funding != null)
+            {
+                // Remove the allocation
+                _context.FundingAllocations.Remove(allocation);
+                _context.SaveChanges(); // Save deletion first
+
+                // Update the remaining amount
+                funding.Remaining = funding.Amount - funding.FundingAllocations.Sum(a => a.AllocatedAmount);
+                _context.SaveChanges(); // Save the updated funding record
+            }
         }
     }
+
 
 
 }
