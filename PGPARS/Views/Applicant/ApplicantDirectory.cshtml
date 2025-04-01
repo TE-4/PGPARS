@@ -11,34 +11,37 @@
         <form id="applicantForm" method="post">
             <div class="d-flex justify-content-between gap-1 flex-wrap">
                 <div class="d-flex gap-3">
-                <!-- Upload CSV button that triggers the modal -->
-                <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                    <div class="bi bi-upload text-outline">&ensp;Import File</div>
-                </button>
+                    <!-- Upload CSV button that triggers the modal -->
+                    <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        <div class="bi bi-upload text-outline">&ensp;Import File</div>
+                    </button>
 
-                <button type="submit" formaction="@Url.Action("DeleteSelectedApplicants", "Applicant")" formmethod="post" class="btn btn-danger btn-lg" style="border: 2px solid black">
-                    <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
-                </button>
+                    <button type="submit" formaction="@Url.Action("DeleteSelectedApplicants", "Applicant")" formmethod="post" class="btn btn-danger btn-lg" style="border: 2px solid black">
+                        <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
+                    </button>
 
-                <button type="submit" formaction="@Url.Action("AssignToFaculty", "Applicant")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
-                    Assign to Faculty
-                </button>
+                    <button type="submit" formaction="@Url.Action("AssignToFaculty", "Applicant")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
+                        Assign to Faculty
+                    </button>
                 </div>
 
                 
-               <!-- Cohort Dropdown Selection -->
-                <div class="d-flex align-items-center gap-2">
-                    <label for="cohort" class="form-label mb-0"><strong>Cohort:</strong></label>
-                    <select id="cohort" name="cohort" class="form-select" style="min-height: 50px";>
-                        <option value="@ViewData["CurrentYear"]"><strong>@ViewData["CurrentYear"]</strong></option>
-                        @foreach (var cohort in ViewBag.CohortYears)
-                        {
-                            <option value="@cohort">
-                                <strong>@cohort</strong>
-                            </option>
-                        }
-                    </select>
-                </div>
+               
+             
+            <!-- Cohort Dropdown Selection -->
+            <div class="d-flex align-items-center gap-2">
+                <label for="cohort" class="form-label mb-0" style="font-weight: 600;">Cohort:</label>
+
+                <select id="cohort" name="cohort" class="form-select form-select-lg" style="min-width: 160px;">
+                    <option value="@ViewData["CurrentYear"]">@ViewData["CurrentYear"]</option>
+                    @foreach (int cohort in ViewBag.CohortYears)
+                    {                 
+                        <option value="@cohort">@cohort</option>
+                    }
+                </select>
+            </div>
+
+
 
                 <!-- Search bar -->
                 <div class="d-flex gap-2">
