@@ -178,7 +178,7 @@ namespace PGPARS.Controllers
 
 
         [HttpPost]
-        public IActionResult Assign(FundingAllocation allocation)
+        public async Task<IActionResult> Assign(FundingAllocation allocation)
         {
             if (!ModelState.IsValid)
             {
@@ -187,9 +187,15 @@ namespace PGPARS.Controllers
             }
 
             var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+            var applicant = await _applicantRepository.GetApplicantByIdAsync(allocation.Nnumber); // Ensure Applicant is loaded
+
             if (funding == null)
             {
                 return NotFound("Funding not found.");
+            }
+            if (applicant == null)
+            {
+                return NotFound("Applicant not found.");
             }
 
             // Check if allocated amount exceeds remaining funds
@@ -205,6 +211,7 @@ namespace PGPARS.Controllers
             {
                 FundingID = allocation.FundingID,
                 Nnumber = allocation.Nnumber,
+                Applicant = allocation.Applicant, // Include the applicant
                 AllocatedAmount = allocation.AllocatedAmount,
                 StipendValue = allocation.StipendValue,
                 TuitionWaiver = allocation.TuitionWaiver,
@@ -215,7 +222,9 @@ namespace PGPARS.Controllers
 
             _fundingRepository.AddAllocation(newAllocation);
             TempData["SuccessMessage"] = "Funding allocation added successfully.";
-            _logger.LogAction("Assigned", User.Identity.Name, "Assigned " + allocation.AllocatedAmount.ToString("C"), "FUNDING");
+            _logger.LogAction("Assigned", User.Identity.Name,
+                $"Assigned {allocation.AllocatedAmount:C} to {applicant.FullName}",
+                "ALLOCATION");
 
             return RedirectToAction("FundingDirectory");
         }
@@ -293,7 +302,6 @@ namespace PGPARS.Controllers
             // Update remaining amount
             funding.Remaining -= amountDifference;
 
-            // Ensure remaining funds do not go negative
             if (funding.Remaining < 0)
             {
                 TempData["ErrorMessage"] = "Allocation exceeds available funds.";
@@ -303,11 +311,19 @@ namespace PGPARS.Controllers
 
             _fundingRepository.UpdateFunding(funding);
             _fundingRepository.UpdateAllocation(allocation);
-            _logger.LogAction("Edit", User.Identity.Name, $"Edited allocation for {allocation.Nnumber}", "ALLOCATION");
+
+            // Ensure the Applicant is included before logging
+            allocation = _fundingRepository.GetFundingAllocationById(allocation.Id);
+            if (allocation.Applicant != null)
+            {
+                _logger.LogAction("Edit", User.Identity.Name,
+                    $"Edited allocation for {allocation.Applicant.FullName}", "ALLOCATION");
+            }
 
             TempData["SuccessMessage"] = "Funding allocation updated successfully.";
             return RedirectToAction("FundingAllocations");
         }
+
 
 
         [HttpPost]
@@ -329,7 +345,7 @@ namespace PGPARS.Controllers
             }
 
             _fundingRepository.DeleteAllocation(id);
-            _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocation for {allocation.Nnumber}", "ALLOCATION");
+            _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocation for {allocation.Applicant.FullName}", "ALLOCATION");
 
             TempData["SuccessMessage"] = "Funding allocation deleted successfully.";
             return RedirectToAction("FundingAllocations");

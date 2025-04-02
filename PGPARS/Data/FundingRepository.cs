@@ -137,34 +137,34 @@ public class FundingRepository : IFundingRepository
 
     public void UpdateAllocation(FundingAllocation allocation)
     {
-        // Fetch the existing allocation from the database
-        var existingAllocation = _context.FundingAllocations.Find(allocation.Id);
+        var existingAllocation = _context.FundingAllocations
+            .Include(fa => fa.Applicant) // Include Applicant
+            .FirstOrDefault(fa => fa.Id == allocation.Id);
 
         if (existingAllocation != null)
         {
-            // Recalculate the remaining amount of funding before updating the allocation
-            var funding = _context.Fundings.Include(f => f.FundingAllocations)
-                                           .FirstOrDefault(f => f.Id == allocation.FundingID);
+            var funding = _context.Fundings
+                .Include(f => f.FundingAllocations)
+                    .ThenInclude(fa => fa.Applicant) // Ensure Applicants are included
+                .FirstOrDefault(f => f.Id == allocation.FundingID);
 
             if (funding != null)
             {
-                // Update the allocated amount for the allocation
                 existingAllocation.AllocatedAmount = allocation.AllocatedAmount;
 
-                // Recalculate the remaining funding amount after the allocation update
-                funding.Remaining = funding.Amount - funding.FundingAllocations
-                    .Sum(a => a.AllocatedAmount);
+                // Recalculate remaining funding amount
+                funding.Remaining = funding.Amount - funding.FundingAllocations.Sum(a => a.AllocatedAmount);
 
-                // Save the changes to the allocation
+                // Save changes
                 _context.FundingAllocations.Update(existingAllocation);
-                _context.SaveChanges(); // Save allocation update first
+                _context.SaveChanges();
 
-                // Save the changes to the funding
                 _context.Fundings.Update(funding);
-                _context.SaveChanges(); // Save funding update
+                _context.SaveChanges();
             }
         }
     }
+
 
 
     public void DeleteAllocation(int id)

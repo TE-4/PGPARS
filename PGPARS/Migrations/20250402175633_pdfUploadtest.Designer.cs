@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250330230005_AddSharePointPdfUrl")]
-    partial class AddSharePointPdfUrl
+    [Migration("20250402175633_pdfUploadtest")]
+    partial class pdfUploadtest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -479,11 +479,10 @@ namespace PGPARS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal?>("AllocatedAmount")
+                    b.Property<decimal>("AllocatedAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("AllocatedNotes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FundingID")
