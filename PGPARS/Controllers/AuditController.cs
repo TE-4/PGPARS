@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
+using PGPARS.Infrastructure;
 using PGPARS.Models;
 using System.Threading.Tasks;
 
@@ -16,18 +17,29 @@ namespace PGPARS.Controllers
             _auditRepository = auditRepo;
         }
 
-        public async Task<IActionResult> Index(string filter, DateTime? startDate, DateTime? endDate)
+        public async Task<IActionResult> Index(string filter, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 20)
         {
             Console.WriteLine($"Filter: {filter}, StartDate: {startDate}, EndDate: {endDate}");
 
             var categories = await _auditRepository.GetCategoriesAsync();
             ViewBag.Categories = categories;
 
-            // Fetch logs based on selected category and date range
+            // Fetch filtered logs
             var logs = await _auditRepository.GetLogsByFiltersAsync(filter, startDate, endDate);
 
-            return View(logs);
+            int totalItems = logs.Count();
+            var pagedLogs = logs.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            var model = new PaginatedList<AuditLog>(pagedLogs, totalItems, page, pageSize);
+
+            ViewBag.Filter = filter;
+            ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
+            ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
+
+
+            return View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> DeleteSelectedLogs(List<int> SelectedLogs)
