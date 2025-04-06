@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PGPARS.Models.AuditLog>
+﻿@model PGPARS.Infrastructure.PaginatedList<AuditLog>
 
 <body>
     <div class="main">
@@ -26,13 +26,14 @@
                                 <span class="input-group-text" style="background-color:dimgray; color:white; border: 1px solid white;">
                                     <i class="bi bi-tag"></i>
                                 </span>
-                                <select name="filter" class="form-select" style="background-color:dimgray; color:white; border: 1px solid white;">
-                                    <option value="">All Categories</option>
+                                <select name="filter" class="form-select" multiple size="5" style="background-color:dimgray; color:white; border: 1px solid white;">
                                     @foreach (var category in ViewBag.Categories)
                                     {
-                                        <option value="@category" selected="@(category == Context.Request.Query["filter"] ? "selected" : null)">@category</option>
+                                        var selectedFilters = Context.Request.Query["filter"];
+                                        <option value="@category">@category</option>
                                     }
                                 </select>
+
                             </div>
                         </div>
 
@@ -104,7 +105,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (!Model.Any())
+                            @if (!Model.Items.Any())
                             {
                                 <tr>
                                     <td colspan="6" class="text-center text-muted">No audit logs found.</td>
@@ -112,7 +113,7 @@
                             }
                             else
                             {
-                                @foreach (var log in Model)
+                                @foreach (var log in Model.Items)
                                 {
                                     <tr>
                                         <td class="container-checkbox align-content-center">
@@ -134,7 +135,54 @@
             </form>
         </div>
     </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <nav>
+                <ul class="pagination">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link text-dark fw-bold" asp-action="Index"
+                               asp-route-page="@(Model.PageIndex - 1)"
+                               asp-route-filter="@ViewBag.Filter"
+                               asp-route-startDate="@ViewBag.StartDate"
+                               asp-route-endDate="@ViewBag.EndDate">
+                                Previous
+                            </a>
+                        </li>
+                    }
+
+                    <li class="page-item disabled">
+                        <span class="page-link text-dark fw-bold">
+                            Page @Model.PageIndex of @Model.TotalPages
+                        </span>
+                    </li>
+
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link text-dark fw-bold" asp-action="Index"
+                               asp-route-page="@(Model.PageIndex + 1)"
+                               asp-route-filter="@ViewBag.Filter"
+                               asp-route-startDate="@ViewBag.StartDate"
+                               asp-route-endDate="@ViewBag.EndDate">
+                                Next
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    }
+
+
+
+
 </body>
+
+
 
 <script>
     // "Select All" Checkbox Functionality

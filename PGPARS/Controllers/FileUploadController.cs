@@ -18,25 +18,33 @@ namespace PGPARS.Controllers
         private readonly IApplicantRepository _applicantRepo;
         private readonly UserManager<AppUser> _userManager;
         private readonly AuditLogService _logger;
+        private readonly IConfiguration _config;
 
         public FileUploadController(CsvService csvService, IApplicantRepository applicantRepo, UserManager<AppUser> userManager, 
-            AuditLogService als)
+            AuditLogService als, IConfiguration config)
         {
             _csvService = csvService;
             _applicantRepo = applicantRepo;
             _userManager = userManager;
             _logger = als;
+            _config = config;
         }
 
         [HttpPost]
         public async Task<IActionResult> ApplicantUpload(IFormFile fileUpload, int cohort)
         {
+
+            // first check if file actually has content, if not return with error message
             if (fileUpload == null || fileUpload.Length == 0)
             {
                 TempData["ErrorMessage"] = "Please select a file.";
                 return RedirectToAction("ApplicantDirectory", "Applicant");
             }
 
+            // obtain the base URL for sharepoint PDF link from the config
+            string? SharePointBaseUrl = _config["SharePoint:PdfBaseUrl"];
+
+            // obtain the file extension to determine if need to parse CSV or Excel file
             var extension = Path.GetExtension(fileUpload.FileName).ToLower();
 
             try
@@ -87,6 +95,12 @@ namespace PGPARS.Controllers
                 {
                     TempData["ErrorMessage"] = "Unsupported file type. Please upload a .csv or .xlsx file.";
                     return RedirectToAction("ApplicantDirectory", "Applicant");
+                }
+
+                // before saving to the database, add SharePoint URL with the applicant's Nnumber
+                foreach(var applicant in applicants)
+                {
+                    applicant.SharePointPdfUrl = $"{SharePointBaseUrl}{applicant.Nnumber}.pdf";
                 }
 
                 var uploadCount = _applicantRepo.AddApplicants(applicants);

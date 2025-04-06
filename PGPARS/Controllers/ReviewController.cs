@@ -88,7 +88,16 @@ namespace PGPARS.Controllers
             }
             return View(review);
         }
+        public async Task<IActionResult> ViewReview(int id)
+        {
+            var review = await _reviewRepository.GetReviewByIdAsync(id);
+            if (review == null)
+            {
+                return NotFound();
+            }
 
+            return View(review);
+        }
         // POST: DeleteReview
         [HttpPost]
         public async Task<IActionResult> DeleteReview(int id)
