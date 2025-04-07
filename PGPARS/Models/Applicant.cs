@@ -13,7 +13,7 @@ namespace PGPARS.Models
         // Personal information
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Cohort { get; set; } 
+        public int? Cohort { get; set; } 
         public string? Email { get; set; } 
         public string? Phone { get; set; } 
         public string? AdvisorEmail { get; set; }
@@ -22,6 +22,7 @@ namespace PGPARS.Models
         public string? Sex { get; set; } 
         public string? PrimaryCitizenship { get; set; } 
         public string? CitizenshipStatus { get; set; } 
+        public string? SharePointPdfUrl { get; set; }
 
         // Program related information
         public string? MissingItems { get; set; } 

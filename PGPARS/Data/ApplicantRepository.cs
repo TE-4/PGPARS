@@ -21,6 +21,11 @@ namespace PGPARS.Data
             return _context.Applicants.ToList();
         }
 
+        public async Task AddApplicantAsync(Applicant applicant)
+        {
+            await _context.Applicants.AddAsync(applicant);
+        }
+
         public async Task<List<Applicant>> GetApplicantsAsync()
         {
             return await _context.Applicants.ToListAsync(); 

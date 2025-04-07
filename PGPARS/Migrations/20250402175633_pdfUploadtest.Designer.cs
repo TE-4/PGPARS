@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250330212430_FundingDeleteUpdate")]
-    partial class FundingDeleteUpdate
+    [Migration("20250402175633_pdfUploadtest")]
+    partial class pdfUploadtest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -264,8 +264,8 @@ namespace PGPARS.Migrations
                     b.Property<string>("CitizenshipStatus")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cohort")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Cohort")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("Course_Req_Met")
                         .HasColumnType("bit");
@@ -379,6 +379,9 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sex")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SharePointPdfUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

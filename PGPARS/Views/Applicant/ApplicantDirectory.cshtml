@@ -1,20 +1,19 @@
 ﻿@model IEnumerable<PGPARS.Models.Applicant>
 <body>
     <div class="main">
-        <!--Old header
             <div class="container-opaque">
             <div class="text-center text-outline p-3">
                 <h2>Applicant Directory</h2>
             </div>
         </div>
-        <br />-->
+        <br />
         <!-- Buttons -->
         <form id="applicantForm" method="post">
             <div class="d-flex justify-content-between gap-1 flex-wrap">
                 <div class="d-flex gap-3">
                 <!-- Upload CSV button that triggers the modal -->
                 <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                    <div class="bi bi-upload text-outline">&ensp;Import CSV</div>
+                    <div class="bi bi-upload text-outline">&ensp;Import File</div>
                 </button>
 
                 <button type="submit" formaction="@Url.Action("DeleteSelectedApplicants", "Applicant")" formmethod="post" class="btn btn-danger btn-lg" style="border: 2px solid black">
@@ -25,6 +24,22 @@
                     Assign to Faculty
                 </button>
                 </div>
+
+                
+               <!-- Cohort Dropdown Selection -->
+                <div class="d-flex align-items-center gap-2">
+                    <label for="cohort" class="form-label mb-0"><strong>Cohort:</strong></label>
+                    <select id="cohort" name="cohort" class="form-select" style="min-height: 50px";>
+                        <option value="@ViewData["CurrentYear"]"><strong>@ViewData["CurrentYear"]</strong></option>
+                        @foreach (var cohort in ViewBag.CohortYears)
+                        {
+                            <option value="@cohort">
+                                <strong>@cohort</strong>
+                            </option>
+                        }
+                    </select>
+                </div>
+
                 <!-- Search bar -->
                 <div class="d-flex gap-2">
                     <input type="text" name="searchString" class="form-control" style="min-height: 50px;" placeholder="Search by name..." value="@ViewData["SearchString"]" />
@@ -33,6 +48,7 @@
                     </button>
                 </div>
             </div>
+
             <!-- Table -->
                 <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
                     <table class="table align-middle text-dark">
@@ -117,9 +133,17 @@
                 <div class="modal-body">
                     <!-- Form for CSV upload -->
                     <form asp-controller="FileUpload" asp-action="ApplicantUpload" method="post" enctype="multipart/form-data">
+
+                        <!-- Cohort input field -->
+                        <div class="form-group mb-3">
+                            <label for="cohort" class="form-label"><strong>Cohort Year:</strong></label>
+                            <input type="number" id="cohort" name="cohort" class="form-control" placeholder="Cohort Year.." min="2000" max="2100" required>
+                        </div>
+
                         <div class="form-group mb-4">
-                            <label for="csvFile" class="form-label"><strong>Choose CSV File(GDP_Applicant..):</strong></label>
-                            <input type="file" id="csvFile" name="csvFile" class="form-control" required>
+                            <label for="csvFile" class="form-label"><strong>Choose Excel or CSV File(GDP_Applicant..):</strong></label>
+                            <input type="file" id="fileUpload" name="fileUpload" class="form-control" 
+                            accept=".csv, .xlsx" required>
                         </div>
                         <button type="submit" class="btn btn-lg w-100" style="background-color:royalblue; color: white; border: 2px solid black;">
                             <div class="text-outline">Upload</div>

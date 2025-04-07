@@ -1,0 +1,109 @@
+﻿@model PGPARS.Models.Review
+
+@{
+    ViewData["Title"] = "View Review";
+}
+
+<div class="main">
+    <div class="container-opaque">
+        <div class="text-center text-outline p-3">
+            <h2><i class="bi bi-info-circle"></i> View Review</h2>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="container">
+        <div class="card shadow-lg p-4 bg-dark text-light">
+            <!-- Review Information Section -->
+            <fieldset class="border rounded p-3">
+                <legend class="fw-bold"><i class="bi bi-list-stars"></i> Review Scores</legend>
+                <hr class="border-light" />
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-envelope-paper"></i> Letter Quality</label>
+                        <p>@Model.LetterQuality</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-file-earmark-text"></i> Resume Quality</label>
+                        <p>@Model.ResumeQuality</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-file-earmark-person"></i> Resume Exp Quality</label>
+                        <p>@Model.ResExpQuality</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-journal-text"></i> Writing Sample Quality</label>
+                        <p>@Model.WritingSampleQuality</p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Comments Section -->
+            <fieldset class="border rounded p-3 mt-4">
+                <legend class="fw-bold"><i class="bi bi-chat-left-text"></i> Comments</legend>
+                <hr class="border-light" />
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-chat-square-dots"></i> Resume Comments</label>
+                        <p>@Model.ResumeComments</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-chat-square-dots"></i> Writing Sample Comments</label>
+                        <p>@Model.WritingSampleComments</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-chat-square-dots"></i> LOR Comments</label>
+                        <p>@Model.LORComments</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-chat-square-dots"></i> Overall Fit Comments</label>
+                        <p>@Model.OverallFitComments</p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Final Evaluation Section -->
+            <fieldset class="border rounded p-3 mt-4">
+                <legend class="fw-bold"><i class="bi bi-clipboard-check"></i> Final Evaluation</legend>
+                <hr class="border-light" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-file-earmark-check"></i> LOR Relevance</label>
+                        <p>@Model.LORRelevance</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-award"></i> LOR Quality</label>
+                        <p>@Model.LORQuality</p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-bar-chart-steps"></i> Overall Fit Quality</label>
+                        <p>@Model.OverallFitQuality</p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Back Button -->
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="ReviewDirectory" class="btn btn-outline-light">
+                    <i class="bi bi-arrow-left-circle"></i> Back to Directory
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
