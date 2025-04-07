@@ -12,13 +12,17 @@ namespace PGPARS.Controllers
 {
     public class ApplicantController : Controller
     {
+        private readonly IReviewRepository _reviewRepository;
+        private readonly IFundingRepository _fundingRepository;
         private readonly IApplicantRepository _applicantRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly AuditLogService _logger;
 
-        public ApplicantController(IApplicantRepository applicantRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
+        public ApplicantController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
         {
             _applicantRepository = applicantRepository;
+            _reviewRepository = reviewRepository;
+            _fundingRepository = fundingRepository;
             _webHostEnvironment = webHostEnvironment;
             _logger = auditLogService;
         }
