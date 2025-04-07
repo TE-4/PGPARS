@@ -131,6 +131,7 @@ namespace PGPARS.Data
                 }
             }
 
+            //Secondary Committee Tester
             email = "comm@comm.com";
             user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -186,6 +187,41 @@ namespace PGPARS.Data
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(newUser, "Faculty");
+                    Debug.WriteLine("User successfully created!");
+
+                }
+                else
+                {
+                    Debug.WriteLine("Creating user failed");
+                    foreach (var error in result.Errors)
+                    {
+                        Debug.WriteLine($"Error: {error.Description}");
+                    }
+
+                }
+            }
+
+            //Staff Tester
+            email = "Staff@staff.com";
+            user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                Debug.WriteLine("Attempting to create new user...");
+                var newUser = new AppUser
+                {
+                    FirstName = "Staff",
+                    LastName = "Tester",
+                    Email = email,
+                    Nnumber = "n00000004",
+                    UserName = email,
+                    Position = "Staff Positions?"
+                };
+
+                var result = await _userManager.CreateAsync(newUser, "Staff@1234");
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(newUser, "Staff");
                     Debug.WriteLine("User successfully created!");
 
                 }

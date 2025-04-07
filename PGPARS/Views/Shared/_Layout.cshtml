@@ -59,6 +59,30 @@
             </div>
         </div>
     }
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Staff"))
+    {
+        <div class="sidenav a">
+            <p class="text-center">Welcome, @User.Identity.Name!</p>
+            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
+            <!--
+            <a class="specialtext" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a>
+            <a class="specialtext" asp-action="CommitteeDashboard" asp-controller="Committee">Dashboard</a><br />
+            <a class="specialtext" asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
+            -->
+            <p class="text-center sidenav-footer">
+                <a class="specialtext" asp-action="Logout" asp-controller="Account">Logout</a>
+                &copy; 2024 - PGPARS<br />Magic in Development
+            </p>
+        </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
+        </div>
+    }
     @if (!User.Identity.IsAuthenticated)
     {
         <div class="header" style="left: 0px">

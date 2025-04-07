@@ -70,7 +70,6 @@ namespace PGPARS.Controllers
             return View(applicant);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditApplicant(string Nnumber)
         {
@@ -111,7 +110,6 @@ namespace PGPARS.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditApplicant(ApplicantEditViewModel model)

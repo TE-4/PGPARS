@@ -59,7 +59,7 @@ namespace PGPARS.Controllers
             }
             if (User.IsInRole("Staff"))
             {
-                return RedirectToAction("Dashboard", "Staff");
+                return RedirectToAction("ApplicantDirectory", "Applicant");
             }
             return RedirectToAction("Login", "Account");
         }
