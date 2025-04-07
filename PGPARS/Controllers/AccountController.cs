@@ -114,7 +114,8 @@ namespace PGPARS.Controllers
                 var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == model.Nnumber);
                 if(userExists != null)
                 {
-                    TempData["ErrorMessage"] = "A User with this N-Number already exists!";
+                    TempData["ErrorMessage"] = "A User with this N-Number already exists";
+                    ModelState.AddModelError("Nnumber", "A user with this N-Number already exists");
                     return View(model);
                 }
 
@@ -375,7 +376,11 @@ namespace PGPARS.Controllers
             return View(reviews);
         }
 
-
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
 
     }// end class

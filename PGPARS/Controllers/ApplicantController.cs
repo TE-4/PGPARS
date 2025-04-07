@@ -66,6 +66,8 @@ namespace PGPARS.Controllers
             var applicants = await _applicantRepository.GetApplicantsAsync();
             var applicant = applicants.FirstOrDefault(a => a.Nnumber == Nnumber);
 
+            // Obtain the reviewers for the applicant and pass to the view
+
             if (applicant == null)
             {
                 return NotFound();
