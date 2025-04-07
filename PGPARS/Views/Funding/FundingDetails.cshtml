@@ -67,7 +67,11 @@
                                 @foreach (var allocation in Model.FundingAllocations)
                                 {
                                     <tr>
-                                        <td>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</td>
+                                        <td class="text-center specialtext">
+                                            <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@allocation.Nnumber" style="color: white; text-decoration: none;">
+                                                @allocation.Applicant?.FullName
+                                            </a>
+                                        </td>
                                         <td>@allocation.AllocatedAmount.ToString("C")</td>
                                         <td>@allocation.StipendValue?.ToString("C")</td>
                                         <td>@(allocation.TuitionWaiver.HasValue ? (allocation.TuitionWaiver.Value ? "Yes" : "No") : "N/A")</td>
