@@ -24,6 +24,23 @@ public class FundingRepository : IFundingRepository
             .Include(f => f.FundingAllocations) // Ensure allocations are loaded
             .FirstOrDefault(f => f.Id == fundingId);
     }
+    public IEnumerable<string> GetFundTypesStartingWith(string term)
+    {
+        return _context.Fundings
+            .Where(f => f.FundType != null && f.FundType.StartsWith(term))
+            .Select(f => f.FundType)
+            .Distinct()
+            .ToList();
+    }
+
+    public IEnumerable<string> GetSourcesStartingWith(string term)
+    {
+        return _context.Fundings
+            .Where(f => f.Source != null && f.Source.StartsWith(term))
+            .Select(f => f.Source)
+            .Distinct()
+            .ToList();
+    }
 
     public async Task<Funding> GetFundingDetailsByIdAsync(int fundingId)
     {
