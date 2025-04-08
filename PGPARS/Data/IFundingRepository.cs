@@ -14,6 +14,8 @@ namespace PGPARS.Data
         IEnumerable<FundingAllocation> GetFundingAllocations();
 
         Task<Funding> GetFundingDetailsByIdAsync(int fundingId);
+        IEnumerable<string> GetFundTypesStartingWith(string term);
+        IEnumerable<string> GetSourcesStartingWith(string term);
 
 
 

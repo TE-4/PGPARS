@@ -31,28 +31,15 @@
                         <div class="col-md-4">
                             <!-- Funding Type -->
                             <label asp-for="FundType" class="form-label"><i class="bi bi-credit-card"></i> Funding Type</label>
-                            <select asp-for="FundType" class="form-control" required>
-                                <option value="">Select a type</option>
-                                <option value="GRA">GRA</option>
-                                <option value="Tonsfeldt">Tonsfeldt</option>
-                                <option value="Grad Scholar">Grad Scholar</option>
-                                <option value="JZAG">JZAG</option>
-                                <option value="Startup">Startup</option>
-                            </select>
+                            <input asp-for="FundType" type="text" class="form-control" placeholder="Enter funding type" required />
                             <span asp-validation-for="FundType" class="text-danger"></span>
                         </div>
                         <div class="col-md-4">
                             <!-- Funding Source -->
                             <label asp-for="Source" class="form-label"><i class="bi bi-building"></i> Funding Source</label>
-                            <select asp-for="Source" class="form-control" required>
-                                <option value="">Select a source</option>
-                                <option value="COAS">COAS</option>
-                                <option value="Foundation">Foundation</option>
-                                <option value="Graduate School">Graduate School</option>
-                                <option value="Jacksonville Zoo">Jacksonville Zoo</option>
-                                <option value="Startup">Startup</option>
-                            </select>
+                            <input asp-for="Source" type="text" class="form-control" placeholder="Enter funding source" required />
                             <span asp-validation-for="Source" class="text-danger"></span>
+
                         </div>
                     </div>
                 </fieldset>
@@ -133,4 +120,52 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#fundTypeInput').on('input', function () {
+                let inputVal = $(this).val();
+                if (inputVal.length >= 1) {
+                    $.getJSON('/Funding/GetFundTypes', { term: inputVal }, function (data) {
+                        let list = $('#fundTypeSuggestions');
+                        list.empty();
+                        data.forEach(function (item) {
+                            list.append($('<option>').val(item));
+                        });
+                    });
+                }
+            });
+
+            $('#sourceInput').on('input', function () {
+                let inputVal = $(this).val();
+                if (inputVal.length >= 1) {
+                    $.getJSON('/Funding/GetSources', { term: inputVal }, function (data) {
+                        let list = $('#sourceSuggestions');
+                        list.empty();
+                        data.forEach(function (item) {
+                            list.append($('<option>').val(item));
+                        });
+                    });
+                }
+            });
+
+             document.addEventListener('DOMContentLoaded', function () {
+            const amountInput = document.querySelector('[name="Amount"]');
+
+            if (amountInput) {
+                amountInput.addEventListener('blur', function () {
+                    let value = parseFloat(this.value.replace(/[^0-9.]/g, ''));
+                    if (!isNaN(value)) {
+                        this.value = `$${value.toFixed(2)}`;
+                    } else {
+                        this.value = '';
+                    }
+                });
+
+                // Remove $ on focus so users can edit cleanly
+                amountInput.addEventListener('focus', function () {
+                    this.value = this.value.replace(/[^0-9.]/g, '');
+                });
+            }
+        });
+    </script>
 }
