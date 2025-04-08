@@ -15,11 +15,13 @@
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
             <a class="specialtext" asp-action="AdminDashboard" asp-controller="Admin">Dashboard</a><br />
-            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <a class="specialtext" asp-action="Directory" asp-controller="Account">User Directory</a><br />
+            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
+            <a class="specialtext" asp-action="Dashboard" asp-controller="Faculty">Faculty Dashboard</a><br />
             <a class="specialtext" asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
             <a class="specialtext" asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
             <a class="specialtext" asp-action="Index" asp-controller="Audit">Action History</a>
+
             <p class="text-center sidenav-footer">
                 <a class="specialtext" asp-action="Logout" asp-controller="Account">Logout</a>
                 <br/>
