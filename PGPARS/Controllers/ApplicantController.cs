@@ -54,6 +54,8 @@ namespace PGPARS.Controllers
             // Items to pass to the view
             ViewData["CurrentYear"] = year;
             ViewBag.CohortYears = cohortYears;
+
+            // for preserving these values in the view
             ViewBag.Cohort = cohort;
             ViewData["SearchString"] = searchString;
 

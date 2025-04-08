@@ -17,22 +17,27 @@ namespace PGPARS.Controllers
             _auditRepository = auditRepo;
         }
 
-        public async Task<IActionResult> Index(string filter, DateTime? startDate, DateTime? endDate, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> Index(List<string>? filters, string? searchTerm,
+            DateTime? startDate, DateTime? endDate, 
+            int page = 1, int pageSize = 20)
         {
-            Console.WriteLine($"Filter: {filter}, StartDate: {startDate}, EndDate: {endDate}");
+            
 
             var categories = await _auditRepository.GetCategoriesAsync();
-            ViewBag.Categories = categories;
+
+            filters ??= new List<string>();
+            ViewBag.Categories = new MultiSelectList(items: categories, selectedValues: filters);
 
             // Fetch filtered logs
-            var logs = await _auditRepository.GetLogsByFiltersAsync(filter, startDate, endDate);
+            var logs = await _auditRepository.GetLogsByFiltersAsync(filters, searchTerm, startDate, endDate);
 
             int totalItems = logs.Count();
             var pagedLogs = logs.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             var model = new PaginatedList<AuditLog>(pagedLogs, totalItems, page, pageSize);
 
-            ViewBag.Filter = filter;
+            ViewBag.Filters = filters;
+            ViewBag.SearchTerm = searchTerm;
             ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
             ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
 

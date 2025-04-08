@@ -10,7 +10,8 @@ namespace PGPARS.Data
         Task<IEnumerable<AuditLog>> GetLogsAsync();
         Task<List<string>> GetCategoriesAsync();
 
-        Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(string category, DateTime? startDate, DateTime? endDate);
+        Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(List<string>? filters,
+            string? searchTerm, DateTime? startDate, DateTime? endDate);
 
         Task DeleteLogsAsync(List<int> logIds);
     }
