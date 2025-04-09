@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PGPARS.Data;
 using PGPARS.Models;
@@ -351,6 +352,14 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingAllocations");
         }
 
+        public IActionResult AllocationDetails(int id)
+        {
+            var allocation = _fundingRepository.GetFundingAllocationById(id);
+            if (allocation == null)
+                return NotFound();
+
+            return View(allocation);
+        }
 
 
     }

@@ -118,6 +118,8 @@ public class FundingRepository : IFundingRepository
     {
         return _context.FundingAllocations
             .Include(fa => fa.Applicant) // Ensure Applicant is included if needed
+             .Include(a => a.Funding)
+
             .FirstOrDefault(fa => fa.Id == id);
     }
     public void AddAllocation(FundingAllocation allocation)
