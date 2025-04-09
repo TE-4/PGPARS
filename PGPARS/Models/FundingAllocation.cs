@@ -5,6 +5,8 @@ namespace PGPARS.Models
 {
     public class FundingAllocation
     {
+        internal dynamic Remaining;
+
         [Key]
         public int Id { get; set; }
 

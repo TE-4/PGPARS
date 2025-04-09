@@ -4,6 +4,12 @@
     <div class="container-opaque">
         <div class="text-center text-outline p-3">
             <h2><i class="bi bi-cash-stack"></i> Allocation Details</h2>
+            <div class="funding-summary">
+                <p><strong>@ViewBag.ApplicantName</strong> was assigned <strong>@ViewBag.Amount?.ToString("C")</strong> from <strong>@ViewBag.Source</strong> with Funding Type <strong>@ViewBag.FundType</strong></p>
+                <p>Allocated Amount: <strong>@ViewBag.Amount?.ToString("C")</strong></p>
+                <p>Remaining Funding Amount: <strong>@ViewBag.RemainingAmount?.ToString("C")</strong></p>
+            </div>
+
         </div>
     </div>
 
