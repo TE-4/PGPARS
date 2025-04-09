@@ -366,6 +366,22 @@ namespace PGPARS.Controllers
             return RedirectToAction("FundingAllocations");
         }
 
+        public IActionResult AllocationDetails(int id)
+        {
+            var allocation = _fundingRepository.GetFundingAllocationById(id);
+            var funding = _fundingRepository.GetFundingById(allocation.FundingID);
+
+            ViewBag.ApplicantName = allocation.Applicant.FullName;
+            ViewBag.Amount = allocation.AllocatedAmount;
+            ViewBag.RemainingAmount = funding.Remaining;
+            ViewBag.Source = funding.Source;
+            ViewBag.FundType = funding.FundType;
+
+            if (allocation == null)
+                return NotFound();
+
+            return View(allocation);
+        }
 
 
     }

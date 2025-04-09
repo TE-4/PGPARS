@@ -41,6 +41,10 @@
                             <td><span class="badge bg-info text-dark">@allocation.Status</span></td>
                             <td>
                                 <div class="d-flex gap-2">
+                                    <!-- Details Button -->
+                                    <a asp-action="AllocationDetails" asp-route-id="@allocation.Id" class="btn btn-info btn-sm">
+                                        <i class="bi bi-eye"></i> Details
+                                    </a>
                                     <!-- Edit Button -->
                                     <a asp-action="EditAllocation" asp-route-id="@allocation.Id" class="btn btn-warning btn-sm">
                                         <i class="bi bi-pencil-square"></i> Edit
