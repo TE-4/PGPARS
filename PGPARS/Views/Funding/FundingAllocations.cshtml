@@ -17,9 +17,6 @@
                     <th>Funding Source</th>
                     <th>Applicant</th>
                     <th>Allocated Amount</th>
-                    <th>Stipend Value</th>
-                    <th>Tuition Waiver</th>
-                    <th>Tuition Waiver Type</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -41,9 +38,6 @@
                             <td>@(allocation.Funding?.Source ?? "Unknown")</td>
                             <td>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</td>
                             <td>@allocation.AllocatedAmount.ToString("C")</td>
-                            <td>@(allocation.StipendValue.HasValue ? allocation.StipendValue.ToString() : "N/A")</td>
-                            <td>@(allocation.TuitionWaiver.HasValue ? (allocation.TuitionWaiver.Value ? "Yes" : "No") : "N/A")</td>
-                            <td>@allocation.TuitionWaiverType</td>
                             <td><span class="badge bg-info text-dark">@allocation.Status</span></td>
                             <td>
                                 <div class="d-flex gap-2">

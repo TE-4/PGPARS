@@ -52,9 +52,9 @@
                 <hr class="border-light" />
                 @if (Model.FundingAllocations != null && Model.FundingAllocations.Any())
                 {
-                    <div class="table-responsive">
-                        <table class="table table-striped table-dark">
-                            <thead>
+                    <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
+                        <table class="table align-middle text-dark">
+                            <thead class="text-uppercase">
                                 <tr>
                                     <th>Applicant</th>
                                     <th>Allocated Amount</th>
@@ -67,7 +67,11 @@
                                 @foreach (var allocation in Model.FundingAllocations)
                                 {
                                     <tr>
-                                        <td>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</td>
+                                        <td class="text-center specialtext">
+                                            <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@allocation.Nnumber" style="color: white; text-decoration: none;">
+                                                @allocation.Applicant?.FullName
+                                            </a>
+                                        </td>
                                         <td>@allocation.AllocatedAmount.ToString("C")</td>
                                         <td>@allocation.StipendValue?.ToString("C")</td>
                                         <td>@(allocation.TuitionWaiver.HasValue ? (allocation.TuitionWaiver.Value ? "Yes" : "No") : "N/A")</td>

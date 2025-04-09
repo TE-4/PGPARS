@@ -26,6 +26,20 @@ namespace PGPARS.Controllers
             _logger = auditLogService;
         }
 
+        [HttpGet]
+        public JsonResult GetFundTypes(string term)
+        {
+            var results = _fundingRepository.GetFundTypesStartingWith(term);
+            return Json(results);
+        }
+
+        [HttpGet]
+        public JsonResult GetSources(string term)
+        {
+            var results = _fundingRepository.GetSourcesStartingWith(term);
+            return Json(results);
+        }
+
 
         [HttpGet]
         public IActionResult AddFunding() => View(new Funding());
