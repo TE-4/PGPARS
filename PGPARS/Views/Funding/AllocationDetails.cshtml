@@ -22,25 +22,57 @@
             <fieldset class="border rounded p-3">
                 <legend class="fw-bold"><i class="bi bi-person"></i> Applicant Information</legend>
                 <hr class="border-light" />
-                <p><strong>Name:</strong> @(Model.Applicant?.FirstName ?? "Unknown") @(Model.Applicant?.LastName ?? "")</p>
-                <p><strong>N Number:</strong> @Model.Nnumber</p>
+                <p>
+                    <strong>Name:</strong>
+                    <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@Model.Nnumber" style="color: white; text-decoration: none;">
+                        @(Model.Applicant?.FirstName ?? "Unknown") @(Model.Applicant?.LastName ?? "")
+                    </a>
+                    &nbsp;|&nbsp; <!-- Optional: Add separator between name and number -->
+                    <strong>N Number:</strong> @Model.Nnumber
+                </p>
             </fieldset>
+
 
             <fieldset class="border rounded p-3 mt-4">
                 <legend class="fw-bold"><i class="bi bi-currency-dollar"></i> Allocation Details</legend>
                 <hr class="border-light" />
-                <p><strong>Allocated Amount:</strong> @Model.AllocatedAmount.ToString("C")</p>
-                <p><strong>Stipend Value:</strong> @(Model.StipendValue?.ToString("C") ?? "N/A")</p>
-                <p><strong>Tuition Waiver:</strong> @(Model.TuitionWaiver.HasValue ? (Model.TuitionWaiver.Value ? "Yes" : "No") : "N/A")</p>
-                <p><strong>Tuition Waiver Type:</strong> @Model.TuitionWaiverType</p>
-                <p><strong>Status:</strong> @Model.Status</p>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label"><i class="bi bi-currency-dollar"></i> Allocated Amount</label>
+                        <p>@Model.AllocatedAmount.ToString("C")</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label"><i class="bi bi-cash"></i> Stipend Value</label>
+                        <p>@(Model.StipendValue?.ToString("C") ?? "N/A")</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label"><i class="bi bi-card-checklist"></i> Tuition Waiver</label>
+                        <p>@(Model.TuitionWaiver.HasValue ? (Model.TuitionWaiver.Value ? "Yes" : "No") : "N/A")</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label"><i class="bi bi-tag"></i> Tuition Waiver Type</label>
+                        <p>@Model.TuitionWaiverType</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label"><i class="bi bi-info-circle"></i> Status</label>
+                        <p>@Model.Status</p>
+                    </div>
+                </div>
             </fieldset>
+
 
             <fieldset class="border rounded p-3 mt-4">
                 <legend class="fw-bold"><i class="bi bi-chat-left-text"></i> Notes</legend>
                 <hr class="border-light" />
-                <p>@Model.AllocatedNotes</p>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <p>@Model.AllocatedNotes</p>
+                    </div>
+                </div>
             </fieldset>
+
 
             <!-- Back Button -->
             <div class="d-flex justify-content-between mt-4">
