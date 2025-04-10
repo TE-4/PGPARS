@@ -1,5 +1,10 @@
 ﻿@using Microsoft.IdentityModel.Tokens
 @model IEnumerable<PGPARS.Models.Funding>
+@{
+    var selectedCohorts = Context.Request.Query["selectedCohorts"].ToList();
+    var selectedSources = Context.Request.Query["selectedSources"].ToList();
+    var selectedFundTypes = Context.Request.Query["selectedFundTypes"].ToList();
+}
 
 <body>
     <div class="main">
@@ -31,6 +36,57 @@
                 </button>
             </form>
         </div>
+        <form method="get" asp-action="FundingDirectory">
+            <div class="mb-3">
+                <!-- Cohort Filter -->
+                <div class="mb-2">
+                    <label><strong>Cohort</strong></label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var cohort in Model.Select(m => m.Cohort).Distinct())
+                        {
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input" name="selectedCohorts" value="@cohort"
+                                @(selectedCohorts.Contains(cohort.ToString()) ? "checked" : "") />
+                                <label class="form-check-label">@cohort</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Source Filter -->
+                <div class="mb-2">
+                    <label><strong>Source</strong></label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var source in Model.Select(m => m.Source).Distinct())
+                        {
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input" name="selectedSources" value="@source"
+                                @(selectedSources.Contains(source) ? "checked" : "") />
+                                <label class="form-check-label">@source</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Fund Type Filter -->
+                <div class="mb-2">
+                    <label><strong>Fund Type</strong></label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var fundType in Model.Select(m => m.FundType).Distinct())
+                        {
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" class="form-check-input" name="selectedFundTypes" value="@fundType"
+                                @(selectedFundTypes.Contains(fundType) ? "checked" : "") />
+                                <label class="form-check-label">@fundType</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </form>
+
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <thead class="text-uppercase">

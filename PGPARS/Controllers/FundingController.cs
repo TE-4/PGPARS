@@ -152,9 +152,13 @@ namespace PGPARS.Controllers
         }
 
         // GET: FundingDirectory
-        public IActionResult FundingDirectory(string searchQuery)
+        public IActionResult FundingDirectory(
+      string searchQuery,
+      List<string> selectedCohorts,
+      List<string> selectedSources,
+      List<string> selectedFundTypes)
         {
-            IEnumerable<Funding> fundingList;
+            IEnumerable<Funding> fundingList = _fundingRepository.GetFunding();
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
@@ -165,9 +169,32 @@ namespace PGPARS.Controllers
                 fundingList = _fundingRepository.GetFunding();
             }
 
-            ViewData["SearchQuery"] = searchQuery; // Preserve the search query in the view
+            // Apply Cohort filter
+            if (selectedCohorts != null && selectedCohorts.Any())
+            {
+                var cohortInts = selectedCohorts.Select(int.Parse).ToList();
+                fundingList = fundingList.Where(f => cohortInts.Contains(f.Cohort));
+            }
+
+
+            if (selectedSources != null && selectedSources.Any())
+            {
+                fundingList = fundingList.Where(f => selectedSources.Contains(f.Source));
+            }
+
+            if (selectedFundTypes != null && selectedFundTypes.Any())
+            {
+                fundingList = fundingList.Where(f => selectedFundTypes.Contains(f.FundType));
+            }
+
+            ViewData["SearchQuery"] = searchQuery;
+            ViewData["SelectedCohorts"] = selectedCohorts ?? new List<string>();
+            ViewData["SelectedSources"] = selectedSources ?? new List<string>();
+            ViewData["SelectedFundTypes"] = selectedFundTypes ?? new List<string>();
+
             return View(fundingList);
         }
+
 
         [HttpGet]
         public IActionResult Assign(int id)

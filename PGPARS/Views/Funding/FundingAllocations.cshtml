@@ -10,9 +10,9 @@
 
     <br />
 
-    <div class="table-responsive shadow-sm rounded p-3">
+    <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
         <table class="table align-middle text-dark">
-            <thead class="text-uppercase bg-primary text-white">
+            <thead class="text-uppercase">
                 <tr>
                     <th>Funding Source</th>
                     <th>Applicant</th>
@@ -35,7 +35,10 @@
                     @foreach (var allocation in Model)
                     {
                         <tr>
-                            <td>@(allocation.Funding?.Source ?? "Unknown")</td>
+                            <td class="text-center specialtext">
+                                <a asp-action="FundingDetails" asp-controller="Funding" asp-route-id="@allocation.FundingID" style="color: white; text-decoration: none;">
+                                    @allocation.Funding.Source
+                                </a>
                             <td>@(allocation.Applicant?.FirstName ?? "Unknown") @(allocation.Applicant?.LastName ?? "")</td>
                             <td>@allocation.AllocatedAmount.ToString("C")</td>
                             <td><span class="badge bg-info text-dark">@allocation.Status</span></td>
