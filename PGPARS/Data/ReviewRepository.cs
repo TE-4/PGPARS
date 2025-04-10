@@ -40,6 +40,17 @@ public class ReviewRepository : IReviewRepository
         _context.Reviews.Add(review);
     }
 
+    public List<Review> GetReviewsByApplicantId(string ApplicantId)
+    {
+        var reviews = _context.Reviews
+            .Include(r => r.Applicant)
+            .Include(r => r.AppUser)
+            .Where(r => r.Nnumber == ApplicantId)
+            .ToList();
+
+        return reviews;
+    }
+
     
     public async Task AddReviewAsync(Review review)
     {

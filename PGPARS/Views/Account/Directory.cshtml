@@ -9,13 +9,7 @@
             </div>
         </div>
         <br />
-        @if (TempData["UserCreated"] != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                @TempData["UserCreated"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
+        
 
         <!-- Search bar -->
         <div class="d-flex justify-content-between gap-1 flex-wrap">
@@ -102,17 +96,48 @@
         </div>
 
         <!-- Pagination -->
-        <div class="d-flex justify-content-center align-items-center mt-4">
-            @if (Model.HasPreviousPage)
-            {
-                <a class="btn btn-primary mx-2" asp-action="SearchUsers" asp-route-query="@Context.Request.Query["query"]" asp-route-role="@Context.Request.Query["role"]" asp-route-page="@(Model.PageIndex - 1)" asp-route-pageSize="@Model.PageSize">Previous</a>
-            }
-            <span class="mx-3">Page @Model.PageIndex of @Model.TotalPages</span>
-            @if (Model.HasNextPage)
-            {
-                <a class="btn btn-primary mx-2" asp-action="SearchUsers" asp-route-query="@Context.Request.Query["query"]" asp-route-role="@Context.Request.Query["role"]" asp-route-page="@(Model.PageIndex + 1)" asp-route-pageSize="@Model.PageSize">Next</a>
-            }
-        </div>
+        @if (Model.TotalPages > 1)
+        {
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <nav>
+                    <ul class="pagination">
+                        @if (Model.HasPreviousPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link text-dark fw-bold" asp-action="SearchUsers"
+                                   asp-route-query="@Context.Request.Query["query"]"
+                                   asp-route-role="@Context.Request.Query["role"]"
+                                   asp-route-page="@(Model.PageIndex - 1)"
+                                   asp-route-pageSize="@Model.PageSize">
+                                    Previous
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item disabled">
+                            <span class="page-link text-dark fw-bold">
+                                Page @Model.PageIndex of @Model.TotalPages
+                            </span>
+                        </li>
+
+                        @if (Model.HasNextPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link text-dark fw-bold" asp-action="SearchUsers"
+                                   asp-route-query="@Context.Request.Query["query"]"
+                                   asp-route-role="@Context.Request.Query["role"]"
+                                   asp-route-page="@(Model.PageIndex + 1)"
+                                   asp-route-pageSize="@Model.PageSize">
+                                    Next
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
+
 
 
         <!-- Modal -->

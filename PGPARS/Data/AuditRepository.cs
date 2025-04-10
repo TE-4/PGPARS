@@ -36,13 +36,25 @@ namespace PGPARS.Data
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(string category, DateTime? startDate, DateTime? endDate)
+        public async Task<IEnumerable<AuditLog>> GetLogsByFiltersAsync(
+                                                List<string>? filters,
+                                                string? searchTerm,
+                                                DateTime? startDate,
+                                                DateTime? endDate)
         {
             var query = _context.AuditLogs.AsQueryable();
 
-            if (!string.IsNullOrEmpty(category))
+            if (filters != null && filters.Any())
+            {           
+                query = query.Where(a => filters.Contains(a.Category));
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                query = query.Where(a => a.Category == category);
+                query = query.Where(a =>
+                    a.Action.Contains(searchTerm) ||
+                    a.Details.Contains(searchTerm) ||
+                    a.Actor.Contains(searchTerm));
             }
 
             if (startDate.HasValue)
@@ -52,12 +64,12 @@ namespace PGPARS.Data
 
             if (endDate.HasValue)
             {
-                // Ensure we include logs from the entire day (if filtering by day only)
                 query = query.Where(a => a.TimeStamp <= endDate.Value.AddDays(1).AddTicks(-1));
             }
 
             return await query.OrderByDescending(a => a.TimeStamp).ToListAsync();
         }
+
 
         public async Task<List<string>> GetCategoriesAsync()
         {

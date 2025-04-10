@@ -47,44 +47,9 @@
                 }
             </table>
         </div>
-                <!--<div class="dashboard-cell">
-                    <div class="table-responsive shadow-sm rounded">
-                        <table class="table align-middle text-dark">
-                            <tbody>
-                                <thead>
-                                    <th>Applicant</th>
-                                    <th>Reviews</th>
-                                </thead>
-
-                                {
-                                    var reviews = new List<(string NNumber, DateTime DateTime)>
-                                    {
-                                        ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-10)),
-                                        ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-20)),
-                                        ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-30))
-                                    }
-                                    .OrderByDescending(r => r.DateTime)
-                                    .ToList();
-
-                                    foreach (var review in reviews)
-                                    {
-                                        <tr>
-                                            <td>Applicant</td>
-                                            <td>
-                                                review.NNumber - review.DateTime.ToString("MM/dd/yyyy HH:mm")
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-                    </div>-->
     </div>
 </body>
-
+                
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function ()
@@ -146,3 +111,41 @@
             .catch(error => console.error("Error fetching chart data:", error));
     });
 </script>
+
+<!-- Old Stuff
+
+    <div class="dashboard-cell">
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table align-middle text-dark">
+                <tbody>
+                    <thead>
+                        <th>Applicant</th>
+                        <th>Reviews</th>
+                    </thead>
+
+                    {
+                        var reviews = new List<(string NNumber, DateTime DateTime)>
+                        {
+                            ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-10)),
+                            ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-20)),
+                            ("N" + new Random().Next(10000000, 99999999), DateTime.Now.AddMinutes(-30))
+                        }
+                        .OrderByDescending(r => r.DateTime)
+                        .ToList();
+
+                        foreach (var review in reviews)
+                        {
+                            <tr>
+                                <td>Applicant</td>
+                                <td>
+                                    review.NNumber - review.DateTime.ToString("MM/dd/yyyy HH:mm")
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+-->

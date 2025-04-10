@@ -12,13 +12,17 @@ namespace PGPARS.Controllers
 {
     public class ApplicantController : Controller
     {
+        private readonly IReviewRepository _reviewRepository;
+        private readonly IFundingRepository _fundingRepository;
         private readonly IApplicantRepository _applicantRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly AuditLogService _logger;
 
-        public ApplicantController(IApplicantRepository applicantRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
+        public ApplicantController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
         {
             _applicantRepository = applicantRepository;
+            _reviewRepository = reviewRepository;
+            _fundingRepository = fundingRepository;
             _webHostEnvironment = webHostEnvironment;
             _logger = auditLogService;
         }
@@ -50,6 +54,8 @@ namespace PGPARS.Controllers
             // Items to pass to the view
             ViewData["CurrentYear"] = year;
             ViewBag.CohortYears = cohortYears;
+
+            // for preserving these values in the view
             ViewBag.Cohort = cohort;
             ViewData["SearchString"] = searchString;
 
@@ -62,6 +68,8 @@ namespace PGPARS.Controllers
             var applicants = await _applicantRepository.GetApplicantsAsync();
             var applicant = applicants.FirstOrDefault(a => a.Nnumber == Nnumber);
 
+            // Obtain the reviewers for the applicant and pass to the view
+
             if (applicant == null)
             {
                 return NotFound();
@@ -70,7 +78,6 @@ namespace PGPARS.Controllers
             return View(applicant);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditApplicant(string Nnumber)
         {
@@ -111,7 +118,6 @@ namespace PGPARS.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditApplicant(ApplicantEditViewModel model)

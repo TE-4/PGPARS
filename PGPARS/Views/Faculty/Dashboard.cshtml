@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Faculty Dashboard";
+    var currentCohort = 2025;
+
+    var assignedReviews = new List<dynamic>
+    {
+        new { ReviewId = 1, ApplicantName = "Alice Johnson", Status = "In Progress" },
+        new { ReviewId = 2, ApplicantName = "Bob Smith", Status = "Not Started" },
+        new { ReviewId = 3, ApplicantName = "Carlos Ramirez", Status = "Submitted" }
+    };
+
+    var assignedInterviews = new List<dynamic>
+    {
+        new { InterviewId = 1, ApplicantName = "Dana Lee", InterviewDate = DateTime.Today.AddDays(1), Status = "Scheduled" },
+        new { InterviewId = 2, ApplicantName = "Eli Turner", InterviewDate = DateTime.Today.AddDays(3), Status = "Completed" }
+    };
+}
+
+<body>
+    <div class="main">
+        <div class="chart-container">
+            (Graph goes here)
+            <canvas id="facultyChart"></canvas>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Assigned Reviews</h5>
+                        <p class="card-text display-6">@assignedReviews.Count</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Assigned Interviews</h5>
+                        <p class="card-text display-6">@assignedInterviews.Count</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-secondary mb-3 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Current Cohort</h5>
+                        <p class="card-text display-6">@currentCohort</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive shadow-sm rounded">
+            <h4 class="text-white bg-dark p-3">Assigned Reviews</h4>
+            <table class="table align-middle text-dark">
+                <thead class="text-uppercase">
+                    <tr>
+                        <th>Applicant</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var review in assignedReviews)
+                    {
+                        <tr>
+                            <td>@review.ApplicantName</td>
+                            <td>@review.Status</td>
+                            <td>
+                                <button type="submit" class="btn btn-lg" style="background-color: royalblue; border: 2px solid black;">
+                                    <div class="bi bi-eye text-outline">&ensp;View</div>
+                                </button>
+                                <!--<a href="#" class="btn btn-sm btn-outline-primary">View</a>-->
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive shadow-sm rounded">
+            <h4 class="text-white bg-dark p-3">Assigned Interviews</h4>
+            <table class="table align-middle text-dark">
+                <thead class="text-uppercase">
+                    <tr>
+                        <th>Applicant</th>
+                        <th>Interview Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var interview in assignedInterviews)
+                    {
+                        <tr>
+                            <td>@interview.ApplicantName</td>
+                            <td>@interview.InterviewDate.ToString("MM/dd/yyyy")</td>
+                            <td>@interview.Status</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black;">
+                                    <div class="bi bi-box-arrow-in-up text-outline">&ensp;Submit</div>
+                                </button>
+                                <!--<a href="#" class="btn btn-sm btn-outline-success">Submit</a>-->
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('/Faculty/GetChartData')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('facultyChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Applicant Status',
+                            data: data.values,
+                            borderWidth: 0,
+                            backgroundColor: '#0d215f'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: 'white',
+                                    font: { size: 14 }
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: 'white',
+                                    font: { size: 14 }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: 'white',
+                                    font: { size: 14 }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Applicant Overview',
+                                color: 'white',
+                                font: { size: 20 }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error("Chart loading error:", error));
+    });
+</script>

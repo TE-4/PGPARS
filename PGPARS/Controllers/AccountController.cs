@@ -59,7 +59,7 @@ namespace PGPARS.Controllers
             }
             if (User.IsInRole("Staff"))
             {
-                return RedirectToAction("Dashboard", "Staff");
+                return RedirectToAction("ApplicantDirectory", "Applicant");
             }
             return RedirectToAction("Login", "Account");
         }
@@ -114,7 +114,8 @@ namespace PGPARS.Controllers
                 var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == model.Nnumber);
                 if(userExists != null)
                 {
-                    ModelState.AddModelError(string.Empty, "User with this N-Number already exists.");
+                    TempData["ErrorMessage"] = "A User with this N-Number already exists";
+                    ModelState.AddModelError("Nnumber", "A user with this N-Number already exists");
                     return View(model);
                 }
 
@@ -139,7 +140,7 @@ namespace PGPARS.Controllers
                         await _userManager.AddToRoleAsync(user, role.Name);
                         Debug.WriteLine("Assigned role to new user successfully!");
                     }
-                    TempData["UserCreated"] = "User successfully created!";
+                    TempData["SuccessMessage"] = "User successfully created!";
 
                     // log the user creation
                     await _logger.LogAction("User Creation", User.Identity.Name, $"User {user.Email} created successfully.", "ACCOUNT");
@@ -375,7 +376,11 @@ namespace PGPARS.Controllers
             return View(reviews);
         }
 
-
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
 
     }// end class

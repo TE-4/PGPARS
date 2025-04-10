@@ -1,55 +1,66 @@
 ﻿@model IEnumerable<PGPARS.Models.Applicant>
+
 <body>
     <div class="main">
-            <div class="container-opaque">
+        <div class="container-opaque">
             <div class="text-center text-outline p-3">
                 <h2>Applicant Directory</h2>
             </div>
         </div>
+
         <br />
-        <!-- Buttons -->
-        <form id="applicantForm" method="post">
-            <div class="d-flex justify-content-between gap-1 flex-wrap">
-                <div class="d-flex gap-3">
-                <!-- Upload CSV button that triggers the modal -->
-                <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                    <div class="bi bi-upload text-outline">&ensp;Import File</div>
-                </button>
 
-                <button type="submit" formaction="@Url.Action("DeleteSelectedApplicants", "Applicant")" formmethod="post" class="btn btn-danger btn-lg" style="border: 2px solid black">
-                    <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
-                </button>
+        <!-- Beginning of GET and POST forms -->
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
 
-                <button type="submit" formaction="@Url.Action("AssignToFaculty", "Applicant")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
-                    Assign to Faculty
-                </button>
+            <!-- GET Form -->
+            <form method="get" class="d-inline-block">
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    <!-- Cohort Filter -->
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="cohort" class="form-label mb-0 fw-bold text-outline">Cohort:</label>
+                        <select id="cohort" name="cohort" class="form-select form-select-lg" style="min-width: 160px;">
+                            <option value="@ViewData["CurrentYear"]">@ViewData["CurrentYear"]</option>
+                            @foreach (int cohort in ViewBag.CohortYears)
+                            {
+                                <option value="@cohort">@cohort</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="text" name="searchString" class="form-control" style="min-height: 50px;" placeholder="Search by name..." value="@ViewData["SearchString"]" />
+                        <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
+                            <div class="bi bi-search text-outline">&ensp;Search</div>
+                        </button>
+                    </div>
                 </div>
+            </form>
 
-                
-               <!-- Cohort Dropdown Selection -->
-                <div class="d-flex align-items-center gap-2">
-                    <label for="cohort" class="form-label mb-0"><strong>Cohort:</strong></label>
-                    <select id="cohort" name="cohort" class="form-select" style="min-height: 50px";>
-                        <option value="@ViewData["CurrentYear"]"><strong>@ViewData["CurrentYear"]</strong></option>
-                        @foreach (var cohort in ViewBag.CohortYears)
-                        {
-                            <option value="@cohort">
-                                <strong>@cohort</strong>
-                            </option>
-                        }
-                    </select>
-                </div>
+            <!-- POST Form -->
+            <form id="applicantForm" method="post" class="w-100">
+                <!-- POST Buttons -->
+                @if (User.Identity.IsAuthenticated && !User.IsInRole("Staff"))
+                {
+                    <div class="d-flex gap-2 align-items-center mt-3 flex-wrap">
 
-                <!-- Search bar -->
-                <div class="d-flex gap-2">
-                    <input type="text" name="searchString" class="form-control" style="min-height: 50px;" placeholder="Search by name..." value="@ViewData["SearchString"]" />
-                    <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
-                        <div class="bi bi-search text-outline">&ensp;Search</div>
-                    </button>
-                </div>
-            </div>
+                        <button type="submit" formaction="@Url.Action("DeleteSelectedApplicants", "Applicant")" formmethod="post" class="btn btn-danger btn-lg" style="border: 2px solid black;">
+                            <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
+                        </button>
 
-            <!-- Table -->
+                        <button type="submit" formaction="@Url.Action("AssignToFaculty", "Applicant")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black;">
+                            <div class="bi bi-person-plus text-outline">&ensp;Assign to Faculty</div>
+                        </button>
+
+                        <!-- Upload Modal Button -->
+                        <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black;" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                            <div class="bi bi-upload text-outline">&ensp;Import File</div>
+                        </button>
+                    </div>
+                }
+
+                <!-- Applicant Table -->
                 <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
                     <table class="table align-middle text-dark">
                         <thead class="text-uppercase">
@@ -66,7 +77,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model == null)
+                            @if (Model == null || !Model.Any())
                             {
                                 <tr>
                                     <td colspan="6" class="text-center text-muted">No applicants found.</td>
@@ -79,9 +90,9 @@
                                     <tr>
                                         <td class="container-checkbox align-content-center">
                                             <label>
-                                            <input type="checkbox" name="SelectedApplicants" value="@applicant.Nnumber" class="selectApplicant"/>
-                                            <span class="checkmark"></span>
-                                        </label>
+                                                <input type="checkbox" name="SelectedApplicants" value="@applicant.Nnumber" class="selectApplicant" />
+                                                <span class="checkmark"></span>
+                                            </label>
                                         </td>
                                         <td class="text-center specialtext">
                                             <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="color: white; text-decoration: none;">
@@ -92,78 +103,52 @@
                                         <td class="text-center">@applicant.Email</td>
                                         <td class="text-center">@applicant.Phone</td>
                                         <td class="text-center">@applicant.Nnumber</td>
-                                        <!--<td>
-                                            <div class="d-flex justify-content-center gap-3">
-                                                <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none;">
-                                                    <button type="submit" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black">
-                                                        <div class="bi bi-eye">&ensp;Details</div>
-                                                    </button>
-                                                </a>
-                                                <a asp-action="EditApplicant" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" style="text-decoration: none;">
-                                                    <button type="submit" class="btn btn-secondary btn-lg" style="border: 2px solid black">
-                                                        <div class="bi bi-pencil">&ensp;Edit</div>
-                                                    </button>
-                                                </a>
-                                                <form asp-action="DeleteApplicant" asp-controller="Applicant" asp-route-Nnumber="@applicant.Nnumber" method="post" class="d-inline-block"
-                                                    onsubmit="return confirm('Are you sure you want to delete this applicant?');">
-                                                    <button type="submit" class="btn btn-danger btn-lg" style="border: 2px solid black">
-                                                        <div class="bi bi-trash">&ensp;Delete</div>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>-->
                                     </tr>
                                 }
                             }
                         </tbody>
                     </table>
                 </div>
-            </span>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalLabel">Upload Applicants</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form for CSV upload -->
-                    <form asp-controller="FileUpload" asp-action="ApplicantUpload" method="post" enctype="multipart/form-data">
+        <!-- Modal for Uploading Applicants -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content text-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel">Upload Applicants</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-controller="FileUpload" asp-action="ApplicantUpload" method="post" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <label for="cohort" class="form-label text-dark"><strong>Cohort Year:</strong></label>
+                                <input type="number" id="cohort" name="cohort" class="form-control" placeholder="Cohort Year.." min="2000" max="2100" required>
+                            </div>
 
-                        <!-- Cohort input field -->
-                        <div class="form-group mb-3">
-                            <label for="cohort" class="form-label"><strong>Cohort Year:</strong></label>
-                            <input type="number" id="cohort" name="cohort" class="form-control" placeholder="Cohort Year.." min="2000" max="2100" required>
-                        </div>
+                            <div class="form-group mb-4">
+                                <label for="csvFile" class="form-label text-dark"><strong>Choose Excel or CSV File (GDP_Applicant..):</strong></label>
+                                <input type="file" id="fileUpload" name="fileUpload" class="form-control" accept=".csv, .xlsx" required>
+                            </div>
 
-                        <div class="form-group mb-4">
-                            <label for="csvFile" class="form-label"><strong>Choose Excel or CSV File(GDP_Applicant..):</strong></label>
-                            <input type="file" id="fileUpload" name="fileUpload" class="form-control" 
-                            accept=".csv, .xlsx" required>
-                        </div>
-                        <button type="submit" class="btn btn-lg w-100" style="background-color:royalblue; color: white; border: 2px solid black;">
-                            <div class="text-outline">Upload</div>
-                        </button>
-                        <!--<button type="submit" class="btn btn-primary w-100">Upload</button>-->
-                    </form>
+                            <button type="submit" class="btn btn-lg w-100" style="background-color:royalblue; color: white; border: 2px solid black;">
+                                <div class="text-outline">Upload</div>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        document.getElementById("selectAll").addEventListener("change", function ()
-        {
-            let checkboxes = document.querySelectorAll(".selectApplicant");
-            checkboxes.forEach(checkbox =>
-            {
-                checkbox.checked = this.checked;
+        <!-- JS: Select All Checkboxes -->
+        <script>
+            document.getElementById("selectAll").addEventListener("change", function () {
+                let checkboxes = document.querySelectorAll(".selectApplicant");
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
             });
-        });
-    </script>
-
+        </script>
+    </div>
 </body>

@@ -15,11 +15,13 @@
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
             <a class="specialtext" asp-action="AdminDashboard" asp-controller="Admin">Dashboard</a><br />
-            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <a class="specialtext" asp-action="Directory" asp-controller="Account">User Directory</a><br />
+            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
+            <a class="specialtext" asp-action="Dashboard" asp-controller="Faculty">Faculty Dashboard</a><br />
             <a class="specialtext" asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
             <a class="specialtext" asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
             <a class="specialtext" asp-action="Index" asp-controller="Audit">Action History</a>
+
             <p class="text-center sidenav-footer">
                 <a class="specialtext" asp-action="Logout" asp-controller="Account">Logout</a>
                 <br/>
@@ -59,6 +61,30 @@
             </div>
         </div>
     }
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Staff"))
+    {
+        <div class="sidenav a">
+            <p class="text-center">Welcome, @User.Identity.Name!</p>
+            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
+            <!--
+            <a class="specialtext" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a>
+            <a class="specialtext" asp-action="CommitteeDashboard" asp-controller="Committee">Dashboard</a><br />
+            <a class="specialtext" asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
+            -->
+            <p class="text-center sidenav-footer">
+                <a class="specialtext" asp-action="Logout" asp-controller="Account">Logout</a>
+                &copy; 2024 - PGPARS<br />Magic in Development
+            </p>
+        </div>
+        <div class="header">
+            <div class="headerContent">
+                <strong>Psychology Graduate Program Applicant Review System</strong>
+            </div>
+            <div class="headerLogo">
+                <img src="~/images/UNF-Logo.png" alt="UNF Logo" />
+            </div>
+        </div>
+    }
     @if (!User.Identity.IsAuthenticated)
     {
         <div class="header" style="left: 0px">
@@ -82,7 +108,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    
+    <!--This is to slightly move the toastr notification downward from the top center-->
+    <style>
+        .toast-top-center{
+            top: 70px;
+        }
+    </style>
     <script>
         toastr.options = {
             "positionClass": "toast-top-center", // Positions the toast at the top center
@@ -94,7 +125,7 @@
             "hideEasing": "linear",
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
-            "closeButton": "true"
+            "closeButton": true
         };
 
     

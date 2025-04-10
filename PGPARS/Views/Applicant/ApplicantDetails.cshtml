@@ -47,7 +47,7 @@
             <!-- Review Info -->
             <div class="row">
                 <div class="col-md-4">
-                    <p><strong><i class="bi bi-person"></i> Reviewer 1:</strong> *Reviewer 1*</p>
+                    <p><strong><i class="bi bi-person"></i> Reviewer 1:</strong> </p>
                 </div>
                 <div class="col-md-4">
                     <p><strong><i class="bi bi-person"></i> Reviewer 2:</strong> *Reviewer 2*</p>
@@ -91,13 +91,15 @@
                             <div class="bi bi-pencil text-outline">&ensp;Edit</div>
                         </button>
                     </a>
-
-                    <form asp-action="DeleteApplicant" asp-controller="Applicant" asp-route-id="@Model.Nnumber" method="post"
-                          onsubmit="return confirm('Are you sure you want to delete this applicant?');">
-                        <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;">
-                            <div class="bi bi-trash text-outline">&ensp;Delete</div>
-                        </button>
-                    </form>
+                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Staff"))
+                    {
+                        <form asp-action="DeleteApplicant" asp-controller="Applicant" asp-route-id="@Model.Nnumber" method="post"
+                        onsubmit="return confirm('Are you sure you want to delete this applicant?');">
+                            <button type="submit" class="btn btn-danger btn-lg" style="color: white; border: 2px solid black;">
+                                <div class="bi bi-trash text-outline">&ensp;Delete</div>
+                            </button>
+                        </form>
+                    }
                 </div>
             </div>
         </div>

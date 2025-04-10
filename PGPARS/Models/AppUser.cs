@@ -8,6 +8,7 @@ namespace PGPARS.Models
     {
         
         [Required]
+        [RegularExpression(@"^[nN]\d{8}$", ErrorMessage = "Nnumber must be in the format 'nXXXXXXXX' or 'NXXXXXXXX'.")]
         public string Nnumber { get; set; }
 
         [Required]
