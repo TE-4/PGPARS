@@ -175,10 +175,15 @@ namespace PGPARS.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+            var roles = await _userManager.GetRolesAsync(user);
+            
             if (user == null) 
             {
                 return NotFound();
             }
+
+            
+
             var model = new EditViewModel
             {
                 Id = user.Id,
@@ -186,9 +191,9 @@ namespace PGPARS.Controllers
                 LastName = user.LastName,
                 Nnumber = user.Nnumber,
                 Position = user.Position,
-                Email = user.Email};
-
-
+                Email = user.Email,
+                Role = roles.FirstOrDefault()
+            };
 
             return View(model);
         }

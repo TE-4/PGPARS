@@ -115,7 +115,7 @@ namespace PGPARS.Controllers
                     _fundingRepository.DeleteAllocation(allocation.Id);
                 }
 
-                _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocations for funding: {funding.Source}", "ALLOCATIONS");
+                _logger.LogAction("Delete", User.Identity.Name, $"Deleted allocations for funding: {funding.Source}", "ALLOCATION");
             }
 
             // Proceed with deleting the funding record
