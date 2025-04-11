@@ -68,5 +68,13 @@ namespace PGPARS.Data
         {
             await _context.SaveChangesAsync();
         }
+
+
+        public async Task<List<Applicant>> GetApplicantsByNnumbersAsync(List<string> Nnumbers)
+        {
+            return await _context.Applicants
+                .Where(a => Nnumbers.Contains(a.Nnumber))
+                .ToListAsync();
+        }
     }
 }

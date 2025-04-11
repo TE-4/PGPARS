@@ -174,21 +174,20 @@ namespace PGPARS.Controllers
                 return RedirectToAction("ApplicantDirectory");
             }
 
-            foreach (var Nnumber in SelectedApplicants)
-            {
-                var applicants = await _applicantRepository.GetApplicantsAsync();
-                var applicant = applicants.FirstOrDefault(a => a.Nnumber.Equals(Nnumber));
+            // Fetch only the applicants that match the selected Nnumbers
+            var applicantsToDelete = await _applicantRepository.GetApplicantsByNnumbersAsync(SelectedApplicants);
 
-                if (applicant != null)
-                {
-                    _applicantRepository.DeleteApplicant(Nnumber);
-                    await _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
-                }
+            foreach (var applicant in applicantsToDelete)
+            {
+                _applicantRepository.DeleteApplicant(applicant.Nnumber);
+                await _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
             }
+
             TempData["SuccessMessage"] = "Applicants deleted";
             await _applicantRepository.SaveChangesAsync();
 
             return RedirectToAction("ApplicantDirectory");
         }
+
     }
 }

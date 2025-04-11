@@ -10,7 +10,9 @@ namespace PGPARS.Data
 
         Task<List<Applicant>> GetApplicantsAsync(); 
 
-        Task<Applicant> GetApplicantByIdAsync(string Nnumber); 
+        Task<Applicant> GetApplicantByIdAsync(string Nnumber);
+
+        Task<List<Applicant>> GetApplicantsByNnumbersAsync(List<string> Nnumbers);
 
         int AddApplicants(List<Applicant> applicants);
 
@@ -19,5 +21,6 @@ namespace PGPARS.Data
         void DeleteApplicant(string Nnumber);
 
         Task SaveChangesAsync();
+         
     }
 }
