@@ -43,13 +43,13 @@ namespace PGPARS.Models.ViewModels
         [Display(Name = "Reviewer 2")]
         public string? Reviewer2 { get; set; }
 
-        [Display(Name = "Reveiwer 1 Decision")]
+        [Display(Name = "Reviewer 1 Decision")]
         public bool? Rev1Decision { get; set; }
 
-        [Display(Name = "Reveiwer 2 Decision")]
+        [Display(Name = "Reviewer 2 Decision")]
         public bool? Rev2Decision { get; set; }
 
-        [Display(Name = "Reveiwers Agree")]
+        [Display(Name = "Reviewers Agree")]
         public bool? RevAgree { get; set; }
 
         [Display(Name = "Committee Review")]
@@ -64,8 +64,11 @@ namespace PGPARS.Models.ViewModels
         [Display(Name = "Mentor 3")]
         public string? Mentor3 { get; set; }
 
-        [Display(Name = "Selected Mentor")]
-        public string? SelectMentor { get; set; }
+        [Display(Name = "Mentor 4")]
+        public string? Mentor4 { get; set; }
+
+        [Display(Name = "Assigned Mentor")]
+        public string? AssignedMentor { get; set; }
 
         [Display(Name = "GPA Overall")]
         public decimal? GPAOverall { get; set; }

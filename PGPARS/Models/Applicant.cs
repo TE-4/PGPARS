@@ -44,7 +44,7 @@ namespace PGPARS.Models
         public bool? Rev1Decision { get; set; } //Review / Committee
         public bool? Rev2Decision { get; set; } //Review / Committee
         public bool? RevAgree { get; set; } //Review / Committee
-        public int? NumberOfReviews { get; set; } = 0; // Keeps track of how many reviews have been assigned 
+        public int? NumberOfReviews { get; set; } = 0; // Keeps track of how many reviews have been assigned (helps with assignment process)
 
 
         // School Information

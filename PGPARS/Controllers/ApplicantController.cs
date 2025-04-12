@@ -107,7 +107,7 @@ namespace PGPARS.Controllers
                 Mentor1 = applicant.Mentor1,
                 Mentor2 = applicant.Mentor2,
                 Mentor3 = applicant.Mentor3,
-                SelectMentor = applicant.SelectMentor,
+                AssignedMentor = applicant.AssignedMentor,
                 GPAOverall = applicant.GPAOverall,
                 GPAPsych = applicant.GPAPsych,
                 GPAComment = applicant.GPAComment,
@@ -151,7 +151,7 @@ namespace PGPARS.Controllers
             applicant.Mentor1 = model.Mentor1;
             applicant.Mentor2 = model.Mentor2;
             applicant.Mentor3 = model.Mentor3;
-            applicant.SelectMentor = model.SelectMentor;
+            applicant.AssignedMentor = model.AssignedMentor;
             applicant.GPAOverall = model.GPAOverall;
             applicant.GPAPsych = model.GPAPsych;
             applicant.GPAComment = model.GPAComment;

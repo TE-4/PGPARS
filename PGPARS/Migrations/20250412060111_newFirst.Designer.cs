@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250401015707_first")]
-    partial class first
+    [Migration("20250412060111_newFirst")]
+    partial class newFirst
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -261,6 +261,9 @@ namespace PGPARS.Migrations
                     b.Property<DateTime?>("AppSubmitDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("AssignedMentor")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CitizenshipStatus")
                         .HasColumnType("nvarchar(max)");
 
@@ -337,45 +340,6 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("School1Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School2GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School2Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School2Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School3GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School3Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School3Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School4GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School4Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School4Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School5GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School5Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School5Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SelectMentor")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sex")
