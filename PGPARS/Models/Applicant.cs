@@ -51,26 +51,14 @@ namespace PGPARS.Models
         public string? School1Institution { get; set; } //School
         public string? School1Major { get; set; } //School
         public decimal? School1GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School2Institution { get; set; } //School
-        public string? School2Major { get; set; } //School
-        public decimal? School2GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School3Institution { get; set; } //School
-        public string? School3Major { get; set; } //School
-        public decimal? School3GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School4Institution { get; set; } //School
-        public string? School4Major { get; set; } //School
-        public decimal? School4GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School5Institution { get; set; } //School
-        public string? School5Major { get; set; } //School
-        public decimal? School5GPA { get; set; } //Last 60+ hour GPA (Grad School only)
-
+        
 
         // Mentors 
         public string? Mentor1 { get; set; } //mentor / advisor?
         public string? Mentor2 { get; set; } //mentor / advisor?
         public string? Mentor3 { get; set; } //mentor / advisor?
         public string? Mentor4 { get; set; } //mentor / advisor?
-        public string? SelectMentor { get; set; } //mentor / advisor?
+        public string? AssignedMentor { get; set; } //mentor / advisor?
         
         
         // Navigation properties
