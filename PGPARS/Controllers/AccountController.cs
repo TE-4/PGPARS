@@ -50,11 +50,16 @@ namespace PGPARS.Controllers
             }
             if (User.IsInRole("Committee"))
             {
-                string id = _userManager.GetUserId(User);
-                return RedirectToAction("AssignedReviews", new { Id = id });
+                // possibly load the reviews and interviews in here
+
+                
+                return RedirectToAction("Dashboard", "Faculty");
             }
             if (User.IsInRole("Faculty"))
             {
+                // possibly load the reviews and interviews in here
+
+
                 return RedirectToAction("Dashboard", "Faculty");
             }
             if (User.IsInRole("Staff"))

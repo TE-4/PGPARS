@@ -17,8 +17,11 @@ namespace PGPARS.Controllers
         private readonly IApplicantRepository _applicantRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly AuditLogService _logger;
+        
 
-        public ApplicantController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
+        public ApplicantController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository
+            , IReviewRepository reviewRepository, IWebHostEnvironment webHostEnvironment
+            , AuditLogService auditLogService)
         {
             _applicantRepository = applicantRepository;
             _reviewRepository = reviewRepository;
@@ -69,6 +72,8 @@ namespace PGPARS.Controllers
             var applicant = applicants.FirstOrDefault(a => a.Nnumber == Nnumber);
 
             // Obtain the reviewers for the applicant and pass to the view
+            var reviewers = await _reviewRepository.GetReviewsByApplicantIdAsync(Nnumber);
+            ViewBag.Reviews = reviewers;
 
             if (applicant == null)
             {

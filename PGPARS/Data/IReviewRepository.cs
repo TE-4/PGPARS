@@ -9,6 +9,8 @@ namespace PGPARS.Data
         Task<IEnumerable<Review>> GetReviewsAsync();
         Review GetReviewById(int ReviewId);
         Task<Review> GetReviewByIdAsync(int ReviewId);
+        Task<List<Review>> GetReviewsByApplicantIdAsync(string ApplicantId);
+        Task<List<AppUser>> GetReviewersByApplicantIdAsync(string ApplicantId);
         void AddReview(Review review);
         Task AddReviewAsync(Review review);
         Task AddReviewsAsync(List<Review> reviews);
