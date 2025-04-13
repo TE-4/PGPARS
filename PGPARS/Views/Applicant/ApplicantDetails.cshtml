@@ -17,6 +17,7 @@
                 <h3 class="mb-0">@Model.FullName</h3>
             </div>
             <hr class="border-light" />
+
             <!-- Personal Info -->
             <div class="row">
                 <div class="col-md-6">
@@ -31,6 +32,7 @@
                 </div>
             </div>
             <hr class="border-light" />
+
             <!-- Course Info -->
             <div class="row">
                 <div class="col-md-4">
@@ -96,7 +98,7 @@
                             <div class="bi bi-pencil text-outline">&ensp;Edit</div>
                         </button>
                     </a>
-                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Staff"))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <form asp-action="DeleteApplicant" asp-controller="Applicant" asp-route-id="@Model.Nnumber" method="post"
                         onsubmit="return confirm('Are you sure you want to delete this applicant?');">
