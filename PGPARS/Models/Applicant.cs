@@ -17,12 +17,19 @@ namespace PGPARS.Models
         public string? Email { get; set; } 
         public string? Phone { get; set; } 
         public string? AdvisorEmail { get; set; }
-        public string? Status { get; set; } //Most significant, implement slider bar?
         public string? Race { get; set; } 
         public string? Sex { get; set; } 
         public string? PrimaryCitizenship { get; set; } 
         public string? CitizenshipStatus { get; set; } 
-        public string? SharePointPdfUrl { get; set; }
+        public string? SharePointPdfUrl { get; set; } // This will need to be figured out soon
+
+        // Applicant Statuses
+        public string? Status { get; set; } //Most significant, implement slider bar?
+        public string? GradAcceptStatus { get; set; }
+        public string? WorkStatus { get; set; }
+        public bool? IsEnrolled { get; set; }
+        public bool? HasUnfEmail { get; set; }
+
 
         // Program related information
         public string? MissingItems { get; set; } 
