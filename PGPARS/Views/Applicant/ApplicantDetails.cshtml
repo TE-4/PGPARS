@@ -46,26 +46,39 @@
                 </div>
             </div>
             <hr class="border-light" />
-            
-            
+
+
 
             <!-- Review Info -->
             <div class="row">
-                @foreach(var review in ViewBag.Reviews as List<Review>){
-                <div class="col-md-4">
-                    <p>
+                @if(ViewBag.Reviews.Count == 0)
+                {
+                    <div class="col-md-4">
                         <strong><i class="bi bi-person"></i> Review Info</strong>
-                        @if (review.AppUser != null)
-                        {
-                                <p><strong>Reviewer:</strong> @review.AppUser.FirstName @review.AppUser.LastName</p>
-                                <p><strong><i class="bi bi-check"></i>Decision:</strong> @(review.DecisionRecommendation ?? "No Decision Yet")</p>
-                        }
-                        else
-                        {
-                            <em>Not assigned</em>
-                        }
-                    </p>
-                </div>
+                        <p>
+                            <em>No Reviewers Assigned Yet</em>
+                            <i class="bi bi-x-circle-fill text-danger ms-2" title="No Reviewer Assigned"></i>
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var review in ViewBag.Reviews as List<Review>)
+                    {
+                        <div class="col-md-4">
+                            <strong><i class="bi bi-person"></i> Review Info</strong>                          
+                            <p>
+                                <strong>Reviewer:</strong>
+                                @review.AppUser.FirstName @review.AppUser.LastName
+                                <i class="bi bi-check-circle-fill text-success ms-2" title="Reviewer Assigned"></i>
+                            </p>
+                            <p>
+                                <strong>Decision:</strong>
+                                @(review.DecisionRecommendation ?? "No Decision Yet")
+                            </p>
+                        </div>
+                
+                    }
                 }
                <hr class="border-light" />
                 <div class="col-md-4">

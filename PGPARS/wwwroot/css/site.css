@@ -497,3 +497,9 @@ body, html {
     list-style: none;
     padding-left: 0;
 }
+
+/*Placeholder text for search bar*/
+.lighter_placeholder{
+    color: #dddddd;
+    opacity: 1; /* Apparently this is a firefox fix */
+}

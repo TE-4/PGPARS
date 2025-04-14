@@ -20,9 +20,22 @@ namespace PGPARS.Services
 
         
         // Assign reviewers to applicants
-        public async Task AssignReviewersAsync()
+        public async Task AssignReviewersAsync(List<string>? selectedApplicants)
         {
-            var applicants = await _applicantRepository.GetApplicantsAsync();
+
+            // Create a list of applicants to be assigned
+            List<Applicant> applicants = new List<Applicant>();
+
+            // Either get all applicants, or just use the input list of applicants
+            if (selectedApplicants != null && selectedApplicants.Count > 0)
+            {
+                applicants = await _applicantRepository.GetApplicantsByNnumbersAsync(selectedApplicants);
+            }
+            else
+            {
+                applicants = await _applicantRepository.GetApplicantsAsync();
+            }
+                
 
             var committeeReviewers = await _userManager.GetUsersInRoleAsync("Committee");
             var adminReviewers = await _userManager.GetUsersInRoleAsync("Admin");
@@ -40,7 +53,7 @@ namespace PGPARS.Services
             int reviewerIndex = 0;
             int reviewCount = shuffledReviewers.Count;
 
-            // this list is to save in memory and only save to the database once at the end (performaance optimization)
+            // this list is to save in memory and only save to the database once at the end 
             List<Review> newReviews = new List<Review>();
 
             foreach (var applicant in applicants)
@@ -165,11 +178,7 @@ namespace PGPARS.Services
         }
 
 
-        // Manually assign a range of reviews
-        public async Task AssignRangeOfReviewers(string[] Nnumbers)
-        {
-
-        }
+        
         
     }
 }

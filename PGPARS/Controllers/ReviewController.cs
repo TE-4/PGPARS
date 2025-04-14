@@ -121,11 +121,11 @@ namespace PGPARS.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AssignReviewers()
+        public async Task<IActionResult> AssignReviewers(List<string>? selectedApplicants)
         {
             try
             {
-                await reviewAssignmentService.AssignReviewersAsync();
+                await reviewAssignmentService.AssignReviewersAsync(selectedApplicants);
                 await _logger.LogAction("Assign Reviewers", User.Identity.Name, "Reviewers automatically assigned", "REVIEW");
                 TempData["SuccessMessage"] = "Reviewers have been assigned successfully.";
             }
@@ -153,5 +153,7 @@ namespace PGPARS.Controllers
 
             return RedirectToAction("ReviewDirectory");
         }
+
+        
     }
 }
