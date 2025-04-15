@@ -154,6 +154,11 @@ namespace PGPARS.Controllers
             return RedirectToAction("ReviewDirectory");
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> SubmitReview()
+        {
+            return View();    
+        }
+
     }
 }

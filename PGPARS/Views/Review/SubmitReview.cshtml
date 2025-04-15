@@ -1,0 +1,120 @@
+﻿@model PGPARS.Models.Review
+
+@{
+    ViewData["Title"] = "Review Form";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4 bg-dark text-light">
+        <h3 class="mb-3"><i class="bi bi-journal-check"></i> Applicant Review Form</h3>
+        <hr class="border-light" />
+
+        <form asp-action="SubmitReview" method="post">
+            @Html.HiddenFor(m => m.Nnumber)
+            @Html.HiddenFor(m => m.AppUserId)
+            @Html.HiddenFor(m => m.ReviewNumber)
+
+            <!-- Review Sections -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="Cohort" class="form-label">Cohort Year</label>
+                    <input asp-for="Cohort" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ReviewComplete" class="form-label">Review Complete?</label>
+                    <select asp-for="ReviewComplete" class="form-control">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="fw-bold">Resume</legend>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label asp-for="ResumeQuality" class="form-label">Resume Quality</label>
+                        <input asp-for="ResumeQuality" class="form-control" />
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="ResumeComments" class="form-label">Comments</label>
+                        <textarea asp-for="ResumeComments" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label asp-for="ResExpQuality" class="form-label">Relevant Experience Quality</label>
+                    <input asp-for="ResExpQuality" class="form-control" />
+                </div>
+            </fieldset>
+
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="fw-bold">Writing Sample</legend>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label asp-for="WritingSampleQuality" class="form-label">Quality</label>
+                        <input asp-for="WritingSampleQuality" class="form-control" />
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="WritingSampleComments" class="form-label">Comments</label>
+                        <textarea asp-for="WritingSampleComments" class="form-control"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="fw-bold">Letters of Recommendation</legend>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label asp-for="LORRelevance" class="form-label">Relevance</label>
+                        <input asp-for="LORRelevance" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="LORQuality" class="form-label">Quality</label>
+                        <input asp-for="LORQuality" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="LORComments" class="form-label">Comments</label>
+                        <textarea asp-for="LORComments" class="form-control"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="fw-bold">Overall Fit</legend>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label asp-for="OverallFitQuality" class="form-label">Fit Quality</label>
+                        <input asp-for="OverallFitQuality" class="form-control" />
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="OverallFitComments" class="form-label">Comments</label>
+                        <textarea asp-for="OverallFitComments" class="form-control"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="mb-3">
+                <label asp-for="DecisionRecommendation" class="form-label">Decision Recommendation</label>
+                <input asp-for="DecisionRecommendation" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FollowUpRequired" class="form-label">Follow-Up Required?</label>
+                <select asp-for="FollowUpRequired" class="form-control">
+                    <option value="">-- Select --</option>
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FinalComments" class="form-label">Final Comments</label>
+                <textarea asp-for="FinalComments" class="form-control" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-light">
+                <i class="bi bi-save"></i> Submit Review
+            </button>
+        </form>
+    </div>
+</div>
