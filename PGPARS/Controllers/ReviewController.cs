@@ -143,7 +143,7 @@ namespace PGPARS.Controllers
             try
             {
                 await reviewAssignmentService.UnassignIncompleteReviewsAsync();
-                await _logger.LogAction("Unassign Incomplete Reviews", User.Identity.Name, "Incomplete reviews automatically unassigned", "REVIEW");
+                await _logger.LogAction("Unassign Incomplete Reviews", User.Identity.Name, "Incomplete reviews unassigned", "REVIEW");
                 TempData["SuccessMessage"] = "All incomplete reviews have been unassigned successfully.";
             }
             catch (Exception ex)
@@ -155,8 +155,10 @@ namespace PGPARS.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Committee")] 
         public async Task<IActionResult> SubmitReview()
         {
+
             return View();    
         }
 
