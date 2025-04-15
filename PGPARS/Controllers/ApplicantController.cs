@@ -17,8 +17,11 @@ namespace PGPARS.Controllers
         private readonly IApplicantRepository _applicantRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly AuditLogService _logger;
+        
 
-        public ApplicantController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository, IReviewRepository reviewRepository, IWebHostEnvironment webHostEnvironment, AuditLogService auditLogService)
+        public ApplicantController(IApplicantRepository applicantRepository, IFundingRepository fundingRepository
+            , IReviewRepository reviewRepository, IWebHostEnvironment webHostEnvironment
+            , AuditLogService auditLogService)
         {
             _applicantRepository = applicantRepository;
             _reviewRepository = reviewRepository;
@@ -69,6 +72,8 @@ namespace PGPARS.Controllers
             var applicant = applicants.FirstOrDefault(a => a.Nnumber == Nnumber);
 
             // Obtain the reviewers for the applicant and pass to the view
+            var reviewers = await _reviewRepository.GetReviewsByApplicantIdAsync(Nnumber);
+            ViewBag.Reviews = reviewers;
 
             if (applicant == null)
             {
@@ -107,7 +112,7 @@ namespace PGPARS.Controllers
                 Mentor1 = applicant.Mentor1,
                 Mentor2 = applicant.Mentor2,
                 Mentor3 = applicant.Mentor3,
-                SelectMentor = applicant.SelectMentor,
+                AssignedMentor = applicant.AssignedMentor,
                 GPAOverall = applicant.GPAOverall,
                 GPAPsych = applicant.GPAPsych,
                 GPAComment = applicant.GPAComment,
@@ -151,7 +156,7 @@ namespace PGPARS.Controllers
             applicant.Mentor1 = model.Mentor1;
             applicant.Mentor2 = model.Mentor2;
             applicant.Mentor3 = model.Mentor3;
-            applicant.SelectMentor = model.SelectMentor;
+            applicant.AssignedMentor = model.AssignedMentor;
             applicant.GPAOverall = model.GPAOverall;
             applicant.GPAPsych = model.GPAPsych;
             applicant.GPAComment = model.GPAComment;
@@ -174,21 +179,20 @@ namespace PGPARS.Controllers
                 return RedirectToAction("ApplicantDirectory");
             }
 
-            foreach (var Nnumber in SelectedApplicants)
-            {
-                var applicants = await _applicantRepository.GetApplicantsAsync();
-                var applicant = applicants.FirstOrDefault(a => a.Nnumber.Equals(Nnumber));
+            // Fetch only the applicants that match the selected Nnumbers
+            var applicantsToDelete = await _applicantRepository.GetApplicantsByNnumbersAsync(SelectedApplicants);
 
-                if (applicant != null)
-                {
-                    _applicantRepository.DeleteApplicant(Nnumber);
-                    await _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
-                }
+            foreach (var applicant in applicantsToDelete)
+            {
+                _applicantRepository.DeleteApplicant(applicant.Nnumber);
+                await _logger.LogAction("Delete", User.Identity.Name, "Deleted " + applicant.FullName, "APPLICANT");
             }
+
             TempData["SuccessMessage"] = "Applicants deleted";
             await _applicantRepository.SaveChangesAsync();
 
             return RedirectToAction("ApplicantDirectory");
         }
+
     }
 }

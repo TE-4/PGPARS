@@ -17,12 +17,19 @@ namespace PGPARS.Models
         public string? Email { get; set; } 
         public string? Phone { get; set; } 
         public string? AdvisorEmail { get; set; }
-        public string? Status { get; set; } //Most significant, implement slider bar?
         public string? Race { get; set; } 
         public string? Sex { get; set; } 
         public string? PrimaryCitizenship { get; set; } 
         public string? CitizenshipStatus { get; set; } 
-        public string? SharePointPdfUrl { get; set; }
+        public string? SharePointPdfUrl { get; set; } // This will need to be figured out soon
+
+        // Applicant Statuses
+        public string? Status { get; set; } //Most significant, implement slider bar?
+        public string? GradAcceptStatus { get; set; }
+        public string? WorkStatus { get; set; }
+        public bool? IsEnrolled { get; set; }
+        public bool? HasUnfEmail { get; set; }
+
 
         // Program related information
         public string? MissingItems { get; set; } 
@@ -44,33 +51,21 @@ namespace PGPARS.Models
         public bool? Rev1Decision { get; set; } //Review / Committee
         public bool? Rev2Decision { get; set; } //Review / Committee
         public bool? RevAgree { get; set; } //Review / Committee
-        public int? NumberOfReviews { get; set; } = 0; // Keeps track of how many reviews have been assigned 
+        public int? NumberOfReviews { get; set; } = 0; // Keeps track of how many reviews have been assigned (helps with assignment process)
 
 
         // School Information
         public string? School1Institution { get; set; } //School
         public string? School1Major { get; set; } //School
         public decimal? School1GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School2Institution { get; set; } //School
-        public string? School2Major { get; set; } //School
-        public decimal? School2GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School3Institution { get; set; } //School
-        public string? School3Major { get; set; } //School
-        public decimal? School3GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School4Institution { get; set; } //School
-        public string? School4Major { get; set; } //School
-        public decimal? School4GPA { get; set; } // Last 60+ hour GPA (Grad School only)
-        public string? School5Institution { get; set; } //School
-        public string? School5Major { get; set; } //School
-        public decimal? School5GPA { get; set; } //Last 60+ hour GPA (Grad School only)
-
+        
 
         // Mentors 
         public string? Mentor1 { get; set; } //mentor / advisor?
         public string? Mentor2 { get; set; } //mentor / advisor?
         public string? Mentor3 { get; set; } //mentor / advisor?
         public string? Mentor4 { get; set; } //mentor / advisor?
-        public string? SelectMentor { get; set; } //mentor / advisor?
+        public string? AssignedMentor { get; set; } //mentor / advisor?
         
         
         // Navigation properties

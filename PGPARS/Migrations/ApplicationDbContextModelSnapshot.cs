@@ -258,6 +258,9 @@ namespace PGPARS.Migrations
                     b.Property<DateTime?>("AppSubmitDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("AssignedMentor")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CitizenshipStatus")
                         .HasColumnType("nvarchar(max)");
 
@@ -284,6 +287,15 @@ namespace PGPARS.Migrations
 
                     b.Property<decimal?>("GPAPsych")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("GradAcceptStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("HasUnfEmail")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsEnrolled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -336,45 +348,6 @@ namespace PGPARS.Migrations
                     b.Property<string>("School1Major")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("School2GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School2Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School2Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School3GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School3Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School3Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School4GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School4Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School4Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("School5GPA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("School5Institution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("School5Major")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SelectMentor")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Sex")
                         .HasColumnType("nvarchar(max)");
 
@@ -382,6 +355,9 @@ namespace PGPARS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Nnumber");
@@ -521,6 +497,9 @@ namespace PGPARS.Migrations
                     b.Property<string>("AppUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Cohort")
+                        .HasColumnType("int");
 
                     b.Property<string>("DecisionRecommendation")
                         .HasColumnType("nvarchar(max)");

@@ -21,12 +21,11 @@ namespace PGPARS.Controllers
             DateTime? startDate, DateTime? endDate, 
             int page = 1, int pageSize = 20)
         {
-            
-
-            var categories = await _auditRepository.GetCategoriesAsync();
 
             filters ??= new List<string>();
-            ViewBag.Categories = new MultiSelectList(items: categories, selectedValues: filters);
+
+            var categories = await _auditRepository.GetCategoriesAsync();
+            ViewBag.Categories = categories;
 
             // Fetch filtered logs
             var logs = await _auditRepository.GetLogsByFiltersAsync(filters, searchTerm, startDate, endDate);

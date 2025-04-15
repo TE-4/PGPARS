@@ -41,7 +41,7 @@
             <!-- POST Form -->
             <form id="applicantForm" method="post" class="w-100">
                 <!-- POST Buttons -->
-                @if (User.Identity.IsAuthenticated && !User.IsInRole("Staff"))
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
                     <div class="d-flex gap-2 align-items-center mt-3 flex-wrap">
 
@@ -49,8 +49,8 @@
                             <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
                         </button>
 
-                        <button type="submit" formaction="@Url.Action("AssignToFaculty", "Applicant")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black;">
-                            <div class="bi bi-person-plus text-outline">&ensp;Assign to Faculty</div>
+                        <button type="submit" formaction="@Url.Action("AssignReviewers", "Review")" formmethod="post" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black;">
+                            <div class="bi bi-person-plus text-outline">&ensp;Assign for Review</div>
                         </button>
 
                         <!-- Upload Modal Button -->
@@ -141,7 +141,7 @@
             </div>
         </div>
 
-        <!-- JS: Select All Checkboxes -->
+        <!-- Select All Checkboxes -->
         <script>
             document.getElementById("selectAll").addEventListener("change", function () {
                 let checkboxes = document.querySelectorAll(".selectApplicant");

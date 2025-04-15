@@ -119,11 +119,11 @@ namespace PGPARS.Controllers
             }
             catch (ApplicationException ex)
             {
-                TempData["ErrorMessage"] = ex.Message;
+                TempData["ErrorMessage"] = $"An error occurred. Please try a valid file or consult the FAQ page if this issue persists.";
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+                TempData["ErrorMessage"] = $"An error occurred. Please try a valid file or consult the FAQ page if this issue persists.";
             }
 
             return RedirectToAction("ApplicantDirectory", "Applicant");
@@ -187,21 +187,43 @@ namespace PGPARS.Controllers
                     return RedirectToAction("Directory", "Account");
                 }
 
+                int skipped = 0;
+
                 foreach (var faculty in faculties)
                 {
                     var userExists = await _userManager.Users.FirstOrDefaultAsync(u => u.Nnumber == faculty.Nnumber);
                     if (userExists != null)
+                    {
+                        Debug.WriteLine($"User {faculty.Nnumber} already exists. Skipping upload.");
+                        skipped++;
                         continue;
+                    }
+                    
+                    // create the appuser object
+                    AppUser user = new AppUser
+                    {
+                        Nnumber = faculty.Nnumber,
+                        FirstName = faculty.FirstName,
+                        LastName = faculty.LastName,
+                        Email = faculty.Email,
+                        UserName = faculty.Email,
+                        Position = faculty.Position,                
+                    };
 
-                    var result = await _userManager.CreateAsync(faculty, "Password123!");
+                    var result = await _userManager.CreateAsync(user, "Password123!");
                     if (!result.Succeeded)
-                        continue;
+                    {
+                        Debug.WriteLine($"Failed to create {faculty.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
 
-                    var roleResult = await _userManager.AddToRoleAsync(faculty, "Faculty");
+                        continue;
+                    }
+                       
+
+                    var roleResult = await _userManager.AddToRoleAsync(user, "Faculty");
                     if (roleResult.Succeeded)
                     {
                         uploadCount++;
-                        await _logger.LogAction("Upload", User.Identity.Name, $"{faculty.FirstName} {faculty.LastName}", "ACCOUNT");
+                        await _logger.LogAction("Upload", faculty.FirstName + " " + faculty.LastName, $"{faculty.FirstName} {faculty.LastName}", "ACCOUNT");
                     }
                 }
 

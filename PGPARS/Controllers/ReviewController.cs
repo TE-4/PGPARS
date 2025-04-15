@@ -121,11 +121,11 @@ namespace PGPARS.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AssignReviewers()
+        public async Task<IActionResult> AssignReviewers(List<string>? selectedApplicants)
         {
             try
             {
-                await reviewAssignmentService.AssignReviewersAsync();
+                await reviewAssignmentService.AssignReviewersAsync(selectedApplicants);
                 await _logger.LogAction("Assign Reviewers", User.Identity.Name, "Reviewers automatically assigned", "REVIEW");
                 TempData["SuccessMessage"] = "Reviewers have been assigned successfully.";
             }
@@ -143,7 +143,7 @@ namespace PGPARS.Controllers
             try
             {
                 await reviewAssignmentService.UnassignIncompleteReviewsAsync();
-                await _logger.LogAction("Unassign Incomplete Reviews", User.Identity.Name, "Incomplete reviews automatically unassigned", "REVIEW");
+                await _logger.LogAction("Unassign Incomplete Reviews", User.Identity.Name, "Incomplete reviews unassigned", "REVIEW");
                 TempData["SuccessMessage"] = "All incomplete reviews have been unassigned successfully.";
             }
             catch (Exception ex)
@@ -153,5 +153,14 @@ namespace PGPARS.Controllers
 
             return RedirectToAction("ReviewDirectory");
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Committee")] 
+        public async Task<IActionResult> SubmitReview()
+        {
+
+            return View();    
+        }
+
     }
 }

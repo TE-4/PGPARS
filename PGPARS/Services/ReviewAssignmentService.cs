@@ -20,9 +20,22 @@ namespace PGPARS.Services
 
         
         // Assign reviewers to applicants
-        public async Task AssignReviewersAsync()
+        public async Task AssignReviewersAsync(List<string>? selectedApplicants)
         {
-            var applicants = await _applicantRepository.GetApplicantsAsync();
+
+            // Create a list of applicants to be assigned
+            List<Applicant> applicants = new List<Applicant>();
+
+            // Either get all applicants, or just use the input list of applicants
+            if (selectedApplicants != null && selectedApplicants.Count > 0)
+            {
+                applicants = await _applicantRepository.GetApplicantsByNnumbersAsync(selectedApplicants);
+            }
+            else
+            {
+                applicants = await _applicantRepository.GetApplicantsAsync();
+            }
+                
 
             var committeeReviewers = await _userManager.GetUsersInRoleAsync("Committee");
             var adminReviewers = await _userManager.GetUsersInRoleAsync("Admin");
@@ -40,7 +53,7 @@ namespace PGPARS.Services
             int reviewerIndex = 0;
             int reviewCount = shuffledReviewers.Count;
 
-            // this list is to save in memory and only save to the database once at the end (performaance optimization)
+            // this list is to save in memory and only save to the database once at the end 
             List<Review> newReviews = new List<Review>();
 
             foreach (var applicant in applicants)
@@ -56,7 +69,8 @@ namespace PGPARS.Services
                     {
                         Nnumber = applicant.Nnumber,
                         AppUserId = reviewer.Id,
-                        ReviewDate = DateTime.Now
+                        ReviewDate = DateTime.Now,
+                        Cohort = applicant.Cohort ?? 0
                     };
 
                     newReviews.Add(review);
@@ -92,16 +106,11 @@ namespace PGPARS.Services
 
             // get affected applicants
             var affectedApplicantIds = reviewsToDelete.Select(r => r.Nnumber).Distinct().ToList();
-            var affectedApplicants = await _applicantRepository.GetApplicantsAsync();
+            var affectedApplicants = await _applicantRepository.GetApplicantsByNnumbersAsync(affectedApplicantIds);
 
-            // 3️⃣ Reset NumberOfReviews for these applicants
-            foreach (var applicant in affectedApplicants)
-            {
-                if (affectedApplicantIds.Contains(applicant.Nnumber))
-                {
-                    applicant.NumberOfReviews = 0;
-                }
-            }
+            // reset the review count for affected applicants
+            affectedApplicants.ForEach(a => a.NumberOfReviews = 0);
+           
 
             // delete all incomplete reviews
             foreach (var review in reviewsToDelete)
@@ -109,13 +118,12 @@ namespace PGPARS.Services
                 _reviewRepository.DeleteReview(review.ReviewNumber);
             }
 
-            // save all changes at the end (performance optimization)
+            // save all changes at the end 
             await _reviewRepository.SaveChangesAsync();
             await _applicantRepository.SaveChangesAsync();
         }
 
 
-        // Manually assign a single reviewer to an applicant
         // Manually assign a single reviewer to an applicant
         public async Task AssignReviewer(string nnumber, string reviewerId)
         {
@@ -151,25 +159,22 @@ namespace PGPARS.Services
             {
                 Nnumber = nnumber,
                 AppUserId = reviewer.Id,
-                ReviewDate = DateTime.Now
+                ReviewDate = DateTime.Now,
+                Cohort = applicant.Cohort ?? 0
             };
 
             await _reviewRepository.AddReviewAsync(review);
 
-            // 6️⃣ Update applicant's review count
+            // update appster
             applicant.NumberOfReviews++;
 
-            // 7️⃣ Save changes in one operation
+            // save all changes to database
             await _reviewRepository.SaveChangesAsync();
             await _applicantRepository.SaveChangesAsync();
         }
 
 
-        // Manually assign a range of reviews
-        public async Task AssignRangeOfReviewers(string[] Nnumbers)
-        {
-
-        }
+        
         
     }
 }

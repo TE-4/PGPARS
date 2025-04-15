@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class newFirst : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,23 +43,11 @@ namespace PGPARS.Migrations
                     School1Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     School1Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     School1GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    School2Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School2Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School2GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    School3Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School3Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School3GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    School4Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School4Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School4GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    School5Institution = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School5Major = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School5GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Mentor1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mentor4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SelectMentor = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AssignedMentor = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

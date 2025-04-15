@@ -9,15 +9,12 @@
         </div>
         <br />
 
-        <!-- filter box styled with dark background -->
+        <!-- filter box  -->
         <div style="padding-bottom: 10px;">
             <div class="card shadow-lg p-1 bg-dark text-light">
-              <!--  <div class="card-header bg-secondary text-white d-flex align-items-center">
-                    <i class="bi bi-funnel me-2"></i> Filter Audit Logs
-                  </div>-->
                 <div class="card-body">
                     <form asp-action="Index" asp-controller="Audit" method="get" class="row g-3">
-                        <!-- Row 1: Search, Category -->
+                        <!-- Row 1 for search and category  -->
                         <div class="col-md-6 col-lg-4">
                             <label class="form-label text-white">
                                 <i class="bi bi-search me-1"></i> Search
@@ -26,59 +23,51 @@
                                 <span class="input-group-text bg-secondary text-white border-white">
                                     <i class="bi bi-search"></i>
                                 </span>
-                                <input type="text" name="searchTerm" class="form-control"
+                                <input type="text" name="searchTerm" class="form-control lighter-placeholder"
                                        value="@ViewBag.SearchTerm"
                                        placeholder="Search by user, action, or details"
                                        style="background-color:dimgray; color:white; border: 1px solid white;" />
                             </div>
                         </div>
 
+                        <!-- Row 2 for categories and date range -->
                         <div class="col-md-6 col-lg-4">
                             <label class="form-label text-white">
-                                <i class="bi bi-list-check me-1"></i> Category
+                                <i class="bi bi-list-check me-1"></i> Categories
                             </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-secondary text-white border-white">
-                                    <i class="bi bi-tag"></i>
-                                </span>
-                                <select name="filters" class="form-select" multiple size="5"
-                                        style="background-color:dimgray; color:white; border: 1px solid white;">
-                                    @foreach (var item in ViewBag.Categories as MultiSelectList)
-                                    {
-                                        <option value="@item.Text" selected="@(item.Selected ? "selected" : null)">
-                                            @item.Text
-                                        </option>
-                                    }
-                                </select>>
+                            <div class="p-2 rounded" style="background-color: dimgray; border: 1px solid white;">
+                                @foreach (string category in ViewBag.Categories as List<string>)
+                                {
+                                    var isChecked = ViewBag.Filters != null && ((List<string>)ViewBag.Filters).Contains(category);
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="filters" value="@category" id="filter_@category"
+                                        @(isChecked ? "checked" : "") />
+                                        <label class="form-check-label text-white" for="filter_@category">
+                                            @category
+                                        </label>
+                                    </div>
+                                }
                             </div>
                         </div>
 
-                        <!-- Row 2: Start Date, End Date -->
-                        <div class="col-md-6 col-lg-4">
+                        <!-- Start and End date -->
+                        <div class="col-md-12 col-lg-4">
                             <label class="form-label text-white">
-                                <i class="bi bi-calendar-event me-1"></i> Start Date
+                                <i class="bi bi-calendar-range me-1"></i> Date Range
                             </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-secondary text-white border-white">
-                                    <i class="bi bi-calendar"></i>
-                                </span>
-                                <input type="date" name="startDate" class="form-control"
-                                       value="@Context.Request.Query["startDate"]"
-                                       style="background-color:dimgray; color:white; border: 1px solid white;" />
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-lg-4">
-                            <label class="form-label text-white">
-                                <i class="bi bi-calendar-check me-1"></i> End Date
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-secondary text-white border-white">
-                                    <i class="bi bi-calendar"></i>
-                                </span>
-                                <input type="date" name="endDate" class="form-control"
-                                       value="@Context.Request.Query["endDate"]"
-                                       style="background-color:dimgray; color:white; border: 1px solid white;" />
+                            <div class="d-flex gap-2">
+                                <div class="flex-fill">
+                                    <label class="form-label text-white"><i class="bi bi-play"></i> Start Date</label>
+                                    <input type="date" name="startDate" class="form-control"
+                                           value="@Context.Request.Query["startDate"]"
+                                           style="background-color:dimgray; color:white; border: 1px solid white;" />
+                                </div>
+                                <div class="flex-fill">
+                                    <label class="form-label text-white"><i class="bi bi-stop"></i> End Date</label>
+                                    <input type="date" name="endDate" class="form-control"
+                                           value="@Context.Request.Query["endDate"]"
+                                           style="background-color:dimgray; color:white; border: 1px solid white;" />
+                                </div>
                             </div>
                         </div>
 
@@ -94,17 +83,13 @@
                             </button>
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>
 
-        <!-- beginning of the table -->
+        <!-- table starts here -->
         <div>
             <form id="auditForm" method="post" onsubmit="return confirm('Are you sure you want to delete selected logs?');">
-
-                <!-- bulk delete button -->
                 <div class="d-flex">
                     <button type="submit" formaction="@Url.Action("DeleteSelectedLogs", "Audit")" class="btn btn-danger btn-lg" style="border: 2px solid black">
                         <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
@@ -152,11 +137,13 @@
                             }
                         </tbody>
                     </table>
+
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- pagination at bottom -->
     @if (Model.TotalPages > 1)
     {
         <div class="d-flex justify-content-center align-items-center mt-4">
@@ -165,13 +152,17 @@
                     @if (Model.HasPreviousPage)
                     {
                         <li class="page-item">
-                            <a class="page-link text-dark fw-bold" asp-action="Index"
-                               asp-route-page="@(Model.PageIndex - 1)"
-                               asp-route-filters="@ViewBag.Filters"
-                               asp-route-startDate="@ViewBag.StartDate"
-                               asp-route-endDate="@ViewBag.EndDate">
-                                Previous
-                            </a>
+                            <form method="get" asp-action="Index" class="d-inline">
+                                <input type="hidden" name="page" value="@(Model.PageIndex - 1)" />
+                                <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
+                                <input type="hidden" name="startDate" value="@ViewBag.StartDate" />
+                                <input type="hidden" name="endDate" value="@ViewBag.EndDate" />
+                                @foreach (string filter in (ViewBag.Filters as List<string> ?? new List<string>()))
+                                {
+                                    <input type="hidden" name="filters" value="@filter" />
+                                }
+                                <button type="submit" class="page-link text-dark fw-bold">Previous</button>
+                            </form>
                         </li>
                     }
 
@@ -184,26 +175,25 @@
                     @if (Model.HasNextPage)
                     {
                         <li class="page-item">
-                            <a class="page-link text-dark fw-bold" asp-action="Index"
-                               asp-route-page="@(Model.PageIndex + 1)"
-                               asp-route-filters="@ViewBag.Filters"
-                               asp-route-startDate="@ViewBag.StartDate"
-                               asp-route-endDate="@ViewBag.EndDate">
-                                Next
-                            </a>
+                            <form method="get" asp-action="Index" class="d-inline">
+                                <input type="hidden" name="page" value="@(Model.PageIndex + 1)" />
+                                <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
+                                <input type="hidden" name="startDate" value="@ViewBag.StartDate" />
+                                <input type="hidden" name="endDate" value="@ViewBag.EndDate" />
+                                @foreach (string filter in (ViewBag.Filters as List<string> ?? new List<string>()))
+                                {
+                                    <input type="hidden" name="filters" value="@filter" />
+                                }
+                                <button type="submit" class="page-link text-dark fw-bold">Next</button>
+                            </form>
                         </li>
                     }
                 </ul>
             </nav>
-        </div>
+        </div>  
     }
 
-
-
-
 </body>
-
-
 
 <script>
     // "Select All" Checkbox Functionality

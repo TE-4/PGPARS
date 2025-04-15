@@ -17,6 +17,7 @@
                 <h3 class="mb-0">@Model.FullName</h3>
             </div>
             <hr class="border-light" />
+
             <!-- Personal Info -->
             <div class="row">
                 <div class="col-md-6">
@@ -31,6 +32,7 @@
                 </div>
             </div>
             <hr class="border-light" />
+
             <!-- Course Info -->
             <div class="row">
                 <div class="col-md-4">
@@ -44,29 +46,47 @@
                 </div>
             </div>
             <hr class="border-light" />
+
+
+
             <!-- Review Info -->
             <div class="row">
+                @if(ViewBag.Reviews.Count == 0)
+                {
+                    <div class="col-md-4">
+                        <strong><i class="bi bi-person"></i> Review Info</strong>
+                        <p>
+                            <em>No Reviewers Assigned Yet</em>
+                            <i class="bi bi-x-circle-fill text-danger ms-2" title="No Reviewer Assigned"></i>
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var review in ViewBag.Reviews as List<Review>)
+                    {
+                        <div class="col-md-4">
+                            <strong><i class="bi bi-person"></i> Review Info</strong>                          
+                            <p>
+                                <strong>Reviewer:</strong>
+                                @review.AppUser.FirstName @review.AppUser.LastName
+                                <i class="bi bi-check-circle-fill text-success ms-2" title="Reviewer Assigned"></i>
+                            </p>
+                            <p>
+                                <strong>Decision:</strong>
+                                @(review.DecisionRecommendation ?? "No Decision Yet")
+                            </p>
+                        </div>
+                
+                    }
+                }
+               <hr class="border-light" />
                 <div class="col-md-4">
-                    <p><strong><i class="bi bi-person"></i> Reviewer 1:</strong> </p>
-                </div>
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-person"></i> Reviewer 2:</strong> *Reviewer 2*</p>
-                </div>
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-person"></i> Interviewer:</strong> *Interviewer?*</p>
+                    <p><strong><i class="bi bi-person"></i> Assigned Interviewer:</strong> Not Assigned</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-check"></i> Decision 1:</strong> @Model.Rev1Decision</p>
-                </div>
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-check-all"></i> Decision 2:</strong> @Model.Rev2Decision</p>
-                </div>
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-magic"></i> Final Decision:</strong> *Final Decision*</p>
-                </div>
-            </div>
+
+            
             <hr class="border-light" />
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
@@ -91,7 +111,7 @@
                             <div class="bi bi-pencil text-outline">&ensp;Edit</div>
                         </button>
                     </a>
-                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Staff"))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <form asp-action="DeleteApplicant" asp-controller="Applicant" asp-route-id="@Model.Nnumber" method="post"
                         onsubmit="return confirm('Are you sure you want to delete this applicant?');">
@@ -247,8 +267,8 @@
                             <td><strong>@Model.Mentor3</strong></td>
                         </tr>
                         <tr>
-                            <td><strong>Mentor Selected: </strong>@Model.SelectMentor</td>
-                            <td><strong>@Model.SelectMentor</strong></td>
+                            <td><strong>Mentor Assigned: </strong>@Model.AssignedMentor</td>
+                            <td><strong>@Model.AssignedMentor</strong></td>
                         </tr>
                     </table>
             </div>
