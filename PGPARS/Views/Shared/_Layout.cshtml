@@ -14,13 +14,13 @@
     {
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
-            <a class="specialtext" asp-action="AdminDashboard" asp-controller="Admin">Dashboard</a><br />
-            <a class="specialtext" asp-action="Directory" asp-controller="Account">User Directory</a><br />
-            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
-            <a class="specialtext" asp-action="Dashboard" asp-controller="Faculty">Faculty Dashboard</a><br />
-            <a class="specialtext" asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
-            <a class="specialtext" asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
-            <a class="specialtext" asp-action="Index" asp-controller="Audit">Action History</a>
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "AdminDashboard" ? "active" : "")" asp-action="AdminDashboard" asp-controller="Admin">Dashboard</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "Directory" ? "active" : "")" asp-action="Directory" asp-controller="Account">User Directory</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "ApplicantDirectory" ? "active" : "")" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "Dashboard" ? "active" : "")" asp-action="Dashboard" asp-controller="Faculty">Faculty Dashboard</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "FundingDirectory" ? "active" : "")" asp-action="FundingDirectory" asp-controller="Funding">Funding Directory</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "ReviewDirectory" ? "active" : "")" asp-action="ReviewDirectory" asp-controller="Review">Review Directory</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")" asp-action="Index" asp-controller="Audit">Action History</a>
 
             <p class="text-center sidenav-footer">
                 <a class="specialtext" asp-action="Logout" asp-controller="Account">Logout</a>
@@ -41,7 +41,7 @@
     {
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
-            <a class="specialtext" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a>
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "AssignedReviews" ? "active" : "")" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a>
             <!--
             <a class="specialtext" asp-action="CommitteeDashboard" asp-controller="Committee">Dashboard</a><br />
             <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
@@ -65,7 +65,7 @@
     {
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
-            <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
+            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "ApplicantDirectory" ? "active" : "")" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />
             <!--
             <a class="specialtext" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a>
             <a class="specialtext" asp-action="CommitteeDashboard" asp-controller="Committee">Dashboard</a><br />

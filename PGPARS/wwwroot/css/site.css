@@ -477,6 +477,13 @@ body, html {
     /*color: aqua;*/
     /*animation: fadeIn 1s;*/
 }
+.specialtext.active {
+    /*font-weight: bold;*/
+    color: white;
+    background: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(255,255,255,0.25) 100%);
+    border-radius: 4px;
+    padding: 4px 8px;
+}
 
 /* TEXT */
 .text-outline {
