@@ -141,7 +141,11 @@
                                             <td>@fund.Cohort</td>
                                             <td>@fund.Amount?.ToString("C")</td>
                                             <td>@fund.Remaining.GetValueOrDefault(0).ToString("C")</td>
-                                            <td>@fund.FundType</td>
+                                            <td class="text-center specialtext">
+                                                <a asp-action="FundingDetails" asp-controller="Funding" asp-route-id="@fund.Id" style="color: white; text-decoration: none;">
+                                                    @fund.FundType
+                                                </a>
+                                            </td>
                                             <td>
                                                 <div class="d-flex justify-content-center gap-3">
                                                     @if (fund.Remaining > 0)
