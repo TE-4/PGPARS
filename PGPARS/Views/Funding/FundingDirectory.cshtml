@@ -8,14 +8,14 @@
 
 <body>
     <div class="main">
-        <div class="container-opaque">
-            <!-- Title -->
+        <!--Title<div class="container-opaque">
+            
             <div class="text-center text-outline p-3">
                 <h2>Funding Directory</h2>
             </div>
         </div>
-        <br />
-        <div class="d-flex justify-content-between align-items-center">
+    <br />-->
+        <div class="d-flex justify-content-between align-items-center" style="padding-bottom: 10px;">
             <!-- Add Funding button -->
             <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
                 <div class="bi bi-upload text-outline">&ensp;Add New Funding</div>
@@ -36,56 +36,70 @@
                 </button>
             </form>
         </div>
-        <form method="get" asp-action="FundingDirectory">
-            <div class="mb-3">
-                <!-- Cohort Filter -->
-                <div class="mb-2">
-                    <label><strong>Cohort</strong></label>
-                    <div class="d-flex flex-wrap gap-2">
-                        @foreach (var cohort in Model.Select(m => m.Cohort).Distinct())
-                        {
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="selectedCohorts" value="@cohort"
-                                @(selectedCohorts.Contains(cohort.ToString()) ? "checked" : "") />
-                                <label class="form-check-label">@cohort</label>
+        <button type="button" class="collapsible"><b>Filter</b></button>
+        <div style="padding-bottom: 20px;" class="content">
+            <div class="card shadow-lg p-1 bg-dark text-light">
+                <div class="card-body" style="padding-bottom: 10px;">
+                    <form method="get" asp-action="FundingDirectory" class="row g-3">
+                        <!-- Cohort Filter -->
+                        <div class="col-md-4">
+                            <label><strong>Cohort</strong></label>
+                            <div class="">
+                                @foreach (var cohort in Model.Select(m => m.Cohort).Distinct())
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" class="form-check-input" name="selectedCohorts" value="@cohort"
+                                        @(selectedCohorts.Contains(cohort.ToString()) ? "checked" : "") />
+                                        <label class="form-check-label">@cohort</label>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
-                </div>
+                        </div>
 
-                <!-- Source Filter -->
-                <div class="mb-2">
-                    <label><strong>Source</strong></label>
-                    <div class="d-flex flex-wrap gap-2">
-                        @foreach (var source in Model.Select(m => m.Source).Distinct())
-                        {
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="selectedSources" value="@source"
-                                @(selectedSources.Contains(source) ? "checked" : "") />
-                                <label class="form-check-label">@source</label>
+                        <!-- Source Filter -->
+                        <div class="col-md-4">
+                            <label><strong>Source</strong></label>
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach (var source in Model.Select(m => m.Source).Distinct())
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" class="form-check-input" name="selectedSources" value="@source"
+                                        @(selectedSources.Contains(source) ? "checked" : "") />
+                                        <label class="form-check-label">@source</label>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
-                </div>
+                        </div>
 
-                <!-- Fund Type Filter -->
-                <div class="mb-2">
-                    <label><strong>Fund Type</strong></label>
-                    <div class="d-flex flex-wrap gap-2">
-                        @foreach (var fundType in Model.Select(m => m.FundType).Distinct())
-                        {
-                            <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" name="selectedFundTypes" value="@fundType"
-                                @(selectedFundTypes.Contains(fundType) ? "checked" : "") />
-                                <label class="form-check-label">@fundType</label>
+                        <!-- Fund Type Filter -->
+                        <div class="col-md-4">
+                            <label><strong>Fund Type</strong></label>
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach (var fundType in Model.Select(m => m.FundType).Distinct())
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" class="form-check-input" name="selectedFundTypes" value="@fundType"
+                                        @(selectedFundTypes.Contains(fundType) ? "checked" : "") />
+                                        <label class="form-check-label">@fundType</label>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-between mt-2">
+                            <a href="/Funding/FundingDirectory" class="btn btn-lg"
+                               style="background-color:dimgray; color: white; border: 2px solid black; min-width: 150px;">
+                                <div class="bi bi-x-circle text-outline">&ensp;Reset</div>
+                            </a>
+                            <button type="submit" class="btn btn-lg" style="background-color:royalblue; color:white; border: 2px solid black;">
+                                <div class="bi bi-funnel text-outline">&ensp;Apply Filters</div>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Apply Filters</button>
-        </form>
+        </div>
+        
 
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
@@ -160,4 +174,20 @@
             </table>
         </div>
     </div>
-    </body>
+</body>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+</script>

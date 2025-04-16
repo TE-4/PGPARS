@@ -5,6 +5,7 @@
   cursor: wait;
   background-color: currentcolor;
   opacity: $placeholder-opacity-max;
+  color:white;
 
   &.btn::before {
     display: inline-block;

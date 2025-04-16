@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class newFirst : Migration
+    public partial class Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,12 +22,16 @@ namespace PGPARS.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdvisorEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Race = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PrimaryCitizenship = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CitizenshipStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SharePointPdfUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GradAcceptStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsEnrolled = table.Column<bool>(type: "bit", nullable: true),
+                    HasUnfEmail = table.Column<bool>(type: "bit", nullable: true),
                     MissingItems = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Program = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppSubmitDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -255,6 +259,7 @@ namespace PGPARS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nnumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Cohort = table.Column<int>(type: "int", nullable: false),
                     ReviewComplete = table.Column<bool>(type: "bit", nullable: false),
                     ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ReviewEdited = table.Column<DateTime>(type: "datetime2", nullable: true),

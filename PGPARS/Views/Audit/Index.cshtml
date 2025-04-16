@@ -2,15 +2,16 @@
 
 <body>
     <div class="main">
-        <div class="container-opaque">
+        <!--<div class="container-opaque">
             <div class="text-center text-outline p-3">
                 <h2><i class="bi bi-journal-text"></i> Action History</h2>
             </div>
         </div>
-        <br />
+        <br />-->
 
         <!-- filter box  -->
-        <div style="padding-bottom: 10px;">
+        <button type="button" class="collapsible"><b>Filter</b></button>
+        <div style="padding-bottom: 20px;" class="content">
             <div class="card shadow-lg p-1 bg-dark text-light">
                 <div class="card-body">
                     <form asp-action="Index" asp-controller="Audit" method="get" class="row g-3">
@@ -75,23 +76,23 @@
                         <div class="col-12 d-flex justify-content-between mt-2">
                             <a href="/Audit/Index" class="btn btn-lg"
                                style="background-color:dimgray; color: white; border: 2px solid black; min-width: 150px;">
-                                <i class="bi bi-x-circle"></i>&ensp;Reset
+                                <div class="bi bi-x-circle text-outline">&ensp;Reset</div>
                             </a>
                             <button type="submit" class="btn btn-lg"
                                     style="background-color:royalblue; color: white; border: 2px solid black; min-width: 150px;">
-                                <i class="bi bi-funnel"></i>&ensp;Filter
+                                <div class="bi bi-funnel text-outline">&ensp;Filter</div>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
         <!-- table starts here -->
         <div>
+            <br />
             <form id="auditForm" method="post" onsubmit="return confirm('Are you sure you want to delete selected logs?');">
                 <div class="d-flex">
-                    <button type="submit" formaction="@Url.Action("DeleteSelectedLogs", "Audit")" class="btn btn-danger btn-lg" style="border: 2px solid black">
+                    <button type="submit" formaction="@Url.Action("DeleteSelectedLogs", "Audit")" class="btn btn-danger btn-lg" style="border: 2px solid black;">
                         <div class="bi bi-trash text-outline">&ensp;Delete Selected</div>
                     </button>
                 </div>
@@ -203,4 +204,20 @@
             checkbox.checked = this.checked;
         });
     });
+</script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
 </script>

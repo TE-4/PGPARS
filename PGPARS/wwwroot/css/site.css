@@ -506,7 +506,34 @@ body, html {
 }
 
 /*Placeholder text for search bar*/
-.lighter_placeholder{
-    color: #dddddd;
+.lighter_placeholder {
+    color: white;
     opacity: 1; /* Apparently this is a firefox fix */
+}
+input:placeholder-shown {
+    color:white;
+    opacity: 1;
+}
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+    background: radial-gradient(circle, rgba(0,22,255,0.25), rgba(0,0,0,1) 100%);
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-size: 25px;
+    text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+    background: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,22,255,0.25) 100%);
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+    padding: 0 8px;
+    display: none;
+    overflow: hidden;
+    background: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,22,255,0.25) 100%);
 }

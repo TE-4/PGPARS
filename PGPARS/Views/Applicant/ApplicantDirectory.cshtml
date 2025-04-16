@@ -2,24 +2,24 @@
 
 <body>
     <div class="main">
-        <div class="container-opaque">
+        <!--<div class="container-opaque">
             <div class="text-center text-outline p-3">
                 <h2>Applicant Directory</h2>
             </div>
         </div>
-
-        <br />
+        <br />-->
 
         <!-- Beginning of GET and POST forms -->
-        <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <div class="">
 
             <!-- GET Form -->
-            <form method="get" class="d-inline-block">
+            <form method="get" class="d-inline-block" style="float:right;">
                 <div class="d-flex flex-wrap align-items-center gap-3">
                     <!-- Cohort Filter -->
                     <div class="d-flex align-items-center gap-2">
-                        <label for="cohort" class="form-label mb-0 fw-bold text-outline">Cohort:</label>
-                        <select id="cohort" name="cohort" class="form-select form-select-lg" style="min-width: 160px;">
+                        <label for="cohort" class="form-label mb-0 fw-bold text-outline" style="font-size: 22px;
+                            text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;">Cohort:</label>
+                        <select id="cohort" name="cohort" class="form-select form-select-lg">
                             <option value="@ViewData["CurrentYear"]">@ViewData["CurrentYear"]</option>
                             @foreach (int cohort in ViewBag.CohortYears)
                             {
