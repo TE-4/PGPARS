@@ -9,16 +9,6 @@
 <body>
     <div class="main">
 
-        <!-- Old Title
-        <div class="container-opaque">
-            <div class="text-center text-outline p-3">
-                <h2>Funding Directory</h2>
-            </div>
-        </div>
-        <br />-->
-
-        <!-- Top Buttons -->
-        <div class="d-flex justify-content-between gap-1 flex-wrap" style="padding-bottom: 10px;">
             <!-- Add Funding button -->
             <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
                 <div class="bi bi-upload text-outline">&ensp;Add New Funding</div>
@@ -39,6 +29,7 @@
                 </button>
             </form>
         </div>
+
         <!-- Filter -->
         <button type="button" class="collapsible"><b>Filter</b></button>
         <div style="padding-bottom: 20px;" class="content">
@@ -103,118 +94,133 @@
                 </div>
             </div>
         </div>
-        <!-- Table Start -->
+
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
-            <table class="table align-middle text-dark">
-                <span> Graph area maybe.</span>
-                @{
-                    var totalAmount = Model.Sum(f => f.Amount ?? 0);
-                    var totalRemaining = Model.Sum(f => f.Remaining ?? 0);
-                }
+            <span>Graph area maybe.</span>
+            @{
+                var totalAmount = Model.Sum(f => f.Amount ?? 0);
+                var totalRemaining = Model.Sum(f => f.Remaining ?? 0);
+            }
 
-                @if (!Model.Any())
-                {
-                    <div class="text-center text-muted">
-                        @if (string.IsNullOrEmpty(ViewData["SearchQuery"]?.ToString()))
-                        {
-                            <span>No Funding found.</span>
-                        }
-                        else
-                        {
-                            <span>Nothing matches your search criteria.</span>
-                        }
-                    </div>
-                }
-                else
-                {
-                    <div class="mb-4">
-                        <h2 class="text-center">Total Funding Summary</h2>
-                        <div class="text-center">
-                            <strong>Total Allocated:</strong> @totalAmount.ToString("C")<br />
-                            <strong>Total Remaining:</strong> @totalRemaining.ToString("C")
-                        </div>
-                    </div>
-
-                    foreach (var sourceGroup in Model.GroupBy(f => f.Source))
+            @if (!Model.Any())
+            {
+                <div class="text-center text-muted">
+                    @if (string.IsNullOrEmpty(ViewData["SearchQuery"]?.ToString()))
                     {
-
-                        <div class="table-responsive shadow-sm rounded my-4" style="padding-top: 10px;">
-                            <h3 class="text-center py-2 bg-secondary text-white">@sourceGroup.Key</h3>
-                            @{
-                                var sourceTotal = sourceGroup.Sum(f => f.Amount ?? 0);
-                                var sourceRemaining = sourceGroup.Sum(f => f.Remaining ?? 0);
-                            }
-
-                            <div class="text-center mb-3">
-                                <strong>Source Total:</strong> @sourceTotal.ToString("C") |
-                                <strong>Source Remaining:</strong> @sourceRemaining.ToString("C")
-                            </div>
-
-                            <table class="table align-middle text-dark">
-                                <thead class="text-uppercase">
-                                    <tr>
-                                        <th>Cohort</th>
-                                        <th>Total Amount</th>
-                                        <th>Remaining Amount</th>
-                                        <th>Fund Type</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var fund in sourceGroup)
-                                    {
-                                        <tr>
-                                            <td>@fund.Cohort</td>
-                                            <td>@fund.Amount?.ToString("C")</td>
-                                            <td>@fund.Remaining.GetValueOrDefault(0).ToString("C")</td>
-                                            <td class="text-center specialtext">
-                                                <a asp-action="FundingDetails" asp-controller="Funding" asp-route-id="@fund.Id" style="color: white; text-decoration: none;">
-                                                    @fund.FundType
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex justify-content-center gap-3">
-                                                    @if (fund.Remaining > 0)
-                                                    {
-                                                        <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg"
-                                                           style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
-                                                            <div class="bi bi-plus-circle text-outline">&ensp;Assign</div>
-                                                        </a>
-                                                    }
-                                                    <a asp-action="EditFunding" asp-route-id="@fund.Id">
-                                                        <button type="button" class="btn btn-secondary btn-lg" style="border: 2px solid black">
-                                                            <div class="bi bi-pencil-square text-outline">&ensp;Edit</div>
-                                                        </button>
-                                                    </a>
-                                                    <a asp-action="ConfirmDeleteFunding" asp-route-id="@fund.Id" class="btn btn-danger btn-lg" style="border: 2px solid black;">
-                                                        <div class="bi bi-trash text-outline">&ensp;Delete</div>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                        <span>No Funding found.</span>
                     }
+                    else
+                    {
+                        <span>Nothing matches your search criteria.</span>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="mb-4">
+                    <h2 class="text-center">Total Funding Summary</h2>
+                    <div class="text-center">
+                        <strong>Total Allocated:</strong> @totalAmount.ToString("C")<br />
+                        <strong>Total Remaining:</strong> @totalRemaining.ToString("C")
+                    </div>
+                </div>
+
+                @foreach (var sourceGroup in Model.GroupBy(f => f.Source))
+                {
+                    <div class="my-4">
+                        <h3 class="text-center py-2 bg-secondary text-white">@sourceGroup.Key</h3>
+                        @{
+                            var sourceTotal = sourceGroup.Sum(f => f.Amount ?? 0);
+                            var sourceRemaining = sourceGroup.Sum(f => f.Remaining ?? 0);
+                        }
+
+                        <div class="text-center mb-3">
+                            <strong>Source Total:</strong> @sourceTotal.ToString("C") |
+                            <strong>Source Remaining:</strong> @sourceRemaining.ToString("C")
+                        </div>
+
+                        <table class="table align-middle text-dark">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th>Cohort</th>
+                                    <th>Total Amount</th>
+                                    <th>Remaining Amount</th>
+                                    <th>Fund Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var fund in sourceGroup)
+                                {
+                                    decimal usedAmount = (fund.Amount ?? 0) - (fund.Remaining ?? 0);
+                                    decimal percentUsed = (fund.Amount ?? 0) == 0 ? 0 : (usedAmount / (fund.Amount ?? 1)) * 100;
+
+                                    <tr>
+                                        <td>@fund.Cohort</td>
+                                        <td>@fund.Amount?.ToString("C")</td>
+                                        <td>@fund.Remaining.GetValueOrDefault(0).ToString("C")</td>
+                                        <td class="text-center specialtext">
+                                            <a asp-action="FundingDetails" asp-controller="Funding" asp-route-id="@fund.Id" style="color: white; text-decoration: none;">
+                                                @fund.FundType
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-3">
+                                                @if (fund.Remaining > 0)
+                                                {
+                                                    <a asp-action="Assign" asp-route-id="@fund.Id" class="btn btn-primary btn-lg"
+                                                       style="background-color:royalblue; color: white; border: 2px solid black; min-height: 50px; min-width: 150px;">
+                                                        <div class="bi bi-plus-circle text-outline">&ensp;Assign</div>
+                                                    </a>
+                                                }
+                                                <a asp-action="EditFunding" asp-route-id="@fund.Id">
+                                                    <button type="button" class="btn btn-secondary btn-lg" style="border: 2px solid black">
+                                                        <div class="bi bi-pencil-square text-outline">&ensp;Edit</div>
+                                                    </button>
+                                                </a>
+                                                <a asp-action="ConfirmDeleteFunding" asp-route-id="@fund.Id" class="btn btn-danger btn-lg" style="border: 2px solid black;">
+                                                    <div class="bi bi-trash text-outline">&ensp;Delete</div>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar
+                                                    @(percentUsed >= 80 ? "bg-success" :
+                                                    percentUsed >= 50 ? "bg-warning" : "bg-danger")"
+                                                     role="progressbar"
+                                                     style="width: @percentUsed.ToString("F0")%;"
+                                                     aria-valuenow="@percentUsed.ToString("F0")"
+                                                     aria-valuemin="0" aria-valuemax="100">
+                                                    @percentUsed.ToString("F0")% used
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
-            </table>
+            }
         </div>
     </div>
 </body>
+
 <script>
     var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
+    for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
     }
 </script>
