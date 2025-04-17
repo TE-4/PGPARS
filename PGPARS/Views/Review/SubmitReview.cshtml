@@ -1,7 +1,7 @@
 ﻿@model PGPARS.Models.Review
 
 @{
-    ViewData["Title"] = "Review Form";
+    ViewData["Title"] = "Submit Review";
 }
 
 <div class="container mt-4">
@@ -10,111 +10,180 @@
         <hr class="border-light" />
 
         <form asp-action="SubmitReview" method="post">
+            <!-- Hidden Keys -->
             @Html.HiddenFor(m => m.Nnumber)
             @Html.HiddenFor(m => m.AppUserId)
             @Html.HiddenFor(m => m.ReviewNumber)
 
-            <!-- Review Sections -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label asp-for="Cohort" class="form-label">Cohort Year</label>
-                    <input asp-for="Cohort" class="form-control" />
-                </div>
-                <div class="col-md-6">
-                    <label asp-for="ReviewComplete" class="form-label">Review Complete?</label>
-                    <select asp-for="ReviewComplete" class="form-control">
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
-                    </select>
-                </div>
-            </div>
-
+            <!-- Resume & Research -->
             <fieldset class="border rounded p-3 mb-3">
-                <legend class="fw-bold">Resume</legend>
+                <legend class="fw-bold"><i class="bi bi-file-person"></i> Resume & Research</legend>
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <label asp-for="ResumeQuality" class="form-label">Resume Quality</label>
-                        <input asp-for="ResumeQuality" class="form-control" />
+                        <label asp-for="ResumeQuality" class="form-label"><i class="bi bi-star-fill me-1"></i> Resume/CV Quality</label>
+                        <select asp-for="ResumeQuality" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
-                    <div class="col-md-8">
-                        <label asp-for="ResumeComments" class="form-label">Comments</label>
-                        <textarea asp-for="ResumeComments" class="form-control"></textarea>
+                    <div class="col-md-4">
+                        <label asp-for="ResExpQuality" class="form-label"><i class="bi bi-flask me-1"></i> Research Experience Quality</label>
+                        <select asp-for="ResExpQuality" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
-                </div>
-                <div class="mb-2">
-                    <label asp-for="ResExpQuality" class="form-label">Relevant Experience Quality</label>
-                    <input asp-for="ResExpQuality" class="form-control" />
+                    <div class="col-md-4">
+                        <label asp-for="ResumeComments" class="form-label"><i class="bi bi-chat-dots me-1"></i> Comments</label>
+                        <textarea asp-for="ResumeComments" class="form-control" rows="1"></textarea>
+                    </div>
                 </div>
             </fieldset>
 
+            <!-- Statement of Purpose -->
             <fieldset class="border rounded p-3 mb-3">
-                <legend class="fw-bold">Writing Sample</legend>
+                <legend class="fw-bold"><i class="bi bi-envelope-paper-heart"></i> Statement of Purpose</legend>
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <label asp-for="WritingSampleQuality" class="form-label">Quality</label>
-                        <input asp-for="WritingSampleQuality" class="form-control" />
+                        <label asp-for="LetterQuality" class="form-label"><i class="bi bi-star-fill me-1"></i> Statement Quality</label>
+                        <select asp-for="LetterQuality" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
                     <div class="col-md-8">
-                        <label asp-for="WritingSampleComments" class="form-label">Comments</label>
+                        <label asp-for="LetterComments" class="form-label"><i class="bi bi-chat-dots me-1"></i> Comments</label>
+                        <textarea asp-for="LetterComments" class="form-control"></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Writing Sample -->
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="fw-bold"><i class="bi bi-pencil-square"></i> Writing Sample</legend>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label asp-for="WritingSampleQuality" class="form-label"><i class="bi bi-star-fill me-1"></i> Quality</label>
+                        <select asp-for="WritingSampleQuality" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="WritingSampleComments" class="form-label"><i class="bi bi-chat-dots me-1"></i> Comments</label>
                         <textarea asp-for="WritingSampleComments" class="form-control"></textarea>
                     </div>
                 </div>
             </fieldset>
 
+            <!-- Letter of Recommendation -->
             <fieldset class="border rounded p-3 mb-3">
-                <legend class="fw-bold">Letters of Recommendation</legend>
+                <legend class="fw-bold"><i class="bi bi-person-hearts"></i> Letters of Recommendation</legend>
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <label asp-for="LORRelevance" class="form-label">Relevance</label>
-                        <input asp-for="LORRelevance" class="form-control" />
+                        <label asp-for="LORRelevance" class="form-label"><i class="bi bi-bookmark-star me-1"></i> Relevance</label>
+                        <select asp-for="LORRelevance" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
                     <div class="col-md-4">
-                        <label asp-for="LORQuality" class="form-label">Quality</label>
-                        <input asp-for="LORQuality" class="form-control" />
+                        <label asp-for="LORQuality" class="form-label"><i class="bi bi-star-fill me-1"></i> Quality</label>
+                        <select asp-for="LORQuality" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
                     <div class="col-md-4">
-                        <label asp-for="LORComments" class="form-label">Comments</label>
-                        <textarea asp-for="LORComments" class="form-control"></textarea>
+                        <label asp-for="LORComments" class="form-label"><i class="bi bi-chat-dots me-1"></i> Comments</label>
+                        <textarea asp-for="LORComments" class="form-control" rows="1"></textarea>
                     </div>
                 </div>
             </fieldset>
 
+            <!-- Overall Fit -->
             <fieldset class="border rounded p-3 mb-3">
-                <legend class="fw-bold">Overall Fit</legend>
+                <legend class="fw-bold"><i class="bi bi-person-badge"></i> Overall Fit</legend>
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <label asp-for="OverallFitQuality" class="form-label">Fit Quality</label>
-                        <input asp-for="OverallFitQuality" class="form-control" />
+                        <label asp-for="OverallFitQuality" class="form-label"><i class="bi bi-star-fill me-1"></i> Fit Quality</label>
+                        <select asp-for="OverallFitQuality" class="form-control">
+                            <option value="">-- Select --</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
                     </div>
                     <div class="col-md-8">
-                        <label asp-for="OverallFitComments" class="form-label">Comments</label>
+                        <label asp-for="OverallFitComments" class="form-label"><i class="bi bi-chat-dots me-1"></i> Comments</label>
                         <textarea asp-for="OverallFitComments" class="form-control"></textarea>
                     </div>
                 </div>
             </fieldset>
 
-            <div class="mb-3">
-                <label asp-for="DecisionRecommendation" class="form-label">Decision Recommendation</label>
-                <input asp-for="DecisionRecommendation" class="form-control" />
-            </div>
+            <!-- Final Decision -->
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="fw-bold"><i class="bi bi-clipboard-check"></i> Final Decision</legend>
 
-            <div class="mb-3">
-                <label asp-for="FollowUpRequired" class="form-label">Follow-Up Required?</label>
-                <select asp-for="FollowUpRequired" class="form-control">
-                    <option value="">-- Select --</option>
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                </select>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="DecisionRecommendation" class="form-label">
+                        <i class="bi bi-clipboard-data me-1"></i> Recommendation
+                    </label>
+                    <select asp-for="DecisionRecommendation" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="Admit">Admit</option>
+                        <option value="Waitlist">Waitlist</option>
+                        <option value="Do Not Admit">Do Not Admit</option>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label asp-for="FinalComments" class="form-label">Final Comments</label>
-                <textarea asp-for="FinalComments" class="form-control" rows="3"></textarea>
-            </div>
+                <div class="mb-3">
+                    <label asp-for="FollowUpRequired" class="form-label">
+                        <i class="bi bi-arrow-repeat me-1"></i> Follow-Up Required?
+                    </label>
+                    <select asp-for="FollowUpRequired" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
 
-            <button type="submit" class="btn btn-light">
-                <i class="bi bi-save"></i> Submit Review
-            </button>
+                <div class="mb-3">
+                    <label asp-for="FinalComments" class="form-label">
+                        <i class="bi bi-chat-dots me-1"></i> Final Comments
+                    </label>
+                    <textarea asp-for="FinalComments" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" onclick="history.back()">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-light">
+                    <i class="bi bi-save"></i> Submit Review
+                </button>
+            </div>
         </form>
     </div>
 </div>

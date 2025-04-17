@@ -19,7 +19,7 @@ namespace PGPARS.Controllers
 
         public async Task<IActionResult> Index(List<string>? filters, string? searchTerm,
             DateTime? startDate, DateTime? endDate, 
-            int page = 1, int pageSize = 20)
+            int page = 1, int pageSize = 25)
         {
 
             filters ??= new List<string>();
