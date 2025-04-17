@@ -519,6 +519,9 @@ namespace PGPARS.Migrations
                     b.Property<int?>("LORRelevance")
                         .HasColumnType("int");
 
+                    b.Property<string>("LetterComments")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("LetterQuality")
                         .HasColumnType("int");
 

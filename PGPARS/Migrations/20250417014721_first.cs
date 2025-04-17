@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class MentorAdd : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -263,19 +263,20 @@ namespace PGPARS.Migrations
                     ReviewComplete = table.Column<bool>(type: "bit", nullable: false),
                     ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ReviewEdited = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LetterQuality = table.Column<int>(type: "int", nullable: true),
                     ResumeQuality = table.Column<int>(type: "int", nullable: true),
                     ResExpQuality = table.Column<int>(type: "int", nullable: true),
                     ResumeComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WritingSampleQuality = table.Column<int>(type: "int", nullable: true),
-                    WritingSampleComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LetterQuality = table.Column<int>(type: "int", nullable: true),
+                    LetterComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LORRelevance = table.Column<int>(type: "int", nullable: true),
                     LORQuality = table.Column<int>(type: "int", nullable: true),
                     LORComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WritingSampleQuality = table.Column<int>(type: "int", nullable: true),
+                    WritingSampleComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OverallFitQuality = table.Column<int>(type: "int", nullable: true),
                     OverallFitComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DecisionRecommendation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FollowUpRequired = table.Column<bool>(type: "bit", nullable: true),
+                    DecisionRecommendation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FinalComments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

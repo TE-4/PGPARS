@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250416153013_MentorAdd")]
-    partial class MentorAdd
+    [Migration("20250417014721_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -521,6 +521,9 @@ namespace PGPARS.Migrations
 
                     b.Property<int?>("LORRelevance")
                         .HasColumnType("int");
+
+                    b.Property<string>("LetterComments")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LetterQuality")
                         .HasColumnType("int");

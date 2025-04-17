@@ -26,7 +26,7 @@ namespace PGPARS.Models
         // Applicant Statuses
         public string? Status { get; set; } //Most significant, implement slider bar?
         public string? GradAcceptStatus { get; set; }
-        public string? WorkStatus { get; set; }
+        public string? WorkStatus { get; set; } // Not Submitted, Submitted, Pending, or Approved
         public bool? IsEnrolled { get; set; }
         public bool? HasUnfEmail { get; set; }
 
@@ -51,7 +51,7 @@ namespace PGPARS.Models
         public bool? Rev1Decision { get; set; } //Review / Committee
         public bool? Rev2Decision { get; set; } //Review / Committee
         public bool? RevAgree { get; set; } //Review / Committee
-        public int? NumberOfReviews { get; set; } = 0; // Keeps track of how many reviews have been assigned (helps with assignment process)
+        public int? NumberOfReviews { get; set; } = 0; // Keeps track of how many committee reviews have been assigned (helps with assignment process, too)
 
 
         // School Information
