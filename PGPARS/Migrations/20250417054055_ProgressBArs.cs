@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGPARS.Migrations
 {
     /// <inheritdoc />
-    public partial class MentorAdd : Migration
+    public partial class ProgressBArs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

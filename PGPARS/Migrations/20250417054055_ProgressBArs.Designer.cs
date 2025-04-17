@@ -12,8 +12,8 @@ using PGPARS.Data;
 namespace PGPARS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250416153013_MentorAdd")]
-    partial class MentorAdd
+    [Migration("20250417054055_ProgressBArs")]
+    partial class ProgressBArs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
