@@ -104,7 +104,11 @@
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <span> Graph area maybe.</span>
-           
+                @{
+                    var totalAmount = Model.Sum(f => f.Amount ?? 0);
+                    var totalRemaining = Model.Sum(f => f.Remaining ?? 0);
+                }
+
                 @if (!Model.Any())
                 {
                     <div class="text-center text-muted">
@@ -120,10 +124,29 @@
                 }
                 else
                 {
+                    <div class="mb-4">
+                        <h2 class="text-center">Total Funding Summary</h2>
+                        <div class="text-center">
+                            <strong>Total Allocated:</strong> @totalAmount.ToString("C")<br />
+                            <strong>Total Remaining:</strong> @totalRemaining.ToString("C")
+                        </div>
+                    </div>
+
                     foreach (var sourceGroup in Model.GroupBy(f => f.Source))
                     {
+
                         <div class="table-responsive shadow-sm rounded my-4" style="padding-top: 10px;">
                             <h3 class="text-center py-2 bg-secondary text-white">@sourceGroup.Key</h3>
+                            @{
+                                var sourceTotal = sourceGroup.Sum(f => f.Amount ?? 0);
+                                var sourceRemaining = sourceGroup.Sum(f => f.Remaining ?? 0);
+                            }
+
+                            <div class="text-center mb-3">
+                                <strong>Source Total:</strong> @sourceTotal.ToString("C") |
+                                <strong>Source Remaining:</strong> @sourceRemaining.ToString("C")
+                            </div>
+
                             <table class="table align-middle text-dark">
                                 <thead class="text-uppercase">
                                     <tr>
