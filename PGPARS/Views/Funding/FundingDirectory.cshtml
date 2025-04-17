@@ -8,14 +8,17 @@
 
 <body>
     <div class="main">
-        <!--Title<div class="container-opaque">
-            
+
+        <!-- Old Title
+        <div class="container-opaque">
             <div class="text-center text-outline p-3">
                 <h2>Funding Directory</h2>
             </div>
         </div>
-    <br />-->
-        <div class="d-flex justify-content-between align-items-center" style="padding-bottom: 10px;">
+        <br />-->
+
+        <!-- Top Buttons -->
+        <div class="d-flex justify-content-between gap-1 flex-wrap" style="padding-bottom: 10px;">
             <!-- Add Funding button -->
             <a asp-action="AddFunding" class="btn btn-success btn-lg" style="border: 2px solid black; min-height: 50px;">
                 <div class="bi bi-upload text-outline">&ensp;Add New Funding</div>
@@ -36,6 +39,7 @@
                 </button>
             </form>
         </div>
+        <!-- Filter -->
         <button type="button" class="collapsible"><b>Filter</b></button>
         <div style="padding-bottom: 20px;" class="content">
             <div class="card shadow-lg p-1 bg-dark text-light">
@@ -85,7 +89,7 @@
                                 }
                             </div>
                         </div>
-
+                        <!-- Filter Buttons -->
                         <div class="col-12 d-flex justify-content-between mt-2">
                             <a href="/Funding/FundingDirectory" class="btn btn-lg"
                                style="background-color:dimgray; color: white; border: 2px solid black; min-width: 150px;">
@@ -99,8 +103,7 @@
                 </div>
             </div>
         </div>
-        
-
+        <!-- Table Start -->
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
             <table class="table align-middle text-dark">
                 <span> Graph area maybe.</span>
@@ -195,9 +198,9 @@
                         </div>
                     }
                 }
-
-                }
-
+            </table>
+        </div>
+    </div>
 </body>
 <script>
     var coll = document.getElementsByClassName("collapsible");
