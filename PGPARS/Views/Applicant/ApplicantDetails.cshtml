@@ -65,8 +65,7 @@
                 {
                     @foreach (var review in ViewBag.Reviews as List<Review>)
                     {
-                        <div class="col-md-4">
-                            <strong><i class="bi bi-person"></i> Review Info</strong>                          
+                        <div class="col-md-4">                        
                             <p>
                                 <strong>Reviewer:</strong>
                                 @review.AppUser.FirstName @review.AppUser.LastName

@@ -16,16 +16,15 @@
     };
 }
 
-<body>
+<body style="overflow-x: hidden;">
     <div class="main">
         <div class="chart-container">
-            (Graph goes here)
             <canvas id="facultyChart"></canvas>
         </div>
 
-        <div class="row my-4">
+        <div class="row my-2">
             <div class="col-md-4">
-                <div class="card text-white bg-primary mb-3 shadow">
+                <div class="card text-white bg-primary mb-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">Assigned Reviews</h5>
                         <p class="card-text display-6">@assignedReviews.Count</p>
@@ -33,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-success mb-3 shadow">
+                <div class="card text-white bg-success mb-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">Assigned Interviews</h5>
                         <p class="card-text display-6">@assignedInterviews.Count</p>
@@ -41,7 +40,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-secondary mb-3 shadow">
+                <div class="card text-white bg-secondary mb-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">Current Cohort</h5>
                         <p class="card-text display-6">@currentCohort</p>
@@ -117,11 +116,13 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('facultyChart').getContext('2d');
-                new Chart(ctx, {
+                new Chart(ctx, 
+                {
                     type: 'bar',
                     data: {
                         labels: data.labels,
-                        datasets: [{
+                        datasets: 
+                        [{
                             label: 'Applicant Status',
                             data: data.values,
                             borderWidth: 0,
