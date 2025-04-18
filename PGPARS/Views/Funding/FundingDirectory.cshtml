@@ -1,5 +1,6 @@
 ﻿@using Microsoft.IdentityModel.Tokens
 @model IEnumerable<PGPARS.Models.Funding>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @{
     var selectedCohorts = Context.Request.Query["selectedCohorts"].ToList();
     var selectedSources = Context.Request.Query["selectedSources"].ToList();
@@ -96,7 +97,7 @@
         </div>
 
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
-            <span>Graph area maybe.</span>
+          
             @{
                 var totalAmount = Model.Sum(f => f.Amount ?? 0);
                 var totalRemaining = Model.Sum(f => f.Remaining ?? 0);
@@ -124,6 +125,11 @@
                         <strong>Total Remaining:</strong> @totalRemaining.ToString("C")
                     </div>
                 </div>
+                <!-- Pie chart  -->
+                <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <canvas id="fundingPieChart" style="max-height: 100%; max-width: 100%;"></canvas>
+                </div>
+
 
                 @foreach (var sourceGroup in Model.GroupBy(f => f.Source))
                 {
@@ -212,7 +218,56 @@
             }
         </div>
     </div>
+ 
+
 </body>
+@{
+    var sourceGroups = Model.GroupBy(f => f.Source);
+    var chartLabels = sourceGroups.Select(g => g.Key).ToList();
+    var chartData = sourceGroups.Select(g => g.Sum(f => f.Amount ?? 0)).ToList();
+    var chartColors = new[] { "#1E3A8A", "#3B82F6", "#93C5FD", "#6B7280", "#374151", "#111827" };
+}
+
+<script>
+    var ctx = document.getElementById('fundingPieChart').getContext('2d');
+
+    var fundingPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: @Html.Raw(Json.Serialize(chartLabels)),
+            datasets: [{
+                label: 'Funding by Source',
+                data: @Html.Raw(Json.Serialize(chartData)),
+                backgroundColor: @Html.Raw(Json.Serialize(chartColors.Take(chartLabels.Count)))
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#000',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Funding Breakdown by Source',
+                    font: {
+                        size: 20
+                    },
+                    color: '#000'
+                }
+            }
+        }
+    });
+</script>
+
 
 <script>
     var coll = document.getElementsByClassName("collapsible");
