@@ -118,13 +118,34 @@
             }
             else
             {
-                <div class="mb-4">
-                    <h2 class="text-center text-shadow2">Total Funding Summary</h2>
-                    <div class="text-center text-shadow2">
-                        <strong>Total Allocated:</strong> @totalAmount.ToString("C")<br />
-                        <strong>Total Remaining:</strong> @totalRemaining.ToString("C")
-                    </div>
-                </div>
+  
+   
+    var totalUsed = totalAmount - totalRemaining;
+    var AmountUsed = totalAmount == 0 ? 0 : (totalUsed / totalAmount * 100);
+
+
+<div class="mb-4">
+    <h2 class="text-center text-shadow2">Total Funding Summary</h2>
+    <div class="text-center text-shadow2">
+        <span><strong>Total Amount:</strong> @totalAmount.ToString("C")</span>
+        <span class="mx-4"><strong>Total Remaining:</strong> @totalRemaining.ToString("C")</span>
+    </div>
+
+    <!-- Progress bar below, showing dollar amount used -->
+    <div class="progress mt-2" style="height: 30px;">
+         <div class="progress-bar bg-info"
+              role="progressbar"
+              style="width: @AmountUsed.ToString("F0")%;"
+              aria-valuenow="@totalUsed"
+              aria-valuemin="0"
+              aria-valuemax="@totalAmount">
+             @totalUsed.ToString("C") Used
+         </div>
+    </div>
+</div>
+
+
+
                 <!-- Pie chart  -->
                 <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
                     <canvas id="fundingPieChart" style="max-height: 100%; max-width: 100%;"></canvas>
