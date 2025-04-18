@@ -98,11 +98,7 @@
 
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
           
-            @{
-                var totalAmount = Model.Sum(f => f.Amount ?? 0);
-                var totalRemaining = Model.Sum(f => f.Remaining ?? 0);
-            }
-
+         
             @if (!Model.Any())
             {
                 <div class="text-center text-muted">
@@ -118,31 +114,36 @@
             }
             else
             {
-  
-   
-    var totalUsed = totalAmount - totalRemaining;
-    var AmountUsed = totalAmount == 0 ? 0 : (totalUsed / totalAmount * 100);
+                var totalAmount = Model.Sum(f => f.Amount ?? 0);
+                var totalRemaining = Model.Sum(f => f.Remaining ?? 0);
+                var totalUsed = totalAmount - totalRemaining;
+                var amountUsedPercent = totalAmount == 0 ? 0 : (totalUsed / totalAmount * 100);
 
 
-<div class="mb-4">
-    <h2 class="text-center text-shadow2">Total Funding Summary</h2>
-    <div class="text-center text-shadow2">
-        <span><strong>Total Amount:</strong> @totalAmount.ToString("C")</span>
-        <span class="mx-4"><strong>Total Remaining:</strong> @totalRemaining.ToString("C")</span>
-    </div>
+            <div class="mb-4">
+                <h2 class="text-center text-shadow2">Total Funding Summary</h2>
 
-    <!-- Progress bar below, showing dollar amount used -->
-    <div class="progress mt-2" style="height: 30px;">
-         <div class="progress-bar bg-info"
-              role="progressbar"
-              style="width: @AmountUsed.ToString("F0")%;"
-              aria-valuenow="@totalUsed"
-              aria-valuemin="0"
-              aria-valuemax="@totalAmount">
-             @totalUsed.ToString("C") Used
-         </div>
-    </div>
-</div>
+                <!-- Flexbox row to align left/right text -->
+                <div class="d-flex justify-content-between px-3 text-shadow2">
+                    <span><strong>Total Amount:</strong> @totalAmount.ToString("C")</span>
+                    <span><strong>Total Remaining:</strong> @totalRemaining.ToString("C")</span>
+                </div>
+
+                <!-- Progress bar aligned with the above text -->
+                    <div class="progress mt-2 mx-3" style="height: 30px;">
+                        <div class="progress-bar
+                @(amountUsedPercent < 50 ? "bg-success" :
+                  amountUsedPercent < 80 ? "bg-warning" : "bg-danger")"
+                             role="progressbar"
+                             style="width: @amountUsedPercent.ToString("F0")%;"
+                             aria-valuenow="@totalUsed"
+                             aria-valuemin="0"
+                             aria-valuemax="@totalAmount">
+                            <strong>@totalUsed.ToString("C") Used</strong>
+                        </div>
+                    </div>
+            </div>
+
 
 
 
@@ -218,29 +219,27 @@
                                             <td colspan="5">
                                                 <div class="progress" style="height: 30px; font-size: 16px;">
                                                     <div class="progress-bar
-                                                        @(percentUsed >= 80 ? "bg-danger" :
-                                                        percentUsed >= 50 ? "bg-warning" : "bg-success")"
+                                                        @(percentUsed < 50 ? "bg-success" :
+                                                          percentUsed < 80 ? "bg-warning" : "bg-danger")"
                                                          role="progressbar"
                                                          style="width: @percentUsed.ToString("F0")%;"
                                                          aria-valuenow="@percentUsed.ToString("F0")"
                                                          aria-valuemin="0" aria-valuemax="100">
                                                         @percentUsed.ToString("F0")% Used
                                                     </div>
-
                                                 </div>
                                             </td>
                                         </tr>
+                                        <!-- End of progress row -->
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
+                        </div> <!-- .content -->
+                    </div> <!-- sourceGroup container -->
                 }
             }
-        </div>
-    </div>
- 
-
+        </div> <!-- .table-responsive -->
+    </div> <!-- .main -->
 </body>
 @{
     var sourceGroups = Model.GroupBy(f => f.Source);
