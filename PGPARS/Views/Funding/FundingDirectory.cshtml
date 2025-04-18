@@ -187,8 +187,8 @@
                                         <td colspan="5">
                                             <div class="progress" style="height: 20px;">
                                                 <div class="progress-bar
-                                                    @(percentUsed >= 80 ? "bg-success" :
-                                                    percentUsed >= 50 ? "bg-warning" : "bg-danger")"
+                                                    @(percentUsed >= 80 ? "bg-danger" :
+                                                    percentUsed >= 50 ? "bg-warning" : "bg-success")"
                                                      role="progressbar"
                                                      style="width: @percentUsed.ToString("F0")%;"
                                                      aria-valuenow="@percentUsed.ToString("F0")"
