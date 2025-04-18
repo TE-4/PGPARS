@@ -4,6 +4,7 @@ using PGPARS.Data;
 using System.Threading.Tasks;
 using PGPARS.Services;
 using Microsoft.AspNetCore.Authorization;
+using PGPARS.Models.ViewModels;
 
 namespace PGPARS.Controllers
 {
@@ -36,7 +37,7 @@ namespace PGPARS.Controllers
             if (ModelState.IsValid)
             {
                 _reviewRepository.AddReview(review);
-                await _reviewRepository.SaveChangesAsync(); 
+                await _reviewRepository.SaveChangesAsync();
 
                 return RedirectToAction("ReviewDirectory");
             }
@@ -84,7 +85,7 @@ namespace PGPARS.Controllers
             if (ModelState.IsValid)
             {
                 _reviewRepository.UpdateReview(review);
-                await _reviewRepository.SaveChangesAsync(); 
+                await _reviewRepository.SaveChangesAsync();
 
                 return RedirectToAction("ReviewDirectory");
             }
@@ -108,14 +109,14 @@ namespace PGPARS.Controllers
             if (review != null)
             {
                 _reviewRepository.DeleteReview(id);
-                await _reviewRepository.SaveChangesAsync(); 
+                await _reviewRepository.SaveChangesAsync();
             }
             return RedirectToAction("ReviewDirectory");
         }
 
         public async Task<IActionResult> ReviewDirectory()
         {
-            var reviewList = await _reviewRepository.GetReviewsAsync(); 
+            var reviewList = await _reviewRepository.GetReviewsAsync();
             return View(reviewList);
         }
 
@@ -155,12 +156,18 @@ namespace PGPARS.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin, Committee")] 
-        public async Task<IActionResult> SubmitReview()
+        [Authorize(Roles = "Admin, Committee")]
+        public async Task<IActionResult> SubmitReview(Review review)
         {
+            SubmitReviewViewModel model = new SubmitReviewViewModel
+            {
+                Reviewer = review.AppUser,
+                Applicant = review.Applicant
 
-            return View();    
+            };
+            return View();
         }
 
+        // do post method next
     }
 }

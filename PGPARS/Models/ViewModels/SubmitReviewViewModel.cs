@@ -2,8 +2,8 @@
 {
     public class SubmitReviewViewModel
     {
-        AppUser Reviewer { get; set; }
-        Applicant Applicant { get; set; }
+        public AppUser Reviewer { get; set; }
+        public Applicant Applicant { get; set; }
 
         // Review Information
         public int? LetterQuality { get; set; }
