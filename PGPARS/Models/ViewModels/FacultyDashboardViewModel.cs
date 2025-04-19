@@ -8,6 +8,9 @@
 
         public IEnumerable<AuditLog> AuditLogs { get; set; }
 
+        public int TotalReviews { get; set; }
+        public int CompletedReviews { get; set; }
+
         // Add Interviews as well 
     }
 }

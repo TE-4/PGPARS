@@ -1,20 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Faculty Dashboard";
-    var currentCohort = 2025;
-
-    var assignedReviews = new List<dynamic>
-    {
-        new { ReviewId = 1, ApplicantName = "Alice Johnson", Status = "In Progress" },
-        new { ReviewId = 2, ApplicantName = "Bob Smith", Status = "Not Started" },
-        new { ReviewId = 3, ApplicantName = "Carlos Ramirez", Status = "Submitted" }
-    };
-
-    var assignedInterviews = new List<dynamic>
-    {
-        new { InterviewId = 1, ApplicantName = "Dana Lee", InterviewDate = DateTime.Today.AddDays(1), Status = "Scheduled" },
-        new { InterviewId = 2, ApplicantName = "Eli Turner", InterviewDate = DateTime.Today.AddDays(3), Status = "Completed" }
-    };
-}
+﻿@model FacultyDashboardViewModel
 
 <body style="overflow-x: hidden;">
     <div class="main">
@@ -26,8 +10,10 @@
             <div class="col-md-4">
                 <div class="card text-white bg-primary mb-2 shadow">
                     <div class="card-body">
-                        <h5 class="card-title">Assigned Reviews</h5>
-                        <p class="card-text display-6">@assignedReviews.Count</p>
+                        <h5 class="card-title">Assigned Reviews</h5>                     
+                        <p class="card-text display-6">
+                            @Model.CompletedReviews / @Model.TotalReviews Completed
+                        </p>
                     </div>
                 </div>
             </div>
@@ -35,7 +21,7 @@
                 <div class="card text-white bg-success mb-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">Assigned Interviews</h5>
-                        <p class="card-text display-6">@assignedInterviews.Count</p>
+                        <p class="card-text display-6"></p>
                     </div>
                 </div>
             </div>
@@ -43,7 +29,7 @@
                 <div class="card text-white bg-secondary mb-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">Current Cohort</h5>
-                        <p class="card-text display-6">@currentCohort</p>
+                        <p class="card-text display-6"></p>
                     </div>
                 </div>
             </div>
@@ -55,24 +41,29 @@
                 <thead class="text-uppercase">
                     <tr>
                         <th>Applicant</th>
-                        <th>Status</th>
+                        <th>Complete?</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var review in assignedReviews)
-                    {
+                   @foreach(var review in Model.Reviews)
+                   {
                         <tr>
-                            <td>@review.ApplicantName</td>
-                            <td>@review.Status</td>
+                            <td>@review.Applicant.FullName</td>
+                            <td>@review.ReviewComplete</td>
                             <td>
-                                <button type="submit" class="btn btn-lg" style="background-color: royalblue; border: 2px solid black;">
-                                    <div class="bi bi-eye text-outline">&ensp;View</div>
-                                </button>
-                                <!--<a href="#" class="btn btn-sm btn-outline-primary">View</a>-->
+                                <a asp-action="SubmitReview"
+                                   asp-controller="Review"
+                                   asp-route-reviewNumber="@review.ReviewNumber">
+                                    <button type="button" class="btn btn-lg"
+                                            style="background-color:seagreen; color: white; border: 2px solid black;">
+                                        <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
+                                    </button>
+                                </a>
+
                             </td>
                         </tr>
-                    }
+                   }
                 </tbody>
             </table>
         </div>
@@ -89,20 +80,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var interview in assignedInterviews)
-                    {
-                        <tr>
-                            <td>@interview.ApplicantName</td>
-                            <td>@interview.InterviewDate.ToString("MM/dd/yyyy")</td>
-                            <td>@interview.Status</td>
-                            <td>
-                                <button type="button" class="btn btn-success btn-lg" style="border: 2px solid black;">
-                                    <div class="bi bi-box-arrow-in-up text-outline">&ensp;Submit</div>
-                                </button>
-                                <!--<a href="#" class="btn btn-sm btn-outline-success">Submit</a>-->
-                            </td>
-                        </tr>
-                    }
+                   
                 </tbody>
             </table>
         </div>

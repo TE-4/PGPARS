@@ -157,16 +157,16 @@ namespace PGPARS.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin, Committee")]
-        public async Task<IActionResult> SubmitReview(Review review)
+        public async Task<IActionResult> SubmitReview(int reviewNumber)
         {
-            SubmitReviewViewModel model = new SubmitReviewViewModel
-            {
-                Reviewer = review.AppUser,
-                Applicant = review.Applicant
+            var review = await _reviewRepository.GetReviewByIdAsync(reviewNumber); // or however you fetch it
 
-            };
-            return View();
+            if (review == null)
+                return NotFound();
+
+            return View(review); // returns the view with the full review object
         }
+
 
         // do post method next
     }

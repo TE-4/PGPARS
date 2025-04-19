@@ -62,7 +62,17 @@ public class ReviewRepository : IReviewRepository
         return reviews;
     }
 
-    
+    public async Task<List<Review>> GetReviewsByReviewerIdAsync(string reviewerId)
+    {
+        var reviews = await _context.Reviews
+            .Include(r => r.Applicant)
+            .Include(r => r.AppUser)
+            .Where(r => r.AppUserId == reviewerId)
+            .ToListAsync();
+        return reviews;
+    }
+
+
     public async Task AddReviewAsync(Review review)
     {
         await _context.Reviews.AddAsync(review);
