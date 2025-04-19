@@ -35,54 +35,61 @@
             </div>
         </div>
 
-        <div class="table-responsive shadow-sm rounded">
-            <h4 class="text-white bg-dark p-3">Assigned Reviews</h4>
-            <table class="table align-middle text-dark">
-                <thead class="text-uppercase">
-                    <tr>
-                        <th>Applicant</th>
-                        <th>Complete?</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   @foreach(var review in Model.Reviews)
-                   {
-                        <tr>
-                            <td>@review.Applicant.FullName</td>
-                            <td>@review.ReviewComplete</td>
-                            <td>
-                                <a asp-action="SubmitReview"
-                                   asp-controller="Review"
-                                   asp-route-reviewNumber="@review.ReviewNumber">
-                                    <button type="button" class="btn btn-lg"
-                                            style="background-color:seagreen; color: white; border: 2px solid black;">
-                                        <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
-                                    </button>
-                                </a>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="table-responsive shadow-sm rounded">
+                    <h4 class="text-white bg-dark p-3">Assigned Reviews</h4>
+                    <table class="table align-middle text-dark">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Date Assigned</th>
+                                <th>Complete?</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           @foreach(var review in Model.Reviews)
+                           {
+                                <tr>
+                                    <td>@review.Applicant.FullName</td>
+                                    <td>@review.ReviewDate</td>
+                                    <td>@review.ReviewComplete</td>
+                                    <td>
+                                        <a asp-action="SubmitReview"
+                                           asp-controller="Review"
+                                           asp-route-reviewNumber="@review.ReviewNumber">
+                                            <button type="button" class="btn btn-lg"
+                                                    style="background-color:seagreen; color: white; border: 2px solid black;">
+                                                <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
+                                            </button>
+                                        </a>
 
-                            </td>
-                        </tr>
-                   }
-                </tbody>
-            </table>
-        </div>
-
-        <div class="table-responsive shadow-sm rounded">
-            <h4 class="text-white bg-dark p-3">Assigned Interviews</h4>
-            <table class="table align-middle text-dark">
-                <thead class="text-uppercase">
-                    <tr>
-                        <th>Applicant</th>
-                        <th>Interview Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+                                    </td>
+                                </tr>
+                           }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="table-responsive shadow-sm rounded">
+                    <h4 class="text-white bg-dark p-3">Assigned Interviews</h4>
+                    <table class="table align-middle text-dark">
+                        <thead class="text-uppercase">
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Interview Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                    
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </body>
