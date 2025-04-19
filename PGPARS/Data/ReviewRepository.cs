@@ -24,14 +24,15 @@ public class ReviewRepository : IReviewRepository
             .ToListAsync();
     }
 
-    public Review GetReviewById(int reviewId)
-    {
-        return _context.Reviews.FirstOrDefault(r => r.ReviewNumber == reviewId);
-    }
 
     public async Task<Review> GetReviewByIdAsync(int reviewId)
     {
-        return await _context.Reviews.FirstOrDefaultAsync(r => r.ReviewNumber == reviewId);
+
+       
+        return await _context.Reviews
+            .Include(r => r.Applicant)
+            .Include(r => r.AppUser)
+            .FirstOrDefaultAsync(r => r.ReviewNumber == reviewId);
     }
 
 
