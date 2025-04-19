@@ -37,6 +37,15 @@ namespace PGPARS.Models.ViewModels
         [Display(Name = "Sex")]
         public string? Sex { get; set; }
 
+        [Display(Name = "CitizenshipStatus")]
+        public string? CitizenshipStatus { get; set; }
+
+        [Display(Name = "PrimaryCitizenship")]
+        public string? PrimaryCitizenship { get; set; }
+
+        [Display(Name = "SharePointPdfUrl")]
+        public string? SharePointPdfUrl { get; set; }
+
         [Display(Name = "Reviewer 1")]
         public string? Reviewer1 { get; set; }
 

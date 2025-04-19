@@ -119,17 +119,16 @@
                 var totalUsed = totalAmount - totalRemaining;
                 var amountUsedPercent = totalAmount == 0 ? 0 : (totalUsed / totalAmount * 100);
 
+                <div class="mb-4">
+                    <h2 class="text-center text-shadow2">Total Funding Summary</h2>
 
-            <div class="mb-4">
-                <h2 class="text-center text-shadow2">Total Funding Summary</h2>
+                    <!-- Flexbox row to align left/right text -->
+                    <div class="d-flex justify-content-between px-3 text-shadow2">
+                        <span><strong>Total Amount:</strong> @totalAmount.ToString("C")</span>
+                        <span><strong>Total Remaining:</strong> @totalRemaining.ToString("C")</span>
+                    </div>
 
-                <!-- Flexbox row to align left/right text -->
-                <div class="d-flex justify-content-between px-3 text-shadow2">
-                    <span><strong>Total Amount:</strong> @totalAmount.ToString("C")</span>
-                    <span><strong>Total Remaining:</strong> @totalRemaining.ToString("C")</span>
-                </div>
-
-                <!-- Progress bar aligned with the above text -->
+                    <!-- Progress bar aligned with the above text -->
                     <div class="progress mt-2 mx-3" style="height: 30px;">
                         <div class="progress-bar
                 @(amountUsedPercent < 50 ? "bg-success" :
@@ -142,10 +141,7 @@
                             <strong>@totalUsed.ToString("C") Used</strong>
                         </div>
                     </div>
-            </div>
-
-
-
+                </div>
 
                 <!-- Pie chart  -->
                 <div class="d-flex justify-content-center align-items-center" style="height: 400px;">

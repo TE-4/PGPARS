@@ -10,9 +10,9 @@
         <div class="container">
             <div class="card shadow-lg p-4 bg-dark text-light">
                 <form asp-action="EditApplicant" asp-controller="Applicant" method="post">
-
+                    <!-- Personal Information -->
                     <fieldset class="border rounded p-3">
-                        <legend class="fw-bold"><i class="bi bi-person-badge"></i>Applicant Information</legend>
+                        <legend class="fw-bold"><div class="bi bi-person-badge">&ensp;Personal Information</div></legend>
                         <hr class="border-light" />
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -58,25 +58,50 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
+                                <label asp-for="AssignedMentor" class="form-label"><i class="bi bi-person-fill"></i> Assigned Mentor</label>
+                                <input asp-for="AssignedMentor" class="form-control" data-val="false" />
+                                <span asp-validation-for="AssignedMentor" class="text-danger"></span>
+                            </div>                            
+                            <div class="col-md-4">
+                                <label asp-for="AdvisorEmail" class="form-label"><i class="bi bi-envelope"></i> Advisor Email</label>
+                                <input asp-for="AdvisorEmail" class="form-control" data-val="false" />
+                                <span asp-validation-for="AdvisorEmail" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
                                 <label asp-for="Sex" class="form-label"><i class="bi bi-flag"></i> Sex</label>
                                 <input asp-for="Sex" class="form-control" data-val="false" />
                                 <span asp-validation-for="Sex" class="text-danger"></span>
                             </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-md-4">
                                 <label asp-for="Race" class="form-label"><i class="bi bi-fingerprint"></i> Race</label>
                                 <input asp-for="Race" class="form-control" data-val="false" />
                                 <span asp-validation-for="Race" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
-                                <label asp-for="AdvisorEmail" class="form-label"><i class="bi bi-envelope"></i> Advisor Email</label>
-                                <input asp-for="AdvisorEmail" class="form-control" data-val="false" />
-                                <span asp-validation-for="AdvisorEmail" class="text-danger"></span>
+                                <label asp-for="CitizenshipStatus" class="form-label"><i class="bi bi-person-vcard-fill"></i> Citizenship Status</label>
+                                <input asp-for="CitizenshipStatus" class="form-control" data-val="false" />
+                                <span asp-validation-for="CitizenshipStatus" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="PrimaryCitizenship" class="form-label"><i class="bi bi-person-arms-up"></i> Primary Citizenship</label>
+                                <input asp-for="PrimaryCitizenship" class="form-control" data-val="false" />
+                                <span asp-validation-for="PrimaryCitizenship" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label asp-for="SharePointPdfUrl" class="form-label"><i class="bi bi-link-45deg"></i> Sharepoint URL</label>
+                                <input asp-for="SharePointPdfUrl" class="form-control" data-val="false" />
+                                <span asp-validation-for="SharePointPdfUrl" class="text-danger"></span>
                             </div>
                         </div>
                     </fieldset>
-
+                    <hr class="border-light" />
+                    <!-- Course Information -->
                     <fieldset class="border rounded p-3">
-                        <legend class="fw-bold"><i class="bi bi-clipboard-check"></i>Course Information</legend>
+                        <legend class="fw-bold"><div class="bi bi-clipboard-check">&ensp;Course Information</div></legend>
                         <hr class="border-light" />
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -99,9 +124,10 @@
                             </div>
                         </div>
                     </fieldset>
-
+                    <hr class="border-light" />
+                    <!-- Review Information -->
                     <fieldset class="border rounded p-3" style="">
-                        <legend class="fw-bold"><i class="bi bi-card-checklist"></i>Review Information</legend>
+                        <legend class="fw-bold"><div class="bi bi-card-checklist">&ensp;Review Information</div></legend>
                         <hr class="border-light" />
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -148,6 +174,7 @@
                             </div>
                         </div>
                     </fieldset>
+                    <br />
                     <div class="text-center">
                         <button type="submit" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
                             <div class="bi bi-save text-outline">&ensp;Save Changes</div>

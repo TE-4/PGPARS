@@ -12,90 +12,171 @@
 
         <div class="card shadow-lg p-4 bg-dark text-light" style="">
             <!-- Name -->
-            <div class="d-flex align-items-center">
-                <i class="bi bi-person-circle" style="font-size: 3rem; margin-right: 15px;"></i>
-                <h3 class="mb-0">@Model.FullName</h3>
+            <div class="d-flex justify-content-start">
+                <div class="bi bi-person-circle" style="font-size: 3rem; margin-right: 15px;">&ensp;@Model.FullName</div>
             </div>
-            <hr class="border-light" />
-
-            <!-- Personal Info -->
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong><i class="bi bi-person-vcard"></i> N-Number:</strong> @Model.Nnumber</p>
-                    <p><strong><i class="bi bi-envelope"></i> Email:</strong> @Model.Email</p>
-                    <p><strong><i class="bi bi-graph-up"></i> Status:</strong> @Model.Status</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong><i class="bi bi-telephone-fill"></i> Phone Number:</strong> @Model.Phone</p>
-                    <p><strong><i class="bi bi-envelope"></i> Advisor Email:</strong> @Model.AdvisorEmail</p>
-                    <p><strong><i class="bi bi-calendar"></i> App Submission Date:</strong> @Model.AppSubmitDate</p>
-                </div>
-            </div>
-            <hr class="border-light" />
-
-            <!-- Course Info -->
-            <div class="row">
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-trophy"></i> Overall GPA:</strong> @Model.GPAOverall</p>
-                </div>
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-trophy-fill"></i> Psychology GPA:</strong> @Model.GPAPsych</p>
-                </div>
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-clipboard-check"></i> Courses Requirements Met:</strong> @Model.Course_Req_Met</p>
-                </div>
-            </div>
-            <hr class="border-light" />
-
-
-
-            <!-- Review Info -->
-            <div class="row">
-                @if(ViewBag.Reviews.Count == 0)
-                {
-                    <div class="col-md-4">
-                        <strong><i class="bi bi-person"></i> Review Info</strong>
-                        <p>
-                            <em>No Reviewers Assigned Yet</em>
-                            <i class="bi bi-x-circle-fill text-danger ms-2" title="No Reviewer Assigned"></i>
-                        </p>
+            @if (@Model.Status.Equals("Unassigned"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         style="width: 0%;">
                     </div>
-                }
-                else
-                {
-                    @foreach (var review in ViewBag.Reviews as List<Review>)
+                    <strong>@Model.Status</strong>
+                </div>
+                <h5 style="text-align:center;">Next Step: Assign Reviewers</h5>
+            }
+            @if (@Model.Status.Equals("1st Review"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         style="width: 20%;">
+                        <strong>@Model.Status</strong>
+                    </div>
+                </div>
+                <h5 style="text-align:center;">Next Step: 2nd Review</h5>
+            }
+            @if (@Model.Status.Equals("Review Conflict"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar @("bg-warning")"
+                         role="progressbar"
+                         style="width: 40%;">
+                        <strong>@Model.Status</strong>
+                    </div>
+                </div>
+                <h5 style="text-align:center;">Next Step: Resolve Reviews</h5>
+            }
+            @if (@Model.Status.Equals("Interview Pending"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         style="width: 60%;">
+                        <strong>@Model.Status</strong>
+                    </div>
+                </div>
+                <h5 style="text-align:center;">Next Step: Evaluate Interview</h5>
+            }
+            @if (@Model.Status.Equals("Accepted"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         style="width: 80%;">
+                        <strong>@Model.Status</strong>
+                    </div>
+                </div>
+                <h5 style="text-align:center;">Next Step: Assign Funding</h5>
+            }
+            @if (@Model.Status.Equals("Denied"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar @("bg-danger")"
+                         role="progressbar"
+                         style="width: 100%;">
+                        <strong>@Model.Status</strong>
+                    </div>
+                </div>
+                <h5 style="text-align:center;">Next Step: Remove Applicant</h5>
+            }
+            @if (@Model.Status.Equals("Funds Assigned"))
+            {
+                <div class="progress mt-2 mx-3" style="height: 30px; font-size: 16px;">
+                    <div class="progress-bar @("bg-success")"
+                         role="progressbar"
+                         style="width: 100%;">
+                        <strong>@Model.Status</strong>
+                    </div>
+                </div>
+                <h5 style="text-align:center;">Next Step: Ensure Applicant Acceptance</h5>
+            }
+            <br />
+            <!-- Personal Info -->
+            <fieldset class="border rounded p-3">
+                <legend class="fw-bold">Personal Information</legend>
+                <hr class="border-light" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong><i class="bi bi-person-vcard"></i> N-Number:</strong> @Model.Nnumber</p>
+                        <p><strong><i class="bi bi-telephone-fill"></i> Phone Number:</strong> @Model.Phone</p>
+                        <p><strong><i class="bi bi-envelope"></i> Email:</strong> @Model.Email</p>
+                        <p><strong><i class="bi bi-envelope-fill"></i> Advisor Email:</strong> @Model.AdvisorEmail</p>
+                        <p><strong><i class="bi bi-person"></i> Assigned Mentor:</strong> @Model.AssignedMentor</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong><i class="bi bi-fingerprint"></i> Race:</strong> @Model.Race</p>
+                        <p><strong><i class="bi bi-flag"></i> Sex:</strong> @Model.Sex</p>
+                        <p><strong><i class="bi bi-person-vcard"></i> Citizenship Status:</strong> @Model.CitizenshipStatus</p>
+                        <p><strong><i class="bi bi-person-vcard-fill"></i> Primary Citizenship:</strong> @Model.PrimaryCitizenship</p>
+                        <p><strong><i class="bi bi-calendar"></i> App Submission Date:</strong> @Model.AppSubmitDate</p>
+                    </div>
+                </div>
+            </fieldset>
+            <br />
+            <!-- Course Info -->
+            <fieldset class="border rounded p-3">
+                <legend class="fw-bold">Course Information</legend>
+                <hr class="border-light" />
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong><i class="bi bi-trophy"></i> Overall GPA:</strong> @Model.GPAOverall</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong><i class="bi bi-trophy-fill"></i> Psychology GPA:</strong> @Model.GPAPsych</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong><i class="bi bi-clipboard-check"></i> Courses Requirements Met:</strong> @Model.Course_Req_Met</p>
+                    </div>
+                </div>
+            </fieldset>
+            <br />
+            <!-- Review Info -->
+            <fieldset class="border rounded p-3">
+                <legend class="fw-bold">Review Information</legend>
+                <hr class="border-light" />
+                <div class="row">
+                    @if(ViewBag.Reviews.Count == 0)
                     {
-                        <div class="col-md-4">                        
+                        <div class="col-md-4">
+                            <strong><i class="bi bi-person"></i> Review Info</strong>
                             <p>
-                                <strong>Reviewer:</strong>
-                                @review.AppUser.FirstName @review.AppUser.LastName
-                                <i class="bi bi-check-circle-fill text-success ms-2" title="Reviewer Assigned"></i>
-                            </p>
-                            <p>
-                                <strong>Decision:</strong>
-                                @(review.DecisionRecommendation ?? "No Decision Yet")
+                                <em>No Reviewers Assigned Yet</em>
+                                <i class="bi bi-x-circle-fill text-danger ms-2" title="No Reviewer Assigned"></i>
                             </p>
                         </div>
-                
                     }
-                }
-               <hr class="border-light" />
-                <div class="col-md-4">
-                    <p><strong><i class="bi bi-person"></i> Assigned Interviewer:</strong> Not Assigned</p>
+                    else
+                    {
+                        @foreach (var review in ViewBag.Reviews as List<Review>)
+                        {
+                            <div class="col-md-4">                        
+                                <p>
+                                    <strong>Reviewer:</strong>
+                                    @review.AppUser.FirstName @review.AppUser.LastName
+                                    <i class="bi bi-check-circle-fill text-success ms-2" title="Reviewer Assigned"></i>
+                                </p>
+                                <p>
+                                    <strong>Decision:</strong>
+                                    @(review.DecisionRecommendation ?? "No Decision Yet")
+                                </p>
+                            </div>
+                 
+                        }
+                    }
+                    <div class="col-md-4">
+                        <p><strong><i class="bi bi-person"></i> Assigned Interviewer:</strong> Not Assigned</p>
+                    </div>
                 </div>
-            </div>
-
-            
-            <hr class="border-light" />
+            </fieldset>
+            <br />
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
                 <a href="javascript:void(0);" onclick="history.back()" class="btn btn-lg btn-outline-light">
                     <i class="bi bi-arrow-left"></i> Back
                 </a>
-
-
                 <div class="d-flex gap-3">
-
                     @if (!string.IsNullOrEmpty(Model.SharePointPdfUrl))
                     {
                         <a href="@Model.SharePointPdfUrl" target="_blank">
@@ -104,7 +185,6 @@
                             </button>
                         </a>
                     }
-
                     <a asp-action="EditApplicant" asp-controller="Applicant" asp-route-Nnumber="@Model.Nnumber">
                         <button type="button" class="btn btn-lg" style="background-color:royalblue; color: white; border: 2px solid black;">
                             <div class="bi bi-pencil text-outline">&ensp;Edit</div>

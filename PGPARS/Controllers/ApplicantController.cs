@@ -106,6 +106,8 @@ namespace PGPARS.Controllers
                 Status = applicant.Status,
                 Race = applicant.Race,
                 Sex = applicant.Sex,
+                CitizenshipStatus = applicant.CitizenshipStatus,
+                PrimaryCitizenship = applicant.PrimaryCitizenship,
                 Rev1Decision = applicant.Rev1Decision,
                 Rev2Decision = applicant.Rev2Decision,
                 RevAgree = applicant.RevAgree,
@@ -150,6 +152,8 @@ namespace PGPARS.Controllers
             applicant.Status = model.Status;
             applicant.Race = model.Race;
             applicant.Sex = model.Sex;
+            applicant.CitizenshipStatus = model.CitizenshipStatus;
+            applicant.PrimaryCitizenship = model.PrimaryCitizenship;
             applicant.Rev1Decision = model.Rev1Decision;
             applicant.Rev2Decision = model.Rev2Decision;
             applicant.RevAgree = model.RevAgree;
