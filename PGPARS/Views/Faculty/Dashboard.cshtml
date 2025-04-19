@@ -5,116 +5,120 @@
         <div class="chart-container">
             <canvas id="facultyChart"></canvas>
         </div>
-
-        <div class="row my-2">
-            <div class="col-md-4">
-                <div class="card text-white bg-primary mb-2 shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Assigned Reviews</h5>                     
-                        <p class="card-text display-6">
-                            @Model.CompletedReviews / @Model.TotalReviews Completed
-                        </p>
+        <!-- Cards -->
+        <div class="container">
+            <div class="row my-2">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary mb-2 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Assigned Reviews</h5>
+                            <p class="card-text display-6">
+                                @Model.CompletedReviews / @Model.TotalReviews Completed
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-success mb-2 shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Assigned Interviews</h5>
-                        <p class="card-text display-6"></p>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success mb-2 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Assigned Interviews</h5>
+                            <p class="card-text display-6"></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-white bg-secondary mb-2 shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Current Cohort</h5>
-                        <p class="card-text display-6"></p>
+                <div class="col-md-4">
+                    <div class="card text-white bg-secondary mb-2 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Current Cohort</h5>
+                            <p class="card-text display-6"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="table-responsive shadow-sm rounded">
-                    <h4 class="text-white bg-dark p-3">Assigned Reviews</h4>
-                    <table class="table align-middle text-dark">
-                        <thead class="text-uppercase">
-                            <tr>
-                                <th>Applicant</th>
-                                <th>Date Assigned</th>
-                                <th>Complete?</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.Reviews != null && Model.Reviews.Any())
-                            {
-                                foreach (var review in Model.Reviews)
+        <!-- Assignments -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table shadow-sm rounded">
+                        <h4 class="text-white bg-dark p-3">Assigned Reviews</h4>
+                        <table class="table align-middle text-dark">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th>Applicant</th>
+                                    <th>Date Assigned</th>
+                                    <th>Complete?</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 16px">
+                                @if (Model.Reviews != null && Model.Reviews.Any())
+                                {
+                                    foreach (var review in Model.Reviews)
+                                    {
+                                        <tr>
+                                            <td class="text-center specialtext">
+                                                <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Applicant.Nnumber" style="color: white; text-decoration: none;">
+                                                    @review.Applicant.FullName
+                                                </a>
+                                            </td>
+                                            <td>@review.ReviewDate</td>
+                                            <td>@review.ReviewComplete</td>
+                                            <td>
+                                                <a asp-action="SubmitReview"
+                                                   asp-controller="Review"
+                                                   asp-route-reviewNumber="@review.ReviewNumber">
+                                                    <button type="button" class="btn btn-lg"
+                                                            style="background-color:seagreen; color: white; border: 2px solid black;">
+                                                        <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
                                 {
                                     <tr>
-                                        <td class="text-center specialtext">
-                                            <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Applicant.Nnumber" style="color: white; text-decoration: none;">
-                                                    @review.Applicant.FullName
-                                            </a>
-                                        </td>
-                                        <td>@review.ReviewDate</td>
-                                        <td>@review.ReviewComplete</td>
-                                        <td>
-                                            <a asp-action="SubmitReview"
-                                               asp-controller="Review"
-                                               asp-route-reviewNumber="@review.ReviewNumber">
-                                                <button type="button" class="btn btn-lg"
-                                                        style="background-color:seagreen; color: white; border: 2px solid black;">
-                                                    <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
-                                                </button>
-                                            </a>
+                                        <td colspan="4" class="text-center text-muted">
+                                            No reviews assigned.
                                         </td>
                                     </tr>
                                 }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">
-                                        No reviews assigned.
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                            </tbody>
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="table-responsive shadow-sm rounded">
-                    <h4 class="text-white bg-dark p-3">Assigned Interviews</h4>
-                    <table class="table align-middle text-dark">
-                        <thead class="text-uppercase">
-                            <tr>
-                                <th>Applicant</th>
-                                <th>Interview Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (1 == 2)
-                            {
-                                
-                            }
-                            else
-                            {
+                <div class="col-md-6">
+                    <div class="table shadow-sm rounded">
+                        <h4 class="text-white bg-dark p-3">Assigned Interviews</h4>
+                        <table class="table align-middle text-dark">
+                            <thead class="text-uppercase">
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted">
-                                        No interviews assigned.
-                                    </td>
+                                    <th>Applicant</th>
+                                    <th>Interview Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
-                            }
-                        </tbody>
+                            </thead>
+                            <tbody style="font-size: 16px">
+                                @if (1 == 2)
+                                {
 
-                    </table>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">
+                                            No interviews assigned.
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -128,12 +132,12 @@
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('facultyChart').getContext('2d');
-                new Chart(ctx, 
+                new Chart(ctx,
                 {
                     type: 'bar',
                     data: {
                         labels: data.labels,
-                        datasets: 
+                        datasets:
                         [{
                             label: 'Applicant Status',
                             data: data.values,

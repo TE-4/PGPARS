@@ -97,8 +97,6 @@
         </div>
 
         <div class="table-responsive shadow-sm rounded" style="padding-top: 10px;">
-          
-         
             @if (!Model.Any())
             {
                 <div class="text-center text-muted">
@@ -144,8 +142,10 @@
                 </div>
 
                 <!-- Pie chart  -->
-                <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
-                    <canvas id="fundingPieChart" style="max-height: 100%; max-width: 100%;"></canvas>
+                <div class="chart-container">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 400px; color:white">
+                        <canvas id="fundingPieChart" style="max-height: 100%; max-width: 100%;"></canvas>
+                    </div>
                 </div>
 
 
@@ -264,7 +264,7 @@
                 legend: {
                     position: 'bottom',
                     labels: {
-                        color: '#000',
+                        color: 'white',
                         font: {
                             size: 14,
                             weight: 'bold'
@@ -277,7 +277,7 @@
                     font: {
                         size: 20
                     },
-                    color: '#000'
+                    color: 'white'
                 }
             }
         }

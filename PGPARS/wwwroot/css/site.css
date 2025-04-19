@@ -84,6 +84,10 @@ body, html {
 /*CONTAINERS*/
 .container {
     color: white;
+    align-items: stretch;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
 }
 .container-opaque {
     background-color: rgb(128, 128, 128, 0.6);
@@ -455,7 +459,7 @@ body, html {
     color: white;
 }
 .table th, .table td {
-    padding: 5px;
+    padding: 0px;
     text-align: center;
     color: white;
     border: 2px solid black;
