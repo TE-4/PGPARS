@@ -65,7 +65,7 @@
     {
         <div class="sidenav a">
             <p class="text-center">Welcome, @User.Identity.Name!</p>
-            <a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "AssignedReviews" ? "active" : "")" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a>
+            <!--<a class="specialtext @(ViewContext.RouteData.Values["action"].ToString() == "AssignedReviews" ? "active" : "")" asp-action="AssignedReviews" asp-controller="Account" asp-route-Id="@User.Identity.Name">Assigned Reviews</a> -->
             <!--
             <a class="specialtext" asp-action="CommitteeDashboard" asp-controller="Committee">Dashboard</a><br />
             <a class="specialtext" asp-action="ApplicantDirectory" asp-controller="Applicant">Applicant Directory</a><br />

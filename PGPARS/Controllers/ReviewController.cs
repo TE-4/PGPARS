@@ -159,15 +159,89 @@ namespace PGPARS.Controllers
         [Authorize(Roles = "Admin, Committee")]
         public async Task<IActionResult> SubmitReview(int reviewNumber)
         {
-            var review = await _reviewRepository.GetReviewByIdAsync(reviewNumber); // get review by ID
+            var review = await _reviewRepository.GetReviewByIdAsync(reviewNumber);
 
             if (review == null)
                 return NotFound();
 
-            return View(review); // returns the view with the full review object
+            var vm = new SubmitReviewViewModel
+            {
+                ReviewNumber = review.ReviewNumber,
+                ResumeQuality = review.ResumeQuality,
+                ResExpQuality = review.ResExpQuality,
+                ResumeComments = review.ResumeComments,
+                LetterQuality = review.LetterQuality,
+                LetterComments = review.LetterComments,
+                LORRelevance = review.LORRelevance,
+                LORQuality = review.LORQuality,
+                LORComments = review.LORComments,
+                WritingSampleQuality = review.WritingSampleQuality,
+                WritingSampleComments = review.WritingSampleComments,
+                OverallFitQuality = review.OverallFitQuality,
+                OverallFitComments = review.OverallFitComments,
+                FollowUpRequired = review.FollowUpRequired,
+                DecisionRecommendation = review.DecisionRecommendation,
+                FinalComments = review.FinalComments,
+                ApplicantFullName = review.Applicant?.FullName,
+                Nnumber = review.Nnumber
+            };
+
+            return View(vm);
         }
 
 
-        // do post method next
+        [HttpPost]
+        [Authorize(Roles = "Admin, Committee")]
+        public async Task<IActionResult> SubmitReview(SubmitReviewViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["ErrorMessage"] = "All fields must be filled in. Comments are optional.";
+                ModelState.AddModelError(string.Empty, "All required fields must be completed before submitting.");
+
+                // Re-populate read-only display data like full name if needed
+                var review = await _reviewRepository.GetReviewByIdAsync(model.ReviewNumber);
+                model.ApplicantFullName = review?.Applicant?.FullName;
+                model.Nnumber = review?.Nnumber;
+
+                return View(model);
+            }
+
+            var existingReview = await _reviewRepository.GetReviewByIdAsync(model.ReviewNumber);
+            if (existingReview == null)
+                return NotFound();
+
+            // Apply updated values
+            existingReview.ResumeQuality = model.ResumeQuality;
+            existingReview.ResExpQuality = model.ResExpQuality;
+            existingReview.ResumeComments = model.ResumeComments;
+            existingReview.LetterQuality = model.LetterQuality;
+            existingReview.LetterComments = model.LetterComments;
+            existingReview.LORRelevance = model.LORRelevance;
+            existingReview.LORQuality = model.LORQuality;
+            existingReview.LORComments = model.LORComments;
+            existingReview.WritingSampleQuality = model.WritingSampleQuality;
+            existingReview.WritingSampleComments = model.WritingSampleComments;
+            existingReview.OverallFitQuality = model.OverallFitQuality;
+            existingReview.OverallFitComments = model.OverallFitComments;
+            existingReview.FollowUpRequired = model.FollowUpRequired;
+            existingReview.DecisionRecommendation = model.DecisionRecommendation;
+            existingReview.FinalComments = model.FinalComments;
+
+            // system values
+            existingReview.ReviewComplete = true;
+            existingReview.ReviewEdited = DateTime.UtcNow;
+
+            // log action and save changes
+            await _logger.LogAction("Submit Review", User.Identity.Name, $"Review submitted for {existingReview.Applicant.FullName}", "REVIEW");
+            await _reviewRepository.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Review submitted successfully.";
+            return RedirectToAction("Dashboard", "Faculty");
+        }
+
+
+
+
     }
 }

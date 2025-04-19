@@ -1,4 +1,4 @@
-﻿@model PGPARS.Models.Review
+﻿@model SubmitReviewViewModel
 
 @{
     ViewData["Title"] = "Submit Review";
@@ -8,7 +8,7 @@
     <div class="card shadow-lg p-4 bg-dark text-light">
         <h3 class="mb-3"><i class="bi bi-journal-check"></i> Applicant Review Form</h3>
         <h4 class="mb-3 d-flex align-items-center justify-content-between">
-            <span><i class="bi bi-person"></i> Applicant: @Model.Applicant.FullName</span>
+            <span><i class="bi bi-person"></i> Applicant: @Model.ApplicantFullName</span>
 
             <a asp-action="ApplicantDetails"
                asp-controller="Applicant"
@@ -22,7 +22,17 @@
         <hr class="border-light" />
 
         <form asp-action="SubmitReview" method="post">
-           
+            
+            <!-- Error message for incomplete review form -->
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <strong>Please complete all required fields before submitting. Comments are optional.</strong>
+                </div>
+            }
+           <!-- Hidden Inputs -->
+           @Html.HiddenFor(m => m.ReviewNumber)
+         
             <!-- Resume & Research -->
             <fieldset class="border rounded p-3 mb-3">
                 <legend class="fw-bold"><i class="bi bi-file-person"></i> Resume & Research</legend>
@@ -185,10 +195,10 @@
 
             <!-- Buttons -->
             <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary" onclick="history.back()">
-                    <i class="bi bi-x-circle"></i> Cancel
+                <button type="button" class="btn btn-lg" onclick="history.back()" style="background-color: red; color: white; border: 2px solid black; text-shadow: 1px 1px 2px black;">
+                    <i class="bi bi-x-circle"></i> Cancel Review
                 </button>
-                <button type="submit" class="btn btn-light">
+                <button type="submit" class="btn btn-lg" style="background-color: green; color:white; border: 2px solid black; text-shadow: 1px 1px 2px black;">
                     <i class="bi bi-save"></i> Submit Review
                 </button>
             </div>
