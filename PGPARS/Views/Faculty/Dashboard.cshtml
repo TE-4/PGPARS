@@ -49,26 +49,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @foreach(var review in Model.Reviews)
-                           {
+                            @if (Model.Reviews != null && Model.Reviews.Any())
+                            {
+                                foreach (var review in Model.Reviews)
+                                {
+                                    <tr>
+                                        <td class="text-center specialtext">
+                                            <a asp-action="ApplicantDetails" asp-controller="Applicant" asp-route-Nnumber="@review.Applicant.Nnumber" style="color: white; text-decoration: none;">
+                                                    @review.Applicant.FullName
+                                            </a>
+                                        </td>
+                                        <td>@review.ReviewDate</td>
+                                        <td>@review.ReviewComplete</td>
+                                        <td>
+                                            <a asp-action="SubmitReview"
+                                               asp-controller="Review"
+                                               asp-route-reviewNumber="@review.ReviewNumber">
+                                                <button type="button" class="btn btn-lg"
+                                                        style="background-color:seagreen; color: white; border: 2px solid black;">
+                                                    <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
                                 <tr>
-                                    <td>@review.Applicant.FullName</td>
-                                    <td>@review.ReviewDate</td>
-                                    <td>@review.ReviewComplete</td>
-                                    <td>
-                                        <a asp-action="SubmitReview"
-                                           asp-controller="Review"
-                                           asp-route-reviewNumber="@review.ReviewNumber">
-                                            <button type="button" class="btn btn-lg"
-                                                    style="background-color:seagreen; color: white; border: 2px solid black;">
-                                                <div class="bi bi-pencil-square text-outline">&ensp;Start Review</div>
-                                            </button>
-                                        </a>
-
+                                    <td colspan="4" class="text-center text-muted">
+                                        No reviews assigned.
                                     </td>
                                 </tr>
-                           }
+                            }
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -85,8 +100,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                   
+                            @if (1 == 2)
+                            {
+                                
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">
+                                        No interviews assigned.
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
+
                     </table>
                 </div>
             </div>

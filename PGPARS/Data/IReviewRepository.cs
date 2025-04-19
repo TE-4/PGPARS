@@ -7,7 +7,6 @@ namespace PGPARS.Data
     {
         IEnumerable<Review> GetReviews();
         Task<IEnumerable<Review>> GetReviewsAsync();
-        Review GetReviewById(int ReviewId);
         Task<Review> GetReviewByIdAsync(int ReviewId);
         Task<List<Review>> GetReviewsByApplicantIdAsync(string ApplicantId);
         Task<List<AppUser>> GetReviewersByApplicantIdAsync(string ApplicantId);

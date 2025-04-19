@@ -159,7 +159,7 @@ namespace PGPARS.Controllers
         [Authorize(Roles = "Admin, Committee")]
         public async Task<IActionResult> SubmitReview(int reviewNumber)
         {
-            var review = await _reviewRepository.GetReviewByIdAsync(reviewNumber); // or however you fetch it
+            var review = await _reviewRepository.GetReviewByIdAsync(reviewNumber); // get review by ID
 
             if (review == null)
                 return NotFound();

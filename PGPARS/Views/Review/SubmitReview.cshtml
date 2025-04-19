@@ -7,14 +7,22 @@
 <div class="container mt-4">
     <div class="card shadow-lg p-4 bg-dark text-light">
         <h3 class="mb-3"><i class="bi bi-journal-check"></i> Applicant Review Form</h3>
+        <h4 class="mb-3 d-flex align-items-center justify-content-between">
+            <span><i class="bi bi-person"></i> Applicant: @Model.Applicant.FullName</span>
+
+            <a asp-action="ApplicantDetails"
+               asp-controller="Applicant"
+               asp-route-nnumber="@Model.Nnumber"
+               target="_blank"
+               class="btn btn-success btn-sm"
+               style="border: 2px solid black;">
+                <i class="bi bi-box-arrow-up-right"></i> View Details
+            </a>
+        </h4>
         <hr class="border-light" />
 
         <form asp-action="SubmitReview" method="post">
-            <!-- Hidden Keys -->
-            @Html.HiddenFor(m => m.Nnumber)
-            @Html.HiddenFor(m => m.AppUserId)
-            @Html.HiddenFor(m => m.ReviewNumber)
-
+           
             <!-- Resume & Research -->
             <fieldset class="border rounded p-3 mb-3">
                 <legend class="fw-bold"><i class="bi bi-file-person"></i> Resume & Research</legend>
@@ -175,7 +183,7 @@
                 </div>
             </fieldset>
 
-
+            <!-- Buttons -->
             <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-secondary" onclick="history.back()">
                     <i class="bi bi-x-circle"></i> Cancel
